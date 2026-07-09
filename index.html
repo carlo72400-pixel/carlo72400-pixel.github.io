@@ -9,7 +9,7 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="Giancarlo Ortiz | Video Editor, Colorist, Content Creator">
 <meta property="og:description" content="Editor and colorist. Short-form specialist. San Antonio / Austin / remote. Resize the window, I dare you.">
-<meta property="og:image" content="assets/reel_poster.jpg">
+<meta property="og:image" content="assets/hero.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -47,7 +47,7 @@ nav ul a:hover::after{width:100%}
 
 /* hero */
 header{position:relative;min-height:88vh;display:flex;align-items:flex-end;overflow:hidden}
-.hero-bg{position:absolute;inset:0;background:url('assets/stills/07_dome-beam-ring.jpg') center 20%/cover no-repeat;transition:filter .55s ease}
+.hero-bg{position:absolute;inset:0;background:url('assets/hero.jpg') center 32%/cover no-repeat;transition:filter .55s ease}
 .hero-grain{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .55s ease;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");mix-blend-mode:overlay}
 .hero-vin{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .55s ease;background:radial-gradient(ellipse at center,transparent 52%,rgba(0,0,0,.65) 100%)}
 .hero-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,10,13,.55) 0%,rgba(10,10,13,.22) 45%,rgba(10,10,13,.97) 100%)}
@@ -128,6 +128,8 @@ dialog img{display:block;width:100%;height:auto}
 .card h3 em{color:var(--red);font-style:normal}
 .card p{font-size:14px;color:var(--dim)}
 .card p b{color:var(--ink);font-weight:600}
+.embeds{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;margin-top:24px;align-items:start}
+.embed-col{display:flex;justify-content:center}
 .social-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:24px}
 .social-card{border:1px solid var(--line);background:var(--panel);padding:24px;text-decoration:none;transition:transform .35s var(--spring),border-color .25s}
 .social-card:hover{border-color:var(--red);transform:translateY(-6px) rotate(.6deg)}
@@ -254,6 +256,17 @@ footer h2{margin-bottom:18px}
       <p><b>Sony FX6, Insta360 Ace Pro 2 / X4</b>, on-set lighting and audio. Full Sail set training, my own camera package, and two years of large-venue event operations. Long days do not scare me.</p>
     </div>
   </div>
+  <div class="kicker" style="margin-top:56px">From the feed</div>
+  <h2>Live on socials</h2>
+  <p style="color:var(--dim);max-width:640px">The Alamodome coverage drop, straight from the grid, and the account it lives on. <a href="https://www.instagram.com/vamppsych/p/Dab07C8kRjq/" target="_blank" rel="noopener" style="color:var(--red)">The black and white set is here.</a></p>
+  <div class="embeds">
+    <div class="embed-col">
+      <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-permalink="https://www.instagram.com/p/Dabz36_EeHb/" data-instgrm-version="14" style="background:#101015;border:1px solid #26262f;margin:0;max-width:540px;min-width:280px;width:100%"></blockquote>
+    </div>
+    <div class="embed-col">
+      <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@vamp.psych" data-unique-id="vamp.psych" data-embed-type="creator" style="max-width:540px;min-width:280px;margin:0;width:100%;background:var(--panel);border:1px solid var(--line)"><section style="display:block;padding:28px;text-align:center"><a target="_blank" rel="noopener" href="https://www.tiktok.com/@vamp.psych" style="color:var(--red);font-weight:700;text-decoration:none">TikTok · @vamp.psych · 7.6K+ followers →</a></section></blockquote>
+    </div>
+  </div>
   <div class="social-row">
     <a class="social-card" href="https://www.tiktok.com/@vamp.psych" target="_blank" rel="noopener">
       <div class="h">TikTok <span>@vamp.psych</span></div>
@@ -357,16 +370,18 @@ document.querySelectorAll('.mq-track').forEach(t=>{ t.innerHTML += t.innerHTML; 
 
 /* ---- stills gallery ---- */
 const stills = [
-  ["01_dome-reveal.jpg","Dome reveal","EDITORIAL SLUDGE"],
-  ["02_red-dome.jpg","Red dome","NIGHT CITY"],
-  ["03_molten-dome.jpg","Molten dome","NIGHT CITY"],
-  ["04_hourglass-beam.jpg","Hourglass beam","EDITORIAL SLUDGE"],
-  ["05_laser-crisscross.jpg","Laser crisscross","EDITORIAL SLUDGE"],
-  ["06_at-the-mic.jpg","At the mic","EDITORIAL SLUDGE"],
-  ["07_dome-beam-ring.jpg","Beam ring","EDITORIAL SLUDGE"],
-  ["08_red-crowd-energy.jpg","Red crowd","SLEAZE"],
-  ["09_earth-dome-hands.jpg","Earth dome","EDITORIAL SLUDGE"],
-  ["10_globe-lightring-finale.jpg","Finale","NIGHT CITY"]
+  ["01_globe-wide.jpg","Globe wide","EDITORIAL SLUDGE"],
+  ["02_red-dome.jpg","Red dome","EDITORIAL SLUDGE"],
+  ["03_beam-dome.jpg","Beam dome","EDITORIAL SLUDGE"],
+  ["04_moon-dome.jpg","Moon dome","EDITORIAL SLUDGE"],
+  ["05_at-the-mic.jpg","At the mic","EDITORIAL SLUDGE"],
+  ["06_pov-armup.jpg","From the pit","EDITORIAL SLUDGE"],
+  ["07_red-crowd.jpg","Red crowd","SLEAZE"],
+  ["08_negative-space.jpg","Negative space","AVANT EDITORIAL"],
+  ["09_lone-profile.jpg","Lone profile","AVANT EDITORIAL"],
+  ["10_molten-dome.jpg","Molten dome","NIGHT CITY"],
+  ["11_beam-ring.jpg","Beam ring","EDITORIAL SLUDGE"],
+  ["12_finale.jpg","Finale","NIGHT CITY"]
 ];
 const g = document.getElementById('gallery');
 const lb = document.getElementById('lightbox');
@@ -400,5 +415,7 @@ document.querySelectorAll('.rv').forEach(el=>io.observe(el));
   });
 })();
 </script>
+<script async src="https://www.instagram.com/embed.js"></script>
+<script async src="https://www.tiktok.com/embed.js"></script>
 </body>
 </html>
