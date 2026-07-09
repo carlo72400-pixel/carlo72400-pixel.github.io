@@ -170,6 +170,11 @@ dialog img{display:block;width:100%;height:auto}
 .tape .t-label{position:absolute;top:8px;left:8px;right:8px;display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;letter-spacing:1.5px;color:var(--ink);text-shadow:0 1px 3px rgba(0,0,0,.9)}
 .tape .t-label .r{color:var(--red)}
 .tape .t-foot{position:absolute;bottom:8px;left:8px;font-family:var(--mono);font-size:10px;letter-spacing:1.5px;color:var(--amber);text-shadow:0 1px 3px rgba(0,0,0,.9)}
+.sac-photos{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:12px;max-width:960px}
+.sacp{display:block;aspect-ratio:4/5;overflow:hidden;border:1px solid var(--line);transition:transform .35s var(--spring),border-color .25s}
+.sacp:hover{transform:translateY(-5px);border-color:var(--red-deep)}
+.sacp img{width:100%;height:100%;object-fit:cover;transition:transform .45s var(--spring)}
+.sacp:hover img{transform:scale(1.06)}
 .client-credits{margin-top:18px;font-family:var(--mono);font-size:12px;letter-spacing:1px;color:var(--dim);max-width:640px}
 .client-credits b{color:var(--ink);font-weight:500}
 
@@ -326,7 +331,7 @@ footer h2{margin-bottom:18px}
 <section id="archive" style="border-top:0"><div class="wrap rv">
   <div class="kicker">Archive · Client Tapes</div>
   <h2>On assignment: SA Current</h2>
-  <p style="color:var(--dim);max-width:640px">Field tapes from my run as social media and content creator for San Antonio's alt-weekly. Shot on location at events across the city; finished cuts shipped on the paper's socials.</p>
+  <p style="color:var(--dim);max-width:680px">I was the alt-weekly's on-the-ground event unit. Sent solo into events across San Antonio, Riverwalk cocktail nights, beer festivals, emo night, the DoSeum, to shoot both photo and video, cut the coverage the same night, and hand back organized 1080p and 4K delivery packages ready to post. Ran the posting side too: five-plus posts a week across IG and TikTok, a <b style="color:var(--ink)">15% engagement lift</b> in three months.</p>
   <div class="tapes">
     <div class="tape vf">
       <video autoplay muted loop playsinline preload="metadata" src="assets/sacurrent/tape1_topshelf.mp4"></video>
@@ -344,7 +349,16 @@ footer h2{margin-bottom:18px}
       <div class="t-foot">SA CURRENT · FIELD DAY</div>
     </div>
   </div>
-  <p class="client-credits">FULL ASSIGNMENT LOG: <b>Brass Monkey Emo Night · Beer Festival · Top Shelf · Doseum · Revolutionary Wings · Cream</b> — five-plus posts a week for IG + TikTok, 15% engagement lift in three months.</p>
+  <div class="clip-label" style="margin-top:34px"><span><b>STILLS PULL</b> · TOP SHELF, RIVERWALK · SHOT + EDITED SAME NIGHT</span><span class="r">19:00 → 01:00</span></div>
+  <div class="sac-photos">
+    <a href="assets/sacurrent/photo_01.jpg" class="sacp"><img src="assets/sacurrent/photo_01.jpg" alt="Top Shelf event photo" loading="lazy"></a>
+    <a href="assets/sacurrent/photo_02.jpg" class="sacp"><img src="assets/sacurrent/photo_02.jpg" alt="Top Shelf event photo" loading="lazy"></a>
+    <a href="assets/sacurrent/photo_03.jpg" class="sacp"><img src="assets/sacurrent/photo_03.jpg" alt="Top Shelf event photo" loading="lazy"></a>
+    <a href="assets/sacurrent/photo_04.jpg" class="sacp"><img src="assets/sacurrent/photo_04.jpg" alt="Top Shelf event photo" loading="lazy"></a>
+    <a href="assets/sacurrent/photo_05.jpg" class="sacp"><img src="assets/sacurrent/photo_05.jpg" alt="Top Shelf event photo" loading="lazy"></a>
+    <a href="assets/sacurrent/photo_06.jpg" class="sacp"><img src="assets/sacurrent/photo_06.jpg" alt="Top Shelf event photo" loading="lazy"></a>
+  </div>
+  <p class="client-credits">FULL ASSIGNMENT LOG: <b>Brass Monkey Emo Night · Beer Festival · Top Shelf · Doseum · Revolutionary Wings · Cream</b> — photo + video coverage, same-night edit turnaround, organized delivery, posting and captions.</p>
 </div></section>
 
 <section id="work"><div class="wrap rv">
@@ -539,6 +553,9 @@ stills.forEach(([f,alt,look],i)=>{
   g.appendChild(a);
 });
 lb.addEventListener('click',()=>lb.close());
+document.querySelectorAll('.sacp').forEach(a=>{
+  a.addEventListener('click',e=>{e.preventDefault();lbImg.src=a.href;lb.showModal();});
+});
 
 /* ---- monitor slideshows ---- */
 document.querySelectorAll('.m-view[data-slides]').forEach(v=>{
