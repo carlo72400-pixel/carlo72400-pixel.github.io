@@ -174,8 +174,26 @@ dialog img{display:block;width:100%;height:auto}
 .client-credits b{color:var(--ink);font-weight:500}
 
 /* ------- socials / monitor out ------- */
-.embeds{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;margin-top:24px;align-items:start}
-.embed-col{display:flex;justify-content:center}
+.monitors{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:24px}
+.mon{position:relative;display:block;border:1px solid var(--line);background:#000;overflow:hidden;text-decoration:none;transition:transform .35s var(--spring),border-color .25s}
+.mon:hover{transform:translateY(-6px);border-color:var(--red-deep)}
+.mon .m-head{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;letter-spacing:1.5px;color:var(--dim);padding:10px 12px;border-bottom:1px solid var(--line);background:var(--bg2)}
+.mon .m-head b{color:var(--ink);font-weight:500}
+.mon .m-head .r{color:var(--red)}
+.mon .m-view{position:relative;aspect-ratio:4/5;overflow:hidden}
+.mon .m-view img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .8s ease}
+.mon .m-view img.on{opacity:1}
+.mon .m-count{position:absolute;top:8px;right:8px;font-family:var(--mono);font-size:10px;letter-spacing:1.5px;color:var(--ink);background:rgba(10,10,13,.72);padding:4px 8px;border:1px solid var(--line)}
+.mon .m-foot{display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:10px;letter-spacing:1.5px;color:var(--amber);padding:10px 12px;border-top:1px solid var(--line);background:var(--bg2)}
+.mon .m-foot .go{color:var(--red)}
+.mon.tt .m-view{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:radial-gradient(ellipse at 50% 30%,#1a1a22 0%,#000 75%)}
+.mon.tt img.av{position:static;width:96px;height:96px;border-radius:50%;border:2px solid var(--red-deep);opacity:1}
+.mon.tt .h{font-weight:700;font-size:16px;color:var(--ink);font-family:Inter,sans-serif}
+.mon.tt .h span{color:var(--red)}
+.mon.tt .stats{display:flex;gap:22px;font-family:var(--mono);font-size:11px;letter-spacing:1px;color:var(--dim);text-align:center}
+.mon.tt .stats b{display:block;color:var(--ink);font-size:16px;letter-spacing:0}
+.mon.tt .cta{font-family:var(--mono);font-size:11px;letter-spacing:1.5px;color:var(--ink);border:1px solid var(--red-deep);padding:9px 16px;transition:background .2s}
+.mon.tt:hover .cta{background:var(--red-deep)}
 .social-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:24px}
 .social-card{border:1px solid var(--line);background:var(--panel);padding:24px;text-decoration:none;transition:transform .35s var(--spring),border-color .25s}
 .social-card:hover{border-color:var(--red);transform:translateY(-6px)}
@@ -340,14 +358,28 @@ footer h2{margin-bottom:18px}
 
   <div class="kicker" style="margin-top:56px">Monitor Out · Live Feed</div>
   <h2>On the grid right now</h2>
-  <p style="color:var(--dim);max-width:640px">The Alamodome coverage drop and the account it lives on. <a href="https://www.instagram.com/vamppsych/p/Dab07C8kRjq/" target="_blank" rel="noopener" style="color:var(--red)">The black and white set is here.</a></p>
-  <div class="embeds">
-    <div class="embed-col">
-      <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-permalink="https://www.instagram.com/p/Dabz36_EeHb/" data-instgrm-version="14" style="background:#101015;border:1px solid #26262f;margin:0;max-width:540px;min-width:280px;width:100%"></blockquote>
-    </div>
-    <div class="embed-col">
-      <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@vamp.psych" data-unique-id="vamp.psych" data-embed-type="creator" style="max-width:540px;min-width:280px;margin:0;width:100%;background:var(--panel);border:1px solid var(--line)"><section style="display:block;padding:28px;text-align:center"><a target="_blank" rel="noopener" href="https://www.tiktok.com/@vamp.psych" style="color:var(--red);font-weight:700;text-decoration:none">TikTok · @vamp.psych · 7.6K+ followers →</a></section></blockquote>
-    </div>
+  <p style="color:var(--dim);max-width:640px">The Alamodome coverage drops and the account they live on. Monitors cycle on their own; click through for the full posts.</p>
+  <div class="monitors">
+    <a class="mon vf" href="https://www.instagram.com/vamppsych/p/Dabz36_EeHb/" target="_blank" rel="noopener">
+      <div class="m-head"><span><span class="r">●</span> <b>MON 1</b> · IG CAROUSEL</span><span>COLOR</span></div>
+      <div class="m-view" data-slides="color" data-n="5"></div>
+      <div class="m-foot"><span>ALAMODOME · 07.04.26</span><span class="go">OPEN POST →</span></div>
+    </a>
+    <a class="mon vf" href="https://www.instagram.com/vamppsych/p/Dab07C8kRjq/" target="_blank" rel="noopener">
+      <div class="m-head"><span><span class="r">●</span> <b>MON 2</b> · IG CAROUSEL</span><span>B&amp;W</span></div>
+      <div class="m-view" data-slides="bw" data-n="7"></div>
+      <div class="m-foot"><span>ALAMODOME · 07.04.26</span><span class="go">OPEN POST →</span></div>
+    </a>
+    <a class="mon tt" href="https://www.tiktok.com/@vamp.psych" target="_blank" rel="noopener">
+      <div class="m-head"><span><span class="r">●</span> <b>MON 3</b> · TIKTOK</span><span>LIVE</span></div>
+      <div class="m-view">
+        <img class="av" src="assets/feed/tt_avatar.jpg" alt="@vamp.psych avatar">
+        <div class="h">@vamp<span>.</span>psych</div>
+        <div class="stats"><span><b>7.6K</b>followers</span><span><b>31.6K</b>likes</span></div>
+        <div class="cta">WATCH ON TIKTOK</div>
+      </div>
+      <div class="m-foot"><span>SHORT-FORM · ESSAYS</span><span class="go">OPEN →</span></div>
+    </a>
   </div>
   <div class="social-row">
     <a class="social-card" href="https://www.tiktok.com/@vamp.psych" target="_blank" rel="noopener">
@@ -500,6 +532,25 @@ stills.forEach(([f,alt,look],i)=>{
 });
 lb.addEventListener('click',()=>lb.close());
 
+/* ---- monitor slideshows ---- */
+document.querySelectorAll('.m-view[data-slides]').forEach(v=>{
+  const pre=v.dataset.slides, n=+v.dataset.n, imgs=[];
+  const count=document.createElement('div');count.className='m-count';
+  for(let i=1;i<=n;i++){
+    const im=document.createElement('img');im.src='assets/feed/'+pre+'_'+String(i).padStart(2,'0')+'.jpg';
+    im.alt='';im.loading='lazy';v.appendChild(im);imgs.push(im);
+  }
+  v.appendChild(count);
+  let cur=0;imgs[0].classList.add('on');count.textContent='01 / '+String(n).padStart(2,'0');
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  setInterval(()=>{
+    imgs[cur].classList.remove('on');
+    cur=(cur+1)%n;
+    imgs[cur].classList.add('on');
+    count.textContent=String(cur+1).padStart(2,'0')+' / '+String(n).padStart(2,'0');
+  },2600);
+});
+
 /* ---- scroll reveal ---- */
 const io = new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);} }),{threshold:.12});
 document.querySelectorAll('.rv').forEach(el=>io.observe(el));
@@ -518,7 +569,5 @@ document.querySelectorAll('.rv').forEach(el=>io.observe(el));
   });
 })();
 </script>
-<script async src="https://www.instagram.com/embed.js"></script>
-<script async src="https://www.tiktok.com/embed.js"></script>
 </body>
 </html>
