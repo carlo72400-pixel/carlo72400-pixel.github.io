@@ -8,15 +8,16 @@
 <meta name="theme-color" content="#0a0a0d">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Giancarlo Ortiz | Video Editor, Colorist, Content Creator">
-<meta property="og:description" content="Editor and colorist. Short-form specialist. San Antonio / Austin / remote. Resize the window, I dare you.">
+<meta property="og:description" content="Editor and colorist. Short-form specialist. San Antonio / Austin / remote. You're looking through my viewfinder.">
 <meta property="og:image" content="assets/hero.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#0a0a0d; --bg2:#101015; --panel:#14141a; --line:#26262f;
   --ink:#f2edee; --dim:#9b939a; --red:#c0323f; --red-deep:#7a1f2b;
+  --amber:#e8a33d; --mono:'JetBrains Mono',monospace;
   --spring:cubic-bezier(.2,1.6,.35,1);
 }
 *{margin:0;padding:0;box-sizing:border-box}
@@ -26,41 +27,71 @@ body{background:var(--bg);color:var(--ink);font-family:Inter,-apple-system,sans-
 a{color:inherit}
 .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
 h2{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(28px,4vw,40px);font-weight:600;margin-bottom:6px}
-.kicker{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin-bottom:10px}
+.kicker{font-family:var(--mono);font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin-bottom:10px}
+.kicker::before{content:'[ '}
+.kicker::after{content:' ]'}
 section{padding:72px 0;border-top:1px solid var(--line)}
+
+/* ------- global camera chrome ------- */
+.ccd{position:fixed;inset:0;pointer-events:none;z-index:90;opacity:.05;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E")}
+.datestamp{position:fixed;right:16px;bottom:12px;z-index:95;font-family:var(--mono);font-size:12px;letter-spacing:2px;color:var(--amber);text-shadow:0 0 6px rgba(232,163,61,.55);pointer-events:none}
+.rec-chip{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--ink)}
+.rec-dot{width:9px;height:9px;border-radius:50%;background:var(--red);box-shadow:0 0 8px var(--red);animation:recblink 1.2s steps(1) infinite}
+@keyframes recblink{50%{opacity:.12}}
+.tc{font-family:var(--mono);font-size:11px;letter-spacing:1.5px;color:var(--dim)}
+.tc b{color:var(--ink);font-weight:500}
+
+/* corner brackets utility */
+.vf{position:relative}
+.vf .bk{position:absolute;width:22px;height:22px;border:2px solid rgba(242,237,238,.55);pointer-events:none;z-index:5}
+.vf .bk.tl{top:10px;left:10px;border-right:0;border-bottom:0}
+.vf .bk.tr{top:10px;right:10px;border-left:0;border-bottom:0}
+.vf .bk.bl{bottom:10px;left:10px;border-right:0;border-top:0}
+.vf .bk.br{bottom:10px;right:10px;border-left:0;border-top:0}
 
 /* scroll reveal */
 .rv{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s var(--spring)}
 .rv.in{opacity:1;transform:none}
 
-/* nav */
-nav{position:sticky;top:0;z-index:50;background:rgba(10,10,13,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
-nav .wrap{display:flex;align-items:center;justify-content:space-between;height:56px}
-.logo{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:20px;letter-spacing:.5px;text-decoration:none}
-.logo span{color:var(--red);display:inline-block;animation:blink 3.2s infinite}
-@keyframes blink{0%,92%,100%{opacity:1}95%{opacity:.15}}
-nav ul{display:flex;gap:22px;list-style:none}
-nav ul a{text-decoration:none;font-size:13px;color:var(--dim);font-weight:500;position:relative}
+/* ------- nav ------- */
+nav{position:sticky;top:0;z-index:50;background:rgba(10,10,13,.88);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:56px;gap:14px}
+.logo{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:20px;letter-spacing:.5px;text-decoration:none;white-space:nowrap}
+.logo span{color:var(--red)}
+.nav-tc{display:flex;align-items:center;gap:16px}
+nav ul{display:flex;gap:18px;list-style:none}
+nav ul a{text-decoration:none;font-family:var(--mono);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--dim);position:relative}
 nav ul a::after{content:'';position:absolute;left:0;bottom:-4px;height:2px;width:0;background:var(--red);transition:width .25s var(--spring)}
 nav ul a:hover{color:var(--ink)}
 nav ul a:hover::after{width:100%}
 
-/* hero */
+/* ------- hero viewfinder ------- */
 header{position:relative;min-height:88vh;display:flex;align-items:flex-end;overflow:hidden}
 .hero-bg{position:absolute;inset:0;background:url('assets/hero.jpg') center 32%/cover no-repeat;transition:filter .55s ease}
-.hero-grain{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .55s ease;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");mix-blend-mode:overlay}
+.hero-grain{position:absolute;inset:0;pointer-events:none;opacity:.22;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E")}
 .hero-vin{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .55s ease;background:radial-gradient(ellipse at center,transparent 52%,rgba(0,0,0,.65) 100%)}
 .hero-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,10,13,.55) 0%,rgba(10,10,13,.22) 45%,rgba(10,10,13,.97) 100%)}
-/* the looks */
 body[data-look="night-city"] .hero-bg{filter:saturate(1.4) contrast(1.08) hue-rotate(-8deg)}
 body[data-look="editorial-dream"] .hero-bg{filter:saturate(.5) contrast(1.14) brightness(.9)}
 body[data-look="darkroom"] .hero-bg{filter:grayscale(1) contrast(1.3) brightness(.96)}
 body[data-look="chrome"] .hero-bg{filter:saturate(.32) contrast(1.2) brightness(1.06)}
 body[data-look="sleaze"] .hero-bg{filter:saturate(1.55) sepia(.22) hue-rotate(-14deg) contrast(1.04)}
 body[data-look="super8"] .hero-bg{filter:sepia(.45) saturate(1.2) contrast(.94) brightness(1.06)}
-body[data-look="super8"] .hero-grain{opacity:.5}
 body[data-look="super8"] .hero-vin{opacity:1}
-.hero-in{position:relative;padding:0 0 60px;width:100%}
+/* hero OSD */
+.osd{position:absolute;z-index:6;font-family:var(--mono);font-size:11px;letter-spacing:1.5px;color:var(--ink);text-shadow:0 1px 3px rgba(0,0,0,.8)}
+.osd.tl{top:74px;left:24px}
+.osd.tr{top:74px;right:24px;text-align:right;color:var(--dim)}
+.osd.crosshair{top:44%;left:50%;transform:translate(-50%,-50%);width:56px;height:56px;border:1.5px solid rgba(242,237,238,.35);pointer-events:none}
+.osd.crosshair::before,.osd.crosshair::after{content:'';position:absolute;background:rgba(242,237,238,.35)}
+.osd.crosshair::before{left:50%;top:-8px;bottom:-8px;width:1px;transform:translateX(-50%)}
+.osd.crosshair::after{top:50%;left:-8px;right:-8px;height:1px;transform:translateY(-50%)}
+header .bk{width:30px;height:30px;border-color:rgba(242,237,238,.4)}
+header .bk.tl{top:66px;left:14px}
+header .bk.tr{top:66px;right:14px}
+header .bk.bl{bottom:14px;left:14px}
+header .bk.br{bottom:14px;right:14px}
+.hero-in{position:relative;z-index:7;padding:0 0 60px;width:100%}
 h1{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(44px,8vw,92px);font-weight:700;line-height:1.0;letter-spacing:.5px}
 h1 .l{display:inline-block;transition:transform .35s var(--spring),color .35s}
 h1 .l:hover{transform:translateY(-14px) rotate(-4deg);color:var(--red)}
@@ -68,97 +99,115 @@ h1 .sp{display:inline-block;width:.35em}
 .hero-sub{font-size:clamp(15px,2vw,19px);color:var(--dim);margin:14px 0 24px;max-width:560px}
 .hero-sub b{color:var(--ink);font-weight:600}
 .btns{display:flex;gap:12px;flex-wrap:wrap}
-.btn{display:inline-block;padding:12px 22px;border:1px solid var(--red-deep);text-decoration:none;font-size:13px;font-weight:600;letter-spacing:1px;text-transform:uppercase;transition:transform .3s var(--spring),background .2s,border-color .2s,color .2s}
+.btn{display:inline-block;padding:12px 22px;border:1px solid var(--red-deep);text-decoration:none;font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;transition:transform .3s var(--spring),background .2s,border-color .2s,color .2s}
 .btn:hover{transform:translateY(-4px)}
 .btn.solid{background:var(--red-deep)}
 .btn.solid:hover{background:var(--red)}
 .btn.ghost:hover{border-color:var(--red);color:var(--red)}
-.hint{margin-top:18px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1px;color:var(--dim)}
+.hint{margin-top:18px;font-family:var(--mono);font-size:11px;letter-spacing:1px;color:var(--dim)}
 .hint b{color:var(--red);font-weight:500}
-/* look chip */
-.look-chip{position:absolute;right:24px;bottom:60px;z-index:5;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.5px;color:var(--ink);background:rgba(10,10,13,.72);border:1px solid var(--line);padding:10px 14px;cursor:pointer;user-select:none;transition:transform .3s var(--spring),border-color .2s}
+.look-chip{position:absolute;right:24px;bottom:60px;z-index:8;font-family:var(--mono);font-size:11px;letter-spacing:1.5px;color:var(--ink);background:rgba(10,10,13,.72);border:1px solid var(--line);padding:10px 14px;cursor:pointer;user-select:none;transition:transform .3s var(--spring),border-color .2s}
 .look-chip:hover{transform:translateY(-4px) rotate(-1deg);border-color:var(--red)}
-.look-chip .lbl{color:var(--red);font-weight:700}
+.look-chip .lbl{color:var(--amber);font-weight:700}
 @media(max-width:760px){
   .look-chip{right:auto;left:24px;bottom:16px}
   .hero-in{padding-bottom:104px}
-  nav ul{gap:12px}
-  nav ul a{font-size:11px}
+  .osd.tl{left:14px}.osd.tr{right:14px}
+  nav ul{gap:10px}
+  nav ul a{font-size:10px}
+  .nav-tc .tc{display:none}
   .kicker{font-size:10px;letter-spacing:2px}
   .hint{font-size:10px}
 }
 @media(max-width:480px){
   nav ul li:nth-child(4),nav ul li:nth-child(5){display:none}
+  .osd.crosshair{display:none}
 }
 
-/* marquee */
-.mq{border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;padding:13px 0;background:var(--bg2)}
-.mq-track{display:flex;gap:0;width:max-content;animation:mq 30s linear infinite;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--dim);white-space:nowrap}
+/* ------- marquee OSD tickers ------- */
+.mq{border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;padding:11px 0;background:var(--bg2)}
+.mq-track{display:flex;width:max-content;animation:mq 30s linear infinite;font-family:var(--mono);font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--dim);white-space:nowrap}
 .mq:hover .mq-track{animation-play-state:paused}
 .mq-track span{padding:0 14px}
 .mq-track b{color:var(--red);font-weight:500}
 @keyframes mq{to{transform:translateX(-50%)}}
 
-/* reel */
+/* ------- playback (video frames) ------- */
+.clip-label{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--mono);font-size:11px;letter-spacing:1.5px;color:var(--dim);margin-bottom:8px}
+.clip-label b{color:var(--ink);font-weight:500}
+.clip-label .r{color:var(--red)}
 .reel-frame{position:relative;border:1px solid var(--line);background:#000;transition:transform .4s var(--spring),box-shadow .4s}
 .reel-frame:hover{transform:translateY(-6px);box-shadow:0 22px 60px -18px rgba(192,50,63,.28)}
-.reel-frame video{display:block;width:100%;height:auto}
-.reel-note{font-size:13px;color:var(--dim);margin-top:10px;font-family:'JetBrains Mono',monospace}
+.reel-frame .yt{position:relative;width:100%;aspect-ratio:16/9}
+.reel-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.reel-note{font-size:12px;color:var(--dim);margin-top:10px;font-family:var(--mono);letter-spacing:1px}
 
-/* stills */
+/* ------- photo mode (stills) ------- */
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;margin-top:24px}
-.grid a{display:block;aspect-ratio:16/9;overflow:hidden;border:1px solid var(--line);position:relative;transition:transform .35s var(--spring),border-color .25s,z-index 0s}
-.grid a:hover{transform:translateY(-6px) rotate(-1deg);border-color:var(--red-deep);z-index:2}
+.grid a{display:block;aspect-ratio:16/9;overflow:hidden;border:1px solid var(--line);position:relative;transition:transform .35s var(--spring),border-color .25s}
+.grid a:hover{transform:translateY(-6px);border-color:var(--red-deep);z-index:2}
 .grid img{width:100%;height:100%;object-fit:cover;transition:transform .45s var(--spring)}
 .grid a:hover img{transform:scale(1.07)}
-.grid .tag{position:absolute;left:0;right:0;bottom:0;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.5px;color:var(--ink);background:linear-gradient(0deg,rgba(10,10,13,.92),transparent);padding:18px 10px 8px;transform:translateY(100%);transition:transform .35s var(--spring)}
+.grid .af{position:absolute;inset:0;opacity:0;transition:opacity .2s;pointer-events:none}
+.grid a:hover .af{opacity:1}
+.grid .af i{position:absolute;width:16px;height:16px;border:2px solid var(--red)}
+.grid .af i:nth-child(1){top:8px;left:8px;border-right:0;border-bottom:0}
+.grid .af i:nth-child(2){top:8px;right:8px;border-left:0;border-bottom:0}
+.grid .af i:nth-child(3){bottom:8px;left:8px;border-right:0;border-top:0}
+.grid .af i:nth-child(4){bottom:8px;right:8px;border-left:0;border-top:0}
+.grid .tag{position:absolute;left:0;right:0;bottom:0;font-family:var(--mono);font-size:10px;letter-spacing:1.5px;color:var(--ink);background:linear-gradient(0deg,rgba(10,10,13,.92),transparent);padding:18px 10px 8px;transform:translateY(100%);transition:transform .35s var(--spring)}
 .grid a:hover .tag{transform:none}
-.grid .tag b{color:var(--red);font-weight:500}
+.grid .tag b{color:var(--amber);font-weight:500}
 dialog{border:1px solid var(--line);background:#000;padding:0;max-width:min(1200px,94vw)}
 dialog::backdrop{background:rgba(0,0,0,.88)}
 dialog img{display:block;width:100%;height:auto}
 
-/* what i do */
-.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-top:24px}
-.card{background:var(--panel);border:1px solid var(--line);padding:26px 24px;position:relative;overflow:hidden;transition:transform .35s var(--spring),border-color .25s}
-.card::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:2px;background:var(--red);transition:left .45s var(--spring)}
-.card:hover{transform:translateY(-6px);border-color:var(--red-deep)}
-.card:hover::before{left:0}
-.card h3{font-family:'Cormorant Garamond',serif;font-size:23px;font-weight:600;margin-bottom:8px}
-.card h3 em{color:var(--red);font-style:normal}
-.card p{font-size:14px;color:var(--dim)}
-.card p b{color:var(--ink);font-weight:600}
+/* ------- client tapes ------- */
+.tapes{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:24px;max-width:760px}
+.tape{position:relative;border:1px solid var(--line);background:#000;overflow:hidden;transition:transform .35s var(--spring),border-color .25s}
+.tape:hover{transform:translateY(-6px);border-color:var(--red-deep)}
+.tape video{display:block;width:100%;aspect-ratio:9/16;object-fit:cover}
+.tape .t-label{position:absolute;top:8px;left:8px;right:8px;display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;letter-spacing:1.5px;color:var(--ink);text-shadow:0 1px 3px rgba(0,0,0,.9)}
+.tape .t-label .r{color:var(--red)}
+.tape .t-foot{position:absolute;bottom:8px;left:8px;font-family:var(--mono);font-size:10px;letter-spacing:1.5px;color:var(--amber);text-shadow:0 1px 3px rgba(0,0,0,.9)}
+.client-credits{margin-top:18px;font-family:var(--mono);font-size:12px;letter-spacing:1px;color:var(--dim);max-width:640px}
+.client-credits b{color:var(--ink);font-weight:500}
+
+/* ------- socials / monitor out ------- */
 .embeds{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;margin-top:24px;align-items:start}
 .embed-col{display:flex;justify-content:center}
 .social-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:24px}
 .social-card{border:1px solid var(--line);background:var(--panel);padding:24px;text-decoration:none;transition:transform .35s var(--spring),border-color .25s}
-.social-card:hover{border-color:var(--red);transform:translateY(-6px) rotate(.6deg)}
+.social-card:hover{border-color:var(--red);transform:translateY(-6px)}
 .social-card .h{font-weight:700;font-size:15px}
 .social-card .h span{color:var(--red)}
 .social-card .s{font-size:13px;color:var(--dim);margin-top:4px}
 
-/* about */
+/* ------- menu / about ------- */
 .about-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:40px;margin-top:24px}
 @media(max-width:760px){.about-grid{grid-template-columns:1fr}}
 .about-grid p{color:var(--dim);margin-bottom:14px}
 .about-grid p b{color:var(--ink)}
-.offclock{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--dim);border-left:2px solid var(--red-deep);padding-left:14px;margin-top:18px}
+.offclock{font-family:var(--mono);font-size:12px;color:var(--dim);border-left:2px solid var(--red-deep);padding-left:14px;margin-top:18px}
 .credits{list-style:none;font-size:14px}
-.credits li{padding:10px 0;border-bottom:1px solid var(--line);transition:padding-left .3s var(--spring)}
-.credits li:hover{padding-left:10px}
+.credits li{padding:10px 0 10px 14px;border-bottom:1px solid var(--line);position:relative;transition:padding-left .3s var(--spring)}
+.credits li::before{content:'▸';position:absolute;left:0;color:var(--red);font-size:11px;top:13px}
+.credits li:hover{padding-left:22px}
 .credits b{display:block}
 .credits span{display:block;color:var(--dim);font-size:13px}
 .credits .r{color:var(--red);font-weight:600}
 
-/* footer */
+/* ------- footer standby ------- */
 footer{padding:80px 0 60px;border-top:1px solid var(--line);text-align:center}
 footer h2{margin-bottom:18px}
+.standby{font-family:var(--mono);font-size:11px;letter-spacing:3px;color:var(--dim);margin-bottom:14px}
+.standby i{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--amber);box-shadow:0 0 8px var(--amber);margin-right:8px;animation:recblink 2s steps(1) infinite}
 .email{display:inline-block;font-family:'Cormorant Garamond',serif;font-size:clamp(22px,4vw,36px);color:var(--ink);text-decoration:none;border:1px solid var(--red-deep);padding:14px 34px;transition:background .25s,transform .1s ease-out}
 .email:hover{background:var(--red-deep)}
 .foot-meta{margin-top:28px;font-size:13px;color:var(--dim)}
 .foot-meta a{color:var(--dim)}
 .foot-meta a:hover{color:var(--ink)}
-.fine{margin-top:34px;font-family:'JetBrains Mono',monospace;font-size:11px;color:#4d4750;letter-spacing:1px}
+.fine{margin-top:34px;font-family:var(--mono);font-size:11px;color:#4d4750;letter-spacing:1px}
 .fine b{color:#6b2430;font-weight:400}
 
 @media (prefers-reduced-motion: reduce){
@@ -168,70 +217,78 @@ footer h2{margin-bottom:18px}
 </style>
 </head>
 <body data-look="night-city">
+<div class="ccd" aria-hidden="true"></div>
+<div class="datestamp" id="datestamp" aria-hidden="true"></div>
 
 <nav><div class="wrap">
   <a class="logo" href="#top">G<span>.</span>ORTIZ</a>
+  <div class="nav-tc">
+    <span class="rec-chip"><span class="rec-dot"></span>REC</span>
+    <span class="tc" id="timecode"><b>00:00:00:00</b></span>
+  </div>
   <ul>
-    <li><a href="#reel">Reel</a></li>
-    <li><a href="#film">Film</a></li>
-    <li><a href="#stills">Stills</a></li>
-    <li><a href="#work">Work</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="#contact">Contact</a></li>
+    <li><a href="#playback">Playback</a></li>
+    <li><a href="#stills">Photo</a></li>
+    <li><a href="#archive">Archive</a></li>
+    <li><a href="#work">Menu</a></li>
+    <li><a href="#about">Info</a></li>
+    <li><a href="#contact">Standby</a></li>
   </ul>
 </div></nav>
 
-<header id="top">
+<header id="top" class="vf">
   <div class="hero-bg"></div>
   <div class="hero-grain"></div>
   <div class="hero-vin"></div>
   <div class="hero-shade"></div>
-  <button class="look-chip" id="lookChip" title="cycle the grade">LOOK&nbsp;<span class="lbl" id="lookName">NIGHT CITY</span>&nbsp;·&nbsp;<span id="lookHint">resize me</span></button>
+  <i class="bk tl"></i><i class="bk tr"></i><i class="bk bl"></i><i class="bk br"></i>
+  <div class="osd tl">CAM A · FX6 · 4K 24P</div>
+  <div class="osd tr">ISO 800 · T2.8<br>WB 3200K</div>
+  <div class="osd crosshair" aria-hidden="true"></div>
+  <button class="look-chip" id="lookChip" title="cycle the picture profile">PP&nbsp;<span class="lbl" id="lookName">NIGHT CITY</span>&nbsp;·&nbsp;<span id="lookHint">resize me</span></button>
   <div class="wrap hero-in">
-    <div class="kicker">San Antonio, TX &nbsp;·&nbsp; Available SA / Austin / Remote</div>
+    <div class="kicker">San Antonio TX · Avail SA / Austin / Remote</div>
     <h1 id="heroName" aria-label="Giancarlo Ortiz">Giancarlo Ortiz</h1>
-    <p class="hero-sub"><b>Video editor, colorist, and content creator.</b> Short-form specialist behind the brand Vamppsych. I write, shoot, cut, grade, and design end to end.</p>
+    <p class="hero-sub"><b>Video editor, colorist, and content creator.</b> Short-form specialist behind the brand Vamppsych. You're looking through my viewfinder. I write, shoot, cut, grade, and design end to end.</p>
     <div class="btns">
-      <a class="btn solid" href="#reel">Watch the reel</a>
+      <a class="btn solid" href="#playback">Roll playback</a>
       <a class="btn ghost" href="assets/docs/GiancarloOrtiz-Resume-VideoEditor.pdf">Resume (PDF)</a>
       <a class="btn ghost" href="#contact">Contact</a>
     </div>
-    <div class="hint">psst. <b>drag the window edge</b> and this page regrades itself. or hit the look chip.</div>
+    <div class="hint">psst. <b>drag the window edge</b> and the picture profile regrades. or hit the PP chip.</div>
   </div>
 </header>
 
-<div class="mq" aria-hidden="true"><div class="mq-track" id="mqTrack">
+<div class="mq" aria-hidden="true"><div class="mq-track">
   <span>EDIT <b>·</b> COLOR <b>·</b> SHORT-FORM <b>·</b> DAVINCI RESOLVE <b>·</b> PREMIERE <b>·</b> AFTER EFFECTS <b>·</b> SONY FX6 <b>·</b> CUSTOM DCTL LOOKS <b>·</b> FUSION <b>·</b> CAPCUT <b>·</b> SAN ANTONIO TX <b>·</b>&nbsp;</span>
 </div></div>
 
-<section id="reel"><div class="wrap rv">
-  <div class="kicker">Reel</div>
-  <h2>Live coverage, shot + graded</h2>
-  <p style="color:var(--dim);max-width:640px;margin-bottom:22px">Stadium concert highlight reel. Shot on the floor, graded in DaVinci Resolve, finished in 4K.</p>
-  <div class="reel-frame">
-    <video controls playsinline preload="metadata" poster="assets/reel_poster.jpg">
-      <source src="assets/reel.mp4" type="video/mp4">
-    </video>
+<section id="playback"><div class="wrap rv">
+  <div class="kicker">Playback</div>
+  <h2>The work, rolled from the top</h2>
+  <p style="color:var(--dim);max-width:640px;margin-bottom:26px">Two clips. The short film I wrote, directed, and edited, and the behind-the-scenes of how it got made.</p>
+
+  <div class="clip-label"><span><b>CLIP 001</b> · VOLUME (2026) · NARRATIVE SHORT</span><span class="r">TC 00:03:10</span></div>
+  <div class="reel-frame vf">
+    <i class="bk tl"></i><i class="bk tr"></i><i class="bk bl"></i><i class="bk br"></i>
+    <div class="yt"><iframe src="https://www.youtube-nocookie.com/embed/pQ0W-conqwE" title="VOLUME — the new kid" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
   </div>
-  <div class="reel-note">ALAMODOME · 07.04.2026 · SHOT / EDIT / COLOR: G. ORTIZ</div>
+  <div class="reel-note">WRITER / DIRECTOR / EDITOR: G. ORTIZ · FOUR-ACTOR SHORT · SCRIPTED PER-CLIP COLOR PIPELINE IN RESOLVE · FULL SAIL 2026</div>
+
+  <div style="height:36px"></div>
+
+  <div class="clip-label"><span><b>CLIP 002</b> · VOLUME BTS EP01 · REHEARSAL VLOG</span><span class="r">TC 00:09:01</span></div>
+  <div class="reel-frame vf">
+    <i class="bk tl"></i><i class="bk tr"></i><i class="bk bl"></i><i class="bk br"></i>
+    <div class="yt"><iframe src="https://www.youtube-nocookie.com/embed/KuMfghV9hmA" title="VOLUME BTS EP01 Rehearsal Vlog" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+  </div>
+  <div class="reel-note">HOW I RUN A SET: REHEARSAL, DIRECTION, COVERAGE · <a href="https://www.youtube.com/watch?v=psxQ4pLF4fw" target="_blank" rel="noopener" style="color:var(--red)">EP02: THE PROCESS →</a></div>
 </div></section>
 
-<section id="film" style="border-top:0;padding-top:0"><div class="wrap rv">
-  <div class="kicker">Narrative</div>
-  <h2>VOLUME (2026)</h2>
-  <p style="color:var(--dim);max-width:640px;margin-bottom:22px">A four-actor short about the new kid. Written, directed, and edited by me at Full Sail. Shot-matched pastel grade built as a scripted per-clip color pipeline in Resolve.</p>
-  <div class="reel-frame">
-    <video controls playsinline preload="metadata" poster="assets/volume_poster.jpg">
-      <source src="assets/volume.mp4" type="video/mp4">
-    </video>
-  </div>
-  <div class="reel-note">VOLUME · 3 MIN · WRITER / DIRECTOR / EDITOR: G. ORTIZ · FULL SAIL 2026</div>
-</div></section>
-
-<section id="stills"><div class="wrap rv">
-  <div class="kicker">Stills</div>
+<section id="stills" style="border-top:0;padding-top:0"><div class="wrap rv">
+  <div class="kicker">Photo Mode</div>
   <h2>Frames from the floor</h2>
-  <p style="color:var(--dim)">Pulled and graded from my live coverage. Click to view full.</p>
+  <p style="color:var(--dim)">Pulled and graded from my live stadium coverage. Click to view full.</p>
   <div class="grid" id="gallery"></div>
 </div></section>
 
@@ -239,26 +296,51 @@ footer h2{margin-bottom:18px}
   <span>NIGHT CITY <b>·</b> EDITORIAL DREAM <b>·</b> DARKROOM <b>·</b> CHROME <b>·</b> SLEAZE <b>·</b> SUPER 8 <b>·</b> LOOKS BUILT IN-HOUSE <b>·</b> NIGHT CITY <b>·</b> EDITORIAL DREAM <b>·</b> DARKROOM <b>·</b> CHROME <b>·</b> SLEAZE <b>·</b> SUPER 8 <b>·</b> LOOKS BUILT IN-HOUSE <b>·</b>&nbsp;</span>
 </div></div>
 
-<section id="work" style="border-top:0"><div class="wrap rv">
-  <div class="kicker">What I do</div>
-  <h2>Three lanes, one pipeline</h2>
-  <div class="cols">
-    <div class="card">
-      <h3>Edit <em>+</em> Color</h3>
-      <p><b>Premiere Pro, After Effects, DaVinci Resolve, CapCut.</b> Retention-driven short-form cutting, narrative editing, shot-matched grades, custom DCTL looks, Fusion composites. I also build my own effect and transition plugins for Resolve and Premiere.</p>
+<section id="archive" style="border-top:0"><div class="wrap rv">
+  <div class="kicker">Archive · Client Tapes</div>
+  <h2>On assignment: SA Current</h2>
+  <p style="color:var(--dim);max-width:640px">Field tapes from my run as social media and content creator for San Antonio's alt-weekly. Shot on location at events across the city; finished cuts shipped on the paper's socials.</p>
+  <div class="tapes">
+    <div class="tape vf">
+      <video autoplay muted loop playsinline preload="metadata" src="assets/sacurrent/tape1_topshelf.mp4"></video>
+      <div class="t-label"><span><span class="r">●</span> TAPE 01</span><span>TOP SHELF</span></div>
+      <div class="t-foot">SA CURRENT · FOOD FEST</div>
     </div>
-    <div class="card">
-      <h3>Content <em>+</em> Social</h3>
-      <p>Founder of <b>Vamppsych</b>, 7.6K+ on TikTok. Hooks, pacing, thumbnails, analytics, visual systems, title cards, and motion graphics. Every post written, shot, edited, and designed by me.</p>
+    <div class="tape vf">
+      <video autoplay muted loop playsinline preload="metadata" src="assets/sacurrent/tape2_culinaria.mp4"></video>
+      <div class="t-label"><span><span class="r">●</span> TAPE 02</span><span>SERVICE</span></div>
+      <div class="t-foot">SA CURRENT · ON THE LINE</div>
     </div>
-    <div class="card">
-      <h3>Production</h3>
-      <p><b>Sony FX6, Insta360 Ace Pro 2 / X4</b>, on-set lighting and audio. Full Sail set training, my own camera package, and two years of large-venue event operations. Long days do not scare me.</p>
+    <div class="tape vf">
+      <video autoplay muted loop playsinline preload="metadata" src="assets/sacurrent/tape3_beerfest.mp4"></video>
+      <div class="t-label"><span><span class="r">●</span> TAPE 03</span><span>BEER FEST</span></div>
+      <div class="t-foot">SA CURRENT · FIELD DAY</div>
     </div>
   </div>
-  <div class="kicker" style="margin-top:56px">From the feed</div>
-  <h2>Live on socials</h2>
-  <p style="color:var(--dim);max-width:640px">The Alamodome coverage drop, straight from the grid, and the account it lives on. <a href="https://www.instagram.com/vamppsych/p/Dab07C8kRjq/" target="_blank" rel="noopener" style="color:var(--red)">The black and white set is here.</a></p>
+  <p class="client-credits">FULL ASSIGNMENT LOG: <b>Brass Monkey Emo Night · Beer Festival · Top Shelf · Doseum · Revolutionary Wings · Cream</b> — five-plus posts a week for IG + TikTok, 15% engagement lift in three months.</p>
+</div></section>
+
+<section id="work"><div class="wrap rv">
+  <div class="kicker">Menu · What I Do</div>
+  <h2>Three lanes, one pipeline</h2>
+  <div class="social-row" style="margin-top:24px">
+    <div class="social-card">
+      <div class="h">Edit <span>+</span> Color</div>
+      <div class="s"><b style="color:var(--ink)">Premiere, After Effects, DaVinci Resolve, CapCut.</b> Retention-driven short-form, narrative editing, shot-matched grades, custom DCTL looks, Fusion composites. I build my own effect and transition plugins for Resolve and Premiere.</div>
+    </div>
+    <div class="social-card">
+      <div class="h">Content <span>+</span> Social</div>
+      <div class="s">Founder of <b style="color:var(--ink)">Vamppsych</b>, 7.6K+ on TikTok. Hooks, pacing, thumbnails, analytics, visual systems, title cards, motion graphics. Every post written, shot, edited, and designed by me.</div>
+    </div>
+    <div class="social-card">
+      <div class="h">Production</div>
+      <div class="s"><b style="color:var(--ink)">Sony FX6, Insta360 Ace Pro 2 / X4</b>, on-set lighting and audio. Full Sail set training, my own camera package, two years of large-venue event operations. Long days do not scare me.</div>
+    </div>
+  </div>
+
+  <div class="kicker" style="margin-top:56px">Monitor Out · Live Feed</div>
+  <h2>On the grid right now</h2>
+  <p style="color:var(--dim);max-width:640px">The Alamodome coverage drop and the account it lives on. <a href="https://www.instagram.com/vamppsych/p/Dab07C8kRjq/" target="_blank" rel="noopener" style="color:var(--red)">The black and white set is here.</a></p>
   <div class="embeds">
     <div class="embed-col">
       <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-permalink="https://www.instagram.com/p/Dabz36_EeHb/" data-instgrm-version="14" style="background:#101015;border:1px solid #26262f;margin:0;max-width:540px;min-width:280px;width:100%"></blockquote>
@@ -278,13 +360,13 @@ footer h2{margin-bottom:18px}
     </a>
     <a class="social-card" href="https://www.youtube.com/@Vamppsych" target="_blank" rel="noopener">
       <div class="h">YouTube <span>@Vamppsych</span></div>
-      <div class="s">Long-form essays and edits</div>
+      <div class="s">VOLUME, the BTS series, long-form edits</div>
     </a>
   </div>
 </div></section>
 
 <section id="about"><div class="wrap rv">
-  <div class="kicker">About</div>
+  <div class="kicker">Info</div>
   <h2>Editor first, one-person studio when needed</h2>
   <div class="about-grid">
     <div>
@@ -296,6 +378,7 @@ footer h2{margin-bottom:18px}
     <ul class="credits">
       <li><b>VOLUME</b><span class="r">Writer / Director / Editor</span><span>Narrative short, Full Sail · 2026</span></li>
       <li><b>SKINWALKER</b><span class="r">Writer / Director</span><span>Narrative short, in production · 2026</span></li>
+      <li><b>SA Current</b><span class="r">Social Media &amp; Content Creator</span><span>Alt-weekly client work · San Antonio</span></li>
       <li><b>Stadium concert coverage</b><span class="r">Shooter / Editor / Colorist</span><span>Live event, 65,000-seat venue · 2026</span></li>
       <li><b>Full Sail student productions</b><span class="r">Camera / Lighting / Audio crew</span><span>2025 to 2026</span></li>
       <li><b>Vamppsych</b><span class="r">Founder / Creative Director</span><span>2023 to present</span></li>
@@ -304,7 +387,7 @@ footer h2{margin-bottom:18px}
 </div></section>
 
 <footer id="contact"><div class="wrap rv">
-  <div class="kicker">Contact</div>
+  <div class="standby"><i></i>STANDBY</div>
   <h2>Let's cut something</h2>
   <a class="email" id="magnetMail" href="mailto:carlo72400@gmail.com">carlo72400@gmail.com</a>
   <div class="foot-meta">
@@ -314,13 +397,13 @@ footer h2{margin-bottom:18px}
     <a href="assets/docs/GiancarloOrtiz-Resume-VideoEditor.pdf">Editor resume</a> ·
     <a href="assets/docs/GiancarloOrtiz-Resume-Content.pdf">Content resume</a>
   </div>
-  <div class="fine">GIANCARLO ORTIZ · SAN ANTONIO TX · EST. VAMPPSYCH 2023 · <b>you found the bottom. did you try resizing yet?</b></div>
+  <div class="fine">GIANCARLO ORTIZ · SAN ANTONIO TX · EST. VAMPPSYCH 2023 · <b>end of tape. rewind, or hit record with me.</b></div>
 </div></footer>
 
 <dialog id="lightbox"><img id="lightbox-img" src="" alt=""></dialog>
 
 <script>
-/* ---- bouncy name ---- */
+/* ---- bouncy name (word-safe) ---- */
 (function(){
   const h = document.getElementById('heroName');
   const words = h.textContent.split(' '); h.textContent='';
@@ -332,7 +415,26 @@ footer h2{margin-bottom:18px}
   });
 })();
 
-/* ---- the looks: resize = regrade (tap chip to cycle) ---- */
+/* ---- running timecode (24fps) ---- */
+(function(){
+  const el = document.getElementById('timecode');
+  let f=0;
+  setInterval(()=>{
+    f++;
+    const fr=f%24, s=Math.floor(f/24)%60, m=Math.floor(f/1440)%60, hh=Math.floor(f/86400);
+    const p=n=>String(n).padStart(2,'0');
+    el.innerHTML='<b>'+p(hh)+':'+p(m)+':'+p(s)+':'+p(fr)+'</b>';
+  },1000/24);
+})();
+
+/* ---- amber date stamp ---- */
+(function(){
+  const d=new Date();
+  const months=['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+  document.getElementById('datestamp').textContent = months[d.getMonth()]+' '+String(d.getDate()).padStart(2,'0')+' '+d.getFullYear();
+})();
+
+/* ---- picture profiles: resize = regrade (tap chip to cycle) ---- */
 const LOOKS = [
   ['night-city','NIGHT CITY'],
   ['editorial-dream','EDITORIAL DREAM'],
@@ -365,10 +467,10 @@ chip.addEventListener('click',()=>{
   applyLook(manual,'chip');
 });
 
-/* ---- marquee: duplicate track for seamless loop ---- */
+/* ---- marquee seamless loop ---- */
 document.querySelectorAll('.mq-track').forEach(t=>{ t.innerHTML += t.innerHTML; });
 
-/* ---- stills gallery ---- */
+/* ---- photo mode gallery ---- */
 const stills = [
   ["01_globe-wide.jpg","Globe wide","EDITORIAL SLUDGE"],
   ["02_red-dome.jpg","Red dome","EDITORIAL SLUDGE"],
@@ -389,9 +491,10 @@ const lbImg = document.getElementById('lightbox-img');
 stills.forEach(([f,alt,look],i)=>{
   const a=document.createElement('a');a.href='assets/stills/'+f;
   const img=document.createElement('img');img.src='assets/stills/'+f;img.alt=alt;img.loading='lazy';
+  const af=document.createElement('div');af.className='af';af.innerHTML='<i></i><i></i><i></i><i></i>';
   const tag=document.createElement('div');tag.className='tag';
   tag.innerHTML='FR_'+String(i+1).padStart(2,'0')+' · '+alt.toUpperCase()+' · <b>'+look+'</b>';
-  a.append(img,tag);
+  a.append(img,af,tag);
   a.addEventListener('click',e=>{e.preventDefault();lbImg.src=a.href;lb.showModal();});
   g.appendChild(a);
 });
