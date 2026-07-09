@@ -8,19 +8,20 @@
 <meta name="theme-color" content="#0a0a0d">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Giancarlo Ortiz | Video Editor, Colorist, Content Creator">
-<meta property="og:description" content="Editor and colorist. Short-form specialist. San Antonio / Austin / remote.">
+<meta property="og:description" content="Editor and colorist. Short-form specialist. San Antonio / Austin / remote. Resize the window, I dare you.">
 <meta property="og:image" content="assets/reel_poster.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#0a0a0d; --bg2:#101015; --panel:#14141a; --line:#26262f;
   --ink:#f2edee; --dim:#9b939a; --red:#c0323f; --red-deep:#7a1f2b;
+  --spring:cubic-bezier(.2,1.6,.35,1);
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--ink);font-family:Inter,-apple-system,sans-serif;line-height:1.6;font-size:16px}
+body{background:var(--bg);color:var(--ink);font-family:Inter,-apple-system,sans-serif;line-height:1.6;font-size:16px;overflow-x:hidden}
 ::selection{background:var(--red-deep);color:#fff}
 a{color:inherit}
 .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
@@ -28,91 +29,149 @@ h2{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(28px,4vw,40px)
 .kicker{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin-bottom:10px}
 section{padding:72px 0;border-top:1px solid var(--line)}
 
+/* scroll reveal */
+.rv{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s var(--spring)}
+.rv.in{opacity:1;transform:none}
+
 /* nav */
 nav{position:sticky;top:0;z-index:50;background:rgba(10,10,13,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
 nav .wrap{display:flex;align-items:center;justify-content:space-between;height:56px}
 .logo{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:20px;letter-spacing:.5px;text-decoration:none}
-.logo span{color:var(--red)}
+.logo span{color:var(--red);display:inline-block;animation:blink 3.2s infinite}
+@keyframes blink{0%,92%,100%{opacity:1}95%{opacity:.15}}
 nav ul{display:flex;gap:22px;list-style:none}
-nav ul a{text-decoration:none;font-size:13px;color:var(--dim);font-weight:500}
+nav ul a{text-decoration:none;font-size:13px;color:var(--dim);font-weight:500;position:relative}
+nav ul a::after{content:'';position:absolute;left:0;bottom:-4px;height:2px;width:0;background:var(--red);transition:width .25s var(--spring)}
 nav ul a:hover{color:var(--ink)}
+nav ul a:hover::after{width:100%}
 
 /* hero */
-header{position:relative;min-height:86vh;display:flex;align-items:flex-end;overflow:hidden}
-.hero-bg{position:absolute;inset:0;background:url('assets/stills/07_dome-beam-ring.jpg') center 20%/cover no-repeat}
-.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,10,13,.55) 0%,rgba(10,10,13,.25) 45%,rgba(10,10,13,.97) 100%)}
-.hero-in{position:relative;padding:0 0 64px;width:100%}
-h1{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(44px,8vw,84px);font-weight:700;line-height:1.02;letter-spacing:.5px}
-.hero-sub{font-size:clamp(15px,2vw,19px);color:var(--dim);margin:14px 0 26px;max-width:560px}
+header{position:relative;min-height:88vh;display:flex;align-items:flex-end;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:url('assets/stills/07_dome-beam-ring.jpg') center 20%/cover no-repeat;transition:filter .55s ease}
+.hero-grain{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .55s ease;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");mix-blend-mode:overlay}
+.hero-vin{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .55s ease;background:radial-gradient(ellipse at center,transparent 52%,rgba(0,0,0,.65) 100%)}
+.hero-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,10,13,.55) 0%,rgba(10,10,13,.22) 45%,rgba(10,10,13,.97) 100%)}
+/* the looks */
+body[data-look="night-city"] .hero-bg{filter:saturate(1.4) contrast(1.08) hue-rotate(-8deg)}
+body[data-look="editorial-dream"] .hero-bg{filter:saturate(.5) contrast(1.14) brightness(.9)}
+body[data-look="darkroom"] .hero-bg{filter:grayscale(1) contrast(1.3) brightness(.96)}
+body[data-look="chrome"] .hero-bg{filter:saturate(.32) contrast(1.2) brightness(1.06)}
+body[data-look="sleaze"] .hero-bg{filter:saturate(1.55) sepia(.22) hue-rotate(-14deg) contrast(1.04)}
+body[data-look="super8"] .hero-bg{filter:sepia(.45) saturate(1.2) contrast(.94) brightness(1.06)}
+body[data-look="super8"] .hero-grain{opacity:.5}
+body[data-look="super8"] .hero-vin{opacity:1}
+.hero-in{position:relative;padding:0 0 60px;width:100%}
+h1{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(44px,8vw,92px);font-weight:700;line-height:1.0;letter-spacing:.5px}
+h1 .l{display:inline-block;transition:transform .35s var(--spring),color .35s}
+h1 .l:hover{transform:translateY(-14px) rotate(-4deg);color:var(--red)}
+h1 .sp{display:inline-block;width:.35em}
+.hero-sub{font-size:clamp(15px,2vw,19px);color:var(--dim);margin:14px 0 24px;max-width:560px}
 .hero-sub b{color:var(--ink);font-weight:600}
 .btns{display:flex;gap:12px;flex-wrap:wrap}
-.btn{display:inline-block;padding:12px 22px;border:1px solid var(--red-deep);text-decoration:none;font-size:13px;font-weight:600;letter-spacing:1px;text-transform:uppercase;transition:.2s}
+.btn{display:inline-block;padding:12px 22px;border:1px solid var(--red-deep);text-decoration:none;font-size:13px;font-weight:600;letter-spacing:1px;text-transform:uppercase;transition:transform .3s var(--spring),background .2s,border-color .2s,color .2s}
+.btn:hover{transform:translateY(-4px)}
 .btn.solid{background:var(--red-deep)}
 .btn.solid:hover{background:var(--red)}
 .btn.ghost:hover{border-color:var(--red);color:var(--red)}
+.hint{margin-top:18px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1px;color:var(--dim)}
+.hint b{color:var(--red);font-weight:500}
+/* look chip */
+.look-chip{position:absolute;right:24px;bottom:60px;z-index:5;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.5px;color:var(--ink);background:rgba(10,10,13,.72);border:1px solid var(--line);padding:10px 14px;cursor:pointer;user-select:none;transition:transform .3s var(--spring),border-color .2s}
+.look-chip:hover{transform:translateY(-4px) rotate(-1deg);border-color:var(--red)}
+.look-chip .lbl{color:var(--red);font-weight:700}
+@media(max-width:760px){
+  .look-chip{right:auto;left:24px;bottom:16px}
+  .hero-in{padding-bottom:104px}
+  nav ul{gap:12px}
+  nav ul a{font-size:11px}
+  .kicker{font-size:10px;letter-spacing:2px}
+  .hint{font-size:10px}
+}
+@media(max-width:480px){
+  nav ul li:nth-child(4),nav ul li:nth-child(5){display:none}
+}
+
+/* marquee */
+.mq{border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;padding:13px 0;background:var(--bg2)}
+.mq-track{display:flex;gap:0;width:max-content;animation:mq 30s linear infinite;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--dim);white-space:nowrap}
+.mq:hover .mq-track{animation-play-state:paused}
+.mq-track span{padding:0 14px}
+.mq-track b{color:var(--red);font-weight:500}
+@keyframes mq{to{transform:translateX(-50%)}}
 
 /* reel */
-.reel-frame{position:relative;border:1px solid var(--line);background:#000}
+.reel-frame{position:relative;border:1px solid var(--line);background:#000;transition:transform .4s var(--spring),box-shadow .4s}
+.reel-frame:hover{transform:translateY(-6px);box-shadow:0 22px 60px -18px rgba(192,50,63,.28)}
 .reel-frame video{display:block;width:100%;height:auto}
 .reel-note{font-size:13px;color:var(--dim);margin-top:10px;font-family:'JetBrains Mono',monospace}
-.slot{margin-top:28px;border:1px dashed var(--line);padding:22px 24px;display:flex;gap:16px;align-items:center;flex-wrap:wrap;justify-content:space-between}
-.slot b{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600}
-.slot small{color:var(--dim)}
 
 /* stills */
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;margin-top:24px}
-.grid a{display:block;aspect-ratio:16/9;overflow:hidden;border:1px solid var(--line)}
-.grid img{width:100%;height:100%;object-fit:cover;transition:transform .35s,filter .35s;filter:saturate(.96)}
-.grid a:hover img{transform:scale(1.04);filter:saturate(1.1)}
+.grid a{display:block;aspect-ratio:16/9;overflow:hidden;border:1px solid var(--line);position:relative;transition:transform .35s var(--spring),border-color .25s,z-index 0s}
+.grid a:hover{transform:translateY(-6px) rotate(-1deg);border-color:var(--red-deep);z-index:2}
+.grid img{width:100%;height:100%;object-fit:cover;transition:transform .45s var(--spring)}
+.grid a:hover img{transform:scale(1.07)}
+.grid .tag{position:absolute;left:0;right:0;bottom:0;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.5px;color:var(--ink);background:linear-gradient(0deg,rgba(10,10,13,.92),transparent);padding:18px 10px 8px;transform:translateY(100%);transition:transform .35s var(--spring)}
+.grid a:hover .tag{transform:none}
+.grid .tag b{color:var(--red);font-weight:500}
 dialog{border:1px solid var(--line);background:#000;padding:0;max-width:min(1200px,94vw)}
 dialog::backdrop{background:rgba(0,0,0,.88)}
 dialog img{display:block;width:100%;height:auto}
 
 /* what i do */
 .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-top:24px}
-.card{background:var(--panel);border:1px solid var(--line);padding:26px 24px}
+.card{background:var(--panel);border:1px solid var(--line);padding:26px 24px;position:relative;overflow:hidden;transition:transform .35s var(--spring),border-color .25s}
+.card::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:2px;background:var(--red);transition:left .45s var(--spring)}
+.card:hover{transform:translateY(-6px);border-color:var(--red-deep)}
+.card:hover::before{left:0}
 .card h3{font-family:'Cormorant Garamond',serif;font-size:23px;font-weight:600;margin-bottom:8px}
 .card h3 em{color:var(--red);font-style:normal}
 .card p{font-size:14px;color:var(--dim)}
 .card p b{color:var(--ink);font-weight:600}
-
-/* socials */
 .social-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:24px}
-.social-card{border:1px solid var(--line);background:var(--panel);padding:24px;text-decoration:none;transition:.2s}
-.social-card:hover{border-color:var(--red-deep)}
+.social-card{border:1px solid var(--line);background:var(--panel);padding:24px;text-decoration:none;transition:transform .35s var(--spring),border-color .25s}
+.social-card:hover{border-color:var(--red);transform:translateY(-6px) rotate(.6deg)}
 .social-card .h{font-weight:700;font-size:15px}
 .social-card .h span{color:var(--red)}
 .social-card .s{font-size:13px;color:var(--dim);margin-top:4px}
-.embed-wrap{margin-top:26px;display:flex;justify-content:center}
 
 /* about */
 .about-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:40px;margin-top:24px}
 @media(max-width:760px){.about-grid{grid-template-columns:1fr}}
 .about-grid p{color:var(--dim);margin-bottom:14px}
 .about-grid p b{color:var(--ink)}
+.offclock{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--dim);border-left:2px solid var(--red-deep);padding-left:14px;margin-top:18px}
 .credits{list-style:none;font-size:14px}
-.credits li{padding:10px 0;border-bottom:1px solid var(--line)}
+.credits li{padding:10px 0;border-bottom:1px solid var(--line);transition:padding-left .3s var(--spring)}
+.credits li:hover{padding-left:10px}
 .credits b{display:block}
 .credits span{display:block;color:var(--dim);font-size:13px}
 .credits .r{color:var(--red);font-weight:600}
 
 /* footer */
-footer{padding:72px 0 60px;border-top:1px solid var(--line);text-align:center}
-footer h2{margin-bottom:14px}
-.email{font-family:'Cormorant Garamond',serif;font-size:clamp(22px,4vw,34px);color:var(--ink);text-decoration:none;border-bottom:1px solid var(--red-deep)}
-.email:hover{color:var(--red)}
-.foot-meta{margin-top:26px;font-size:13px;color:var(--dim)}
+footer{padding:80px 0 60px;border-top:1px solid var(--line);text-align:center}
+footer h2{margin-bottom:18px}
+.email{display:inline-block;font-family:'Cormorant Garamond',serif;font-size:clamp(22px,4vw,36px);color:var(--ink);text-decoration:none;border:1px solid var(--red-deep);padding:14px 34px;transition:background .25s,transform .1s ease-out}
+.email:hover{background:var(--red-deep)}
+.foot-meta{margin-top:28px;font-size:13px;color:var(--dim)}
 .foot-meta a{color:var(--dim)}
 .foot-meta a:hover{color:var(--ink)}
 .fine{margin-top:34px;font-family:'JetBrains Mono',monospace;font-size:11px;color:#4d4750;letter-spacing:1px}
+.fine b{color:#6b2430;font-weight:400}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;transition-duration:.01ms !important}
+  .rv{opacity:1;transform:none}
+}
 </style>
 </head>
-<body>
+<body data-look="night-city">
 
 <nav><div class="wrap">
   <a class="logo" href="#top">G<span>.</span>ORTIZ</a>
   <ul>
     <li><a href="#reel">Reel</a></li>
+    <li><a href="#film">Film</a></li>
     <li><a href="#stills">Stills</a></li>
     <li><a href="#work">Work</a></li>
     <li><a href="#about">About</a></li>
@@ -122,19 +181,28 @@ footer h2{margin-bottom:14px}
 
 <header id="top">
   <div class="hero-bg"></div>
+  <div class="hero-grain"></div>
+  <div class="hero-vin"></div>
+  <div class="hero-shade"></div>
+  <button class="look-chip" id="lookChip" title="cycle the grade">LOOK&nbsp;<span class="lbl" id="lookName">NIGHT CITY</span>&nbsp;·&nbsp;<span id="lookHint">resize me</span></button>
   <div class="wrap hero-in">
     <div class="kicker">San Antonio, TX &nbsp;·&nbsp; Available SA / Austin / Remote</div>
-    <h1>Giancarlo Ortiz</h1>
+    <h1 id="heroName" aria-label="Giancarlo Ortiz">Giancarlo Ortiz</h1>
     <p class="hero-sub"><b>Video editor, colorist, and content creator.</b> Short-form specialist behind the brand Vamppsych. I write, shoot, cut, grade, and design end to end.</p>
     <div class="btns">
       <a class="btn solid" href="#reel">Watch the reel</a>
       <a class="btn ghost" href="assets/docs/GiancarloOrtiz-Resume-VideoEditor.pdf">Resume (PDF)</a>
       <a class="btn ghost" href="#contact">Contact</a>
     </div>
+    <div class="hint">psst. <b>drag the window edge</b> and this page regrades itself. or hit the look chip.</div>
   </div>
 </header>
 
-<section id="reel"><div class="wrap">
+<div class="mq" aria-hidden="true"><div class="mq-track" id="mqTrack">
+  <span>EDIT <b>·</b> COLOR <b>·</b> SHORT-FORM <b>·</b> DAVINCI RESOLVE <b>·</b> PREMIERE <b>·</b> AFTER EFFECTS <b>·</b> SONY FX6 <b>·</b> CUSTOM DCTL LOOKS <b>·</b> FUSION <b>·</b> CAPCUT <b>·</b> SAN ANTONIO TX <b>·</b>&nbsp;</span>
+</div></div>
+
+<section id="reel"><div class="wrap rv">
   <div class="kicker">Reel</div>
   <h2>Live coverage, shot + graded</h2>
   <p style="color:var(--dim);max-width:640px;margin-bottom:22px">Stadium concert highlight reel. Shot on the floor, graded in DaVinci Resolve, finished in 4K.</p>
@@ -144,27 +212,32 @@ footer h2{margin-bottom:14px}
     </video>
   </div>
   <div class="reel-note">ALAMODOME · 07.04.2026 · SHOT / EDIT / COLOR: G. ORTIZ</div>
-  <div style="margin-top:56px">
-    <div class="kicker">Narrative</div>
-    <h2>VOLUME (2026)</h2>
-    <p style="color:var(--dim);max-width:640px;margin-bottom:22px">A four-actor short about the new kid. Written, directed, and edited by me at Full Sail. Shot-matched pastel grade built as a scripted per-clip color pipeline in Resolve.</p>
-    <div class="reel-frame">
-      <video controls playsinline preload="metadata" poster="assets/volume_poster.jpg">
-        <source src="assets/volume.mp4" type="video/mp4">
-      </video>
-    </div>
-    <div class="reel-note">VOLUME · 3 MIN · WRITER / DIRECTOR / EDITOR: G. ORTIZ · FULL SAIL 2026</div>
-  </div>
 </div></section>
 
-<section id="stills"><div class="wrap">
+<section id="film" style="border-top:0;padding-top:0"><div class="wrap rv">
+  <div class="kicker">Narrative</div>
+  <h2>VOLUME (2026)</h2>
+  <p style="color:var(--dim);max-width:640px;margin-bottom:22px">A four-actor short about the new kid. Written, directed, and edited by me at Full Sail. Shot-matched pastel grade built as a scripted per-clip color pipeline in Resolve.</p>
+  <div class="reel-frame">
+    <video controls playsinline preload="metadata" poster="assets/volume_poster.jpg">
+      <source src="assets/volume.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="reel-note">VOLUME · 3 MIN · WRITER / DIRECTOR / EDITOR: G. ORTIZ · FULL SAIL 2026</div>
+</div></section>
+
+<section id="stills"><div class="wrap rv">
   <div class="kicker">Stills</div>
   <h2>Frames from the floor</h2>
   <p style="color:var(--dim)">Pulled and graded from my live coverage. Click to view full.</p>
   <div class="grid" id="gallery"></div>
 </div></section>
 
-<section id="work"><div class="wrap">
+<div class="mq" aria-hidden="true"><div class="mq-track">
+  <span>NIGHT CITY <b>·</b> EDITORIAL DREAM <b>·</b> DARKROOM <b>·</b> CHROME <b>·</b> SLEAZE <b>·</b> SUPER 8 <b>·</b> LOOKS BUILT IN-HOUSE <b>·</b> NIGHT CITY <b>·</b> EDITORIAL DREAM <b>·</b> DARKROOM <b>·</b> CHROME <b>·</b> SLEAZE <b>·</b> SUPER 8 <b>·</b> LOOKS BUILT IN-HOUSE <b>·</b>&nbsp;</span>
+</div></div>
+
+<section id="work" style="border-top:0"><div class="wrap rv">
   <div class="kicker">What I do</div>
   <h2>Three lanes, one pipeline</h2>
   <div class="cols">
@@ -197,7 +270,7 @@ footer h2{margin-bottom:14px}
   </div>
 </div></section>
 
-<section id="about"><div class="wrap">
+<section id="about"><div class="wrap rv">
   <div class="kicker">About</div>
   <h2>Editor first, one-person studio when needed</h2>
   <div class="about-grid">
@@ -205,6 +278,7 @@ footer h2{margin-bottom:14px}
       <p>I have been cutting daily for four-plus years. I built <b>Vamppsych</b> from zero into an audience by shipping constantly: writing, shooting, editing, grading, and designing everything myself. That means I am fast, I finish things, and I do not need hand-holding across the pipeline.</p>
       <p>I hold an <b>A.S. in Digital Cinematography from Full Sail University</b> and am finishing the B.S. in 2027. On the narrative side I wrote, directed, and edited the short film <b>VOLUME</b>, and my next short, <b>SKINWALKER</b>, is in production.</p>
       <p>Based in San Antonio. Available for staff, freelance, and crew work in SA and Austin, and remote anywhere.</p>
+      <div class="offclock">off the clock: underground rap, horror movies, taxidermy, and a good pair of New Rock boots.</div>
     </div>
     <ul class="credits">
       <li><b>VOLUME</b><span class="r">Writer / Director / Editor</span><span>Narrative short, Full Sail · 2026</span></li>
@@ -216,10 +290,10 @@ footer h2{margin-bottom:14px}
   </div>
 </div></section>
 
-<footer id="contact"><div class="wrap">
+<footer id="contact"><div class="wrap rv">
   <div class="kicker">Contact</div>
   <h2>Let's cut something</h2>
-  <a class="email" href="mailto:carlo72400@gmail.com">carlo72400@gmail.com</a>
+  <a class="email" id="magnetMail" href="mailto:carlo72400@gmail.com">carlo72400@gmail.com</a>
   <div class="foot-meta">
     <a href="https://www.tiktok.com/@vamp.psych" target="_blank" rel="noopener">TikTok</a> ·
     <a href="https://www.instagram.com/vamppsych" target="_blank" rel="noopener">Instagram</a> ·
@@ -227,35 +301,104 @@ footer h2{margin-bottom:14px}
     <a href="assets/docs/GiancarloOrtiz-Resume-VideoEditor.pdf">Editor resume</a> ·
     <a href="assets/docs/GiancarloOrtiz-Resume-Content.pdf">Content resume</a>
   </div>
-  <div class="fine">GIANCARLO ORTIZ · SAN ANTONIO TX · EST. VAMPPSYCH 2023</div>
+  <div class="fine">GIANCARLO ORTIZ · SAN ANTONIO TX · EST. VAMPPSYCH 2023 · <b>you found the bottom. did you try resizing yet?</b></div>
 </div></footer>
 
 <dialog id="lightbox"><img id="lightbox-img" src="" alt=""></dialog>
 
 <script>
+/* ---- bouncy name ---- */
+(function(){
+  const h = document.getElementById('heroName');
+  const words = h.textContent.split(' '); h.textContent='';
+  words.forEach((word,wi)=>{
+    if(wi>0){const s=document.createElement('span');s.className='sp';h.appendChild(s);}
+    const w=document.createElement('span');w.style.whiteSpace='nowrap';w.style.display='inline-block';
+    [...word].forEach(ch=>{const s=document.createElement('span');s.className='l';s.textContent=ch;w.appendChild(s);});
+    h.appendChild(w);
+  });
+})();
+
+/* ---- the looks: resize = regrade (tap chip to cycle) ---- */
+const LOOKS = [
+  ['night-city','NIGHT CITY'],
+  ['editorial-dream','EDITORIAL DREAM'],
+  ['darkroom','DARKROOM'],
+  ['chrome','CHROME'],
+  ['sleaze','SLEAZE'],
+  ['super8','SUPER 8']
+];
+const chip = document.getElementById('lookChip');
+const nameEl = document.getElementById('lookName');
+const hintEl = document.getElementById('lookHint');
+let manual = -1;
+function bandFromWidth(w){
+  if(w>=1500) return 0;
+  if(w>=1250) return 1;
+  if(w>=1000) return 2;
+  if(w>=800)  return 3;
+  if(w>=600)  return 4;
+  return 5;
+}
+function applyLook(i,src){
+  document.body.dataset.look = LOOKS[i][0];
+  nameEl.textContent = LOOKS[i][1];
+  hintEl.textContent = src==='chip' ? 'tap to cycle' : (matchMedia('(pointer:coarse)').matches ? 'tap to cycle' : 'resize me');
+}
+applyLook(bandFromWidth(innerWidth));
+addEventListener('resize',()=>{ if(manual<0) applyLook(bandFromWidth(innerWidth)); });
+chip.addEventListener('click',()=>{
+  manual = manual<0 ? (bandFromWidth(innerWidth)+1)%LOOKS.length : (manual+1)%LOOKS.length;
+  applyLook(manual,'chip');
+});
+
+/* ---- marquee: duplicate track for seamless loop ---- */
+document.querySelectorAll('.mq-track').forEach(t=>{ t.innerHTML += t.innerHTML; });
+
+/* ---- stills gallery ---- */
 const stills = [
-  ["01_dome-reveal.jpg","Dome reveal"],
-  ["02_red-dome.jpg","Red dome"],
-  ["03_molten-dome.jpg","Molten dome"],
-  ["04_hourglass-beam.jpg","Hourglass beam"],
-  ["05_laser-crisscross.jpg","Laser crisscross"],
-  ["06_at-the-mic.jpg","At the mic"],
-  ["07_dome-beam-ring.jpg","Beam ring"],
-  ["08_red-crowd-energy.jpg","Red crowd"],
-  ["09_earth-dome-hands.jpg","Earth dome"],
-  ["10_globe-lightring-finale.jpg","Finale"]
+  ["01_dome-reveal.jpg","Dome reveal","EDITORIAL SLUDGE"],
+  ["02_red-dome.jpg","Red dome","NIGHT CITY"],
+  ["03_molten-dome.jpg","Molten dome","NIGHT CITY"],
+  ["04_hourglass-beam.jpg","Hourglass beam","EDITORIAL SLUDGE"],
+  ["05_laser-crisscross.jpg","Laser crisscross","EDITORIAL SLUDGE"],
+  ["06_at-the-mic.jpg","At the mic","EDITORIAL SLUDGE"],
+  ["07_dome-beam-ring.jpg","Beam ring","EDITORIAL SLUDGE"],
+  ["08_red-crowd-energy.jpg","Red crowd","SLEAZE"],
+  ["09_earth-dome-hands.jpg","Earth dome","EDITORIAL SLUDGE"],
+  ["10_globe-lightring-finale.jpg","Finale","NIGHT CITY"]
 ];
 const g = document.getElementById('gallery');
 const lb = document.getElementById('lightbox');
 const lbImg = document.getElementById('lightbox-img');
-stills.forEach(([f,alt])=>{
+stills.forEach(([f,alt,look],i)=>{
   const a=document.createElement('a');a.href='assets/stills/'+f;
   const img=document.createElement('img');img.src='assets/stills/'+f;img.alt=alt;img.loading='lazy';
-  a.appendChild(img);
+  const tag=document.createElement('div');tag.className='tag';
+  tag.innerHTML='FR_'+String(i+1).padStart(2,'0')+' · '+alt.toUpperCase()+' · <b>'+look+'</b>';
+  a.append(img,tag);
   a.addEventListener('click',e=>{e.preventDefault();lbImg.src=a.href;lb.showModal();});
   g.appendChild(a);
 });
 lb.addEventListener('click',()=>lb.close());
+
+/* ---- scroll reveal ---- */
+const io = new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);} }),{threshold:.12});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+
+/* ---- magnetic email ---- */
+(function(){
+  const m = document.getElementById('magnetMail');
+  if(matchMedia('(pointer:coarse)').matches || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  addEventListener('mousemove',e=>{
+    const r = m.getBoundingClientRect();
+    const cx=r.left+r.width/2, cy=r.top+r.height/2;
+    const dx=e.clientX-cx, dy=e.clientY-cy;
+    const d=Math.hypot(dx,dy);
+    if(d<220){ const p=(220-d)/220; m.style.transform=`translate(${dx*p*.18}px,${dy*p*.18}px)`; }
+    else m.style.transform='';
+  });
+})();
 </script>
 </body>
 </html>
