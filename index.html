@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Giancarlo Ortiz | Video Editor, Colorist, Content Creator</title>
+<meta name="description" content="Giancarlo Ortiz. Video editor, colorist, and content creator in San Antonio, TX. Short-form specialist, DaVinci Resolve and Premiere, creator of Vamppsych.">
+<meta name="theme-color" content="#0a0a0d">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Giancarlo Ortiz | Video Editor, Colorist, Content Creator">
+<meta property="og:description" content="Editor and colorist. Short-form specialist. San Antonio / Austin / remote.">
+<meta property="og:image" content="assets/reel_poster.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0a0d; --bg2:#101015; --panel:#14141a; --line:#26262f;
+  --ink:#f2edee; --dim:#9b939a; --red:#c0323f; --red-deep:#7a1f2b;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:Inter,-apple-system,sans-serif;line-height:1.6;font-size:16px}
+::selection{background:var(--red-deep);color:#fff}
+a{color:inherit}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+h2{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(28px,4vw,40px);font-weight:600;margin-bottom:6px}
+.kicker{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin-bottom:10px}
+section{padding:72px 0;border-top:1px solid var(--line)}
+
+/* nav */
+nav{position:sticky;top:0;z-index:50;background:rgba(10,10,13,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:56px}
+.logo{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:20px;letter-spacing:.5px;text-decoration:none}
+.logo span{color:var(--red)}
+nav ul{display:flex;gap:22px;list-style:none}
+nav ul a{text-decoration:none;font-size:13px;color:var(--dim);font-weight:500}
+nav ul a:hover{color:var(--ink)}
+
+/* hero */
+header{position:relative;min-height:86vh;display:flex;align-items:flex-end;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:url('assets/stills/07_dome-beam-ring.jpg') center 20%/cover no-repeat}
+.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,10,13,.55) 0%,rgba(10,10,13,.25) 45%,rgba(10,10,13,.97) 100%)}
+.hero-in{position:relative;padding:0 0 64px;width:100%}
+h1{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(44px,8vw,84px);font-weight:700;line-height:1.02;letter-spacing:.5px}
+.hero-sub{font-size:clamp(15px,2vw,19px);color:var(--dim);margin:14px 0 26px;max-width:560px}
+.hero-sub b{color:var(--ink);font-weight:600}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;padding:12px 22px;border:1px solid var(--red-deep);text-decoration:none;font-size:13px;font-weight:600;letter-spacing:1px;text-transform:uppercase;transition:.2s}
+.btn.solid{background:var(--red-deep)}
+.btn.solid:hover{background:var(--red)}
+.btn.ghost:hover{border-color:var(--red);color:var(--red)}
+
+/* reel */
+.reel-frame{position:relative;border:1px solid var(--line);background:#000}
+.reel-frame video{display:block;width:100%;height:auto}
+.reel-note{font-size:13px;color:var(--dim);margin-top:10px;font-family:'JetBrains Mono',monospace}
+.slot{margin-top:28px;border:1px dashed var(--line);padding:22px 24px;display:flex;gap:16px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.slot b{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600}
+.slot small{color:var(--dim)}
+
+/* stills */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;margin-top:24px}
+.grid a{display:block;aspect-ratio:16/9;overflow:hidden;border:1px solid var(--line)}
+.grid img{width:100%;height:100%;object-fit:cover;transition:transform .35s,filter .35s;filter:saturate(.96)}
+.grid a:hover img{transform:scale(1.04);filter:saturate(1.1)}
+dialog{border:1px solid var(--line);background:#000;padding:0;max-width:min(1200px,94vw)}
+dialog::backdrop{background:rgba(0,0,0,.88)}
+dialog img{display:block;width:100%;height:auto}
+
+/* what i do */
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-top:24px}
+.card{background:var(--panel);border:1px solid var(--line);padding:26px 24px}
+.card h3{font-family:'Cormorant Garamond',serif;font-size:23px;font-weight:600;margin-bottom:8px}
+.card h3 em{color:var(--red);font-style:normal}
+.card p{font-size:14px;color:var(--dim)}
+.card p b{color:var(--ink);font-weight:600}
+
+/* socials */
+.social-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:24px}
+.social-card{border:1px solid var(--line);background:var(--panel);padding:24px;text-decoration:none;transition:.2s}
+.social-card:hover{border-color:var(--red-deep)}
+.social-card .h{font-weight:700;font-size:15px}
+.social-card .h span{color:var(--red)}
+.social-card .s{font-size:13px;color:var(--dim);margin-top:4px}
+.embed-wrap{margin-top:26px;display:flex;justify-content:center}
+
+/* about */
+.about-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:40px;margin-top:24px}
+@media(max-width:760px){.about-grid{grid-template-columns:1fr}}
+.about-grid p{color:var(--dim);margin-bottom:14px}
+.about-grid p b{color:var(--ink)}
+.credits{list-style:none;font-size:14px}
+.credits li{padding:10px 0;border-bottom:1px solid var(--line)}
+.credits b{display:block}
+.credits span{display:block;color:var(--dim);font-size:13px}
+.credits .r{color:var(--red);font-weight:600}
+
+/* footer */
+footer{padding:72px 0 60px;border-top:1px solid var(--line);text-align:center}
+footer h2{margin-bottom:14px}
+.email{font-family:'Cormorant Garamond',serif;font-size:clamp(22px,4vw,34px);color:var(--ink);text-decoration:none;border-bottom:1px solid var(--red-deep)}
+.email:hover{color:var(--red)}
+.foot-meta{margin-top:26px;font-size:13px;color:var(--dim)}
+.foot-meta a{color:var(--dim)}
+.foot-meta a:hover{color:var(--ink)}
+.fine{margin-top:34px;font-family:'JetBrains Mono',monospace;font-size:11px;color:#4d4750;letter-spacing:1px}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <a class="logo" href="#top">G<span>.</span>ORTIZ</a>
+  <ul>
+    <li><a href="#reel">Reel</a></li>
+    <li><a href="#stills">Stills</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</div></nav>
+
+<header id="top">
+  <div class="hero-bg"></div>
+  <div class="wrap hero-in">
+    <div class="kicker">San Antonio, TX &nbsp;·&nbsp; Available SA / Austin / Remote</div>
+    <h1>Giancarlo Ortiz</h1>
+    <p class="hero-sub"><b>Video editor, colorist, and content creator.</b> Short-form specialist behind the brand Vamppsych. I write, shoot, cut, grade, and design end to end.</p>
+    <div class="btns">
+      <a class="btn solid" href="#reel">Watch the reel</a>
+      <a class="btn ghost" href="assets/docs/GiancarloOrtiz-Resume-VideoEditor.pdf">Resume (PDF)</a>
+      <a class="btn ghost" href="#contact">Contact</a>
+    </div>
+  </div>
+</header>
+
+<section id="reel"><div class="wrap">
+  <div class="kicker">Reel</div>
+  <h2>Live coverage, shot + graded</h2>
+  <p style="color:var(--dim);max-width:640px;margin-bottom:22px">Stadium concert highlight reel. Shot on the floor, graded in DaVinci Resolve, finished in 4K.</p>
+  <div class="reel-frame">
+    <video controls playsinline preload="metadata" poster="assets/reel_poster.jpg">
+      <source src="assets/reel.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="reel-note">ALAMODOME · 07.04.2026 · SHOT / EDIT / COLOR: G. ORTIZ</div>
+  <div class="slot">
+    <div><b>Narrative reel</b><br><small>VOLUME, a four-actor short I wrote, directed, and edited. Editor cut lands here shortly.</small></div>
+    <span class="kicker" style="margin:0">Coming soon</span>
+  </div>
+</div></section>
+
+<section id="stills"><div class="wrap">
+  <div class="kicker">Stills</div>
+  <h2>Frames from the floor</h2>
+  <p style="color:var(--dim)">Pulled and graded from my live coverage. Click to view full.</p>
+  <div class="grid" id="gallery"></div>
+</div></section>
+
+<section id="work"><div class="wrap">
+  <div class="kicker">What I do</div>
+  <h2>Three lanes, one pipeline</h2>
+  <div class="cols">
+    <div class="card">
+      <h3>Edit <em>+</em> Color</h3>
+      <p><b>Premiere Pro, After Effects, DaVinci Resolve, CapCut.</b> Retention-driven short-form cutting, narrative editing, shot-matched grades, custom DCTL looks, Fusion composites. I also build my own effect and transition plugins for Resolve and Premiere.</p>
+    </div>
+    <div class="card">
+      <h3>Content <em>+</em> Social</h3>
+      <p>Founder of <b>Vamppsych</b>, 7.6K+ on TikTok. Hooks, pacing, thumbnails, analytics, visual systems, title cards, and motion graphics. Every post written, shot, edited, and designed by me.</p>
+    </div>
+    <div class="card">
+      <h3>Production</h3>
+      <p><b>Sony FX6, Insta360 Ace Pro 2 / X4</b>, on-set lighting and audio. Full Sail set training, my own camera package, and two years of large-venue event operations. Long days do not scare me.</p>
+    </div>
+  </div>
+  <div class="social-row">
+    <a class="social-card" href="https://www.tiktok.com/@vamp.psych" target="_blank" rel="noopener">
+      <div class="h">TikTok <span>@vamp.psych</span></div>
+      <div class="s">7.6K+ followers · short-form, video essays, underground music culture</div>
+    </a>
+    <a class="social-card" href="https://www.instagram.com/vamppsych" target="_blank" rel="noopener">
+      <div class="h">Instagram <span>@vamppsych</span></div>
+      <div class="s">Visual systems, posters, graded stills</div>
+    </a>
+    <a class="social-card" href="https://www.youtube.com/@Vamppsych" target="_blank" rel="noopener">
+      <div class="h">YouTube <span>@Vamppsych</span></div>
+      <div class="s">Long-form essays and edits</div>
+    </a>
+  </div>
+</div></section>
+
+<section id="about"><div class="wrap">
+  <div class="kicker">About</div>
+  <h2>Editor first, one-person studio when needed</h2>
+  <div class="about-grid">
+    <div>
+      <p>I have been cutting daily for four-plus years. I built <b>Vamppsych</b> from zero into an audience by shipping constantly: writing, shooting, editing, grading, and designing everything myself. That means I am fast, I finish things, and I do not need hand-holding across the pipeline.</p>
+      <p>I hold an <b>A.S. in Digital Cinematography from Full Sail University</b> and am finishing the B.S. in 2027. On the narrative side I wrote, directed, and edited the short film <b>VOLUME</b>, and my next short, <b>SKINWALKER</b>, is in production.</p>
+      <p>Based in San Antonio. Available for staff, freelance, and crew work in SA and Austin, and remote anywhere.</p>
+    </div>
+    <ul class="credits">
+      <li><b>VOLUME</b><span class="r">Writer / Director / Editor</span><span>Narrative short, Full Sail · 2026</span></li>
+      <li><b>SKINWALKER</b><span class="r">Writer / Director</span><span>Narrative short, in production · 2026</span></li>
+      <li><b>Stadium concert coverage</b><span class="r">Shooter / Editor / Colorist</span><span>Live event, 65,000-seat venue · 2026</span></li>
+      <li><b>Full Sail student productions</b><span class="r">Camera / Lighting / Audio crew</span><span>2025 to 2026</span></li>
+      <li><b>Vamppsych</b><span class="r">Founder / Creative Director</span><span>2023 to present</span></li>
+    </ul>
+  </div>
+</div></section>
+
+<footer id="contact"><div class="wrap">
+  <div class="kicker">Contact</div>
+  <h2>Let's cut something</h2>
+  <a class="email" href="mailto:carlo72400@gmail.com">carlo72400@gmail.com</a>
+  <div class="foot-meta">
+    <a href="https://www.tiktok.com/@vamp.psych" target="_blank" rel="noopener">TikTok</a> ·
+    <a href="https://www.instagram.com/vamppsych" target="_blank" rel="noopener">Instagram</a> ·
+    <a href="https://www.youtube.com/@Vamppsych" target="_blank" rel="noopener">YouTube</a> ·
+    <a href="assets/docs/GiancarloOrtiz-Resume-VideoEditor.pdf">Editor resume</a> ·
+    <a href="assets/docs/GiancarloOrtiz-Resume-Content.pdf">Content resume</a>
+  </div>
+  <div class="fine">GIANCARLO ORTIZ · SAN ANTONIO TX · EST. VAMPPSYCH 2023</div>
+</div></footer>
+
+<dialog id="lightbox"><img id="lightbox-img" src="" alt=""></dialog>
+
+<script>
+const stills = [
+  ["01_dome-reveal.jpg","Dome reveal"],
+  ["02_red-dome.jpg","Red dome"],
+  ["03_molten-dome.jpg","Molten dome"],
+  ["04_hourglass-beam.jpg","Hourglass beam"],
+  ["05_laser-crisscross.jpg","Laser crisscross"],
+  ["06_at-the-mic.jpg","At the mic"],
+  ["07_dome-beam-ring.jpg","Beam ring"],
+  ["08_red-crowd-energy.jpg","Red crowd"],
+  ["09_earth-dome-hands.jpg","Earth dome"],
+  ["10_globe-lightring-finale.jpg","Finale"]
+];
+const g = document.getElementById('gallery');
+const lb = document.getElementById('lightbox');
+const lbImg = document.getElementById('lightbox-img');
+stills.forEach(([f,alt])=>{
+  const a=document.createElement('a');a.href='assets/stills/'+f;
+  const img=document.createElement('img');img.src='assets/stills/'+f;img.alt=alt;img.loading='lazy';
+  a.appendChild(img);
+  a.addEventListener('click',e=>{e.preventDefault();lbImg.src=a.href;lb.showModal();});
+  g.appendChild(a);
+});
+lb.addEventListener('click',()=>lb.close());
+</script>
+</body>
+</html>
