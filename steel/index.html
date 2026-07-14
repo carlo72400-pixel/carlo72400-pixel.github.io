@@ -4,111 +4,106 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex">
-<title>G.ORTIZ // SHATTERED STEEL</title>
-<meta name="description" content="Shattered Steel theme prototype. Giancarlo Ortiz, director and colorist, San Antonio TX.">
+<title>G.ORTIZ // VAMP.SYS 2003</title>
+<meta name="description" content="Vamppsych x Ennaria x Y2K x Xbox theme prototype. Giancarlo Ortiz, director and colorist, San Antonio TX.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Silkscreen:wght@400;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
   --void:#050505; --panel:#0c0d0e; --steel-hi:#3a3f45; --steel:#22262b; --steel-lo:#101214;
-  --edge:#4a4f55; --acid:#D6FF3D; --blood:#C41E24; --bone:#E8E6E0; --dim:#8b8e88;
+  --bevel-hi:#7d838c; --bevel-lo:#15171a;
+  --acid:#D6FF3D; --blood:#C41E24; --bone:#E8E6E0; --dim:#8b8e88; --chrome:#C9CDD3;
   --px:'Silkscreen',monospace; --dot:'DotGothic16',monospace; --mono:'IBM Plex Mono','Courier New',monospace;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:var(--void);color:var(--bone);font-family:var(--mono);font-size:14px;line-height:1.5;overflow-x:hidden}
-/* generated sludge wall behind everything */
-body::before{content:'';position:fixed;inset:0;z-index:-1;background:var(--void) url(assets/bg_sludge.jpg) center/cover no-repeat;opacity:.9}
-::selection{background:var(--acid);color:#000}
+::selection{background:var(--blood);color:var(--bone)}
 a{color:inherit}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
 
-/* ---- film grain over everything ---- */
-body::after{content:'';position:fixed;inset:0;z-index:100;pointer-events:none;opacity:.09;
+/* gothic damask tile wall + film grain */
+body::before{content:'';position:fixed;inset:0;z-index:-1;background:var(--void) url(assets/tile_gothic.jpg) top left/384px repeat}
+body::after{content:'';position:fixed;inset:0;z-index:100;pointer-events:none;opacity:.08;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E")}
 
 .wrap{max-width:1200px;margin:0 auto;padding:0 20px}
 
-/* ---- header: asymmetric gothic title cards over the shatter plate ---- */
-header.wrap{padding:clamp(120px,22vh,220px) 20px 30px;position:relative}
-header::before{content:'';position:absolute;inset:0;z-index:-1;
-  background:url(assets/hero_shatter.jpg) center top/cover no-repeat;
-  -webkit-mask-image:linear-gradient(180deg,#000 0%,#000 62%,transparent 100%);
-  mask-image:linear-gradient(180deg,#000 0%,#000 62%,transparent 100%)}
-header .wrapin{position:relative}
-.sysline{font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--dim);text-transform:uppercase;text-shadow:0 1px 4px rgba(0,0,0,.95),0 0 12px rgba(0,0,0,.8)}
+/* ---- masthead: chrome wordmark over the tile ---- */
+header.wrap{padding:44px 20px 6px;position:relative;text-align:center}
+.sysline{font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--dim);text-transform:uppercase;text-shadow:0 1px 4px rgba(0,0,0,.95)}
 .sysline b{color:var(--acid);font-weight:500}
-h1{font-family:var(--dot);font-size:clamp(40px,7.4vw,86px);line-height:.95;text-transform:uppercase;letter-spacing:2px;margin-top:14px;max-width:900px}
-h1 .off{display:block;margin-left:clamp(30px,12vw,190px);color:var(--acid);text-shadow:3px 0 var(--blood), -2px 0 rgba(214,255,61,.35)}
-.role{position:relative;display:inline-block;margin:18px 0 0 clamp(4px,6vw,90px);font-family:var(--px);font-size:clamp(11px,1.6vw,15px);letter-spacing:3px;text-transform:uppercase}
+.sysline .r{color:var(--blood)}
+.wordmark{display:block;width:min(760px,94%);max-height:44vh;object-fit:contain;margin:26px auto 0;mix-blend-mode:screen;filter:drop-shadow(0 6px 24px rgba(0,0,0,.6))}
+.role{position:relative;display:inline-block;margin:20px auto 0;font-family:var(--px);font-size:clamp(11px,1.6vw,15px);letter-spacing:3px;text-transform:uppercase}
 .role .dead{position:relative;color:var(--dim);white-space:nowrap}
-/* gaffer tape crossing out the old job title */
 .role .dead::after{content:'';position:absolute;left:-6%;right:-6%;top:38%;height:14px;transform:rotate(-2.4deg);
-  background:linear-gradient(180deg,#171716 0%,#0e0e0d 45%,#141413 100%);
-  clip-path:polygon(0 22%,3% 0,97% 8%,100% 30%,99% 78%,96% 100%,2% 94%,1% 70%);
-  box-shadow:0 1px 2px rgba(0,0,0,.8)}
-.role .now{color:var(--blood);margin-left:14px;text-shadow:0 0 12px rgba(196,30,36,.5)}
+  background:url(assets/tape_long.png) center/100% auto no-repeat;filter:brightness(.9)}
+.role .now{color:var(--blood);margin-left:14px;text-shadow:0 0 12px rgba(196,30,36,.55)}
+.chromerule{height:3px;max-width:760px;margin:24px auto 0;border:0;
+  background:linear-gradient(90deg,transparent,var(--chrome) 18%,#fff 50%,var(--chrome) 82%,transparent);opacity:.5}
+
+/* ---- marquee ticker ---- */
+.mq{border-top:1px solid #1b1e21;border-bottom:1px solid #1b1e21;overflow:hidden;padding:8px 0;margin-top:22px;background:rgba(5,5,5,.72)}
+.mq-track{display:flex;width:max-content;animation:mq 26s linear infinite;font-family:var(--px);font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--dim);white-space:nowrap}
+.mq-track b{color:var(--acid);font-weight:400}
+.mq-track span{padding:0 16px}
+@keyframes mq{to{transform:translateX(-50%)}}
 
 /* ---- main broken grid ---- */
-main.wrap{display:grid;grid-template-columns:minmax(0,7.2fr) minmax(0,4.8fr);gap:0 34px;padding:58px 20px 30px;position:relative;align-items:start}
-
-/* gaffer tape divider between video and nav */
+main.wrap{display:grid;grid-template-columns:minmax(0,7.2fr) minmax(0,4.8fr);gap:0 34px;padding:48px 20px 30px;position:relative;align-items:start}
 .tape-v{position:absolute;top:-8px;bottom:6%;left:calc(58.5% - 10px);width:22px;z-index:6;pointer-events:none;
   background:linear-gradient(90deg,#1c1c1a 0%,#121211 40%,#1f1f1d 100%);
   border-left:1px solid rgba(255,255,255,.06);border-right:1px solid rgba(0,0,0,.9);
   clip-path:polygon(18% 0,88% 1%,100% 4%,92% 22%,100% 40%,90% 61%,100% 79%,86% 100%,12% 99%,0 96%,10% 74%,0 55%,12% 33%,2% 12%);
   box-shadow:0 0 14px rgba(0,0,0,.9)}
-/* real generated gaffer tape slaps */
-.slap{position:absolute;pointer-events:none;z-index:8;filter:drop-shadow(0 4px 8px rgba(0,0,0,.75))}
-#slap-player{top:-30px;left:-26px;width:140px;transform:rotate(-6deg)}
-#slap-nav{top:-12px;right:-4px;width:104px;transform:rotate(5deg)}
-.slap-inline{display:block;width:230px;max-width:56%;margin:8px 0 2px;transform:rotate(-1.6deg);filter:drop-shadow(0 3px 6px rgba(0,0,0,.7));pointer-events:none}
-.slap-foot{display:block;width:min(360px,64%);margin:0 auto 16px;transform:rotate(-2deg);filter:drop-shadow(0 4px 10px rgba(0,0,0,.8))}
 
-/* ---- video player: mechanical HUD frame ---- */
-.player{position:relative;
-  background:linear-gradient(160deg,rgba(30,33,37,.42) 0%,rgba(12,13,15,.66) 100%),url(assets/plate_steel.jpg) center/cover;
-  padding:14px;border:1px solid #000;outline:1px solid var(--edge);outline-offset:-3px;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.14), inset 0 -2px 6px rgba(0,0,0,.7), 0 24px 60px -20px rgba(0,0,0,.9)}
-.player .glowrim{position:absolute;inset:9px;border:1px solid rgba(214,255,61,.5);box-shadow:0 0 14px rgba(214,255,61,.28), inset 0 0 18px rgba(214,255,61,.12);pointer-events:none;z-index:3}
-/* exposed corner nodes */
-.node{position:absolute;width:16px;height:16px;z-index:7;background:radial-gradient(circle at 34% 30%,#585e66 0%,#2a2e33 55%,#0c0d0e 100%);border:1px solid #000;box-shadow:0 0 0 1px rgba(255,255,255,.08) inset}
-.node::after{content:'';position:absolute;inset:5px;background:var(--acid);box-shadow:0 0 8px var(--acid);border-radius:50%}
-.node.tl{top:-6px;left:-6px}.node.tr{top:-6px;right:-6px}.node.bl{bottom:-6px;left:-6px}.node.br{bottom:-6px;right:-6px}
+/* real gaffer tape slaps */
+.slap{position:absolute;pointer-events:none;z-index:9;filter:drop-shadow(0 4px 8px rgba(0,0,0,.75))}
+#slap-player{top:-26px;left:-24px;width:132px;transform:rotate(-6deg)}
+#slap-nav{top:-12px;right:-4px;width:104px;transform:rotate(5deg)}
+.slap-inline{display:block;width:210px;max-width:52%;margin:10px 0 2px;transform:rotate(-1.6deg);filter:drop-shadow(0 3px 6px rgba(0,0,0,.7));pointer-events:none}
+.slap-foot{display:block;width:min(340px,64%);margin:0 auto 16px;transform:rotate(-2deg);filter:drop-shadow(0 4px 10px rgba(0,0,0,.8))}
+
+/* ---- the player: Ennaria decora frame around the HUD screen ---- */
+.ennaria{position:relative;border:clamp(30px,4.2vw,52px) solid transparent;
+  border-image:url(assets/frame_ennaria.jpg) 110 stretch;
+  background:#000;box-shadow:0 30px 70px -24px rgba(0,0,0,.95)}
+.node{position:absolute;width:15px;height:15px;z-index:8;background:radial-gradient(circle at 34% 30%,#585e66 0%,#2a2e33 55%,#0c0d0e 100%);border:1px solid #000}
+.node::after{content:'';position:absolute;inset:4.5px;background:var(--acid);box-shadow:0 0 8px var(--acid);border-radius:50%}
+.node.tl{top:-8px;left:-8px}.node.tr{top:-8px;right:-8px}.node.bl{bottom:-8px;left:-8px}.node.br{bottom:-8px;right:-8px}
 .node.br::after,.node.tl::after{background:var(--blood);box-shadow:0 0 8px var(--blood)}
-/* HUD readouts on the frame */
-.hud-top{display:flex;justify-content:space-between;align-items:center;font-family:var(--px);font-size:9px;letter-spacing:2px;color:var(--acid);padding:2px 4px 10px;text-transform:uppercase}
+.hud-top{display:flex;justify-content:space-between;align-items:center;font-family:var(--px);font-size:9px;letter-spacing:2px;color:var(--acid);padding:6px 8px;text-transform:uppercase;background:rgba(4,4,4,.9)}
 .hud-top .err{color:var(--blood)}
-.hud-bot{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;letter-spacing:1.5px;color:var(--dim);padding:10px 4px 2px;text-transform:uppercase}
+.hud-bot{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-family:var(--mono);font-size:10px;letter-spacing:1.5px;color:var(--dim);padding:8px;text-transform:uppercase;background:rgba(4,4,4,.9)}
 .hud-bot b{color:var(--bone);font-weight:500}
-.screen{position:relative;background:#000;border:1px solid #000;box-shadow:inset 0 0 0 1px #16181a}
+.screen{position:relative;background:#000;border:1px solid #16181a}
 .screen .yt{position:relative;width:100%;aspect-ratio:16/9}
 .screen iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
-/* CSS-only CRT scanlines + vignette over the tube */
 .crt{position:absolute;inset:0;pointer-events:none;z-index:2;
   background:repeating-linear-gradient(180deg,rgba(0,0,0,0) 0 2px,rgba(0,0,0,.22) 2px 3px,rgba(0,0,0,0) 3px 4px);
   mix-blend-mode:multiply}
 .crt::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 62%,rgba(0,0,0,.42) 100%)}
 .crt::before{content:'';position:absolute;left:0;right:0;height:22%;top:-25%;background:linear-gradient(180deg,transparent,rgba(214,255,61,.05),transparent);animation:sweep 7s linear infinite}
 @keyframes sweep{to{top:120%}}
-.player .cap{margin-top:12px;font-family:var(--mono);font-size:11px;letter-spacing:1px;color:var(--dim)}
-.player .cap b{color:var(--acid);font-weight:500}
+.player-cap{margin-top:12px;font-family:var(--mono);font-size:11px;letter-spacing:1px;color:var(--dim)}
+.player-cap b{color:var(--acid);font-weight:500}
 
-/* ---- nav: intentionally broken asymmetrical grid ---- */
-nav{display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:minmax(58px,auto);gap:9px;position:relative}
-nav .head{grid-column:1/-1;font-family:var(--px);font-size:12px;letter-spacing:3px;color:var(--dim);text-transform:uppercase;padding:4px 2px 0}
+/* ---- nav: Y2K bevel buttons on the broken grid ---- */
+nav{display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:minmax(58px,auto);gap:10px;position:relative}
+nav .head{grid-column:1/-1;display:flex;align-items:center;gap:9px;font-family:var(--px);font-size:12px;letter-spacing:3px;color:var(--dim);text-transform:uppercase;padding:4px 2px 2px}
 nav .head b{color:var(--acid);font-weight:400}
+nav .head img{width:24px;height:auto;mix-blend-mode:screen;filter:drop-shadow(0 0 8px rgba(214,255,61,.5))}
 .nv{position:relative;display:flex;flex-direction:column;justify-content:center;gap:2px;padding:10px 12px;text-decoration:none;
-  background:linear-gradient(150deg,rgba(16,18,20,.6) 0%,rgba(7,8,9,.82) 90%),url(assets/plate_steel.jpg);
+  background:linear-gradient(150deg,rgba(24,27,30,.72) 0%,rgba(8,9,10,.86) 90%),url(assets/plate_steel.jpg);
   background-size:auto,220% auto;
-  border:1px solid #000;outline:1px solid #33383e;outline-offset:-2px;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.09)}
+  border:2px outset var(--bevel-hi);border-bottom-color:var(--bevel-lo);border-right-color:var(--bevel-lo)}
 .nv:nth-child(odd){background-position:0 0,18% 64%}
 .nv:nth-child(even){background-position:0 0,76% 22%}
 .nv:nth-child(3n){background-position:0 0,52% 88%}
 .nv .idx{font-family:var(--px);font-size:8px;letter-spacing:1.5px;color:var(--dim)}
 .nv .nm{font-family:var(--dot);font-size:clamp(15px,1.6vw,19px);letter-spacing:1px;text-transform:uppercase}
 .nv .ext{font-family:var(--mono);font-size:9px;letter-spacing:1px;color:var(--dim);text-transform:uppercase}
-/* the deliberate breakage */
 .nv:nth-child(2){grid-column:1/4}
 .nv:nth-child(3){grid-column:4/7;transform:translateY(9px) rotate(.6deg)}
 .nv:nth-child(4){grid-column:2/5;transform:translateX(-10px)}
@@ -117,27 +112,31 @@ nav .head b{color:var(--acid);font-weight:400}
 .nv:nth-child(7){grid-column:3/7;transform:translateX(8px) rotate(.4deg)}
 .nv:nth-child(8){grid-column:1/5;transform:rotate(-.5deg) translateY(4px)}
 .nv:nth-child(9){grid-column:5/7;transform:translateY(-11px) rotate(1deg)}
-/* glitch hover: instant snap, no easing anywhere */
+/* glitch hover: instant snap, bevel slams inset */
 .nv,.nv *{transition:none}
-.nv:hover,.nv:focus-visible{background:var(--acid);outline:2px solid var(--blood);outline-offset:2px;
+.nv:hover,.nv:focus-visible{background:var(--acid);border-style:inset;outline:2px solid var(--blood);outline-offset:2px;
   clip-path:polygon(0 0,100% 2%,99% 34%,101% 36%,100% 65%,98% 67%,100% 100%,2% 99%,0 71%,1.5% 69%,0 34%)}
 .nv:hover .nm,.nv:focus-visible .nm{color:#000;text-shadow:2px 0 var(--blood),-2px 0 #fff}
 .nv:hover .idx,.nv:hover .ext,.nv:focus-visible .idx,.nv:focus-visible .ext{color:#000}
 .nv:hover::after,.nv:focus-visible::after{content:'ERR_0x'attr(data-err)' // REROUTE';position:absolute;right:6px;bottom:4px;font-family:var(--px);font-size:7px;letter-spacing:1px;color:var(--blood)}
 .nv:active{transform:translate(1px,2px) !important}
 
-/* ---- footer strip ---- */
-footer{border-top:1px solid #1c1f22;margin-top:26px;padding:18px 0 40px}
-.foot-grid{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-family:var(--mono);font-size:10px;letter-spacing:1.5px;color:var(--dim);text-transform:uppercase}
+/* ---- footer ---- */
+footer{border-top:1px solid #1c1f22;margin-top:30px;padding:20px 0 44px;background:rgba(5,5,5,.55)}
+.foot-grid{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;font-family:var(--mono);font-size:10px;letter-spacing:1.5px;color:var(--dim);text-transform:uppercase}
 .foot-grid a{color:var(--bone);text-decoration:none}
 .foot-grid a:hover{background:var(--acid);color:#000}
 .foot-grid .r{color:var(--blood)}
+.counter{display:inline-flex;align-items:center;gap:8px;font-family:var(--px);font-size:9px;letter-spacing:1.5px;color:var(--dim)}
+.counter .digits{display:inline-flex;gap:2px}
+.counter .digits i{font-style:normal;font-family:var(--mono);font-weight:600;font-size:12px;color:var(--acid);background:#000;border:1px inset var(--bevel-hi);padding:2px 4px;text-shadow:0 0 6px rgba(214,255,61,.6)}
+.bestviewed{margin-top:14px;text-align:center;font-family:var(--px);font-size:8px;letter-spacing:2px;color:#4d504b;text-transform:uppercase}
 
-/* ---- mobile: dense vertical feed, still broken ---- */
+/* ---- mobile ---- */
 @media(max-width:880px){
   main.wrap{grid-template-columns:1fr;gap:0}
   .tape-v{display:none}
-  nav{grid-template-columns:repeat(2,1fr);gap:8px;margin-top:26px}
+  nav{grid-template-columns:repeat(2,1fr);gap:9px;margin-top:28px}
   .nv:nth-child(n){grid-column:auto;transform:none}
   .nv:nth-child(2){grid-column:1/-1}
   .nv:nth-child(3){transform:rotate(.7deg)}
@@ -147,44 +146,51 @@ footer{border-top:1px solid #1c1f22;margin-top:26px;padding:18px 0 40px}
   .nv:nth-child(7){transform:rotate(.5deg)}
   .nv:nth-child(8){transform:translateX(-5px) rotate(-.4deg)}
   .nv:nth-child(9){grid-column:1/-1;transform:rotate(.6deg)}
-  h1 .off{margin-left:8vw}
-  .role{margin-left:2px}
+  header.wrap{padding-top:30px}
+  .foot-grid{justify-content:center;text-align:center}
 }
 @media (prefers-reduced-motion: reduce){
   *{animation:none !important}
   .crt::before{display:none}
+  .mq-track{animation:none;width:auto}
 }
 </style>
 </head>
 <body>
 
 <header class="wrap">
-  <p class="sysline">SYS.BOOT // <b>SHATTERED STEEL v0.1</b> // ARCHIVE UNIT 210 // SAN ANTONIO TX // <span style="color:var(--blood)">REC MEDIA FOUND: 7</span></p>
-  <h1>Giancarlo<span class="off">Ortiz</span></h1>
+  <p class="sysline"><b>VAMP.SYS 2003</b> // GOTHIC ARCHIVE UNIT 210 // SAN ANTONIO TX // <span class="r">REC MEDIA FOUND: 7</span> // SIGNAL: HOT</p>
+  <h1 class="sr">Giancarlo Ortiz, director and colorist</h1>
+  <img class="wordmark" src="assets/wordmark.png" alt="GIANCARLO ORTIZ in liquid chrome lettering" width="1281" height="405">
   <p class="role"><span class="dead">VIDEO EDITOR</span><span class="now">DIRECTOR</span></p>
+  <hr class="chromerule">
 </header>
+
+<div class="mq" aria-hidden="true"><div class="mq-track">
+  <span>EDIT <b>·</b> COLOR <b>·</b> DIRECTING <b>·</b> SAME-NIGHT DELIVERY <b>·</b> SONY FX6 <b>·</b> CUSTOM DCTL LOOKS <b>·</b> SAN ANTONIO TX <b>·</b> EST. 2023 <b>·</b> EDIT <b>·</b> COLOR <b>·</b> DIRECTING <b>·</b> SAME-NIGHT DELIVERY <b>·</b> SONY FX6 <b>·</b> CUSTOM DCTL LOOKS <b>·</b> SAN ANTONIO TX <b>·</b> EST. 2023 <b>·</b>&nbsp;</span>
+</div></div>
 
 <main class="wrap">
   <div class="tape-v" aria-hidden="true"></div>
 
-  <section class="player" aria-label="Featured film">
+  <section aria-label="Featured film" style="position:relative">
     <img class="slap" id="slap-player" src="assets/tape_diag.png" alt="" aria-hidden="true">
-    <span class="node tl" aria-hidden="true"></span><span class="node tr" aria-hidden="true"></span>
-    <span class="node bl" aria-hidden="true"></span><span class="node br" aria-hidden="true"></span>
-    <div class="glowrim" aria-hidden="true"></div>
-    <div class="hud-top"><span>FEED_01 // VOLUME.MOV</span><span class="err">SIGNAL: HOT</span></div>
-    <div class="screen">
-      <div class="yt"><iframe src="https://www.youtube-nocookie.com/embed/pQ0W-conqwE" title="VOLUME, a short film by Giancarlo Ortiz" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
-      <div class="crt" aria-hidden="true"></div>
+    <div class="ennaria">
+      <span class="node tl" aria-hidden="true"></span><span class="node tr" aria-hidden="true"></span>
+      <span class="node bl" aria-hidden="true"></span><span class="node br" aria-hidden="true"></span>
+      <div class="hud-top"><span>FEED_01 // VOLUME.MOV</span><span class="err">SIGNAL: HOT</span></div>
+      <div class="screen">
+        <div class="yt"><iframe src="https://www.youtube-nocookie.com/embed/pQ0W-conqwE" title="VOLUME, a short film by Giancarlo Ortiz" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+        <div class="crt" aria-hidden="true"></div>
+      </div>
+      <div class="hud-bot"><span>DIR/EDIT/COLOR: <b>G.ORTIZ</b></span><span>RT <b>00:03:10</b> · 24FPS</span><span>★ <b>COURSE DIRECTOR'S AWARD</b></span></div>
     </div>
-    <div class="hud-bot"><span>DIR/EDIT/COLOR: <b>G.ORTIZ</b></span><span>RT <b>00:03:10</b> · 24FPS</span><span>★ <b>COURSE DIRECTOR'S AWARD</b></span></div>
     <img class="slap-inline" src="assets/tape_long.png" alt="" aria-hidden="true" loading="lazy">
-    <p class="cap">NARRATIVE SHORT, FULL SAIL 2026. Wrote it, directed it, cut it, graded it. <b>The archive below routes to the full system.</b></p>
+    <p class="player-cap">NARRATIVE SHORT, FULL SAIL 2026. Wrote it, directed it, cut it, graded it. <b>The archive below routes to the full system.</b></p>
   </section>
 
   <nav aria-label="Site archive">
-    <img class="slap" id="slap-nav" src="assets/tape_stub.png" alt="" aria-hidden="true" loading="lazy">
-    <div class="head">// ARCHIVE <b>INDEX</b> // SELECT NODE</div>
+    <div class="head"><img src="assets/orb.png" alt="" aria-hidden="true">// ARCHIVE <b>INDEX</b> // SELECT NODE</div>
     <a class="nv" href="../index.html#about" data-err="A1"><span class="idx">FILE_01</span><span class="nm">Info</span><span class="ext">OPERATOR PROFILE // WHO IS THIS</span></a>
     <a class="nv" href="../index.html#stills" data-err="B7"><span class="idx">FILE_02</span><span class="nm">Stills</span><span class="ext">GRADED FRAMES // ALAMODOME RUN</span></a>
     <a class="nv" href="../index.html#archive" data-err="C2"><span class="idx">FILE_03</span><span class="nm">Archive</span><span class="ext">SA CURRENT TAPES // SAME NIGHT</span></a>
@@ -196,14 +202,28 @@ footer{border-top:1px solid #1c1f22;margin-top:26px;padding:18px 0 40px}
   </nav>
 </main>
 
-<footer class="wrap">
+<footer>
   <img class="slap-foot" src="assets/tape_long.png" alt="" aria-hidden="true" loading="lazy">
-  <div class="foot-grid">
+  <div class="wrap foot-grid">
     <span>G.ORTIZ // EST. VAMPPSYCH 2023 // <span class="r">FUTURE FILM DIRECTOR</span></span>
+    <span class="counter">YOU ARE VISITOR <span class="digits" id="hits"></span></span>
     <span><a href="../index.html">MAIN SYSTEM</a> · <a href="../dream/">DREAM.ALT</a> · <a href="mailto:carlo72400@gmail.com">OPEN CHANNEL</a></span>
-    <span>PROTOTYPE // NOT THE LIVE FACE // <span class="r">STEEL SHATTERS, WORK DOESN'T</span></span>
   </div>
+  <p class="bestviewed">BEST VIEWED AT 1024x768 · CHROME AND ROSES · STEEL SHATTERS, WORK DOESN'T</p>
 </footer>
 
+<script>
+(function(){
+  var n;
+  try{
+    n=(parseInt(localStorage.getItem('vampsys_hits'),10)||1336)+1;
+    localStorage.setItem('vampsys_hits',n);
+  }catch(_){n=1337;}
+  var el=document.getElementById('hits');
+  String(n).padStart(6,'0').split('').forEach(function(d){
+    var i=document.createElement('i');i.textContent=d;el.appendChild(i);
+  });
+})();
+</script>
 </body>
 </html>
