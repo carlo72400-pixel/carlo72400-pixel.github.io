@@ -221,6 +221,26 @@ dialog img{display:block;width:100%;height:auto}
 .credits span{display:block;color:var(--dim);font-size:13px}
 .credits .r{color:var(--red);font-weight:600}
 
+/* ------- rate card ------- */
+.rate-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin-top:24px}
+.rate{border:1px solid var(--line);background:var(--panel);padding:22px;position:relative;transition:transform .35s var(--spring),border-color .25s}
+.rate:hover{border-color:var(--red);transform:translateY(-6px)}
+.rate .tag{font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--amber);margin-bottom:8px;text-transform:uppercase}
+.rate .nm{font-weight:700;font-size:15px}
+.rate .pr{font-family:'Bebas Neue',Impact,sans-serif;font-size:44px;line-height:1;color:var(--ink);margin:8px 0 2px;letter-spacing:1px}
+.rate .pr span{font-size:16px;color:var(--dim);letter-spacing:1px}
+.rate .mk{font-family:var(--mono);font-size:10px;letter-spacing:1px;color:var(--dim);margin-bottom:12px}
+.rate ul{list-style:none;font-size:13px;color:var(--dim)}
+.rate li{padding:5px 0 5px 14px;position:relative;border-bottom:1px dashed var(--line)}
+.rate li:last-child{border-bottom:0}
+.rate li::before{content:'▸';position:absolute;left:0;color:var(--red);font-size:10px;top:8px}
+.rate .start{position:absolute;top:-9px;right:12px;font-family:var(--mono);font-size:9px;letter-spacing:2px;background:var(--red-deep);color:var(--ink);padding:3px 8px}
+.alacarte{margin-top:26px;border:1px dashed var(--line);padding:18px 22px;display:flex;flex-wrap:wrap;gap:10px 26px}
+.alacarte span{font-family:var(--mono);font-size:11px;letter-spacing:1px;color:var(--dim)}
+.alacarte b{color:var(--ink);font-weight:600}
+.rate-fine{margin-top:18px;font-family:var(--mono);font-size:10px;letter-spacing:1.5px;color:var(--dim)}
+.rate-fine b{color:var(--amber);font-weight:500}
+
 /* ------- footer standby ------- */
 footer{padding:80px 0 60px;border-top:1px solid var(--line);text-align:center}
 footer h2{margin-bottom:18px}
@@ -269,6 +289,7 @@ dialog img{max-height:86vh;object-fit:contain}
     <li><a href="#archive">Archive</a></li>
     <li><a href="#playback">Playback</a></li>
     <li><a href="#feed">Feed</a></li>
+    <li><a href="#rates">Rates</a></li>
     <li><a href="#contact">Standby</a></li>
   </ul>
 </div></nav>
@@ -458,6 +479,98 @@ dialog img{max-height:86vh;object-fit:contain}
 
 
 
+<section id="rates"><div class="wrap rv">
+  <div class="kicker">Rate Card · Student Rates 2026</div>
+  <h2>Student rates, pro pipeline</h2>
+  <p style="color:var(--dim);max-width:680px">I am finishing my B.S. and building a client list, so the rates sit deliberately under market while the work does not. Same FX6, same custom color pipeline, same same-night discipline from my SA Current runs. Market lines below come from current San Antonio pricing research; these numbers climb when the degree does.</p>
+  <div class="rate-grid">
+    <div class="rate vf">
+      <span class="start">START HERE</span>
+      <div class="tag">Events · Flagship</div>
+      <div class="nm">Event Recap</div>
+      <div class="pr">$150</div>
+      <div class="mk">SA MARKET: $500&ndash;700 FOR 2 HRS</div>
+      <ul>
+        <li>Up to 2 hours on site</li>
+        <li>60&ndash;90s recap cut the <b style="color:var(--ink)">same night</b></li>
+        <li>3 vertical cutdowns for TikTok + IG</li>
+        <li>Graded in a custom look</li>
+      </ul>
+    </div>
+    <div class="rate">
+      <div class="tag">Events</div>
+      <div class="nm">Event Full</div>
+      <div class="pr">$250</div>
+      <div class="mk">SA MARKET: $700&ndash;1,000</div>
+      <ul>
+        <li>Up to 4 hours on site</li>
+        <li>Everything in Recap</li>
+        <li>5 vertical cutdowns</li>
+        <li>4K stills set pulled from the footage</li>
+      </ul>
+    </div>
+    <div class="rate">
+      <div class="tag">Social</div>
+      <div class="nm">Content Day</div>
+      <div class="pr">$250</div>
+      <div class="mk">AGENCY RETAINERS: $500&ndash;2,500/MO</div>
+      <ul>
+        <li>One shoot visit at your spot</li>
+        <li>4 reels shot + cut</li>
+        <li>Hooks, captions, platform formatting</li>
+        <li>Ready-to-post files</li>
+      </ul>
+    </div>
+    <div class="rate">
+      <div class="tag">Social · Retainer</div>
+      <div class="nm">Monthly 8</div>
+      <div class="pr">$450<span>/mo</span></div>
+      <div class="mk">AGENCY RETAINERS: $1,000&ndash;2,500/MO</div>
+      <ul>
+        <li>Two shoot visits a month</li>
+        <li>8 reels shot + cut</li>
+        <li>Posting calendar included</li>
+        <li>Priority turnaround</li>
+      </ul>
+    </div>
+    <div class="rate">
+      <div class="tag">Brand</div>
+      <div class="nm">Brand Film</div>
+      <div class="pr">$400</div>
+      <div class="mk">SA MARKET: $1,500&ndash;3,500</div>
+      <ul>
+        <li>Half-day shoot</li>
+        <li>60&ndash;90s brand film</li>
+        <li>Custom DCTL color grade</li>
+        <li>2 vertical cutdowns</li>
+      </ul>
+    </div>
+    <div class="rate">
+      <div class="tag">Artists · Local Rate</div>
+      <div class="nm">Music Video</div>
+      <div class="pr">$350</div>
+      <div class="mk">INDIE MARKET: $1,500+</div>
+      <ul>
+        <li>Half-day shoot, performance + b-roll</li>
+        <li>Graded in custom in-house looks</li>
+        <li>Vertical teaser for the drop</li>
+        <li>I know the scene. Bring the track.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="alacarte">
+    <span>SINGLE REEL <b>$75</b></span>
+    <span>LISTING / SPACE TOUR <b>$125</b></span>
+    <span>EDIT ONLY <b>$25/HR</b></span>
+    <span>COLOR GRADE <b>$30/HR</b></span>
+    <span>EXTRA VERTICAL <b>$40</b></span>
+    <span>EXTRA ON-SITE HOUR <b>$50</b></span>
+    <span>RAW FOOTAGE HANDOFF <b>+$50</b></span>
+    <span>NEXT-DAY RUSH <b>+$50</b></span>
+  </div>
+  <div class="rate-fine">50% DEPOSIT BOOKS THE DATE · NET 15 · FREE TRAVEL INSIDE LOOP 410, $0.50/MI BEYOND · W-9 ON REQUEST · <b>SAME-NIGHT DELIVERY INCLUDED ON EVERY EVENT PACKAGE</b></div>
+</div></section>
+
 <footer id="contact"><div class="wrap rv">
   <div class="standby"><i></i>STANDBY</div>
   <h2>Let's cut something</h2>
@@ -465,14 +578,15 @@ dialog img{max-height:86vh;object-fit:contain}
   <div class="book">
     <div class="book-line">BOOKING: EVENT COVERAGE · SHORT-FORM PACKAGES · EDIT + COLOR · SAME-NIGHT DELIVERY AVAILABLE</div>
     <a class="btn solid" href="mailto:carlo72400@gmail.com?subject=Booking%20request%20%E2%80%94%20%5Bproject%20name%5D&body=Project%3A%0ADate(s)%3A%0ALocation%3A%0AWhat%20you%20need%20(shoot%20%2F%20edit%20%2F%20both)%3A%0ADeliverables%20(runtime%2C%20formats%2C%20platforms)%3A%0ABudget%20range%3A%0ADeadline%3A">Request work</a>
-    <div class="book-fine">Written estimate within 24 hours. Invoices, W-9, and rate sheet available on request.</div>
+    <div class="book-fine">Written estimate within 24 hours. Student rates on the <a href="#rates" style="color:var(--amber)">rate card</a> above; invoices and W-9 on request.</div>
   </div>
   <div class="foot-meta">
     <a href="https://www.tiktok.com/@vamp.psych" target="_blank" rel="noopener">TikTok</a> ·
     <a href="https://www.instagram.com/vamppsych" target="_blank" rel="noopener">Instagram</a> ·
     <a href="https://www.youtube.com/@Vamppsych" target="_blank" rel="noopener">YouTube</a> ·
     <a href="assets/docs/GiancarloOrtiz-Resume-VideoEditor.pdf">Editor resume</a> ·
-    <a href="assets/docs/GiancarloOrtiz-Resume-Content.pdf">Content resume</a>
+    <a href="assets/docs/GiancarloOrtiz-Resume-Content.pdf">Content resume</a> ·
+    <a href="assets/docs/GiancarloOrtiz-RateCard.pdf">Rate card (PDF)</a>
   </div>
   <div class="fine">GIANCARLO ORTIZ · SAN ANTONIO TX · EST. VAMPPSYCH 2023 · <b>end of tape. rewind, or hit record with me.</b></div>
 </div></footer>
