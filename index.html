@@ -163,6 +163,16 @@ dialog{border:1px solid var(--line);background:#000;padding:0;max-width:min(1200
 dialog::backdrop{background:rgba(0,0,0,.88)}
 dialog img{display:block;width:100%;height:auto}
 
+/* ------- grade A/B slider ------- */
+.ab{position:relative;margin-top:36px;border:1px solid var(--line);background:#000;overflow:hidden;aspect-ratio:16/9;cursor:ew-resize;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.ab img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
+.ab .ab-top{clip-path:inset(0 calc(100% - var(--cut,50%)) 0 0)}
+.ab .ab-line{position:absolute;top:0;bottom:0;left:var(--cut,50%);width:2px;background:var(--red);box-shadow:0 0 10px rgba(192,50,63,.7);z-index:4;transform:translateX(-1px);pointer-events:none}
+.ab .ab-grip{position:absolute;top:50%;left:var(--cut,50%);transform:translate(-50%,-50%);z-index:5;width:42px;height:42px;border:1.5px solid rgba(242,237,238,.75);border-radius:50%;background:rgba(10,10,13,.55);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:12px;color:var(--ink);letter-spacing:1px;pointer-events:none}
+.ab .ab-tag{position:absolute;top:12px;z-index:4;font-family:var(--mono);font-size:10px;letter-spacing:1.5px;color:var(--ink);background:rgba(10,10,13,.62);padding:4px 8px;pointer-events:none}
+.ab .ab-tag.a{left:44px}
+.ab .ab-tag.b{right:44px;color:var(--amber)}
+
 /* ------- client tapes ------- */
 .tapes{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:24px;max-width:760px}
 .tape{position:relative;border:1px solid var(--line);background:#000;overflow:hidden;transition:transform .35s var(--spring),border-color .25s}
@@ -365,6 +375,18 @@ dialog img{max-height:86vh;object-fit:contain}
   <h2>Frames from the floor</h2>
   <p style="color:var(--dim)">Pulled and graded from my live stadium coverage. Click to view full.</p>
   <div class="grid" id="gallery"></div>
+
+  <div class="clip-label" style="margin-top:40px"><span><b>GRADE A/B</b> · ALAMODOME FLOOR · ONE FRAME, TWO STATES</span><span class="r">DRAG THE LINE</span></div>
+  <div class="ab vf" id="abwrap" role="slider" aria-label="Color grade before and after comparison, drag to compare" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" tabindex="0">
+    <img src="assets/stills/grade_sludge.jpg" alt="Graded frame in the Editorial Sludge look" loading="lazy">
+    <img class="ab-top" src="assets/stills/grade_source.jpg" alt="Same frame straight off the sensor" loading="lazy">
+    <span class="ab-tag a">SOURCE</span>
+    <span class="ab-tag b">GRADED · EDITORIAL SLUDGE</span>
+    <div class="ab-line"></div>
+    <div class="ab-grip">&lt;&nbsp;&gt;</div>
+    <span class="bk tl"></span><span class="bk tr"></span><span class="bk bl"></span><span class="bk br"></span>
+  </div>
+  <p style="color:var(--dim);font-size:14px;margin-top:10px;max-width:660px">Left of the line is what the sensor saw. Right is the finished grade, an in-house look built as a DCTL and run through my Resolve color pipeline.</p>
 </div></section>
 
 <div class="mq" aria-hidden="true"><div class="mq-track">
@@ -401,7 +423,7 @@ dialog img{max-height:86vh;object-fit:contain}
     <a href="assets/sacurrent/photo_05.jpg" class="sacp"><img src="assets/sacurrent/photo_05.jpg" alt="Top Shelf event photo" loading="lazy"></a>
     <a href="assets/sacurrent/photo_06.jpg" class="sacp"><img src="assets/sacurrent/photo_06.jpg" alt="Top Shelf event photo" loading="lazy"></a>
   </div>
-  <p class="client-credits">FULL ASSIGNMENT LOG: <b>Top Shelf · Beer Festival · Doseum · Revolutionary Wings</b> — photo + video coverage, same-night edit turnaround, organized delivery, posting and captions.</p>
+  <p class="client-credits">FULL ASSIGNMENT LOG: <b>Top Shelf · Beer Festival · Doseum · Revolutionary Wings</b> · photo + video coverage, same-night edit turnaround, organized delivery, posting and captions.</p>
 </div></section>
 
 <section id="playback"><div class="wrap rv">
@@ -412,7 +434,7 @@ dialog img{max-height:86vh;object-fit:contain}
   <div class="clip-label"><span><b>CLIP 001</b> · VOLUME (2026) · NARRATIVE SHORT</span><span class="r">TC 00:03:10</span></div>
   <div class="reel-frame vf">
     <i class="bk tl"></i><i class="bk tr"></i><i class="bk bl"></i><i class="bk br"></i>
-    <div class="yt"><iframe src="https://www.youtube-nocookie.com/embed/pQ0W-conqwE" title="VOLUME — the new kid" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+    <div class="yt"><iframe src="https://www.youtube-nocookie.com/embed/pQ0W-conqwE" title="VOLUME · the new kid" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
   </div>
   <div class="reel-note">WRITER / DIRECTOR / EDITOR: G. ORTIZ · FOUR-ACTOR SHORT · SCRIPTED PER-CLIP COLOR PIPELINE IN RESOLVE · FULL SAIL 2026</div>
 
@@ -507,6 +529,18 @@ dialog img{max-height:86vh;object-fit:contain}
         <li>Everything in Recap</li>
         <li>5 vertical cutdowns</li>
         <li>4K stills set pulled from the footage</li>
+      </ul>
+    </div>
+    <div class="rate">
+      <div class="tag">Personal · Photo</div>
+      <div class="nm">Follow Day</div>
+      <div class="pr">$300</div>
+      <div class="mk">SA MARKET: $800&ndash;2,000 FOR DAY COVERAGE</div>
+      <ul>
+        <li>Up to 6 hours shadowing your day</li>
+        <li>Quince, birthday, proposal, family day</li>
+        <li>Candid photos, composed and graded like film frames, color set + a moody B&amp;W set</li>
+        <li>Full gallery delivered <b style="color:var(--ink)">next morning</b></li>
       </ul>
     </div>
     <div class="rate">
@@ -624,6 +658,22 @@ dialog img{max-height:86vh;object-fit:contain}
   const d=new Date();
   const months=['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
   document.getElementById('datestamp').textContent = months[d.getMonth()]+' '+String(d.getDate()).padStart(2,'0')+' '+d.getFullYear();
+})();
+
+/* ---- grade A/B slider ---- */
+(function(){
+  const ab=document.getElementById('abwrap');
+  if(!ab) return;
+  let cut=50;
+  const apply=()=>{ab.style.setProperty('--cut',cut+'%');ab.setAttribute('aria-valuenow',Math.round(cut));};
+  const fromX=x=>{const r=ab.getBoundingClientRect();cut=Math.max(2,Math.min(98,(x-r.left)/r.width*100));apply();};
+  ab.addEventListener('pointerdown',e=>{ab.setPointerCapture(e.pointerId);fromX(e.clientX);});
+  ab.addEventListener('pointermove',e=>{if(e.buttons)fromX(e.clientX);});
+  ab.addEventListener('keydown',e=>{
+    if(e.key==='ArrowLeft'){cut=Math.max(2,cut-4);apply();e.preventDefault();}
+    if(e.key==='ArrowRight'){cut=Math.min(98,cut+4);apply();e.preventDefault();}
+  });
+  apply();
 })();
 
 /* ---- picture profiles: resize = regrade (tap chip to cycle) ---- */
