@@ -112,8 +112,8 @@ body[data-look="super8"] .hero-vin{opacity:1}
 .osd.crosshair::before{left:50%;top:-8px;bottom:-8px;width:1px;transform:translateX(-50%)}
 .osd.crosshair::after{top:50%;left:-8px;right:-8px;height:1px;transform:translateY(-50%)}
 .hero-mascot{position:absolute;z-index:8;width:120px;filter:drop-shadow(0 8px 16px rgba(20,8,14,.45))}
-.hm-star{top:70px;right:34px;transform:rotate(8deg);animation:bob 3.4s ease-in-out infinite}
-.hm-shooter{bottom:-6px;right:150px;transform:rotate(-5deg)}
+.hm-star{top:64px;right:40px;width:150px;transform:rotate(6deg);animation:bob 4s ease-in-out infinite}
+.hm-charm{top:120px;right:110px;width:74px;transform:rotate(-4deg)}
 @keyframes bob{50%{transform:rotate(8deg) translateY(-8px)}}
 header .bk{width:30px;height:30px;border-color:var(--chrome3);opacity:.6}
 header .bk.tl{top:64px;left:14px}
@@ -147,7 +147,8 @@ h1 .sp{display:inline-block;width:.3em}
 .hint{margin-top:18px;font-family:var(--mono);font-size:11px;letter-spacing:.5px;color:var(--dim)}
 .hint b{color:var(--rose-deep);font-weight:600}
 /* field-kit polaroids */
-.kit-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:26px 20px;margin-top:34px;padding-bottom:10px}
+.kit-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:30px 24px;margin-top:34px;padding-bottom:10px}
+.kitzoom{display:block;cursor:zoom-in}
 .polaroid{position:relative;background:#fff;border-radius:10px;padding:10px 10px 12px;box-shadow:var(--shadow)}
 .polaroid.k1{transform:rotate(-2.4deg)}
 .polaroid.k2{transform:rotate(1.8deg)}
@@ -198,7 +199,8 @@ h1 .sp{display:inline-block;width:.3em}
 .clip-label{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;font-family:var(--mono);font-size:11px;letter-spacing:1.2px;color:var(--dim);margin-bottom:9px}
 .clip-label b{color:var(--ink);font-weight:600}
 .clip-label .r{color:var(--rose-deep)}
-.reel-frame{position:relative;border:34px solid transparent;border-image:url('assets/kawaii/lace_frame.png') 66 round;background:#fff;box-shadow:var(--shadow);transition:transform .4s var(--spring),box-shadow .4s}
+.reel-frame{position:relative;border:36px solid transparent;border-image:url('assets/kawaii/ribbon_frame_clean.png') 235 round;background:#fff;box-shadow:var(--shadow);transition:transform .4s var(--spring),box-shadow .4s}
+.reel-frame::before{content:'';position:absolute;top:-52px;left:50%;transform:translateX(-50%);width:138px;height:78px;z-index:7;background:url('assets/kawaii/ribbon_bow.png') no-repeat center / contain;pointer-events:none}
 .reel-frame:hover{transform:translateY(-6px)}
 
 .reel-frame .yt{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden}
@@ -281,6 +283,13 @@ nav ul a.cur::after{width:100%;background:var(--amber)}
 .sacp:nth-child(5)::before{background-image:url('steel/assets/washi_mint.png');transform:rotate(-40deg)}
 .sacp:nth-child(6)::before{background-image:url('steel/assets/washi_lilac.png');transform:rotate(-36deg)}
 .sacp img{border-radius:12px}
+.blue-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:26px;max-width:1000px}
+.bluep{display:block;overflow:hidden;border:2px solid #fff;border-radius:14px;box-shadow:var(--shadow-sm);transition:transform .35s var(--spring);cursor:zoom-in;aspect-ratio:1/1}
+.bluep.bhero{grid-column:span 2;grid-row:span 2;aspect-ratio:auto}
+.bluep img{width:100%;height:100%;object-fit:cover;transition:transform .45s var(--spring)}
+.bluep:hover{transform:translateY(-5px)}
+.bluep:hover img{transform:scale(1.05)}
+@media(max-width:640px){.blue-grid{grid-template-columns:repeat(2,1fr)}.bluep.bhero{grid-column:span 2;grid-row:span 1}}
 .sacp img{width:100%;height:100%;object-fit:cover;transition:transform .45s var(--spring)}
 .sacp:hover img{transform:scale(1.06)}
 .client-credits{margin-top:18px;font-family:var(--mono);font-size:12px;letter-spacing:.4px;color:var(--dim);max-width:640px}
@@ -403,8 +412,11 @@ nav ul a{padding:8px 2px}
   .logo,h1{animation:none}
 }
 /* section crew mascots: each sticker marks the job that section proves */
-.sec-mascot{position:absolute;width:104px;right:26px;top:-52px;z-index:6;transform:rotate(6deg);filter:drop-shadow(0 8px 14px rgba(180,110,140,.3));pointer-events:none}
+.sec-mascot{position:absolute;width:128px;right:26px;top:-34px;z-index:6;transform:rotate(6deg);filter:drop-shadow(0 8px 14px rgba(180,110,140,.3));pointer-events:none}
 .sec-mascot.flip{right:170px;top:-52px;transform:rotate(-7deg)}
+.sec-mascot.curtain{width:220px;top:4px;right:60px;transform:none;image-rendering:pixelated;opacity:.95}
+#playback .sec-mascot{width:72px;top:-14px;transform:rotate(5deg)}
+footer .sec-mascot{width:120px}
 footer .sec-mascot{top:18px}
 @media(max-width:640px){.sec-mascot{width:64px;right:12px;top:-28px}.sec-mascot.flip{display:none}}
 /* testing hook: ?proof renders fully-revealed state at first paint */
@@ -442,8 +454,8 @@ html.proof header{min-height:860px !important}
   <div class="osd tl">CAM A · FX6 · 4K 24P</div>
   <div class="osd tr">ISO 800 · T2.8<br>WB 3200K</div>
   <div class="osd crosshair" aria-hidden="true"></div>
-  <img class="hero-mascot hm-star" src="assets/kawaii/drawn_star_web.png" alt="" aria-hidden="true">
-  <img class="hero-mascot hm-shooter" src="assets/kawaii/drawn_shooter_web.png" alt="" aria-hidden="true">
+  <img class="hero-mascot hm-star" src="assets/kawaii/ribbon_bow.png" alt="" aria-hidden="true">
+  <img class="hero-mascot hm-charm" src="steel/assets/charm.png" alt="" aria-hidden="true">
   <button class="look-chip" id="lookChip" title="cycle the picture profile">PP&nbsp;<span class="lbl" id="lookName">NIGHT CITY</span>&nbsp;·&nbsp;<span id="lookHint">resize me</span></button>
   <div class="wrap hero-in">
     <div class="kicker">San Antonio TX · Avail SA / Austin / Remote</div>
@@ -483,10 +495,9 @@ html.proof header{min-height:860px !important}
 
   <div class="clip-label" style="margin-top:44px"><span><b>THE FIELD KIT</b> · WHAT THE WORK GETS SHOT ON</span><span class="r">OWNED · NOT RENTED</span></div>
   <div class="kit-row">
-    <div class="polaroid k1"><img class="washi" src="steel/assets/washi_pink.png" alt="" aria-hidden="true"><img class="cam" src="assets/kawaii/kit/kit_fx6.jpg" loading="lazy" alt="Field kit card: Sony FX6 cinema body on the studio desk"><div class="cap"><b>SONY FX6</b> · the rig</div></div>
-    <div class="polaroid k2"><img class="washi" src="steel/assets/washi_mint.png" alt="" aria-hidden="true"><img class="cam" src="assets/kawaii/kit/kit_acepro2.jpg" loading="lazy" alt="Field kit card: Insta360 Ace Pro 2 action camera"><div class="cap"><b>ACE PRO 2</b> · the runner</div></div>
-    <div class="polaroid k3"><img class="washi" src="steel/assets/washi_lilac.png" alt="" aria-hidden="true"><img class="cam" src="assets/kawaii/kit/kit_goultra.jpg" loading="lazy" alt="Field kit card: Insta360 GO Ultra pocket camera"><div class="cap"><b>GO ULTRA</b> · the pocket</div></div>
-    <div class="polaroid k4"><img class="washi" src="steel/assets/washi_pink.png" alt="" aria-hidden="true"><img class="cam" src="assets/kawaii/hero_camera_web.jpg" width="1400" height="1737" loading="lazy" alt="The decoden digicam: chrome 4K compact decorated with original kawaii stickers, pearls and a beaded charm"><span class="rec-badge"><span class="rec-dot"></span>REC</span><div class="cap"><b>DECODEN DIGICAM</b> · the charm</div></div>
+    <div class="polaroid k1"><img class="washi" src="steel/assets/washi_pink.png" alt="" aria-hidden="true"><a class="kitzoom" href="assets/kawaii/kit/kit_fx6_full.jpg"><img class="cam" src="assets/kawaii/kit/kit_fx6_full.jpg" loading="lazy" alt="Field kit card: Sony FX6 cinema body on the studio desk"></a><div class="cap"><b>SONY FX6</b> · the rig · tap to read</div></div>
+    <div class="polaroid k2"><img class="washi" src="steel/assets/washi_mint.png" alt="" aria-hidden="true"><a class="kitzoom" href="assets/kawaii/kit/kit_acepro2_full.jpg"><img class="cam" src="assets/kawaii/kit/kit_acepro2_full.jpg" loading="lazy" alt="Field kit card: Insta360 Ace Pro 2 action camera"></a><div class="cap"><b>ACE PRO 2</b> · the runner · tap to read</div></div>
+    <div class="polaroid k3"><img class="washi" src="steel/assets/washi_lilac.png" alt="" aria-hidden="true"><a class="kitzoom" href="assets/kawaii/kit/kit_goultra_full.jpg"><img class="cam" src="assets/kawaii/kit/kit_goultra_full.jpg" loading="lazy" alt="Field kit card: Insta360 GO Ultra pocket camera"></a><div class="cap"><b>GO ULTRA</b> · the pocket · tap to read</div></div>
   </div>
 
   <div style="height:44px"></div>
@@ -509,7 +520,7 @@ html.proof header{min-height:860px !important}
   </div>
 </div></section>
 
-<section id="stills"><img class="doily" src="assets/kawaii/lace_doily_web.png" alt="" aria-hidden="true"><img class="sec-mascot" src="assets/kawaii/drawn_colorist_web.png" alt="" aria-hidden="true"><div class="wrap rv">
+<section id="stills"><img class="doily" src="assets/kawaii/lace_doily_web.png" alt="" aria-hidden="true"><img class="sec-mascot" src="assets/kawaii/ribbon_bow.png" alt="" aria-hidden="true"><div class="wrap rv">
   <div class="kicker">Photo Mode</div>
   <h2>Frames from the floor</h2>
   <p style="color:var(--dim)">Pulled and graded from my live stadium coverage. Click to view full.</p>
@@ -532,7 +543,7 @@ html.proof header{min-height:860px !important}
   <span>NIGHT CITY <b>·</b> EDITORIAL DREAM <b>·</b> DARKROOM <b>·</b> CHROME <b>·</b> SLEAZE <b>·</b> SUPER 8 <b>·</b> LOOKS BUILT IN-HOUSE <b>·</b> NIGHT CITY <b>·</b> EDITORIAL DREAM <b>·</b> DARKROOM <b>·</b> CHROME <b>·</b> SLEAZE <b>·</b> SUPER 8 <b>·</b> LOOKS BUILT IN-HOUSE <b>·</b>&nbsp;</span>
 </div></div>
 
-<section id="archive" style="border-top:0"><img class="sec-mascot flip" src="assets/kawaii/drawn_editor_web.png" alt="" aria-hidden="true"><div class="wrap rv">
+<section id="archive" style="border-top:0"><img class="sec-mascot flip curtain" src="assets/kawaii/f2u/heartcurtain.png" alt="" aria-hidden="true"><div class="wrap rv">
   <div class="kicker">Archive · Client Tapes</div>
   <h2>On assignment: SA Current</h2>
   <p style="color:var(--dim);max-width:680px">I was the alt-weekly's on-the-ground event unit. Sent solo into events across San Antonio, Riverwalk cocktail nights, beer festivals, emo night, the DoSeum, to shoot both photo and video, cut the coverage the same night, and hand back organized 1080p and 4K delivery packages ready to post. Ran the posting side too: five-plus posts a week across IG and TikTok, a <b style="color:var(--ink)">15% engagement lift</b> in three months.</p>
@@ -574,9 +585,20 @@ html.proof header{min-height:860px !important}
     <a href="assets/kawaii/projects/lit_event.jpg" class="sacp"><img src="assets/kawaii/projects/lit_event.jpg" alt="Event coverage: guest mid-pose under club lighting" loading="lazy"></a>
   </div>
   <p class="client-credits">TWO SESSIONS + ONE NIGHT OUT · my own FX6 lighting package · subjects lit, relit, and graded in-house.</p>
+
+  <div class="clip-label" style="margin-top:40px"><span><b>THE BLUE SESSION</b> · EDITORIAL PORTRAIT SET · ALAMEDA THEATER, SAN ANTONIO</span><span class="r">STYLED · LIT · GRADED</span></div>
+  <div class="blue-grid">
+    <a class="bluep bhero" href="assets/kawaii/blue/blue_hero_alameda.jpg"><img src="assets/kawaii/blue/blue_hero_alameda.jpg" alt="Blue session hero: model with blue-streaked hair and tattoos in front of the Alameda Theater marquee" loading="lazy"></a>
+    <a class="bluep" href="assets/kawaii/blue/blue_swirl.jpg"><img src="assets/kawaii/blue/blue_swirl.jpg" alt="Blue session: lit studio portrait against a blue swirl backdrop" loading="lazy"></a>
+    <a class="bluep" href="assets/kawaii/blue/blue_marquee.jpg"><img src="assets/kawaii/blue/blue_marquee.jpg" alt="Blue session: the Alameda marquee over her shoulder" loading="lazy"></a>
+    <a class="bluep" href="assets/kawaii/blue/blue_night.jpg"><img src="assets/kawaii/blue/blue_night.jpg" alt="Blue session: night exterior in a blue wash" loading="lazy"></a>
+    <a class="bluep" href="assets/kawaii/blue/blue_branches.jpg"><img src="assets/kawaii/blue/blue_branches.jpg" alt="Blue session: dramatic pose under bare branches" loading="lazy"></a>
+    <a class="bluep" href="assets/kawaii/blue/blue_roses.jpg"><img src="assets/kawaii/blue/blue_roses.jpg" alt="Blue session: blue hair against a rose bush" loading="lazy"></a>
+  </div>
+  <p class="client-credits">ONE SUBJECT, FIVE LOOKS · styled editorial session shot across San Antonio · the blue wash is an in-house grade.</p>
 </div></section>
 
-<section id="playback"><img class="sec-mascot" src="assets/kawaii/drawn_director_web.png" alt="" aria-hidden="true"><div class="wrap rv">
+<section id="playback"><img class="sec-mascot" src="steel/assets/charm.png" alt="" aria-hidden="true"><div class="wrap rv">
   <div class="kicker">Playback</div>
   <h2>The work, rolled from the top</h2>
   <p style="color:var(--dim);max-width:640px;margin-bottom:26px">Three clips. The short film I wrote, directed, and edited, plus the two-part behind-the-scenes of how it got made.</p>
@@ -798,7 +820,7 @@ html.proof header{min-height:860px !important}
   <div class="rate-fine">50% DEPOSIT BOOKS THE DATE · NET 15 · FREE TRAVEL INSIDE LOOP 410, $0.50/MI BEYOND · W-9 ON REQUEST · <b>SAME-NIGHT DELIVERY INCLUDED ON EVERY EVENT PACKAGE</b> · COMMERCIAL TIERS INCLUDE 2 REVISION ROUNDS, EXTRAS BILLED</div>
 </div></section>
 
-<footer id="contact"><img class="sec-mascot" src="assets/kawaii/drawn_star_web.png" alt="" aria-hidden="true"><div class="wrap rv">
+<footer id="contact"><img class="sec-mascot" src="assets/kawaii/ribbon_bow.png" alt="" aria-hidden="true"><div class="wrap rv">
   <div class="standby"><i></i>STANDBY</div>
   <h2>Let's cut something</h2>
   <span class="email-wrap"><img class="email-stk s1" src="assets/kawaii/f2u/bow_pink.png" alt="" aria-hidden="true"><img class="email-stk s2" src="assets/kawaii/f2u/bow_blue.png" alt="" aria-hidden="true"><a class="email" id="magnetMail" href="mailto:carlo72400@gmail.com">carlo72400@gmail.com</a></span>
@@ -1099,6 +1121,16 @@ document.querySelectorAll('.rate-grid,#gallery,.tapes,.monitors,.social-row,.sac
     v.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); toggle(); } });
   });
   var lbi = document.getElementById('lightbox-img');
+  var lbx = document.getElementById('lightbox');
+  document.querySelectorAll('.kitzoom, .bluep').forEach(function(a){
+    a.addEventListener('click', function(e){
+      e.preventDefault();
+      lbi.src = a.getAttribute('href');
+      var im = a.querySelector('img');
+      lbi.alt = (im && im.alt) ? im.alt + ' (full size)' : 'Full-size image';
+      lbx.showModal();
+    });
+  });
   document.querySelectorAll('#gallery a, .sacp').forEach(function(a){
     a.addEventListener('click', function(){
       var im = a.querySelector('img');
