@@ -62,7 +62,7 @@ footer h2::after{margin:10px auto 0}
 @media(max-width:760px){.doily{width:140px;right:-40px}}
 
 /* ------- soft camera chrome ------- */
-.datestamp{position:fixed;right:16px;bottom:12px;z-index:95;font-family:var(--mono);font-size:12px;letter-spacing:2px;color:var(--amber);text-shadow:0 1px 2px rgba(255,255,255,.7);pointer-events:none}
+.datestamp{position:fixed;left:16px;bottom:12px;z-index:95;font-family:var(--mono);font-size:12px;letter-spacing:2px;color:var(--amber);text-shadow:0 1px 2px rgba(255,255,255,.7);pointer-events:none}
 .rec-chip{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--ink)}
 .rec-dot{width:9px;height:9px;border-radius:50%;background:var(--rose);box-shadow:0 0 8px var(--rose);animation:recblink 1.2s steps(1) infinite}
 @keyframes recblink{50%{opacity:.15}}
@@ -183,7 +183,6 @@ h1 .sp{display:inline-block;width:.3em}
   .rec-chip{display:none}
 }
 @media(max-width:480px){
-  nav ul li:nth-child(5),nav ul li:nth-child(6){display:none}
   .logo{font-size:19px}
 }
 
@@ -403,7 +402,7 @@ nav ul a{padding:8px 2px}
   .sac-photos{grid-template-columns:repeat(2,1fr)}
   .monitors,.tapes{grid-template-columns:1fr}
   section{padding:54px 0}
-  .datestamp{font-size:10px;right:10px;bottom:8px}
+  .datestamp{font-size:10px;left:10px;bottom:8px}
 }
 @media (prefers-reduced-motion: reduce){
   html{scroll-behavior:auto}
@@ -423,6 +422,50 @@ footer .sec-mascot{top:18px}
 /* testing hook: ?proof renders fully-revealed state at first paint */
 html.proof .rv,html.proof .stag>*{opacity:1 !important;transform:none !important;transition:none !important}
 html.proof header{min-height:860px !important}
+
+/* ---- mobile swipe-chip nav (all sections visible + jumpable) ---- */
+@media(max-width:760px){
+  nav .wrap{flex-wrap:wrap;height:auto;min-height:52px;padding-top:8px;padding-bottom:6px;gap:6px 12px}
+  .nav-tc{order:1}
+  nav ul{order:3;width:100%;flex-wrap:nowrap;overflow-x:auto;gap:8px;padding:2px 2px 4px;scrollbar-width:none;-webkit-overflow-scrolling:touch;
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 16px,#000 calc(100% - 16px),transparent);mask-image:linear-gradient(90deg,transparent,#000 16px,#000 calc(100% - 16px),transparent)}
+  nav ul::-webkit-scrollbar{display:none}
+  nav ul li{flex:0 0 auto}
+  nav ul a{display:block;font-size:11px;letter-spacing:1px;padding:8px 14px;background:#fff;border:1.5px solid var(--line2);border-radius:999px;color:var(--ink)}
+  nav ul a::after{display:none}
+  nav ul a.cur{background:var(--rose);border-color:var(--rose);color:#fff}
+}
+
+/* ---- floating rates + share buttons ---- */
+.fab-stack{position:fixed;right:15px;bottom:15px;z-index:70;display:flex;flex-direction:column;gap:10px;align-items:flex-end}
+.fab{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:1.5px;padding:12px 18px;border-radius:999px;border:0;cursor:pointer;text-decoration:none;line-height:1;box-shadow:0 8px 22px -6px rgba(214,120,155,.6);transition:transform .3s var(--spring),box-shadow .3s}
+.fab:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 12px 26px -6px rgba(214,120,155,.7)}
+.fab-rates{background:#fff;color:var(--rose-deep);border:1.5px solid var(--rose)}
+.fab-rates::before{content:'\2661 '}
+.fab-share{background:var(--rose);color:#fff}
+.fab-share::before{content:'\25C9 '}
+@media(max-width:560px){.fab{font-size:10px;padding:11px 15px}}
+@media print{.fab-stack{display:none}}
+
+/* ---- share sheet ---- */
+#share{width:min(380px,92vw);max-width:min(380px,92vw);height:auto;max-height:90vh;padding:22px 20px 20px;background:linear-gradient(180deg,#ffffff,#fdf4f8);border:2px solid #fff;border-radius:22px;overflow-y:auto;text-align:center}
+#share::backdrop{background:rgba(120,80,100,.5);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+.sheet-x{position:absolute;top:10px;right:12px;width:30px;height:30px;border:0;border-radius:50%;background:var(--panel2);color:var(--dim);font-size:19px;cursor:pointer;line-height:26px;z-index:2}
+.sheet-kick{font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--rose-deep);margin-bottom:12px;font-weight:600}
+.sheet-qr{display:block;position:relative;border-radius:16px;overflow:hidden;box-shadow:var(--shadow-sm);cursor:zoom-in}
+.sheet-qr img{width:100%;height:auto;display:block;border-radius:16px}
+.sheet-qr-tap{position:absolute;top:9px;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:9px;letter-spacing:1px;color:#fff;background:rgba(90,43,62,.72);padding:4px 11px;border-radius:999px;pointer-events:none}
+.sheet-label{font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--dim);text-align:left;margin:17px 0 8px;font-weight:600}
+.sheet-socials{display:flex;flex-direction:column;gap:8px}
+.sheet-socials a{display:flex;justify-content:space-between;align-items:center;text-decoration:none;font-size:13px;color:var(--dim);background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:11px 14px;transition:border-color .2s,transform .2s}
+.sheet-socials a b{color:var(--ink);font-weight:700}
+.sheet-socials a:hover{border-color:var(--rose);transform:translateX(2px)}
+.sheet-socials a::after{content:'\2197';color:var(--rose-deep);font-weight:700}
+.sheet-rates{display:flex;justify-content:space-between;align-items:center;text-decoration:none;font-size:13px;background:var(--rose);color:#fff;border-radius:12px;padding:13px 15px;font-weight:600}
+.sheet-rates b{color:#fff}
+.sheet-rates span{font-size:17px}
+.sheet-copy{margin-top:14px;width:100%;font-family:var(--mono);font-size:11px;letter-spacing:1px;padding:11px;border:1.5px dashed var(--line2);border-radius:12px;background:#fff;color:var(--dim);cursor:pointer;transition:color .2s,border-color .2s}
+.sheet-copy.done{color:#3a9c6a;border-color:#b6e3cf}
 </style>
 </head>
 <body data-look="night-city">
@@ -1148,6 +1191,46 @@ document.querySelectorAll('.rate-grid,#gallery,.tapes,.monitors,.social-row,.sac
       var im = a.querySelector('img');
       lbi.alt = (im && im.alt) ? im.alt + ' (full size)' : 'Full-size photo';
     });
+  });
+})();
+</script>
+<div class="fab-stack">
+  <a class="fab fab-rates" href="#rates" aria-label="Jump to student rates">RATES</a>
+  <button class="fab fab-share" id="shareBtn" aria-haspopup="dialog" aria-label="Share this page">SHARE</button>
+</div>
+<dialog id="share" aria-label="Share and follow Giancarlo Ortiz">
+  <button class="sheet-x" id="shareX" aria-label="Close">×</button>
+  <div class="sheet-kick">SCAN · FOLLOW · BOOK</div>
+  <a class="sheet-qr" id="shareQr" href="assets/kawaii/qr_sticker.jpg" aria-label="Enlarge the QR code to scan">
+    <img src="assets/kawaii/qr_sticker.jpg" alt="QR code shown as the screen of a kawaii-decorated camera; scan to open Giancarlo Ortiz's portfolio" loading="lazy">
+    <span class="sheet-qr-tap">tap to enlarge</span>
+  </a>
+  <div class="sheet-label">FOLLOW</div>
+  <div class="sheet-socials">
+    <a href="https://www.tiktok.com/@vamp.psych" target="_blank" rel="noopener"><span><b>TikTok</b> @vamp.psych</span></a>
+    <a href="https://www.instagram.com/vamppsych" target="_blank" rel="noopener"><span><b>Instagram</b> @vamppsych</span></a>
+    <a href="https://www.youtube.com/@Vamppsych" target="_blank" rel="noopener"><span><b>YouTube</b> @Vamppsych</span></a>
+  </div>
+  <div class="sheet-label">RATES</div>
+  <a class="sheet-rates" href="#rates" id="shareRates">Student rates from <b>$150</b> <span>→</span></a>
+  <button class="sheet-copy" id="shareCopy">Copy site link</button>
+</dialog>
+<script>
+(function(){
+  var sh=document.getElementById('share'), open=document.getElementById('shareBtn');
+  if(!sh||!open) return;
+  open.addEventListener('click',function(){ sh.showModal(); });
+  document.getElementById('shareX').addEventListener('click',function(){ sh.close(); });
+  sh.addEventListener('click',function(e){ if(e.target===sh) sh.close(); });
+  var qr=document.getElementById('shareQr');
+  var lbi=document.getElementById('lightbox-img'), lbx=document.getElementById('lightbox');
+  qr.addEventListener('click',function(e){ e.preventDefault(); lbi.src=qr.getAttribute('href'); lbi.alt='QR code, scan to open the portfolio'; sh.close(); lbx.showModal(); });
+  document.getElementById('shareRates').addEventListener('click',function(){ sh.close(); });
+  var cp=document.getElementById('shareCopy'), URL='https://carlo72400-pixel.github.io/';
+  cp.addEventListener('click',function(){
+    function ok(){ cp.textContent='Link copied ♥'; cp.classList.add('done'); }
+    if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(URL).then(ok,fb); } else fb();
+    function fb(){ var t=document.createElement('textarea'); t.value=URL; t.style.position='fixed'; t.style.opacity='0'; document.body.appendChild(t); t.focus(); t.select(); try{document.execCommand('copy'); ok();}catch(e){ cp.textContent=URL; } t.remove(); }
   });
 })();
 </script>
