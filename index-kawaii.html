@@ -49,13 +49,19 @@ h2{font-family:var(--disp);font-size:clamp(30px,4.4vw,46px);font-weight:560;font
 .kicker::before{content:'❀ '}
 .kicker::after{content:' ❀'}
 section{padding:74px 0 68px;position:relative}
-section::before{content:'';position:absolute;top:-2px;left:0;right:0;height:30px;
-  background:url('assets/kawaii/lace_trim_web.png') repeat-x center top / auto 30px;opacity:.85;pointer-events:none}
+section::before{content:'';position:absolute;top:-4px;left:0;right:0;height:58px;
+  background:url('assets/kawaii/lace_trim_web.png') repeat-x center top / auto 58px;pointer-events:none;
+  filter:drop-shadow(0 6px 8px rgba(214,120,155,.18))}
 #about::before{display:none}
+section .wrap>h2::after{content:'';display:block;width:210px;height:15px;margin-top:10px;
+  background:url('assets/kawaii/f2u/pearlhearts2.png') repeat-x left center / auto 15px;image-rendering:pixelated}
+footer h2::after{margin:10px auto 0}
+.pxchain{display:block;width:100%;height:20px;margin:34px 0 6px;
+  background:url('assets/kawaii/f2u/whitebowhearts.png') repeat-x center / auto 18px;image-rendering:pixelated}
+.doily{position:absolute;top:26px;right:-60px;width:230px;opacity:.9;transform:rotate(180deg);pointer-events:none}
+@media(max-width:760px){.doily{width:140px;right:-40px}}
 
 /* ------- soft camera chrome ------- */
-.ccd{position:fixed;inset:0;pointer-events:none;z-index:90;opacity:.28;
-  background-image:radial-gradient(rgba(255,255,255,.55) 1px, transparent 1px);background-size:4px 4px}
 .datestamp{position:fixed;right:16px;bottom:12px;z-index:95;font-family:var(--mono);font-size:12px;letter-spacing:2px;color:var(--amber);text-shadow:0 1px 2px rgba(255,255,255,.7);pointer-events:none}
 .rec-chip{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--ink)}
 .rec-dot{width:9px;height:9px;border-radius:50%;background:var(--rose);box-shadow:0 0 8px var(--rose);animation:recblink 1.2s steps(1) infinite}
@@ -90,13 +96,25 @@ nav ul a:hover{color:var(--ink)}
 nav ul a:hover::after{width:100%}
 
 /* ------- hero ------- */
-header{position:relative;min-height:90vh;min-height:90svh;display:flex;align-items:center;overflow:hidden;padding:70px 0 40px}
-.hero-bg{position:absolute;inset:0;background:
-   radial-gradient(700px 500px at 78% 40%, #fce1ec 0%, transparent 60%),
-   radial-gradient(600px 500px at 20% 70%, #e7eefc 0%, transparent 55%);pointer-events:none}
-.hero-sparkle{position:absolute;inset:0;pointer-events:none;opacity:.5;
-  background-image:radial-gradient(rgba(255,255,255,.9) 1px,transparent 1.6px),radial-gradient(rgba(255,255,255,.7) 1px,transparent 1.6px);
-  background-size:38px 38px,64px 64px;background-position:0 0,20px 30px}
+header{position:relative;min-height:88vh;min-height:88svh;display:flex;align-items:flex-end;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:url('assets/hero.jpg') center 32%/cover no-repeat;transition:filter .55s ease}
+.hero-vin{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .55s ease;background:radial-gradient(ellipse at center,transparent 52%,rgba(0,0,0,.65) 100%)}
+.hero-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,10,16,.5) 0%,rgba(20,10,16,.18) 45%,rgba(24,12,19,.9) 100%)}
+body[data-look="night-city"] .hero-bg{filter:saturate(1.4) contrast(1.08) hue-rotate(-8deg)}
+body[data-look="editorial-dream"] .hero-bg{filter:saturate(.5) contrast(1.14) brightness(.9)}
+body[data-look="darkroom"] .hero-bg{filter:grayscale(1) contrast(1.3) brightness(.96)}
+body[data-look="chrome"] .hero-bg{filter:saturate(.32) contrast(1.2) brightness(1.06)}
+body[data-look="sleaze"] .hero-bg{filter:saturate(1.55) sepia(.22) hue-rotate(-14deg) contrast(1.04)}
+body[data-look="super8"] .hero-bg{filter:sepia(.45) saturate(1.2) contrast(.94) brightness(1.06)}
+body[data-look="super8"] .hero-vin{opacity:1}
+.osd.crosshair{top:44%;left:50%;transform:translate(-50%,-50%);width:56px;height:56px;border:1.5px solid rgba(255,240,247,.4);pointer-events:none}
+.osd.crosshair::before,.osd.crosshair::after{content:'';position:absolute;background:rgba(255,240,247,.4)}
+.osd.crosshair::before{left:50%;top:-8px;bottom:-8px;width:1px;transform:translateX(-50%)}
+.osd.crosshair::after{top:50%;left:-8px;right:-8px;height:1px;transform:translateY(-50%)}
+.hero-mascot{position:absolute;z-index:8;width:120px;filter:drop-shadow(0 8px 16px rgba(20,8,14,.45))}
+.hm-star{top:70px;right:34px;transform:rotate(8deg);animation:bob 3.4s ease-in-out infinite}
+.hm-shooter{bottom:-6px;right:150px;transform:rotate(-5deg)}
+@keyframes bob{50%{transform:rotate(8deg) translateY(-8px)}}
 header .bk{width:30px;height:30px;border-color:var(--chrome3);opacity:.6}
 header .bk.tl{top:64px;left:14px}
 header .bk.tr{top:64px;right:14px}
@@ -105,8 +123,14 @@ header .bk.br{bottom:14px;right:14px}
 .osd{position:absolute;z-index:6;font-family:var(--mono);font-size:11px;letter-spacing:1.4px;color:var(--dim)}
 .osd.tl{top:72px;left:24px}
 .osd.tr{top:72px;right:24px;text-align:right}
-.hero-in{position:relative;z-index:7;width:100%}
-.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:34px;align-items:center}
+.hero-in{position:relative;z-index:7;width:100%;padding-bottom:60px}
+header .kicker{color:#ffd3e1}
+header .kicker::before,header .kicker::after{color:#ffd3e1}
+.hero-sub{color:#efe2ea !important;text-shadow:0 1px 10px rgba(20,8,14,.75)}
+.hero-sub b{color:#fff !important}
+header .hint{color:#e8d5e0}
+header .hint b{color:#ffb9cd}
+header .osd{color:#f7eef4;text-shadow:0 1px 3px rgba(0,0,0,.8)}
 h1{font-family:var(--disp);font-size:clamp(52px,8.4vw,104px);font-weight:600;line-height:.94;letter-spacing:0;font-variation-settings:'SOFT' 50,'WONK' 1,'opsz' 144;
   background:linear-gradient(96deg,#e87ea0 0%,#c9a7e6 30%,#9fc6ee 55%,#a9e0c8 78%,#f0c48f 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;background-size:200% auto;animation:chrome 11s linear infinite}
 h1 .l{display:inline-block;transition:-webkit-text-fill-color .3s ease}
@@ -122,29 +146,23 @@ h1 .sp{display:inline-block;width:.3em}
 .btn.ghost:hover{background:#fff6f9}
 .hint{margin-top:18px;font-family:var(--mono);font-size:11px;letter-spacing:.5px;color:var(--dim)}
 .hint b{color:var(--rose-deep);font-weight:600}
-/* hero camera object */
-.hero-cam-wrap{position:relative;padding:6px}
-.hero-cam{width:100%;height:auto;display:block;border-radius:22px;box-shadow:var(--shadow);transition:filter .55s ease}
-body[data-look="night-city"] .hero-cam{filter:saturate(1.15) contrast(1.03)}
-body[data-look="editorial-dream"] .hero-cam{filter:saturate(.62) contrast(1.08) brightness(1.02)}
-body[data-look="darkroom"] .hero-cam{filter:grayscale(1) contrast(1.12)}
-body[data-look="chrome"] .hero-cam{filter:saturate(.5) contrast(1.06) brightness(1.06)}
-body[data-look="sleaze"] .hero-cam{filter:saturate(1.35) sepia(.16) hue-rotate(-8deg)}
-body[data-look="super8"] .hero-cam{filter:sepia(.34) saturate(1.2) contrast(.98) brightness(1.05)}
-.mascot{position:absolute;width:26%;filter:drop-shadow(0 8px 14px rgba(180,110,140,.32));z-index:6;pointer-events:none}
-.m-shoot{bottom:-14px;left:-20px;transform:rotate(-8deg)}
-.m-star{top:-18px;right:6px;width:15%;animation:bob 3.4s ease-in-out infinite}
-@keyframes bob{50%{transform:translateY(-8px) rotate(6deg)}}
-.rec-badge{position:absolute;top:16px;left:16px;z-index:7;display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--rose-deep);background:rgba(255,255,255,.82);padding:5px 10px;border-radius:999px;box-shadow:var(--shadow-sm)}
+/* field-kit polaroid (camera DNA lives here now) */
+.polaroid{position:relative;margin-top:20px;background:#fff;border-radius:14px;padding:12px 12px 14px;box-shadow:var(--shadow);transform:rotate(-2.5deg);max-width:300px}
+.polaroid img.cam{width:100%;height:auto;display:block;border-radius:8px}
+.polaroid .washi{position:absolute;top:-16px;left:50%;transform:translateX(-50%) rotate(-4deg);width:130px;z-index:3;opacity:.94}
+.polaroid .cap{font-family:var(--mono);font-size:10px;letter-spacing:1.4px;color:var(--dim);text-align:center;margin-top:9px}
+.polaroid .cap b{color:var(--rose-deep)}
+.rec-badge{position:absolute;top:20px;left:20px;z-index:2;display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--rose-deep);background:rgba(255,255,255,.85);padding:5px 10px;border-radius:999px;box-shadow:var(--shadow-sm)}
 .look-chip{position:absolute;right:24px;bottom:34px;z-index:8;font-family:var(--mono);font-size:11px;letter-spacing:1px;color:var(--ink);background:rgba(255,255,255,.86);border:1.5px solid var(--line2);border-radius:999px;padding:9px 15px;cursor:pointer;user-select:none;transition:transform .3s var(--spring),border-color .2s,box-shadow .3s}
 .look-chip:hover{transform:translateY(-3px) rotate(-1deg);border-color:var(--rose);box-shadow:var(--shadow-sm)}
 .look-chip .lbl{color:var(--rose-deep);font-weight:700}
 @media(max-width:860px){
-  .hero-grid{grid-template-columns:1fr;gap:20px}
-  .hero-cam-wrap{order:-1;max-width:440px;margin:0 auto}
-  .hero-in{padding-bottom:84px}
+  .hero-in{padding-bottom:104px}
   .look-chip{right:auto;left:24px;bottom:14px}
-  .osd{display:none}
+  .osd.tr,.osd.crosshair{display:none}
+  .hero-mascot{width:84px}
+  .hm-star{top:62px;right:14px}
+  .hm-shooter{right:14px;bottom:-4px}
 }
 @media(max-width:760px){
   nav ul{gap:10px}
@@ -176,6 +194,8 @@ body[data-look="super8"] .hero-cam{filter:sepia(.34) saturate(1.2) contrast(.98)
 .clip-label .r{color:var(--rose-deep)}
 .reel-frame{position:relative;border:2px solid #fff;border-radius:20px;background:#fff;box-shadow:var(--shadow);overflow:hidden;transition:transform .4s var(--spring),box-shadow .4s}
 .reel-frame:hover{transform:translateY(-6px)}
+.reel-frame::after{content:'';position:absolute;top:0;left:10px;right:10px;height:26px;z-index:6;
+  background:url('assets/kawaii/f2u/hangingheartlace.png') repeat-x top center / auto 26px;image-rendering:pixelated;pointer-events:none;opacity:.95}
 .reel-frame .yt{position:relative;width:100%;aspect-ratio:16/9;border-radius:16px;overflow:hidden}
 .reel-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 .reel-frame .bk{border-color:#f2b8ce}
@@ -211,6 +231,8 @@ dialog img{display:block;width:100%;height:auto;max-height:86vh;object-fit:conta
 .ab .ab-tag.a{left:14px}
 .ab .ab-tag.b{right:14px;color:var(--butter)}
 .ab .bk{border-color:rgba(255,255,255,.8)}
+.ab::after{content:'';position:absolute;top:0;left:8px;right:8px;height:24px;z-index:6;
+  background:url('assets/kawaii/f2u/hangingheartlace.png') repeat-x top center / auto 24px;image-rendering:pixelated;pointer-events:none;opacity:.95}
 .rv.in .ab-grip{animation:nudge 1.1s .7s 2}
 @keyframes nudge{50%{transform:translate(-50%,-50%) scale(1.2)}}
 
@@ -246,6 +268,14 @@ nav ul a.cur::after{width:100%;background:var(--amber)}
 .sac-photos{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:12px;max-width:960px}
 .sacp{display:block;aspect-ratio:4/5;overflow:hidden;border:2px solid #fff;border-radius:14px;box-shadow:var(--shadow-sm);transition:transform .35s var(--spring)}
 .sacp:hover{transform:translateY(-5px)}
+.sacp{position:relative;overflow:visible}
+.sacp::before{content:'';position:absolute;top:-12px;left:-14px;width:84px;height:34px;z-index:3;
+  background:url('steel/assets/washi_pink.png') no-repeat center / contain;transform:rotate(-38deg);opacity:.92;pointer-events:none}
+.sacp:nth-child(2)::before{background-image:url('steel/assets/washi_mint.png');transform:rotate(-42deg)}
+.sacp:nth-child(3)::before{background-image:url('steel/assets/washi_lilac.png');transform:rotate(-35deg)}
+.sacp:nth-child(5)::before{background-image:url('steel/assets/washi_mint.png');transform:rotate(-40deg)}
+.sacp:nth-child(6)::before{background-image:url('steel/assets/washi_lilac.png');transform:rotate(-36deg)}
+.sacp img{border-radius:12px}
 .sacp img{width:100%;height:100%;object-fit:cover;transition:transform .45s var(--spring)}
 .sacp:hover img{transform:scale(1.06)}
 .client-credits{margin-top:18px;font-family:var(--mono);font-size:12px;letter-spacing:.4px;color:var(--dim);max-width:640px}
@@ -275,6 +305,9 @@ nav ul a.cur::after{width:100%;background:var(--amber)}
 .social-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:24px}
 .social-card{border:2px solid #fff;border-radius:18px;background:var(--panel);padding:24px;text-decoration:none;box-shadow:var(--shadow-sm);transition:transform .35s var(--spring)}
 .social-card:hover{transform:translateY(-6px)}
+.social-card{position:relative}
+.social-card::after{content:'✦';position:absolute;top:10px;right:14px;color:var(--lilac);font-size:14px;opacity:0;transition:opacity .25s,transform .4s var(--spring)}
+.social-card:hover::after{opacity:1;transform:rotate(40deg) scale(1.3)}
 .social-card .h{font-weight:700;font-size:15px}
 .social-card .h span{color:var(--rose)}
 .social-card .s{font-size:13px;color:var(--dim);margin-top:4px}
@@ -298,6 +331,12 @@ nav ul a.cur::after{width:100%;background:var(--amber)}
 .rate-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin-top:24px}
 .rate{border:2px solid #fff;border-radius:18px;background:var(--panel);padding:22px;position:relative;box-shadow:var(--shadow-sm);transition:transform .35s var(--spring)}
 .rate:hover{transform:translateY(-6px)}
+.rate::after{content:'';position:absolute;top:-9px;left:18px;width:46px;height:18px;
+  background:url('assets/kawaii/f2u/bow_pink.png') no-repeat center / contain;image-rendering:pixelated;transform:rotate(-6deg)}
+.rate:nth-child(2n)::after{background-image:url('assets/kawaii/f2u/bow_blue.png');transform:rotate(5deg);width:34px;height:20px}
+.rate:nth-child(3n)::after{background-image:url('assets/kawaii/f2u/bow_lilac.png');transform:rotate(-4deg)}
+.rate::before{content:'✦';position:absolute;top:10px;right:14px;color:var(--pink);font-size:15px;opacity:0;transition:opacity .25s,transform .4s var(--spring)}
+.rate:hover::before{opacity:1;transform:rotate(40deg) scale(1.25)}
 .rate .tag{font-family:var(--mono);font-size:10px;letter-spacing:1.5px;color:#7e6da1;margin-bottom:8px;text-transform:uppercase;font-weight:600}
 .rate .nm{font-weight:700;font-size:15px}
 .rate .pr{font-family:var(--disp);font-size:42px;font-weight:600;font-variation-settings:'SOFT' 40;line-height:1;color:var(--rose-deep);margin:8px 0 2px}
@@ -321,6 +360,10 @@ footer h2{margin-bottom:18px}
 .standby i{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--mint);box-shadow:0 0 8px var(--mint);margin-right:8px;animation:recblink 2s steps(1) infinite;vertical-align:middle}
 .email{display:inline-block;font-family:var(--disp);font-weight:600;letter-spacing:.3px;font-size:clamp(22px,3.6vw,36px);color:var(--rose-deep);text-decoration:none;border:2px solid var(--rose);border-radius:999px;padding:12px 34px;background:#fff;transition:background .25s,color .25s,transform .1s ease-out}
 .email:hover{background:var(--rose);color:#fff}
+.email-wrap{position:relative;display:inline-block}
+.email-stk{position:absolute;image-rendering:pixelated;z-index:3;pointer-events:none}
+.email-stk.s1{top:-14px;left:-18px;width:52px;transform:rotate(-14deg)}
+.email-stk.s2{bottom:-12px;right:-20px;width:40px;transform:rotate(12deg)}
 .book{margin-top:30px;padding-top:26px;border-top:2px dashed var(--line2)}
 .book-line{font-family:var(--mono);font-size:10px;letter-spacing:1.5px;color:var(--amber);margin-bottom:16px}
 .book-fine{margin-top:12px;font-family:var(--mono);font-size:11px;color:var(--dim);letter-spacing:.3px}
@@ -347,7 +390,7 @@ nav ul a{padding:8px 2px}
   .logo,h1{animation:none}
 }
 /* section crew mascots: each sticker marks the job that section proves */
-.sec-mascot{position:absolute;width:96px;right:26px;top:-40px;z-index:6;transform:rotate(6deg);filter:drop-shadow(0 8px 14px rgba(180,110,140,.3));pointer-events:none}
+.sec-mascot{position:absolute;width:104px;right:26px;top:-52px;z-index:6;transform:rotate(6deg);filter:drop-shadow(0 8px 14px rgba(180,110,140,.3));pointer-events:none}
 .sec-mascot.flip{right:auto;left:26px;top:8px;transform:rotate(-7deg)}
 footer .sec-mascot{top:18px}
 @media(max-width:640px){.sec-mascot{width:64px;right:12px;top:-28px}.sec-mascot.flip{display:none}}
@@ -357,7 +400,6 @@ html.proof header{min-height:860px !important}
 </style>
 </head>
 <body data-look="night-city">
-<div class="ccd" aria-hidden="true"></div>
 <div class="datestamp" id="datestamp" aria-hidden="true"></div>
 <div class="scrollbar" id="scrollbar" aria-hidden="true"></div>
 <div id="af-cursor" aria-hidden="true"><i></i><i></i><i></i><i></i><span class="st">AF LOCK</span></div>
@@ -381,31 +423,25 @@ html.proof header{min-height:860px !important}
 
 <header id="top" class="vf">
   <div class="hero-bg"></div>
-  <div class="hero-sparkle"></div>
+  <div class="hero-vin"></div>
+  <div class="hero-shade"></div>
   <i class="bk tl"></i><i class="bk tr"></i><i class="bk bl"></i><i class="bk br"></i>
-  <div class="osd tl">CAM A · CHROME DIGICAM · 4K</div>
-  <div class="osd tr">ISO 200 · f/3.2<br>WB 5600K</div>
+  <div class="osd tl">CAM A · FX6 · 4K 24P</div>
+  <div class="osd tr">ISO 800 · T2.8<br>WB 3200K</div>
+  <div class="osd crosshair" aria-hidden="true"></div>
+  <img class="hero-mascot hm-star" src="assets/kawaii/punk_star_web.png" alt="" aria-hidden="true">
+  <img class="hero-mascot hm-shooter" src="assets/kawaii/punk_shooter_web.png" alt="" aria-hidden="true">
   <button class="look-chip" id="lookChip" title="cycle the picture profile">PP&nbsp;<span class="lbl" id="lookName">NIGHT CITY</span>&nbsp;·&nbsp;<span id="lookHint">resize me</span></button>
   <div class="wrap hero-in">
-    <div class="hero-grid">
-      <div class="hero-copy">
-        <div class="kicker">San Antonio TX · Avail SA / Austin / Remote</div>
-        <h1 id="heroName" aria-label="Giancarlo Ortiz">Giancarlo Ortiz</h1>
-        <p class="hero-sub"><b>Video editor, colorist, and director.</b> Short-form specialist behind the brand Vamppsych. You're looking through my viewfinder. I write, direct, shoot, cut, grade, and design end to end.</p>
-        <div class="btns">
-          <a class="btn solid" href="#playback">Roll playback</a>
-          <a class="btn ghost" href="assets/docs/GiancarloOrtiz-Resume-VideoEditor.pdf">Resume (PDF)</a>
-          <a class="btn ghost" href="#contact">Contact</a>
-        </div>
-        <div class="hint" id="ppHint">psst. <b>drag the window edge</b> and the picture profile regrades. or hit the PP chip.</div>
-      </div>
-      <div class="hero-cam-wrap vf">
-        <img class="hero-cam" src="assets/kawaii/hero_camera_web.jpg" width="1400" height="1737" fetchpriority="high" decoding="async" alt="Giancarlo's chrome 4K camera, decorated kawaii decoden style, on white lace">
-        <span class="rec-badge"><span class="rec-dot"></span>REC</span>
-        <img class="mascot m-shoot" src="assets/kawaii/mascot_shooter_web.png" alt="" aria-hidden="true">
-        <img class="mascot m-star" src="assets/kawaii/mascot_star_web.png" alt="" aria-hidden="true">
-      </div>
+    <div class="kicker">San Antonio TX · Avail SA / Austin / Remote</div>
+    <h1 id="heroName" aria-label="Giancarlo Ortiz">Giancarlo Ortiz</h1>
+    <p class="hero-sub"><b>Video editor, colorist, and director.</b> Short-form specialist behind the brand Vamppsych. You're looking through my viewfinder. I write, direct, shoot, cut, grade, and design end to end.</p>
+    <div class="btns">
+      <a class="btn solid" href="#playback">Roll playback</a>
+      <a class="btn ghost" href="assets/docs/GiancarloOrtiz-Resume-VideoEditor.pdf">Resume (PDF)</a>
+      <a class="btn ghost" href="#contact">Contact</a>
     </div>
+    <div class="hint" id="ppHint">psst. <b>drag the window edge</b> and the picture profile regrades. or hit the PP chip.</div>
   </div>
 </header>
 
@@ -430,6 +466,12 @@ html.proof header{min-height:860px !important}
       <li><b>Full Sail student productions</b><span class="r">Camera / Lighting / Audio crew</span><span>2025 to 2026</span></li>
       <li><b>Vamppsych</b><span class="r">Founder / Creative Director</span><span>2023 to present</span></li>
     </ul>
+  <div class="polaroid vf">
+    <img class="washi" src="steel/assets/washi_pink.png" alt="" aria-hidden="true">
+    <img class="cam" src="assets/kawaii/hero_camera_web.jpg" width="1400" height="1737" loading="lazy" decoding="async" alt="The field kit: chrome 4K digicam decorated decoden style with original kawaii stickers, pearls and a beaded charm, on white lace">
+    <span class="rec-badge"><span class="rec-dot"></span>REC</span>
+    <div class="cap"><b>THE FIELD KIT</b> · yes it shoots 4K · yes it has a charm</div>
+  </div>
   </div>
 
   <div style="height:44px"></div>
@@ -452,7 +494,7 @@ html.proof header{min-height:860px !important}
   </div>
 </div></section>
 
-<section id="stills"><img class="sec-mascot" src="assets/kawaii/mascot_colorist_web.png" alt="" aria-hidden="true"><div class="wrap rv">
+<section id="stills"><img class="doily" src="assets/kawaii/lace_doily_web.png" alt="" aria-hidden="true"><img class="sec-mascot" src="assets/kawaii/punk_colorist_web.png" alt="" aria-hidden="true"><div class="wrap rv">
   <div class="kicker">Photo Mode</div>
   <h2>Frames from the floor</h2>
   <p style="color:var(--dim)">Pulled and graded from my live stadium coverage. Click to view full.</p>
@@ -475,7 +517,7 @@ html.proof header{min-height:860px !important}
   <span>NIGHT CITY <b>·</b> EDITORIAL DREAM <b>·</b> DARKROOM <b>·</b> CHROME <b>·</b> SLEAZE <b>·</b> SUPER 8 <b>·</b> LOOKS BUILT IN-HOUSE <b>·</b> NIGHT CITY <b>·</b> EDITORIAL DREAM <b>·</b> DARKROOM <b>·</b> CHROME <b>·</b> SLEAZE <b>·</b> SUPER 8 <b>·</b> LOOKS BUILT IN-HOUSE <b>·</b>&nbsp;</span>
 </div></div>
 
-<section id="archive" style="border-top:0"><img class="sec-mascot flip" src="assets/kawaii/mascot_editor_web.png" alt="" aria-hidden="true"><div class="wrap rv">
+<section id="archive" style="border-top:0"><img class="sec-mascot flip" src="assets/kawaii/punk_editor_web.png" alt="" aria-hidden="true"><div class="wrap rv">
   <div class="kicker">Archive · Client Tapes</div>
   <h2>On assignment: SA Current</h2>
   <p style="color:var(--dim);max-width:680px">I was the alt-weekly's on-the-ground event unit. Sent solo into events across San Antonio, Riverwalk cocktail nights, beer festivals, emo night, the DoSeum, to shoot both photo and video, cut the coverage the same night, and hand back organized 1080p and 4K delivery packages ready to post. Ran the posting side too: five-plus posts a week across IG and TikTok, a <b style="color:var(--ink)">15% engagement lift</b> in three months.</p>
@@ -508,7 +550,7 @@ html.proof header{min-height:860px !important}
   <p class="client-credits">FULL ASSIGNMENT LOG: <b>Top Shelf · Beer Festival · Doseum · Revolutionary Wings</b> · photo + video coverage, same-night edit turnaround, organized delivery, posting and captions.</p>
 </div></section>
 
-<section id="playback"><img class="sec-mascot" src="assets/kawaii/mascot_director_web.png" alt="" aria-hidden="true"><div class="wrap rv">
+<section id="playback"><img class="sec-mascot" src="assets/kawaii/punk_director_web.png" alt="" aria-hidden="true"><div class="wrap rv">
   <div class="kicker">Playback</div>
   <h2>The work, rolled from the top</h2>
   <p style="color:var(--dim);max-width:640px;margin-bottom:26px">Three clips. The short film I wrote, directed, and edited, plus the two-part behind-the-scenes of how it got made.</p>
@@ -675,7 +717,8 @@ html.proof header{min-height:860px !important}
     </div>
   </div>
 
-  <div class="clip-label" style="margin-top:34px"><span><b>COMMERCIAL WORK</b> · SCRIPT TO SCREEN · DIRECTED, NOT JUST SHOT</span><span class="r">2 REVISION ROUNDS ON EVERY TIER</span></div>
+  <span class="pxchain" aria-hidden="true"></span>
+  <div class="clip-label" style="margin-top:12px"><span><b>COMMERCIAL WORK</b> · SCRIPT TO SCREEN · DIRECTED, NOT JUST SHOT</span><span class="r">2 REVISION ROUNDS ON EVERY TIER</span></div>
   <div class="rate-grid" style="margin-top:12px">
     <div class="rate">
       <div class="tag">Commercial · Entry</div>
@@ -729,10 +772,10 @@ html.proof header{min-height:860px !important}
   <div class="rate-fine">50% DEPOSIT BOOKS THE DATE · NET 15 · FREE TRAVEL INSIDE LOOP 410, $0.50/MI BEYOND · W-9 ON REQUEST · <b>SAME-NIGHT DELIVERY INCLUDED ON EVERY EVENT PACKAGE</b> · COMMERCIAL TIERS INCLUDE 2 REVISION ROUNDS, EXTRAS BILLED</div>
 </div></section>
 
-<footer id="contact"><img class="sec-mascot" src="assets/kawaii/mascot_star_web.png" alt="" aria-hidden="true"><div class="wrap rv">
+<footer id="contact"><img class="sec-mascot" src="assets/kawaii/punk_star_web.png" alt="" aria-hidden="true"><div class="wrap rv">
   <div class="standby"><i></i>STANDBY</div>
   <h2>Let's cut something</h2>
-  <a class="email" id="magnetMail" href="mailto:carlo72400@gmail.com">carlo72400@gmail.com</a>
+  <span class="email-wrap"><img class="email-stk s1" src="assets/kawaii/f2u/bow_pink.png" alt="" aria-hidden="true"><img class="email-stk s2" src="assets/kawaii/f2u/bow_blue.png" alt="" aria-hidden="true"><a class="email" id="magnetMail" href="mailto:carlo72400@gmail.com">carlo72400@gmail.com</a></span>
   <div class="book">
     <div class="book-line">BOOKING: EVENT COVERAGE · COMMERCIALS · SHORT-FORM PACKAGES · EDIT + COLOR · SAME-NIGHT DELIVERY AVAILABLE</div>
     <a class="btn solid" href="mailto:carlo72400@gmail.com?subject=Booking%20request%20-%20%5Bproject%20name%5D&body=Project%3A%0ADate(s)%3A%0ALocation%3A%0AWhat%20you%20need%20(shoot%20%2F%20edit%20%2F%20both)%3A%0ADeliverables%20(runtime%2C%20formats%2C%20platforms)%3A%0ABudget%20range%3A%0ADeadline%3A">Request work</a>
@@ -746,7 +789,7 @@ html.proof header{min-height:860px !important}
     <a href="assets/docs/GiancarloOrtiz-Resume-Content.pdf">Content resume</a> ·
     <a href="assets/docs/GiancarloOrtiz-RateCard.pdf">Rate card (PDF)</a>
   </div>
-  <div class="fine">GIANCARLO ORTIZ · SAN ANTONIO TX · EST. VAMPPSYCH 2023 · FUTURE FILM DIRECTOR, McCONAUGHEY ARC IN PROGRESS · <b>end of tape. rewind, or hit record with me.</b></div>
+  <div class="fine">GIANCARLO ORTIZ · SAN ANTONIO TX · EST. VAMPPSYCH 2023 · FUTURE FILM DIRECTOR, McCONAUGHEY ARC IN PROGRESS · <b>end of tape. rewind, or hit record with me.</b><br>pixel dividers via the Pixel Safari f2u archive ♡ recolored in-house</div>
 </div></footer>
 
 <dialog id="lightbox"><img id="lightbox-img" src="" alt=""></dialog>
