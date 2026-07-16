@@ -59,8 +59,9 @@ section .wrap>h2::after{content:'';display:block;width:210px;height:15px;margin-
 footer h2::after{margin:10px auto 0}
 .pxchain{display:block;width:100%;height:20px;margin:34px 0 6px;
   background:url('assets/kawaii/f2u/whitebowhearts.png') repeat-x center / auto 18px;image-rendering:pixelated}
-.doily{position:absolute;top:26px;right:-60px;width:230px;opacity:.9;transform:rotate(180deg);pointer-events:none}
-@media(max-width:760px){.doily{width:140px;right:-40px}}
+/* .doily removed Jul 16 (his call, "remove stray asset"): it was a half-doily rotated
+   180deg and bled off the right edge, so it cropped into a grey scalloped blob that read
+   as a mistake rather than decor. lace_doily_web.png stays on disk, now unreferenced. */
 
 /* ------- soft camera chrome ------- */
 .datestamp{position:fixed;left:16px;bottom:12px;z-index:95;font-family:var(--mono);font-size:12px;letter-spacing:2px;color:var(--amber);text-shadow:0 1px 2px rgba(255,255,255,.7);pointer-events:none}
@@ -637,7 +638,7 @@ section::before{display:none}
   </div>
 </div></section>
 
-<section id="stills"><img class="doily" src="assets/kawaii/lace_doily_web.png" loading="lazy" alt="" aria-hidden="true"><img class="sec-mascot" src="assets/kawaii/ribbon_bow.png" alt="" aria-hidden="true"><div class="wrap rv">
+<section id="stills"><img class="sec-mascot" src="assets/kawaii/ribbon_bow.png" alt="" aria-hidden="true"><div class="wrap rv">
   <div class="kicker">Photo Mode</div>
   <h2>Frames from the floor</h2>
   <p style="color:var(--dim)">Pulled and graded from my live stadium coverage. Click to view full.</p>
