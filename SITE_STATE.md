@@ -16,17 +16,28 @@
 ## Register
 Pastel decoden / "kawaii AND professional." Ennaria pastels (blush, lilac, mint, baby blue, butter, peach) + silver chrome + white lace. Display font = Fraunces pushed to its Rogue-most axis (SOFT 100 / weight 640-680 / WONK 0). Body Inter, OSD JetBrains Mono. The real Kanye/Alamodome shot leads the hero full-bleed and regrades via the PP chip.
 
-**BLACKLETTER = Grenze Gotisch 700. NEVER UnifrakturMaguntia.** Its capital V and B are
-near-identical bulbous forms, so "Vamppsych" reads as "Bamppsych" — he caught this on the
-card back Jul 16 and called it tragic. He picked Fayte Blackletter Gothic
-(elements.envato.com/fayte-blackletter-gothic-QRR868C) but it is PAID ($16.50/mo Envato
-sub) and said to find a free one like it. Grenze Gotisch (Google Fonts) matches Fayte's
-brief — modern condensed display blackletter — and its V is unmistakable. Rejected after a
-V-vs-B render test: Pirata One (V becomes a U), UnifrakturCook (same V/B collision),
-Jacquard 24 (worse), Almendra Display (too light). Grenze is condensed, so bump ~8% when
-swapping off Unifraktur to hold the optical width. Swapped in all four card builds
-(contact-card/build_fullart_card.py + build_contact_card.py, card/build_front.py +
-build_back.py). If he ever downloads Fayte from Envato it is a one-line family swap.
+**BLACKLETTER = New Rocker (his pick, Jul 16).** The whole issue is the capital V in
+"Vamppsych" — it keeps turning into another letter, and he has caught it twice. Render V
+against W, B and U side by side before ever proposing a blackletter. Verdicts:
+- `UnifrakturMaguntia` — **V reads as B** ("Bamppsych"). His words: tragic. Never use.
+- `Grenze Gotisch` — a hairline splits the V's counter so it **reads as W**. He caught this
+  one too. Never use.
+- `Pirata One`, `Federant` — **V reads as U**.  `Ewert` — V reads as W.
+  `Jacquarda Bastarda 9` — V unreadable.  `Almendra Display` — too light to read as gothic.
+- **`New Rocker`** — clean unambiguous V, keeps real lowercase so the name stays a wordmark
+  rather than a metal-band logo. HIS PICK.
+- `Metal Mania` — also a clean V, heavy/angular/hardcore, renders small-caps. Runner-up,
+  kept selectable.
+
+He twice picked PAID Envato faces: Fayte (`fayte-blackletter-gothic-QRR868C`) then Darkgone
+(`darkgone-gothic-blackletter-font-8P5HBRT`), both $16.50/mo, and both times said to find a
+free one instead. If he ever buys one, drop the .otf in and wire a local `@font-face` — one
+line per build.
+
+Swap font via env: `BLACKLETTER=rocker|metal` on `contact-card/build_fullart_card.py`
+(see `_BL` at the top; crest/set px are per-font because cap-heights differ). Also applied
+by hand to `contact-card/build_contact_card.py` (legacy) and `card/build_front.py` +
+`build_back.py` (the printable card had the identical bug).
 
 ## Sections (nav order)
 INFO (Editor first + FIELD KIT camera cards) -> PHOTO MODE (concert stills + A/B grade slider) -> ARCHIVE (SA Current tapes incl. TAPE 04 lucha, STILLS PULL x10, LIT SESSIONS, EDITORIAL PORTRAIT WORK) -> PLAYBACK (VOLUME + 2 BTS, YouTube) -> FEED (2 IG reels + TikTok tile) -> RATES -> STANDBY footer.
