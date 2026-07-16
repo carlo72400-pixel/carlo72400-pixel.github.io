@@ -16,6 +16,18 @@
 ## Register
 Pastel decoden / "kawaii AND professional." Ennaria pastels (blush, lilac, mint, baby blue, butter, peach) + silver chrome + white lace. Display font = Fraunces pushed to its Rogue-most axis (SOFT 100 / weight 640-680 / WONK 0). Body Inter, OSD JetBrains Mono. The real Kanye/Alamodome shot leads the hero full-bleed and regrades via the PP chip.
 
+**BLACKLETTER = Grenze Gotisch 700. NEVER UnifrakturMaguntia.** Its capital V and B are
+near-identical bulbous forms, so "Vamppsych" reads as "Bamppsych" — he caught this on the
+card back Jul 16 and called it tragic. He picked Fayte Blackletter Gothic
+(elements.envato.com/fayte-blackletter-gothic-QRR868C) but it is PAID ($16.50/mo Envato
+sub) and said to find a free one like it. Grenze Gotisch (Google Fonts) matches Fayte's
+brief — modern condensed display blackletter — and its V is unmistakable. Rejected after a
+V-vs-B render test: Pirata One (V becomes a U), UnifrakturCook (same V/B collision),
+Jacquard 24 (worse), Almendra Display (too light). Grenze is condensed, so bump ~8% when
+swapping off Unifraktur to hold the optical width. Swapped in all four card builds
+(contact-card/build_fullart_card.py + build_contact_card.py, card/build_front.py +
+build_back.py). If he ever downloads Fayte from Envato it is a one-line family swap.
+
 ## Sections (nav order)
 INFO (Editor first + FIELD KIT camera cards) -> PHOTO MODE (concert stills + A/B grade slider) -> ARCHIVE (SA Current tapes incl. TAPE 04 lucha, STILLS PULL x10, LIT SESSIONS, EDITORIAL PORTRAIT WORK) -> PLAYBACK (VOLUME + 2 BTS, YouTube) -> FEED (2 IG reels + TikTok tile) -> RATES -> STANDBY footer.
 
@@ -33,7 +45,7 @@ INFO (Editor first + FIELD KIT camera cards) -> PHOTO MODE (concert stills + A/B
 
 ## Key assets (assets/kawaii/ unless noted)
 - Hero photo: assets/hero.jpg (Alamodome). Decoden camera: hero_camera_web.jpg + FIELD KIT cards in kit/.
-- Mascots retired (kept in Reference/kawaii-src); current decor = ribbon bow, charm, pixel heart-curtain, f2u/ pastel pixel dividers, lace_trim/doily.
+- Mascots retired (kept in Reference/kawaii-src); current decor = ribbon bow, charm, pixel heart-curtain, f2u/ pastel pixel dividers, lace_trim. The `.doily` was REMOVED Jul 16 at his ask ("remove stray asset"): it was a half-doily rotated 180deg bled off the right edge (`right:-60px`), so it cropped into a grey scalloped blob that read as a mistake. `lace_doily_web.png` is still on disk, unreferenced. If adding decor that bleeds past an edge, check it does not crop into a shape that reads as broken.
 - RIBBON ASSETS re-keyed Jul 16 (`ribbon_bow.png`, `ribbon_frame_clean.png`; originals in `Reference/kawaii-src/pre-rekey-backup/`). Both had 1-bit mattes with the white background still baked in opaque. Rebuilt from `Reference/kawaii-src/ribbon_frame_src.jpg` via `scratchpad/key_ribbon.py`. THE LESSON if they ever need redoing: key on CHROMA, not brightness. The cast shadow is pink-tinted and the satin HIGHLIGHTS run sat 21-32, so the flood threshold must sit BELOW them (sat<10) or the fill leaks through a highlight and bites chunks out of the bow. Pearls survive because pink encloses them. `binary_fill_holes` also seals the picture window, so punch it back out.
 - `.reel-frame` border-image slice is MEASURED (108 113 110 107) off the 837x825 asset, never guessed. The old value 235 reached past the ~110px ribbon into the source's white margin and drew it as a white box. `background-clip:padding-box` is also load-bearing: `background:#fff` was painting under the transparent border.
 - QR share sticker: qr_sticker.jpg.
@@ -45,9 +57,14 @@ INFO (Editor first + FIELD KIT camera cards) -> PHOTO MODE (concert stills + A/B
     `/usr/bin/python3 -c "import cv2,numpy as np;from PIL import Image;d=cv2.QRCodeDetector();print(d.detectAndDecode(cv2.cvtColor(np.array(Image.open('card_back_full.png').convert('RGB')),cv2.COLOR_RGB2BGR))[0])"`
     (cv2 + pyzbar are on `/usr/bin/python3`, but pyzbar's native libzbar is MISSING, so use cv2.)
 
+## AirDrop copies (~/Desktop/VAMPPSYCH CARD/)
+- `Vamppsych-Card-FRONT.png` + `Vamppsych-Card-BACK.png`, 1488x2076 (2.5x3.5in at 600dpi), QR-verified. Kept at Desktop root so he can AirDrop straight to his phone. Re-copy from `contact-card/vamppsych_contact_card_{front,back}.png` after any card rebuild.
+
 ## Printable Pokemon card  (~/Desktop/Vamppsych/card/)
-- giancarlo_front.png + giancarlo_back.png, 1488x2076 = 2.5x3.5in double-sided hand-out. Back QR scan-verified.
+- giancarlo_front.png + giancarlo_back.png, 1488x2076 = 2.5x3.5in double-sided hand-out. Back QR scan-verified (front has no QR by design).
 - Reprint/iterate: build_front.py + build_back.py in that folder (run with `CARD_OUT=~/Desktop/Vamppsych/card /usr/bin/python3 build_front.py`). Swap the camera art for a face photo, add moves, or spin the full 4-card FIELD KIT set.
+- Both re-rendered Jul 16 with the Grenze Gotisch swap (it had the same Bamppsych bug).
+- FIXED Jul 16: `build_front.py` derived its skill root from `__file__`, which only works when the script sits INSIDE the skill. This Desktop copy resolved to `Desktop/Vamppsych/assets` and died on `starfield.b64`. It now falls back to the real skill dir (override with `SKILL_ROOT`). build_back.py never had the bug.
 
 ## Gotchas / how to verify (IMPORTANT for next session)
 - PANE SCROLL: the old "pane cannot scroll" note is STALE. Retested Jul 16 and `el.scrollIntoView({block:'center',behavior:'instant'})` scrolls the pane fine (scrollY moved to 23898). Bare `window.scrollTo(0,120)` still does nothing, which is probably what produced the original note. Use scrollIntoView + `computer{action:"screenshot"}` — far easier than hunting y-offsets in a tall headless capture.
