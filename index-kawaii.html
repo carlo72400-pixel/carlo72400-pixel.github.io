@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="color-scheme" content="light">
 <title>Giancarlo Ortiz | Video Editor, Colorist, Content Creator</title>
 <meta name="description" content="Giancarlo Ortiz. Video editor, colorist, and content creator in San Antonio, TX. Short-form specialist, DaVinci Resolve and Premiere, creator of Vamppsych.">
 <meta name="theme-color" content="#fbf5f8">
@@ -467,6 +468,28 @@ html.proof header{min-height:860px !important}
 .sheet-rates span{font-size:17px}
 .sheet-copy{margin-top:14px;width:100%;font-family:var(--mono);font-size:11px;letter-spacing:1px;padding:11px;border:1.5px dashed var(--line2);border-radius:12px;background:#fff;color:var(--dim);cursor:pointer;transition:color .2s,border-color .2s}
 .sheet-copy.done{color:#3a9c6a;border-color:#b6e3cf}
+
+/* ---- full-screen page-break dividers (bold film-slate between sections) ---- */
+section::before{display:none}
+.pagebreak{position:relative;overflow:hidden;scroll-margin-top:58px;
+  min-height:clamp(300px,46svh,460px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;padding:60px 24px 72px;
+  background:radial-gradient(ellipse at 50% 34%,#2d2331,#14101b 82%)}
+.pagebreak .pb-no{font-family:var(--mono);font-size:12px;letter-spacing:5px;color:#f2a9be;display:inline-flex;align-items:center;gap:9px}
+.pagebreak .pb-no::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--rose);box-shadow:0 0 8px var(--rose);animation:recblink 1.2s steps(1) infinite}
+.pagebreak .pb-name{font-family:var(--disp);font-size:clamp(46px,14vw,90px);font-weight:640;font-variation-settings:'SOFT' 100,'WONK' 0,'opsz' 144;line-height:.92;
+  background:linear-gradient(96deg,#e87ea0,#c9a7e6,#9fc6ee,#a9e0c8,#f0c48f);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;background-size:200% auto;animation:chrome 11s linear infinite}
+.pagebreak .pb-desc{font-family:var(--mono);font-size:12px;letter-spacing:3px;color:#c6b6c4;text-transform:uppercase}
+.pagebreak::after{content:'';position:absolute;left:0;right:0;bottom:-2px;height:30px;background:url('assets/kawaii/lace_trim_web.png') repeat-x bottom center/auto 30px;pointer-events:none}
+@media (prefers-reduced-motion: reduce){.pagebreak .pb-name{animation:none}}
+
+/* ---- back-to-top button ---- */
+.fab-top{width:46px;height:46px;padding:0;border-radius:50%;border:1.5px solid var(--rose);background:#fff;color:var(--rose-deep);cursor:pointer;font-size:20px;line-height:1;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 22px -6px rgba(214,120,155,.6);opacity:0;pointer-events:none;transform:translateY(8px) scale(.9);transition:opacity .3s,transform .3s var(--spring)}
+.fab-top.show{opacity:1;pointer-events:auto;transform:none}
+.fab-top:hover{transform:translateY(-3px)}
+
+/* ---- covered-text fixes ---- */
+.client-credits{margin-top:26px}
+@media(max-width:640px){ .hint{padding-right:106px} .datestamp{display:none} }
 </style>
 </head>
 <body data-look="night-city">
@@ -1197,6 +1220,7 @@ document.querySelectorAll('.rate-grid,#gallery,.tapes,.monitors,.social-row,.sac
 })();
 </script>
 <div class="fab-stack">
+  <button class="fab-top" id="toTop" aria-label="Back to top" title="Back to top">↑</button>
   <a class="fab fab-rates" href="#rates" aria-label="Jump to student rates">RATES</a>
   <button class="fab fab-share" id="shareBtn" aria-haspopup="dialog" aria-label="Share this page">SHARE</button>
 </div>
@@ -1234,6 +1258,35 @@ document.querySelectorAll('.rate-grid,#gallery,.tapes,.monitors,.social-row,.sac
     if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(URL).then(ok,fb); } else fb();
     function fb(){ var t=document.createElement('textarea'); t.value=URL; t.style.position='fixed'; t.style.opacity='0'; document.body.appendChild(t); t.focus(); t.select(); try{document.execCommand('copy'); ok();}catch(e){ cp.textContent=URL; } t.remove(); }
   });
+})();
+</script>
+<script>
+(function(){
+  var PAGES=[['about','01','INFO','the studio'],['stills','02','PHOTO MODE','frames from the floor'],
+    ['archive','03','ARCHIVE','client work'],['playback','04','PLAYBACK','the film'],
+    ['feed','05','FEED','on the grid'],['rates','06','RATES','student rates'],
+    ['contact','07','STANDBY','let us cut something']];
+  PAGES.forEach(function(pg){
+    var sec=document.getElementById(pg[0]); if(!sec) return;
+    var b=document.createElement('div'); b.className='pagebreak'; b.setAttribute('data-page',pg[0]); b.setAttribute('aria-hidden','true');
+    b.innerHTML='<span class="pb-no">REEL '+pg[1]+' / 07</span><span class="pb-name">'+pg[2]+'</span><span class="pb-desc">'+pg[3]+'</span>';
+    sec.parentNode.insertBefore(b, sec);
+  });
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click', function(e){
+      var id=a.getAttribute('href').slice(1);
+      if(!id || id==='top'){ e.preventDefault(); window.scrollTo({top:0,behavior:'smooth'}); return; }
+      var band=document.querySelector('.pagebreak[data-page="'+id+'"]');
+      var tgt=band||document.getElementById(id);
+      if(tgt){ e.preventDefault(); tgt.scrollIntoView({behavior:'smooth',block:'start'}); }
+    });
+  });
+  var tb=document.getElementById('toTop');
+  if(tb){
+    var onScroll=function(){ tb.classList.toggle('show', window.scrollY > window.innerHeight*0.85); };
+    window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+    tb.addEventListener('click', function(){ window.scrollTo({top:0,behavior:'smooth'}); });
+  }
 })();
 </script>
 </body>
