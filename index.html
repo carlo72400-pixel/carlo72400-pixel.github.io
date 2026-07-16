@@ -497,9 +497,15 @@ html.proof header{min-height:860px !important}
 #share::backdrop{background:rgba(120,80,100,.5);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
 .sheet-x{position:absolute;top:10px;right:12px;width:30px;height:30px;border:0;border-radius:50%;background:var(--panel2);color:var(--dim);font-size:19px;cursor:pointer;line-height:26px;z-index:2}
 .sheet-kick{font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--rose-deep);margin-bottom:12px;font-weight:600}
-.sheet-qr{display:block;position:relative;border-radius:16px;overflow:hidden;box-shadow:var(--shadow-sm);cursor:zoom-in}
-.sheet-qr img{width:100%;height:auto;display:block;border-radius:16px}
-.sheet-qr-tap{position:absolute;top:9px;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:9px;letter-spacing:1px;color:#fff;background:rgba(90,43,62,.72);padding:4px 11px;border-radius:999px;pointer-events:none}
+/* share sheet now shows the real contact card (front + back) instead of the old
+   decoden-camera QR sticker; the back carries the scannable QR. */
+.sheet-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sheet-card{display:block;position:relative;border-radius:12px;overflow:hidden;box-shadow:var(--shadow-sm);cursor:zoom-in;transition:transform .3s var(--spring)}
+.sheet-card:hover{transform:translateY(-3px)}
+.sheet-card img{width:100%;height:auto;display:block}
+.sheet-card-cap{position:absolute;left:0;right:0;bottom:0;font-family:var(--mono);font-size:8.5px;letter-spacing:1px;color:#fff;background:linear-gradient(to top,rgba(90,43,62,.9),rgba(90,43,62,.55) 55%,transparent);padding:16px 4px 5px;text-align:center;pointer-events:none}
+.sheet-card-cap b{font-weight:700}
+.sheet-cards-tap{font-family:var(--mono);font-size:9px;letter-spacing:1px;color:var(--dim);text-align:center;margin-top:8px}
 .sheet-label{font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--dim);text-align:left;margin:17px 0 8px;font-weight:600}
 .sheet-socials{display:flex;flex-direction:column;gap:8px}
 .sheet-socials a{display:flex;justify-content:space-between;align-items:center;text-decoration:none;font-size:13px;color:var(--dim);background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:11px 14px;transition:border-color .2s,transform .2s}
@@ -1284,10 +1290,17 @@ document.querySelectorAll('.rate-grid,#gallery,.tapes,.monitors,.social-row,.sac
 <dialog id="share" aria-label="Share and follow Giancarlo Ortiz">
   <button class="sheet-x" id="shareX" aria-label="Close">×</button>
   <div class="sheet-kick">SCAN · FOLLOW · BOOK</div>
-  <a class="sheet-qr" id="shareQr" href="assets/kawaii/qr_sticker.jpg" aria-label="Enlarge the QR code to scan">
-    <img src="assets/kawaii/qr_sticker.jpg" alt="QR code shown as the screen of a kawaii-decorated camera; scan to open Giancarlo Ortiz's portfolio" loading="lazy">
-    <span class="sheet-qr-tap">tap to enlarge</span>
-  </a>
+  <div class="sheet-cards">
+    <a class="sheet-card" href="assets/kawaii/card/card_front_full.png" aria-label="Enlarge the contact card, front">
+      <img src="assets/kawaii/card/card_front_web.jpg" width="860" height="1200" alt="Vamppsych contact card, front: a big-eye pastel doll muse holding a Super 8 cine camera, with the moves Final Cut and Last Light" loading="lazy">
+      <span class="sheet-card-cap"><b>FRONT</b> · the muse</span>
+    </a>
+    <a class="sheet-card" href="assets/kawaii/card/card_back_full.png" aria-label="Enlarge the contact card back to scan its QR code">
+      <img src="assets/kawaii/card/card_back_web.jpg" width="860" height="1200" alt="Vamppsych contact card, back: a stained glass filmmaking window behind a scannable QR code to this site" loading="lazy">
+      <span class="sheet-card-cap"><b>BACK</b> · scan me</span>
+    </a>
+  </div>
+  <div class="sheet-cards-tap">tap a card to enlarge, then scan the back</div>
   <div class="sheet-label">FOLLOW</div>
   <div class="sheet-socials">
     <a href="https://www.tiktok.com/@vamp.psych" target="_blank" rel="noopener"><span><b>TikTok</b> @vamp.psych</span></a>
@@ -1305,9 +1318,15 @@ document.querySelectorAll('.rate-grid,#gallery,.tapes,.monitors,.social-row,.sac
   open.addEventListener('click',function(){ sh.showModal(); });
   document.getElementById('shareX').addEventListener('click',function(){ sh.close(); });
   sh.addEventListener('click',function(e){ if(e.target===sh) sh.close(); });
-  var qr=document.getElementById('shareQr');
   var lbi=document.getElementById('lightbox-img'), lbx=document.getElementById('lightbox');
-  qr.addEventListener('click',function(e){ e.preventDefault(); lbi.src=qr.getAttribute('href'); lbi.alt='QR code, scan to open the portfolio'; sh.close(); lbx.showModal(); });
+  document.querySelectorAll('.sheet-card').forEach(function(c){
+    c.addEventListener('click',function(e){
+      e.preventDefault();
+      lbi.src=c.getAttribute('href');
+      var im=c.querySelector('img'); lbi.alt=im?im.alt:'Vamppsych contact card';
+      sh.close(); lbx.showModal();
+    });
+  });
   document.getElementById('shareRates').addEventListener('click',function(){ sh.close(); });
   var cp=document.getElementById('shareCopy'), URL='https://carlo72400-pixel.github.io/';
   cp.addEventListener('click',function(){
