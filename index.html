@@ -161,9 +161,37 @@ h1 .sp{display:inline-block;width:.3em}
 .polaroid .cap{font-family:var(--mono);font-size:10px;letter-spacing:1.4px;color:var(--dim);text-align:center;margin-top:9px}
 .polaroid .cap b{color:var(--rose-deep)}
 .rec-badge{position:absolute;top:20px;left:20px;z-index:2;display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--rose-deep);background:rgba(255,255,255,.85);padding:5px 10px;border-radius:999px;box-shadow:var(--shadow-sm)}
-.look-chip{position:absolute;right:24px;bottom:34px;z-index:8;font-family:var(--mono);font-size:11px;letter-spacing:1px;color:var(--ink);background:rgba(255,255,255,.86);border:1.5px solid var(--line2);border-radius:999px;padding:9px 15px;cursor:pointer;user-select:none;transition:transform .3s var(--spring),border-color .2s,box-shadow .3s}
-.look-chip:hover{transform:translateY(-3px) rotate(-1deg);border-color:var(--rose);box-shadow:var(--shadow-sm)}
-.look-chip .lbl{color:var(--rose-deep);font-weight:700}
+/* picture-profile selector: reads like the PP button on his camera, not a generic pill.
+   live LED in the current look's signature colour + PP index + six dial ticks. */
+.look-chip{position:absolute;right:24px;bottom:34px;z-index:8;display:inline-flex;align-items:center;gap:9px;
+  font-family:var(--mono);font-size:11px;letter-spacing:1px;color:var(--ink);
+  background:linear-gradient(180deg,rgba(255,255,255,.92),rgba(255,255,255,.78));
+  -webkit-backdrop-filter:blur(10px) saturate(1.25);backdrop-filter:blur(10px) saturate(1.25);
+  border:1.5px solid rgba(255,255,255,.95);border-radius:13px;padding:8px 13px;cursor:pointer;user-select:none;
+  box-shadow:0 8px 22px -9px rgba(90,40,70,.55),inset 0 1px 0 rgba(255,255,255,.95);
+  transition:transform .3s var(--spring),box-shadow .3s,border-color .2s}
+.look-chip:hover{transform:translateY(-3px);border-color:var(--rose);box-shadow:0 13px 28px -9px rgba(90,40,70,.6)}
+.look-chip:active{transform:translateY(-1px) scale(.98)}
+.look-chip:focus-visible{outline:2px solid var(--rose-deep);outline-offset:3px}
+.pp-led{width:8px;height:8px;border-radius:50%;flex:none;background:var(--pp-col,#3fd8cf);
+  box-shadow:0 0 0 2px rgba(255,255,255,.9),0 0 10px 1px var(--pp-col,#3fd8cf);animation:ppPulse 2.6s ease-in-out infinite}
+@keyframes ppPulse{0%,100%{opacity:1}50%{opacity:.42}}
+.look-chip .tag{font-weight:700;color:var(--rose-deep)}
+/* min-widths sized to the longest strings ("EDITORIAL DREAM" / "tap to cycle"): the chip is
+   right-anchored, so without them its left edge pops as the label changes on each cycle. */
+.look-chip .lbl{color:var(--ink);font-weight:700;min-width:118px;text-align:left}
+.pp-dots{display:inline-flex;gap:3px;align-items:center;flex:none}
+.pp-dots i{width:4px;height:4px;border-radius:50%;background:var(--line2);transition:background .25s,transform .25s var(--spring)}
+.pp-dots i.on{background:var(--pp-col,#3fd8cf);transform:scale(1.55)}
+.look-chip .hnt{color:var(--dim);letter-spacing:.5px;min-width:86px;text-align:left}
+body[data-look="night-city"]{--pp-col:#3fd8cf}
+body[data-look="editorial-dream"]{--pp-col:#b09ad4}
+body[data-look="darkroom"]{--pp-col:#9aa0a6}
+body[data-look="chrome"]{--pp-col:#8fb3c9}
+body[data-look="sleaze"]{--pp-col:#f2569b}
+body[data-look="super8"]{--pp-col:#e8a33d}
+@media (prefers-reduced-motion: reduce){.pp-led{animation:none}}
+@media(max-width:520px){.look-chip .hnt,.look-chip .lbl{min-width:0}.look-chip{gap:7px;padding:7px 11px}}
 @media(max-width:860px){
   .hero-in{padding-bottom:104px}
   .look-chip{right:auto;left:24px;bottom:14px}
@@ -199,7 +227,12 @@ h1 .sp{display:inline-block;width:.3em}
 .clip-label{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;font-family:var(--mono);font-size:11px;letter-spacing:1.2px;color:var(--dim);margin-bottom:9px}
 .clip-label b{color:var(--ink);font-weight:600}
 .clip-label .r{color:var(--rose-deep)}
-.reel-frame{position:relative;border:36px solid transparent;border-image:url('assets/kawaii/ribbon_frame_clean.png') 235 round;background:#fff;box-shadow:var(--shadow);transition:transform .4s var(--spring),box-shadow .4s}
+/* slice MEASURED off ribbon_frame_clean.png (837x825, window at 107..723 / 108..714):
+   the ribbon is ~110px thick, not the 235 this once guessed -- 235 reached past the
+   ribbon into the source's white margin and drew it as a white box round the player.
+   background-clip:padding-box keeps the white backing from painting under the
+   transparent border, which was the second half of that same white box. */
+.reel-frame{position:relative;border:36px solid transparent;border-image:url('assets/kawaii/ribbon_frame_clean.png') 108 113 110 107 round;background:#fff;background-clip:padding-box;box-shadow:var(--shadow);transition:transform .4s var(--spring),box-shadow .4s}
 .reel-frame::before{content:'';position:absolute;top:-52px;left:50%;transform:translateX(-50%);width:138px;height:78px;z-index:7;background:url('assets/kawaii/ribbon_bow.png') no-repeat center / contain;pointer-events:none}
 .reel-frame:hover{transform:translateY(-6px)}
 
@@ -272,7 +305,9 @@ nav ul a.cur::after{width:100%;background:var(--amber)}
 .tape .t-label{position:absolute;top:8px;left:8px;right:8px;display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;letter-spacing:1px;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.9)}
 .tape .t-label .r{color:var(--pink)}
 .tape .t-foot{position:absolute;bottom:8px;left:8px;font-family:var(--mono);font-size:10px;letter-spacing:1px;color:var(--butter);text-shadow:0 1px 3px rgba(0,0,0,.9)}
-.sac-photos{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px 10px;margin-top:26px;max-width:960px}
+/* align-items:start is load-bearing: the default stretch fights .sacp's aspect-ratio,
+   sizing items taller than their row so they spill past the grid and cover the caption below. */
+.sac-photos{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px 10px;margin-top:26px;max-width:960px;align-items:start}
 .sacp{display:block;aspect-ratio:4/5;overflow:hidden;border:2px solid #fff;border-radius:14px;box-shadow:var(--shadow-sm);transition:transform .35s var(--spring)}
 .sacp:hover{transform:translateY(-5px)}
 .sacp{position:relative;overflow:visible}
@@ -283,7 +318,8 @@ nav ul a.cur::after{width:100%;background:var(--amber)}
 .sacp:nth-child(5)::before{background-image:url('steel/assets/washi_mint.png');transform:rotate(-40deg)}
 .sacp:nth-child(6)::before{background-image:url('steel/assets/washi_lilac.png');transform:rotate(-36deg)}
 .sacp img{border-radius:12px}
-.blue-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:26px;max-width:1000px}
+/* dense backfills the col-3 gap the leading span-2 rooftop frame would otherwise leave open */
+.blue-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:26px;max-width:1000px;grid-auto-flow:dense}
 .bluep{display:block;overflow:hidden;border:2px solid #fff;border-radius:14px;box-shadow:var(--shadow-sm);transition:transform .35s var(--spring);cursor:zoom-in;aspect-ratio:1/1}
 .bluep.bhero{grid-column:span 2;grid-row:span 2;aspect-ratio:auto}
 .bluep.bwide{grid-column:span 2;aspect-ratio:2/1.05}
@@ -388,6 +424,13 @@ footer h2{margin-bottom:18px}
 .email-stk{position:absolute;image-rendering:pixelated;z-index:3;pointer-events:none}
 .email-stk.s1{top:-14px;left:-18px;width:52px;transform:rotate(-14deg)}
 .email-stk.s2{bottom:-12px;right:-20px;width:40px;transform:rotate(12deg)}
+/* two ways to reach him: the mail pill, or a straight IG DM */
+.reach{display:flex;flex-direction:column;align-items:center;gap:14px}
+.reach-or{font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--dim)}
+.dm{display:inline-flex;align-items:center;gap:9px;font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--rose-deep);text-decoration:none;border:1.5px solid var(--rose);border-radius:999px;padding:11px 21px;background:#fff;transition:background .25s,color .25s,transform .3s var(--spring)}
+.dm:hover{background:var(--rose);color:#fff;transform:translateY(-2px)}
+.dm svg{width:15px;height:15px;flex:none}
+.dm b{font-weight:600;opacity:.72}
 .book{margin-top:30px;padding-top:26px;border-top:2px dashed var(--line2)}
 .book-line{font-family:var(--mono);font-size:10px;letter-spacing:1.5px;color:var(--amber);margin-bottom:16px}
 .book-fine{margin-top:12px;font-family:var(--mono);font-size:11px;color:var(--dim);letter-spacing:.3px}
@@ -524,7 +567,7 @@ section::before{display:none}
   <div class="osd crosshair" aria-hidden="true"></div>
   <img class="hero-mascot hm-star" src="assets/kawaii/ribbon_bow.png" alt="" aria-hidden="true">
   <img class="hero-mascot hm-charm" src="steel/assets/charm.png" alt="" aria-hidden="true">
-  <button class="look-chip" id="lookChip" title="cycle the picture profile">PP&nbsp;<span class="lbl" id="lookName">NIGHT CITY</span>&nbsp;·&nbsp;<span id="lookHint">resize me</span></button>
+  <button class="look-chip" id="lookChip" title="cycle the picture profile" aria-label="Picture profile. Tap to cycle the grade."><span class="pp-led" aria-hidden="true"></span><span class="tag">PP<b id="lookIdx">1</b></span><span class="lbl" id="lookName">NIGHT CITY</span><span class="pp-dots" id="lookDots" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i><i></i></span><span class="hnt" id="lookHint">resize me</span></button>
   <div class="wrap hero-in">
     <div class="kicker">San Antonio TX · Avail SA / Austin / Remote</div>
     <h1 id="heroName" aria-label="Giancarlo Ortiz">Giancarlo Ortiz</h1>
@@ -665,6 +708,7 @@ section::before{display:none}
 
   <div class="clip-label" style="margin-top:40px"><span><b>EDITORIAL PORTRAIT WORK</b> · TWO SUBJECTS · SHOT ACROSS SAN ANTONIO</span><span class="r">STYLED · LIT · GRADED</span></div>
   <div class="blue-grid">
+    <a class="bluep bwide" href="assets/kawaii/blue/blue_scenegirl.jpg"><img src="assets/kawaii/blue/blue_scenegirl.jpg" alt="Night portrait: green-haired subject on a downtown rooftop against the skyline, flash look, graded in-house" loading="lazy"></a>
     <a class="bluep bhero" href="assets/kawaii/blue/blue_hero_alameda.jpg"><img src="assets/kawaii/blue/blue_hero_alameda.jpg" alt="Blue session hero: model with blue-streaked hair and tattoos in front of the Alameda Theater marquee" loading="lazy"></a>
     <a class="bluep" href="assets/kawaii/blue/blue_swirl.jpg"><img src="assets/kawaii/blue/blue_swirl.jpg" alt="Blue session: lit studio portrait against a blue swirl backdrop" loading="lazy"></a>
     <a class="bluep" href="assets/kawaii/blue/blue_marquee.jpg"><img src="assets/kawaii/blue/blue_marquee.jpg" alt="Blue session: the Alameda marquee over her shoulder" loading="lazy"></a>
@@ -672,7 +716,6 @@ section::before{display:none}
     <a class="bluep" href="assets/kawaii/blue/blue_roses.jpg"><img src="assets/kawaii/blue/blue_roses.jpg" alt="Blue session: blue hair against a rose bush" loading="lazy"></a>
     <a class="bluep" href="assets/kawaii/blue/blue_moody.jpg"><img src="assets/kawaii/blue/blue_moody.jpg" alt="Blue session: night exterior, fishnet glove to face in a violet wash" loading="lazy"></a>
     <a class="bluep" href="assets/kawaii/blue/blue_handpose.jpg"><img src="assets/kawaii/blue/blue_handpose.jpg" alt="Blue session: daylight editorial pose, rings and fishnet sleeve" loading="lazy"></a>
-    <a class="bluep bwide" href="assets/kawaii/blue/blue_scenegirl.jpg"><img src="assets/kawaii/blue/blue_scenegirl.jpg" alt="Night portrait: green-haired subject on a downtown rooftop against the skyline, flash look, graded in-house" loading="lazy"></a>
   </div>
   <p class="client-credits">TWO SUBJECTS, EIGHT FRAMES · Alameda Theater to the downtown rooftops · styled, lit, and graded in-house.</p>
 </div></section>
@@ -907,7 +950,11 @@ section::before{display:none}
     <div class="polaroid" style="flex:0 1 262px"><img class="washi" src="steel/assets/washi_lilac.png" alt="" aria-hidden="true"><a class="kitzoom" href="assets/kawaii/card/card_front_full.png"><img class="cam" width="1488" height="2076" src="assets/kawaii/card/card_front_web.jpg" loading="lazy" alt="Vamppsych contact card, front: a big-eye pastel doll muse holding a Super 8 cine camera, with the moves Final Cut and Last Light"></a><div class="cap"><b>FRONT</b> · the muse · tap to open</div></div>
     <div class="polaroid" style="flex:0 1 262px"><img class="washi" src="steel/assets/washi_pink.png" alt="" aria-hidden="true"><a class="kitzoom" href="assets/kawaii/card/card_back_full.png"><img class="cam" width="1488" height="2076" src="assets/kawaii/card/card_back_web.jpg" loading="lazy" alt="Vamppsych contact card, back: a scannable QR to this site, with roles and social handles"></a><div class="cap"><b>BACK</b> · scan to reach me</div></div>
   </div>
-  <span class="email-wrap"><img class="email-stk s1" src="assets/kawaii/f2u/bow_pink.png" alt="" aria-hidden="true"><img class="email-stk s2" src="assets/kawaii/f2u/bow_blue.png" alt="" aria-hidden="true"><a class="email" id="magnetMail" href="mailto:carlo72400@gmail.com">carlo72400@gmail.com</a></span>
+  <div class="reach">
+    <span class="email-wrap"><img class="email-stk s1" src="assets/kawaii/f2u/bow_pink.png" alt="" aria-hidden="true"><img class="email-stk s2" src="assets/kawaii/f2u/bow_blue.png" alt="" aria-hidden="true"><a class="email" id="magnetMail" href="mailto:carlo72400@gmail.com">carlo72400@gmail.com</a></span>
+    <div class="reach-or">or</div>
+    <a class="dm" href="https://ig.me/m/vamppsych" target="_blank" rel="noopener" aria-label="Send a direct message on Instagram to @vamppsych"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.6" cy="6.4" r="1.25" fill="currentColor" stroke="none"/></svg>DM me on Instagram <b>@vamppsych</b></a>
+  </div>
   <div class="book">
     <div class="book-line">BOOKING: EVENT COVERAGE · COMMERCIALS · SHORT-FORM PACKAGES · EDIT + COLOR · SAME-NIGHT DELIVERY AVAILABLE</div>
     <a class="btn solid" href="mailto:carlo72400@gmail.com?subject=Booking%20request%20-%20%5Bproject%20name%5D&body=Project%3A%0ADate(s)%3A%0ALocation%3A%0AWhat%20you%20need%20(shoot%20%2F%20edit%20%2F%20both)%3A%0ADeliverables%20(runtime%2C%20formats%2C%20platforms)%3A%0ABudget%20range%3A%0ADeadline%3A">Request work</a>
@@ -991,6 +1038,8 @@ const LOOKS = [
 const chip = document.getElementById('lookChip');
 const nameEl = document.getElementById('lookName');
 const hintEl = document.getElementById('lookHint');
+const idxEl = document.getElementById('lookIdx');
+const dots = [...document.querySelectorAll('#lookDots i')];
 let manual = -1;
 function bandFromWidth(w){
   if(w>=1500) return 0;
@@ -1003,6 +1052,9 @@ function bandFromWidth(w){
 function applyLook(i,src){
   document.body.dataset.look = LOOKS[i][0];
   nameEl.textContent = LOOKS[i][1];
+  idxEl.textContent = i+1;
+  dots.forEach((d,n)=>d.classList.toggle('on', n===i));
+  chip.setAttribute('aria-label','Picture profile '+(i+1)+' of '+LOOKS.length+': '+LOOKS[i][1]+'. Tap to cycle the grade.');
   hintEl.textContent = src==='chip' ? 'tap to cycle' : (matchMedia('(pointer:coarse)').matches ? 'tap to cycle' : 'resize me');
 }
 applyLook(bandFromWidth(innerWidth));
