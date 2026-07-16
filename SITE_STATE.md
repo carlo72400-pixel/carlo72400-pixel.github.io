@@ -35,6 +35,7 @@ INFO (Editor first + FIELD KIT camera cards) -> PHOTO MODE (concert stills + A/B
 - Mascots retired (kept in Reference/kawaii-src); current decor = ribbon bow, charm, pixel heart-curtain, f2u/ pastel pixel dividers, lace_trim/doily.
 - QR share sticker: qr_sticker.jpg.
 - IG reels: reels/reel1_web.mp4 (+_poster), reels/reel2_web.mp4. Originals + all generated source PNGs archived in ~/Desktop/Vamppsych/Reference/kawaii-src/.
+- CONTACT CARD (added Jul 16): `assets/kawaii/card/card_{front,back}_full.png` (lightbox, PNG so QR scans) + `_web.jpg` (display). Shown in the #contact footer ("Let's cut something") as 2 washi-taped `.polaroid` + `.kitzoom` lightbox cards. Full-art highlighter style; built by `~/Desktop/Vamppsych/contact-card/build_fullart_card.py` (that folder has the source PNGs). Front QR uses ERROR_CORRECT_L so it scans small.
 
 ## Printable Pokemon card  (~/Desktop/Vamppsych/card/)
 - giancarlo_front.png + giancarlo_back.png, 1488x2076 = 2.5x3.5in double-sided hand-out. Back QR scan-verified.
