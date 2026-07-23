@@ -12,6 +12,12 @@
 - `/index-camera.html` — the old Camera Interface homepage, preserved.
 - `/dream/` — DREAM IN LOG.
 - `/steel/` — CHROME & ROSES.
+- `/bethel/` — CLIENT PROPOSAL, not a theme. Live media + growth plan for Bethel United
+  Methodist Church (227 S Acme Rd, SA). Standalone, `noindex`, deliberately NOT linked from the
+  nav so it is shareable-by-link only. Interactive first-year cost estimator, quoted + linked
+  sources, 12 Golden Hour Sanctuary plates in `bethel/img/`. Source of truth for rebuilds is the
+  scratchpad template + `slideart/` `slideart2/`; the page carries its own `<head>` and OG card
+  (`preview.jpg`, 1200x630) so the link previews when he texts or emails it.
 
 ## Register
 Pastel decoden / "kawaii AND professional." Ennaria pastels (blush, lilac, mint, baby blue, butter, peach) + silver chrome + white lace. Display font = Fraunces pushed to its Rogue-most axis (SOFT 100 / weight 640-680 / WONK 0). Body Inter, OSD JetBrains Mono. The real Kanye/Alamodome shot leads the hero full-bleed and regrades via the PP chip.
