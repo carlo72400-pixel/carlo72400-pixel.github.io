@@ -113,7 +113,7 @@
     border-bottom: 1px solid var(--rule);
   }
   .bar-in {
-    max-width: 78rem; margin: 0 auto; padding: .55rem var(--pad);
+    max-width: 68rem; margin: 0 auto; padding: .55rem var(--pad);
     display: flex; align-items: center; gap: 1rem;
   }
   .mark { font-family: var(--display); font-size: 1.02rem; font-weight: 600; white-space: nowrap; }
@@ -140,8 +140,8 @@
     .hero .veil { background: linear-gradient(180deg, rgba(15,22,42,.93) 0%, rgba(15,22,42,.86) 55%, rgba(15,22,42,.72) 100%); }
   }
   .hero-in {
-    position: relative; max-width: 78rem; margin: 0 auto;
-    padding: clamp(3.2rem, 11vh, 6.5rem) var(--pad);
+    position: relative; max-width: 68rem; margin: 0 auto;
+    padding: clamp(2.6rem, 8.5vh, 5rem) var(--pad);
   }
   .hero h1 {
     font-size: clamp(2.1rem, 1.2rem + 4.3vw, 4rem); margin: .5rem 0 0;
@@ -154,10 +154,11 @@
   }
 
   /* ---------- layout ---------- */
-  section { padding: clamp(2.6rem, 7vw, 4.6rem) 0; border-top: 1px solid var(--rule); }
+  section { padding: clamp(2.1rem, 5.5vw, 3.6rem) 0; border-top: 1px solid var(--rule); }
   section:first-of-type { border-top: 0; }
-  .wrap { max-width: 78rem; margin: 0 auto; padding-inline: var(--pad); }
-  .head { max-width: var(--measure); }
+  .wrap { max-width: 68rem; margin: 0 auto; padding-inline: var(--pad); }
+  .head { max-width: var(--measure); margin-inline: auto; text-align: center; }
+  .split .head { margin-inline: 0; text-align: left; }
   .head h2 { font-size: clamp(1.55rem, 1.1rem + 1.7vw, 2.3rem); margin-top: .45rem; }
   .head .lede { margin-top: .8rem; color: var(--text-soft); }
   .band { background: var(--ink); color: var(--on-dark); border-top-color: var(--ink); }
@@ -177,10 +178,10 @@
   .band ul.list li b, .card.lead ul.list li b, .card.wine ul.list li b { color: #fff; }
   .band .note { border-left-color: var(--brass-lift); }
 
-  .grid { display: grid; gap: 1.1rem; margin-top: 1.9rem; }
+  .grid { display: grid; gap: 1.1rem; margin-top: 1.6rem; }
   .g2 { grid-template-columns: repeat(auto-fit, minmax(min(26rem, 100%), 1fr)); }
   .g3 { grid-template-columns: repeat(auto-fit, minmax(min(15rem, 100%), 1fr)); }
-  .split { display: grid; gap: clamp(1.2rem, 3vw, 2.4rem); align-items: start; margin-top: 1.9rem; }
+  .split { display: grid; gap: clamp(1.2rem, 3vw, 2.4rem); align-items: center; margin-top: 1.6rem; }
   .split > *, .grid > * { min-width: 0; }
   @media (min-width: 860px) { .split { grid-template-columns: 1.45fr .9fr; } .split.flip { grid-template-columns: .9fr 1.45fr; } }
 
@@ -299,14 +300,15 @@
   .close { position: relative; background: var(--ink); color: var(--on-dark); overflow: hidden; border: 0; }
   .close img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
   .close .veil { position: absolute; inset: 0;
-    background: linear-gradient(102deg, rgba(15,22,42,.96) 0%, rgba(15,22,42,.9) 42%, rgba(15,22,42,.5) 75%, rgba(15,22,42,.25) 100%); }
+    background: rgba(15,22,42,.82); }
   .close .wrap { position: relative; }
-  .close h2 { color: #fff; font-size: clamp(1.7rem, 1.1rem + 2.6vw, 2.9rem); max-width: 20ch; }
-  .close p { color: var(--on-dark-2); max-width: 50ch; margin-top: 1.1rem; }
-  .contact { margin-top: 2rem; display: flex; flex-wrap: wrap; gap: .55rem 1.6rem; font-family: var(--util); font-size: .96rem; color: var(--on-dark-2); }
+  .close .wrap { text-align: center; }
+  .close h2 { color: #fff; font-size: clamp(1.7rem, 1.1rem + 2.6vw, 2.9rem); max-width: 20ch; margin-inline: auto; }
+  .close p { color: var(--on-dark-2); max-width: 50ch; margin-top: 1.1rem; margin-inline: auto; }
+  .contact { margin-top: 2rem; display: flex; flex-wrap: wrap; justify-content: center; gap: .55rem 1.6rem; font-family: var(--util); font-size: .96rem; color: var(--on-dark-2); }
   .contact a { color: var(--brass-lift); }
 
-  .toolbar { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1.6rem; }
+  .toolbar { display: flex; flex-wrap: wrap; justify-content: center; gap: .6rem; margin-top: 1.6rem; }
   .btn {
     font-family: var(--util); font-size: .92rem; letter-spacing: .04em; padding: .7rem 1.15rem;
     border-radius: 6px; border: 1px solid var(--brass); background: transparent; color: var(--brass);
