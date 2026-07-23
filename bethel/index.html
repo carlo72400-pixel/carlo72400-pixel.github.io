@@ -245,6 +245,18 @@
   .stepper button:hover { border-color: var(--brass); color: var(--brass); }
   .stepper output { font-family: var(--util); font-size: 1.08rem; min-width: 8.5rem; font-variant-numeric: tabular-nums; }
 
+  .proof { display: grid; gap: .7rem; margin-top: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(13.5rem, 100%), 1fr)); }
+  .pcard { display: block; text-decoration: none; background: var(--ink-2);
+    border: 1px solid #31405f; border-radius: 10px; padding: .85rem .95rem; }
+  .pcard:hover { border-color: var(--brass-lift); }
+  .pnum { font-family: var(--display); font-size: 1.85rem; line-height: 1; color: var(--brass-lift); }
+  .pwho { margin-top: .35rem; font-weight: 700; color: #fff; font-size: 1rem; }
+  .pwho span { display: block; font-family: var(--util); font-size: .82rem; font-weight: 400;
+    color: var(--on-dark-2); letter-spacing: .02em; margin-top: .1rem; }
+  .pwhat { margin-top: .4rem; font-size: .93rem; color: var(--on-dark-2); line-height: 1.45; }
+  .pcard.bench { background: transparent; border-style: dashed; border-color: #4a5875; }
+  .pcard.bench .pnum { color: var(--on-dark-2); }
   .ladder { margin-top: .3rem; border-top: 1px solid var(--rule); }
   .lrow { display: flex; justify-content: space-between; gap: 1rem; align-items: baseline;
     padding: .42rem 0; border-bottom: 1px solid var(--rule); font-size: .98rem; color: var(--text-soft); }
@@ -646,27 +658,12 @@
       </figure>
     </div>
 
-    <div class="split flip" style="margin-top:2.6rem; align-items:start">
+    <div class="split flip" style="margin-top:2.6rem; align-items:center">
       <div>
         <h3 style="font-size:1.3rem">Who the young people here are actually watching</h3>
-        <p style="margin-top:.6rem">This is not theoretical. The teenagers on this block follow creators like
-        <b style="color:#fff">Chris Gone Crazy</b>, who started posting from Chicago at about twelve years old with
-        nothing but a phone and now has roughly <b style="color:#fff">3.2 million followers on TikTok</b> and
-        1.8 million on Instagram. No church is going to out-post that, and we should not try.</p>
-        <p style="margin-top:.7rem">But the same thing is already happening inside the faith, at real scale, and
-        mostly by young people nobody handed a studio to:</p>
-        <ul class="list" style="margin-top:.7rem">
-          <li><b>Finley June</b>, born in 2006, at <b>over 100,000 followers</b>. Her bio reads "pierced &amp; praying, follower of Christ." She does not look like the picture most churches carry of a young Christian, and that is exactly why the young people who follow her listen to her.</li>
-          <li><b>Elijah Lamb, 18</b> &mdash; over 650,000 followers, and he organises virtual testimony nights.</li>
-          <li><b>The Helms triplets</b> &mdash; three brothers who posted one video, woke up to 100,000 views, and reached 355,000 followers within a year.</li>
-          <li><b>Liana Gordan, 17</b> &mdash; more than 70,000 followers making short explainer videos about her faith.</li>
-          <li><b>Allie Schnacky, 23</b> &mdash; 4 million followers, and a documentary series that grew out of it.</li>
-          <li><b>Captain Wonni Jo Williams</b> &mdash; a serving Salvation Army officer who does the trends and the dances in uniform.</li>
-        </ul>
-        <p style="margin-top:.8rem">And for anyone on the board who thinks this is only a young person's game:
-        <b style="color:#fff">R. York Moore</b>, a ministry leader in his fifties, built an audience of nearly
-        400,000 and has received more than <b style="color:#fff">140,000 messages from people saying they decided
-        to follow Christ</b> because of it.</p>
+        <p style="margin-top:.6rem">This is not theoretical, and these are not celebrities with studios behind
+        them. They are mostly teenagers and young adults with a phone. The dotted card is the one Bethel is
+        competing against for the same attention. The rest are people doing it for the faith.</p>
         <p class="note" style="border-color:var(--brass-lift)">By one count there were already close to 1,800 active
         Christian creators on TikTok alone, described as "many of them just teenagers posting from their bedrooms."
         Not one of them was waiting for permission, and most of them do not look like a Sunday school poster.
@@ -679,6 +676,49 @@
       </figure>
     </div>
 
+        <div class="proof">
+          <a class="pcard" href="https://www.instagram.com/hisdaught3r/" target="_blank" rel="noopener">
+            <div class="pnum">108K</div>
+            <div class="pwho">Finley June <span>@hisdaught3r &middot; born 2006</span></div>
+            <div class="pwhat">Bio reads "pierced &amp; praying, follower of Christ." She does not look like the picture most churches carry of a young Christian, and that is exactly why the young people who follow her listen.</div>
+          </a>
+          <a class="pcard" href="https://katychristianmagazine.com/2025/11/05/gen-alpha-and-gen-z-christians-leverage-tiktok-and-instagram-to-share-the-gospel" target="_blank" rel="noopener">
+            <div class="pnum">650K</div>
+            <div class="pwho">Elijah Lamb <span>18 years old</span></div>
+            <div class="pwhat">Runs virtual testimony nights for an audience most churches will never reach in person.</div>
+          </a>
+          <a class="pcard" href="https://katychristianmagazine.com/2025/11/05/gen-alpha-and-gen-z-christians-leverage-tiktok-and-instagram-to-share-the-gospel" target="_blank" rel="noopener">
+            <div class="pnum">355K</div>
+            <div class="pwho">The Helms triplets <span>in one year</span></div>
+            <div class="pwhat">Three brothers posted one video, woke up to 100,000 views, and built the rest from a bedroom.</div>
+          </a>
+          <a class="pcard" href="https://katychristianmagazine.com/2025/11/05/gen-alpha-and-gen-z-christians-leverage-tiktok-and-instagram-to-share-the-gospel" target="_blank" rel="noopener">
+            <div class="pnum">70K</div>
+            <div class="pwho">Liana Gordan <span>17 years old</span></div>
+            <div class="pwhat">Short explainer videos about her faith. Seventeen. Exactly the age we would be training here.</div>
+          </a>
+          <a class="pcard" href="https://katychristianmagazine.com/2025/11/05/gen-alpha-and-gen-z-christians-leverage-tiktok-and-instagram-to-share-the-gospel" target="_blank" rel="noopener">
+            <div class="pnum">4M</div>
+            <div class="pwho">Allie Schnacky <span>23 years old</span></div>
+            <div class="pwhat">Four million followers, and a documentary series that grew out of the account.</div>
+          </a>
+          <a class="pcard" href="https://peermag.org/articles/6-christian-tiktok-creators-to-follow-for-biblical-encouragement/" target="_blank" rel="noopener">
+            <div class="pnum">In uniform</div>
+            <div class="pwho">Capt. Wonni Jo Williams <span>Salvation Army officer</span></div>
+            <div class="pwhat">A serving officer doing the trends and the dances, in uniform, without embarrassment.</div>
+          </a>
+          <a class="pcard" href="https://katychristianmagazine.com/2025/11/05/gen-alpha-and-gen-z-christians-leverage-tiktok-and-instagram-to-share-the-gospel" target="_blank" rel="noopener">
+            <div class="pnum">140K</div>
+            <div class="pwho">R. York Moore <span>a ministry leader in his fifties</span></div>
+            <div class="pwhat">Messages received from people saying they decided to follow Christ because of his videos, from an audience of nearly 400,000. This is not only a young person's game.</div>
+          </a>
+          <a class="pcard bench" href="https://www.tiktok.com/@chris_gone_crazy00" target="_blank" rel="noopener">
+            <div class="pnum">3.2M</div>
+            <div class="pwho">Chris Gone Crazy <span>the benchmark, not the model</span></div>
+            <div class="pwhat">Started posting from Chicago at about twelve with nothing but a phone. This is the scale of attention the church is competing with for the same teenagers.</div>
+          </a>
+        </div>
+    <p class="fine" style="margin-top:.8rem; color:var(--on-dark-2); text-align:center">Every card above is a link. Tap any of them and check the numbers yourself.</p>
 
     <div class="split flip" style="margin-top:2.6rem">
       <figure>
