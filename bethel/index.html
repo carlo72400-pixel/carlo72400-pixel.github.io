@@ -81,6 +81,7 @@
   }
 
   * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
   body, .pg { margin: 0; }
   .pg {
     background: var(--page); color: var(--text);
@@ -103,7 +104,9 @@
   /* ---------- nav ---------- */
   nav.bar {
     position: sticky; top: 0; z-index: 50;
+    background: var(--page);
     background: color-mix(in srgb, var(--page) 92%, transparent);
+    -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--rule);
   }
@@ -163,8 +166,8 @@
   .band .card h3 { color: #fff; }
 
   .grid { display: grid; gap: 1.1rem; margin-top: 1.9rem; }
-  .g2 { grid-template-columns: repeat(auto-fit, minmax(26rem, 1fr)); }
-  .g3 { grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); }
+  .g2 { grid-template-columns: repeat(auto-fit, minmax(min(26rem, 100%), 1fr)); }
+  .g3 { grid-template-columns: repeat(auto-fit, minmax(min(15rem, 100%), 1fr)); }
   .split { display: grid; gap: clamp(1.2rem, 3vw, 2.4rem); align-items: start; margin-top: 1.9rem; }
   @media (min-width: 860px) { .split { grid-template-columns: 1.45fr .9fr; } .split.flip { grid-template-columns: .9fr 1.45fr; } }
 
@@ -214,6 +217,7 @@
   }
   .opt:hover { border-color: var(--brass); }
   .opt input { margin: .25rem 0 0; accent-color: var(--brass); width: 1.05rem; height: 1.05rem; flex: none; }
+  .opt > span:not(.amt) { min-width: 0; }
   .opt .t { font-weight: 700; font-size: .97rem; }
   .opt .d { font-size: .86rem; color: var(--text-soft); }
   .opt .amt { margin-left: auto; font-family: var(--util); font-size: .9rem; font-variant-numeric: tabular-nums; white-space: nowrap; padding-left: .5rem; }
@@ -298,6 +302,13 @@
   .close .btn { border-color: var(--brass-lift); color: var(--brass-lift); }
   .close .btn:hover { background: var(--brass-lift); color: #10162a; }
 
+  @media (pointer: coarse) {
+    .links a { padding: .6rem .65rem; }
+    .cite .srclink { display: inline-block; padding: .35rem 0; }
+    .stepper button { width: 2.75rem; height: 2.75rem; }
+    details.src > summary { padding: 1.1rem 1.15rem; }
+    .contact a { padding: .3rem 0; display: inline-block; }
+  }
   @media print {
     nav.bar { display: none; }
     section { break-inside: avoid; }
@@ -389,7 +400,7 @@
       </div>
     </div>
 
-    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(17rem,1fr))">
+    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(min(17rem,100%),1fr))">
       <figure>
         <img src="img/pg_seniors.jpg" alt="Older neighbors sharing a midday meal at long tables in a sunlit fellowship hall">
         <figcaption>Five days a week, in your own building</figcaption>
