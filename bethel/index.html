@@ -27,12 +27,12 @@
     --page:       #f7f2e7;
     --page-2:     #efe7d6;
     --card:       #fffdf7;
-    --brass:      #9c7523;
+    --brass:      #8a6720;
     --brass-lift: #d3a54a;
     --wine:       #7a2e2e;
     --slate:      #57617a;
     --text:       #1b2338;
-    --text-soft:  #4c5568;
+    --text-soft:  #3f4859;
     --rule:       #ddd2ba;
     --on-dark:    #f4efe3;
     --on-dark-2:  #c3cbdd;
@@ -50,7 +50,7 @@
       --page-2:    #161e35;
       --card:      #1a2338;
       --text:      #ece6d8;
-      --text-soft: #a8b0c2;
+      --text-soft: #b7bfd0;
       --rule:      #2f3a55;
       --brass:     #d3a54a;
       --ink:       #0b1020;
@@ -62,7 +62,7 @@
     --page-2:    #161e35;
     --card:      #1a2338;
     --text:      #ece6d8;
-    --text-soft: #a8b0c2;
+    --text-soft: #b7bfd0;
     --rule:      #2f3a55;
     --brass:     #d3a54a;
     --ink:       #0b1020;
@@ -73,9 +73,9 @@
     --page-2:    #efe7d6;
     --card:      #fffdf7;
     --text:      #1b2338;
-    --text-soft: #4c5568;
+    --text-soft: #3f4859;
     --rule:      #ddd2ba;
-    --brass:     #9c7523;
+    --brass:     #8a6720;
     --ink:       #16203a;
     --ink-2:     #22304f;
   }
@@ -85,8 +85,8 @@
   body, .pg { margin: 0; }
   .pg {
     background: var(--page); color: var(--text);
-    font-family: var(--body); font-size: clamp(1rem, 0.97rem + 0.2vw, 1.09rem);
-    line-height: 1.62; -webkit-font-smoothing: antialiased;
+    font-family: var(--body); font-size: clamp(1.06rem, 1rem + 0.28vw, 1.16rem);
+    line-height: 1.68; -webkit-font-smoothing: antialiased;
   }
   img { max-width: 100%; display: block; }
   h1, h2, h3 { font-family: var(--display); font-weight: 600; text-wrap: balance; line-height: 1.14; margin: 0; }
@@ -95,11 +95,13 @@
   :focus-visible { outline: 3px solid var(--brass); outline-offset: 3px; border-radius: 2px; }
 
   .eyebrow {
-    font-family: var(--util); font-size: .69rem; font-weight: 700;
-    letter-spacing: .19em; text-transform: uppercase; color: var(--wine);
+    font-family: var(--util); font-size: .9rem; font-weight: 700;
+    letter-spacing: .14em; text-transform: uppercase; color: var(--wine);
   }
-  :root[data-theme="dark"] .eyebrow, .band .eyebrow { color: var(--brass-lift); }
   @media (prefers-color-scheme: dark) { .eyebrow { color: var(--brass-lift); } }
+  :root[data-theme="dark"] .eyebrow { color: var(--brass-lift); }
+  :root[data-theme="light"] .eyebrow { color: var(--wine); }
+  .band .eyebrow, :root[data-theme="light"] .band .eyebrow { color: var(--brass-lift); }
 
   /* ---------- nav ---------- */
   nav.bar {
@@ -114,12 +116,12 @@
     max-width: 78rem; margin: 0 auto; padding: .55rem var(--pad);
     display: flex; align-items: center; gap: 1rem;
   }
-  .mark { font-family: var(--display); font-size: .95rem; font-weight: 600; white-space: nowrap; }
+  .mark { font-family: var(--display); font-size: 1.02rem; font-weight: 600; white-space: nowrap; }
   .mark span { color: var(--brass); }
   .links { display: flex; gap: .15rem; margin-left: auto; overflow-x: auto; scrollbar-width: none; min-width: 0; }
   .links::-webkit-scrollbar { display: none; }
   .links a {
-    font-family: var(--util); font-size: .74rem; letter-spacing: .06em; text-transform: uppercase;
+    font-family: var(--util); font-size: .9rem; letter-spacing: .05em; text-transform: uppercase;
     color: var(--text-soft); text-decoration: none; padding: .42rem .6rem; border-radius: 4px;
     white-space: nowrap; border-bottom: 2px solid transparent;
   }
@@ -145,9 +147,9 @@
     font-size: clamp(2.1rem, 1.2rem + 4.3vw, 4rem); margin: .5rem 0 0;
     max-width: 17ch; color: #fff;
   }
-  .hero .sub { max-width: 42ch; margin-top: 1.1rem; color: var(--on-dark-2); font-size: 1.06rem; }
+  .hero .sub { max-width: 42ch; margin-top: 1.1rem; color: var(--on-dark-2); font-size: 1.17rem; }
   .hero .by {
-    margin-top: 2.1rem; font-family: var(--util); font-size: .78rem;
+    margin-top: 2.1rem; font-family: var(--util); font-size: .95rem;
     letter-spacing: .05em; color: var(--on-dark-2);
   }
 
@@ -164,6 +166,16 @@
   .band .card { background: var(--ink-2); border-color: #31405f; }
   .band .card p { color: var(--on-dark-2); }
   .band .card h3 { color: #fff; }
+  /* Anything sitting on a dark ground must use the on-dark ramp, or it goes
+     dark-on-dark the moment the viewer is in light mode. */
+  .band ul.list li,
+  .band figcaption,
+  .band .note,
+  .card.lead ul.list li,
+  .card.lead figcaption,
+  .card.wine ul.list li { color: var(--on-dark-2); }
+  .band ul.list li b, .card.lead ul.list li b, .card.wine ul.list li b { color: #fff; }
+  .band .note { border-left-color: var(--brass-lift); }
 
   .grid { display: grid; gap: 1.1rem; margin-top: 1.9rem; }
   .g2 { grid-template-columns: repeat(auto-fit, minmax(min(26rem, 100%), 1fr)); }
@@ -176,8 +188,8 @@
     background: var(--card); border: 1px solid var(--rule); border-radius: 10px;
     padding: 1.15rem 1.25rem; display: flex; flex-direction: column; gap: .5rem;
   }
-  .card h3 { font-size: 1.14rem; }
-  .card p { color: var(--text-soft); font-size: .97rem; }
+  .card h3 { font-size: 1.2rem; }
+  .card p { color: var(--text-soft); font-size: 1.04rem; }
   .card.lead { background: var(--ink); border-color: var(--ink); }
   .card.lead h3 { color: #fff; } .card.lead p { color: var(--on-dark-2); }
   .card.lead .big { color: var(--brass-lift); }
@@ -187,7 +199,7 @@
   .big { font-family: var(--display); font-size: clamp(1.45rem, 1.05rem + 1.7vw, 2rem); color: var(--brass); line-height: 1.08; }
   figure { margin: 0; }
   figure img { border-radius: 10px; border: 1px solid var(--rule); }
-  figcaption { font-size: .84rem; color: var(--text-soft); font-style: italic; margin-top: .5rem; text-align: center; }
+  figcaption { font-size: .97rem; color: var(--text-soft); font-style: italic; margin-top: .5rem; text-align: center; }
 
   ul.list { margin: .3rem 0 0; padding-left: 1.1rem; }
   ul.list li { margin-bottom: .42rem; color: var(--text-soft); }
@@ -195,7 +207,7 @@
   .band ul.list li b { color: #fff; }
 
   .note {
-    font-size: .89rem; color: var(--text-soft); font-style: italic;
+    font-size: 1rem; color: var(--text-soft); font-style: italic;
     border-left: 3px solid var(--brass); padding-left: .85rem; margin-top: 1.1rem;
   }
 
@@ -203,14 +215,14 @@
   .phase { display: grid; gap: .3rem 1.1rem; padding: 1.1rem 0; border-top: 1px solid var(--rule); }
   @media (min-width: 760px) { .phase { grid-template-columns: 8.5rem 1fr 11rem; align-items: start; } }
   .phase:first-of-type { border-top: 0; }
-  .phase .when { font-family: var(--util); font-size: .74rem; letter-spacing: .12em; text-transform: uppercase; color: var(--brass); font-weight: 700; }
-  .phase .cost { font-family: var(--util); font-size: .87rem; color: var(--text); font-variant-numeric: tabular-nums; }
-  .phase .cost small { display: block; color: var(--text-soft); font-size: .78rem; margin-top: .2rem; }
+  .phase .when { font-family: var(--util); font-size: .93rem; letter-spacing: .12em; text-transform: uppercase; color: var(--brass); font-weight: 700; }
+  .phase .cost { font-family: var(--util); font-size: .98rem; color: var(--text); font-variant-numeric: tabular-nums; }
+  .phase .cost small { display: block; color: var(--text-soft); font-size: .95rem; margin-top: .2rem; }
 
   /* ---------- estimator ---------- */
   .est { background: var(--card); border: 1px solid var(--rule); border-radius: 12px; padding: clamp(1.1rem, 3vw, 1.7rem); }
   .est fieldset { border: 0; margin: 0 0 1.3rem; padding: 0; }
-  .est legend { font-family: var(--util); font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--text-soft); font-weight: 700; margin-bottom: .6rem; padding: 0; }
+  .est legend { font-family: var(--util); font-size: .93rem; letter-spacing: .14em; text-transform: uppercase; color: var(--text-soft); font-weight: 700; margin-bottom: .6rem; padding: 0; }
   .opts { display: grid; gap: .55rem; }
   .opt {
     display: flex; gap: .7rem; align-items: flex-start; cursor: pointer;
@@ -219,9 +231,9 @@
   .opt:hover { border-color: var(--brass); }
   .opt input { margin: .25rem 0 0; accent-color: var(--brass); width: 1.05rem; height: 1.05rem; flex: none; }
   .opt > span:not(.amt) { min-width: 0; }
-  .opt .t { display: block; font-weight: 700; font-size: .97rem; }
-  .opt .d { display: block; font-size: .86rem; color: var(--text-soft); margin-top: .15rem; }
-  .opt .amt { margin-left: auto; font-family: var(--util); font-size: .9rem; font-variant-numeric: tabular-nums; white-space: nowrap; padding-left: .5rem; }
+  .opt .t { display: block; font-weight: 700; font-size: 1.06rem; }
+  .opt .d { display: block; font-size: .98rem; color: var(--text-soft); margin-top: .15rem; }
+  .opt .amt { margin-left: auto; font-family: var(--util); font-size: 1rem; font-variant-numeric: tabular-nums; white-space: nowrap; padding-left: .5rem; }
   .opt:has(input:checked) { border-color: var(--brass); background: color-mix(in srgb, var(--brass) 9%, var(--page)); }
 
   .stepper { display: flex; align-items: center; gap: .7rem; }
@@ -230,11 +242,11 @@
     border: 1px solid var(--rule); background: var(--page); color: var(--text); border-radius: 6px; cursor: pointer;
   }
   .stepper button:hover { border-color: var(--brass); color: var(--brass); }
-  .stepper output { font-family: var(--util); font-size: 1rem; min-width: 8.5rem; font-variant-numeric: tabular-nums; }
+  .stepper output { font-family: var(--util); font-size: 1.08rem; min-width: 8.5rem; font-variant-numeric: tabular-nums; }
 
   .total { border-top: 2px solid var(--brass); padding-top: 1.1rem; display: grid; gap: .55rem; }
-  .trow { display: flex; justify-content: space-between; gap: 1rem; font-size: .95rem; color: var(--text-soft); font-variant-numeric: tabular-nums; }
-  .trow.sum { font-size: 1.05rem; color: var(--text); font-weight: 700; padding-top: .55rem; border-top: 1px solid var(--rule); }
+  .trow { display: flex; justify-content: space-between; gap: 1rem; font-size: 1.04rem; color: var(--text-soft); font-variant-numeric: tabular-nums; }
+  .trow.sum { font-size: 1.18rem; color: var(--text); font-weight: 700; padding-top: .55rem; border-top: 1px solid var(--rule); }
   .trow .v { font-family: var(--util); }
   .trow.sum .v { font-family: var(--display); font-size: 1.55rem; color: var(--brass); }
 
@@ -245,7 +257,7 @@
   /* ---------- sources ---------- */
   details.src { border: 1px solid var(--rule); border-radius: 10px; background: var(--card); margin-top: 1.1rem; }
   details.src > summary {
-    cursor: pointer; padding: .95rem 1.15rem; font-family: var(--util); font-size: .85rem;
+    cursor: pointer; padding: .95rem 1.15rem; font-family: var(--util); font-size: .95rem;
     letter-spacing: .05em; text-transform: uppercase; font-weight: 700; color: var(--text);
     list-style: none; display: flex; align-items: center; gap: .6rem;
   }
@@ -256,26 +268,27 @@
   .cites { list-style: none; margin: 0; padding: 0 1.15rem 1.2rem; display: grid; gap: .95rem; }
   .cite { border-top: 1px solid var(--rule); padding-top: .95rem; }
   .cite:first-child { border-top: 0; padding-top: .1rem; }
-  .cite .claim { font-weight: 700; font-size: .97rem; color: var(--text); }
+  .cite .claim { font-weight: 700; font-size: 1.06rem; color: var(--text); }
   .cite blockquote {
     margin: .45rem 0 .5rem; padding: .1rem 0 .1rem .85rem;
-    border-left: 3px solid var(--brass); font-size: .93rem; color: var(--text-soft); font-style: italic;
+    border-left: 3px solid var(--brass); font-size: 1.01rem; color: var(--text-soft); font-style: italic;
   }
   .cite .srclink {
-    font-family: var(--util); font-size: .79rem; letter-spacing: .01em;
+    font-family: var(--util); font-size: .93rem; letter-spacing: .01em;
     color: var(--brass); text-decoration: none; overflow-wrap: anywhere;
     border-bottom: 1px solid color-mix(in srgb, var(--brass) 45%, transparent); padding-bottom: 1px;
   }
   .cite .srclink:hover { border-bottom-color: var(--brass); }
   .cite .srclink::after { content: " \2197"; }
   .cite .flag {
-    display: inline-block; font-family: var(--util); font-size: .66rem; font-weight: 700;
+    display: inline-block; font-family: var(--util); font-size: .88rem; font-weight: 700;
     letter-spacing: .1em; text-transform: uppercase; padding: .12rem .45rem; border-radius: 3px;
     background: color-mix(in srgb, var(--wine) 14%, transparent); color: var(--wine);
     border: 1px solid color-mix(in srgb, var(--wine) 35%, transparent); margin-left: .45rem; vertical-align: 2px;
   }
-  :root[data-theme="dark"] .cite .flag { color: #e0a0a0; border-color: #7a4a4a; background: rgba(122,46,46,.25); }
-  @media (prefers-color-scheme: dark) { .cite .flag { color: #e0a0a0; border-color: #7a4a4a; background: rgba(122,46,46,.25); } }
+  @media (prefers-color-scheme: dark) { .cite .flag { color: #e8b3b3; border-color: #8a5555; background: rgba(122,46,46,.3); } }
+  :root[data-theme="dark"] .cite .flag { color: #e8b3b3; border-color: #8a5555; background: rgba(122,46,46,.3); }
+  :root[data-theme="light"] .cite .flag { color: var(--wine); border-color: color-mix(in srgb, var(--wine) 35%, transparent); background: color-mix(in srgb, var(--wine) 14%, transparent); }
   table { border-collapse: collapse; width: 100%; font-size: .87rem; min-width: 30rem; }
   th { text-align: left; font-family: var(--util); font-size: .7rem; letter-spacing: .1em; text-transform: uppercase;
        color: var(--text-soft); padding: .5rem .6rem; border-bottom: 2px solid var(--rule); font-weight: 700; }
@@ -290,12 +303,12 @@
   .close .wrap { position: relative; }
   .close h2 { color: #fff; font-size: clamp(1.7rem, 1.1rem + 2.6vw, 2.9rem); max-width: 20ch; }
   .close p { color: var(--on-dark-2); max-width: 50ch; margin-top: 1.1rem; }
-  .contact { margin-top: 2rem; display: flex; flex-wrap: wrap; gap: .55rem 1.6rem; font-family: var(--util); font-size: .85rem; color: var(--on-dark-2); }
+  .contact { margin-top: 2rem; display: flex; flex-wrap: wrap; gap: .55rem 1.6rem; font-family: var(--util); font-size: .96rem; color: var(--on-dark-2); }
   .contact a { color: var(--brass-lift); }
 
   .toolbar { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1.6rem; }
   .btn {
-    font-family: var(--util); font-size: .82rem; letter-spacing: .04em; padding: .6rem 1.05rem;
+    font-family: var(--util); font-size: .92rem; letter-spacing: .04em; padding: .7rem 1.15rem;
     border-radius: 6px; border: 1px solid var(--brass); background: transparent; color: var(--brass);
     cursor: pointer; text-decoration: none; display: inline-block;
   }
@@ -647,28 +660,28 @@
           <legend>Monthly media plan</legend>
           <div class="opts">
             <label class="opt">
-              <input type="radio" name="plan" value="400" checked>
+              <input type="radio" name="plan" value="500" checked>
               <span>
                 <span class="t">Starter &middot; my recommendation</span>
                 <span class="d">Social pages managed, two to three posts weekly, one video from Sunday, the YouTube channel run properly.</span>
               </span>
-              <span class="amt">$400/mo</span>
+              <span class="amt">$500/mo</span>
             </label>
             <label class="opt">
-              <input type="radio" name="plan" value="700">
+              <input type="radio" name="plan" value="900">
               <span>
                 <span class="t">Growth</span>
                 <span class="d">Everything in Starter, plus the interview series, three to four videos weekly, one event covered monthly, and youth team training.</span>
               </span>
-              <span class="amt">$700/mo</span>
+              <span class="amt">$900/mo</span>
             </label>
             <label class="opt">
-              <input type="radio" name="plan" value="1000">
+              <input type="radio" name="plan" value="1400">
               <span>
                 <span class="t">Full Media</span>
                 <span class="d">Everything in Growth, plus livestream direction each Sunday, website upkeep, and sponsor outreach materials.</span>
               </span>
-              <span class="amt">$1,000/mo</span>
+              <span class="amt">$1,400/mo</span>
             </label>
           </div>
         </fieldset>
@@ -679,7 +692,7 @@
             <label class="opt">
               <input type="checkbox" id="optAv" checked>
               <span><span class="t">AV rescue</span><span class="d">Labor, setup and volunteer training.</span></span>
-              <span class="amt">$400</span>
+              <span class="amt">$600</span>
             </label>
             <label class="opt">
               <input type="checkbox" id="hw" checked>
@@ -689,12 +702,12 @@
             <label class="opt">
               <input type="checkbox" id="anniv">
               <span><span class="t">60th Anniversary package</span><span class="d">Anniversary film, the interview series, and event coverage through the year.</span></span>
-              <span class="amt">$1,800</span>
+              <span class="amt">$2,400</span>
             </label>
             <label class="opt">
               <input type="checkbox" id="web">
               <span><span class="t">Website design and build</span><span class="d">First three months of updates included.</span></span>
-              <span class="amt">$1,200</span>
+              <span class="amt">$1,800</span>
             </label>
           </div>
         </fieldset>
@@ -706,14 +719,14 @@
             <output id="evOut">0 events &middot; $0</output>
             <button type="button" id="evPlus" aria-label="One more event">+</button>
           </div>
-          <p class="d" style="font-size:.86rem;color:var(--text-soft);margin-top:.6rem">$300 per event, highlight video included. Only if you want a specific event filmed beyond what the monthly plan covers.</p>
+          <p class="d" style="font-size:.98rem;color:var(--text-soft);margin-top:.6rem">$450 per event, highlight video included. Only if you want a specific event filmed beyond what the monthly plan covers.</p>
         </fieldset>
 
         <div class="total">
-          <div class="trow"><span>Monthly plan for twelve months</span><span class="v" id="tPlan">$4,800</span></div>
-          <div class="trow"><span>One-time projects</span><span class="v" id="tOnce">$1,410</span></div>
+          <div class="trow"><span>Monthly plan for twelve months</span><span class="v" id="tPlan">$6,000</span></div>
+          <div class="trow"><span>One-time projects</span><span class="v" id="tOnce">$1,610</span></div>
           <div class="trow"><span>Event filming</span><span class="v" id="tEv">$0</span></div>
-          <div class="trow sum"><span>First-year total</span><span class="v" id="tSum">$6,210</span></div>
+          <div class="trow sum"><span>First-year total</span><span class="v" id="tSum">$7,610</span></div>
         </div>
         <p class="note" id="grantNote">Two Rio Texas Conference grants may cover the one-time work entirely. I will write the applications for Bethel at no charge.</p>
       </div>
@@ -724,6 +737,15 @@
           <p><b>New People, New Places</b>, up to $6,000 from the Rio Texas Conference. Verified open for the 2026 cycle.</p>
           <p><b>Black Church Development Grant</b>, up to $5,000, whose funding areas include Technology Upgrade and Ministry with Younger People. We should confirm the current cycle by phone.</p>
           <p>I write both applications for Bethel at no charge. If either lands, the equipment and licenses are paid for and the monthly plan is the only line left in the budget.</p>
+        </div>
+        <div class="card">
+          <h3>What this costs elsewhere</h3>
+          <p>So the numbers have context. Church-focused marketing agencies charge <b>$1,500 to $3,500 a month</b>, and the published packages from church media companies run <b>$997</b> and <b>$1,697</b> a month. Part-time church social media help is commonly <b>$1,500 to $3,500 a month</b> at ten to twenty hours a week. A freelance church website build runs <b>$500 to $5,000</b>, and an agency build starts around <b>$2,500</b>.</p>
+          <p>None of those include someone standing in your building on a Sunday, and none of them train your young people to take the work over.</p>
+        </div>
+        <div class="card">
+          <h3>Why my number is below all of that</h3>
+          <p>This is my home city, Bethel is a neighborhood church, and I want this to be the work I am known for. So the rate is deliberately under market. It is not a discount I can hold forever, and it is not what the next church will pay, but it is what I am offering Bethel for its 60th year.</p>
         </div>
         <div class="card">
           <h3>No contract</h3>
@@ -820,6 +842,27 @@
           <div class="claim">OBS Studio as the free streaming software, documented by the UMC itself</div>
           <blockquote>"a free and powerful tool that many churches use to livestream worship"</blockquote>
           <a class="srclink" href="https://www.resourceumc.org/en/content/streaming-church-worship-with-obs-studio-a-beginners-guide" target="_blank" rel="noopener">resourceumc.org &mdash; Streaming church worship with OBS Studio</a>
+        </li>
+      </ul>
+    </details>
+
+    <details class="src">
+      <summary>What this work costs elsewhere</summary>
+      <ul class="cites">
+        <li class="cite">
+          <div class="claim">Church-focused agencies and freelancers, monthly</div>
+          <blockquote>Freelancers at "$300-$800/mo" entry and "$800-$2,500/mo" mid-tier; church-focused agencies at "$1,500-$3,500/mo." Published from a church web and marketing firm's own pricing guide, April 2026.</blockquote>
+          <a class="srclink" href="https://reachrightstudios.com/church-web-design/" target="_blank" rel="noopener">reachrightstudios.com &mdash; church web design and marketing</a>
+        </li>
+        <li class="cite">
+          <div class="claim">Part-time church social media help</div>
+          <blockquote>"$20-$30/hr" for small churches, and "$1,500-$3,500/month" at ten to twenty hours a week, per a church technology job board's own role guide, June 2026.</blockquote>
+          <a class="srclink" href="https://www.christiantechjobs.io/blog/church-social-media-manager-role-guide" target="_blank" rel="noopener">christiantechjobs.io &mdash; church social media manager role guide</a>
+        </li>
+        <li class="cite">
+          <div class="claim">What a church website costs to build</div>
+          <blockquote>Freelance designer "$500-$5,000" one time; professional agency or custom design "$2,500-$10,000+"; outsourced content updates "$50-$150/month."</blockquote>
+          <a class="srclink" href="https://get.tithe.ly/blog/what-should-you-pay-for-a-church-website" target="_blank" rel="noopener">tithe.ly &mdash; what should you pay for a church website</a>
         </li>
       </ul>
     </details>
@@ -928,11 +971,11 @@
   var evOut = document.getElementById('evOut');
 
   function recalc() {
-    var plan = 400;
+    var plan = 500;
     planEls.forEach(function (el) { if (el.checked) { plan = parseInt(el.value, 10); } });
     var yearly = plan * 12;
-    var once = (av.checked ? 400 : 0) + (hw.checked ? 1010 : 0) + (anniv.checked ? 1800 : 0) + (web.checked ? 1200 : 0);
-    var ev = events * 300;
+    var once = (av.checked ? 600 : 0) + (hw.checked ? 1010 : 0) + (anniv.checked ? 2400 : 0) + (web.checked ? 1800 : 0);
+    var ev = events * 450;
 
     document.getElementById('tPlan').textContent = money(yearly);
     document.getElementById('tOnce').textContent = money(once);
