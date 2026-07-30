@@ -1,12 +1,41 @@
-# CHROME DIGICAM — site state (saved Jul 15 2026, updated late)
+# CHROME DIGICAM — site state (saved Jul 15 2026, updated Jul 30)
 
-> NEW SESSION START HERE: read this file + the job-hunt-2026 memory. Site is LIVE and current. Edit `index.html`, then `cp index.html index-kawaii.html`, commit, push. Verify visual changes with HEADLESS Chrome (see Gotchas), not just the preview pane.
+> NEW SESSION START HERE: read this file + the job-hunt-2026 memory. Site is LIVE and current. As of Jul 30 2026 the homepage is SPLIT-FILE (see Architecture below): CSS lives in `assets/css/`, JS in `assets/js/`, `index.html` is markup only. Edit the file that owns the thing, bump its `?v=` stamp in BOTH `index.html` and `index-kawaii.html` (or `cp index.html index-kawaii.html` after HTML edits), commit, push. Verify visual changes with HEADLESS Chrome (see Gotchas), not just the preview pane.
+
+## Architecture (added Jul 30 2026 — modeled on his mom's stanthony-olph.org build)
+
+Monolith split into st-anthony-style partials. His words: "apply this type of coding and design
+to our website." Byte-verified extraction (reassembly matched the old inline blocks exactly;
+before/after headless captures diffed at the same-build noise floor).
+
+- `assets/css/base/` — `_variables.css` (ALL tokens: palette, fonts, spring, shadows),
+  `_reset.css`, `_base.css` (.wrap, h2, .kicker, section lace, .pxchain).
+- `assets/css/layout/` — `_nav.css`, `_hero.css` (hero + marquee), `_bands.css` (page-break
+  dividers), `_mobile-nav.css` (swipe chips), `_footer.css`.
+- `assets/css/components/` — `_chrome.css` (soft camera chrome), `_playback.css`,
+  `_photomode.css` (photo grid + A/B slider), `_kinetic.css`, `_tapes.css`, `_monitors.css`,
+  `_about.css`, `_rates.css`, `_floating.css` (fab stack + share sheet), `_totop.css`
+  (back-to-top + covered-text fixes).
+- `assets/js/` — `main.js` (looks/PP chip, kinetic, lightbox, observers, ?proof hook),
+  `a11y.js` (post-review video a11y patch), `share.js`, `bands.js` (PAGES array + section nav).
+- **LINK ORDER IS THE CASCADE.** The 18 `<link>` tags in `index.html` are in the original
+  source order of the old inline block; specificity ties resolve by that order. Never reorder
+  or alphabetize them.
+- **url() paths inside the CSS files are root-absolute** (`/assets/...`, `/steel/...`) because
+  stylesheet-relative would resolve against `assets/css/...`. Keep them root-absolute; they
+  work on Pages, the custom domain, and `http://localhost` — but NOT `file://` (always verify
+  through a server, which was already the rule).
+- **Cache-busting `?v=YYYYMMDD`** on every link/script tag, mom-style. Bump the stamp on the
+  file(s) you touched or phones keep the stale cached one.
+- `/dream/`, `/steel/`, `/bethel/`, `/photoshoots/`, `index-camera.html` stay standalone
+  single-file faces on purpose (art pieces / client page); only the homepage got the
+  architecture.
 
 ## Live
 - Homepage: https://carlo72400-pixel.github.io/  (this is the front door now)
 - Repo: carlo72400-pixel/carlo72400-pixel.github.io, source in this folder.
-- Deploy: edit `index.html`, `git add -A && git commit && git push`. If Pages sticks on "building", POST to `/pages/builds` via gh.
-- Edit the LIVE file `index.html`. `index-kawaii.html` is a kept-identical copy (the old preview link); `cp index.html index-kawaii.html` after changes to keep them matched.
+- Deploy: edit the owning file under `assets/css/` / `assets/js/` (or `index.html` for markup), bump `?v=`, `git add -A && git commit && git push`. If Pages sticks on "building", POST to `/pages/builds` via gh.
+- `index-kawaii.html` is a kept-identical copy of `index.html` (the old preview link); `cp index.html index-kawaii.html` after HTML changes to keep them matched. CSS/JS edits reach both automatically (both link the same files).
 
 ## Alt faces (all reachable, not the front door)
 - `/index-camera.html` — the old Camera Interface homepage, preserved.
