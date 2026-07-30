@@ -31,6 +31,27 @@ before/after headless captures diffed at the same-build noise floor).
   single-file faces on purpose (art pieces / client page); only the homepage got the
   architecture.
 
+## Copy density pass (Jul 30 2026, his ask "cut this down, simpler and cleaner")
+
+Page went 1,813 -> 1,607 visible words with ZERO facts removed. Everything cut is either
+tightened prose or moved one tap deep. Rates section carried the most: 497 -> 331 words.
+
+- **`.more` disclosure component** (`components/_disclosure.css`) = the reusable pattern for
+  "detail one tap deep," lifted from how his mom's bulletin hides its PDF archive. Native
+  `<details>`, no JS. Markup: `<details class="more"><summary><span><b>LABEL</b>
+  <span class="n">plain-language teaser</span></span></summary><div class="more-body">…`.
+  The teaser is load-bearing: a collapsed block must still say what is inside and roughly what
+  it costs, or it reads as hidden rather than tidy.
+- RATES now shows the **7 core packages** open; **COMMERCIAL WORK** (3 tiers) and
+  **ADD-ONS + HOURLY** (9 items) collapse. Nothing was deleted, all 10 packages and every a la
+  carte line are still on the page. Market-range lines stay on every card (his Jul 23 call).
+- Fine print split into two lines: turnaround promise first (the thing clients actually need),
+  terms second. Was one 40-word run-on.
+- Prose tightened in INFO (3 paragraphs to 2), the three lane cards, and the SA Current
+  paragraph. Facts, numbers, and the award phrasing untouched.
+- Verified: no console errors, no horizontal overflow at 375px, disclosure bodies do not
+  overflow their container open or closed, headless renders checked at 1100px and 500px.
+
 ## Live
 - Homepage: https://carlo72400-pixel.github.io/  (this is the front door now)
 - Repo: carlo72400-pixel/carlo72400-pixel.github.io, source in this folder.
