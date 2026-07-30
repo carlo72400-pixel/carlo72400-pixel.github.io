@@ -21,19 +21,22 @@
 <meta name="twitter:image" content="https://carlo72400-pixel.github.io/bethel/preview.jpg">
 <meta name="theme-color" content="#16203a">
 <style>
+  /* Dark is the page's one and only face (Gianni's call, 2026-07-30: light text on a
+     dark ground reads better for him, and he presents from this page). Print flips to
+     light below so paper copies stay ink-sane. */
   :root {
-    --ink:        #16203a;
-    --ink-2:      #22304f;
-    --page:       #f7f2e7;
-    --page-2:     #efe7d6;
-    --card:       #fffdf7;
-    --brass:      #8a6720;
+    --ink:        #0b1020;
+    --ink-2:      #161e35;
+    --page:       #10162a;
+    --page-2:     #161e35;
+    --card:       #1a2338;
+    --brass:      #d3a54a;
     --brass-lift: #d3a54a;
     --wine:       #7a2e2e;
-    --slate:      #57617a;
-    --text:       #1b2338;
-    --text-soft:  #3f4859;
-    --rule:       #ddd2ba;
+    --slate:      #8a94ab;
+    --text:       #ece6d8;
+    --text-soft:  #c2cadb;
+    --rule:       #2f3a55;
     --on-dark:    #f4efe3;
     --on-dark-2:  #c3cbdd;
 
@@ -44,40 +47,17 @@
     --measure: 64ch;
     --pad: clamp(1.15rem, 4vw, 2.5rem);
   }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --page:      #10162a;
-      --page-2:    #161e35;
-      --card:      #1a2338;
-      --text:      #ece6d8;
-      --text-soft: #b7bfd0;
-      --rule:      #2f3a55;
-      --brass:     #d3a54a;
-      --ink:       #0b1020;
-      --ink-2:     #161e35;
-    }
-  }
-  :root[data-theme="dark"] {
+  /* Viewer theme toggles are intentionally inert: both resolve to the same dark face. */
+  :root[data-theme="dark"], :root[data-theme="light"] {
     --page:      #10162a;
     --page-2:    #161e35;
     --card:      #1a2338;
     --text:      #ece6d8;
-    --text-soft: #b7bfd0;
+    --text-soft: #c2cadb;
     --rule:      #2f3a55;
     --brass:     #d3a54a;
     --ink:       #0b1020;
     --ink-2:     #161e35;
-  }
-  :root[data-theme="light"] {
-    --page:      #f7f2e7;
-    --page-2:    #efe7d6;
-    --card:      #fffdf7;
-    --text:      #1b2338;
-    --text-soft: #3f4859;
-    --rule:      #ddd2ba;
-    --brass:     #8a6720;
-    --ink:       #16203a;
-    --ink-2:     #22304f;
   }
 
   * { box-sizing: border-box; }
@@ -96,12 +76,8 @@
 
   .eyebrow {
     font-family: var(--util); font-size: .9rem; font-weight: 700;
-    letter-spacing: .14em; text-transform: uppercase; color: var(--wine);
+    letter-spacing: .14em; text-transform: uppercase; color: var(--brass-lift);
   }
-  @media (prefers-color-scheme: dark) { .eyebrow { color: var(--brass-lift); } }
-  :root[data-theme="dark"] .eyebrow { color: var(--brass-lift); }
-  :root[data-theme="light"] .eyebrow { color: var(--wine); }
-  .band .eyebrow, :root[data-theme="light"] .band .eyebrow { color: var(--brass-lift); }
 
   /* ---------- nav ---------- */
   nav.bar {
@@ -263,15 +239,11 @@
   .lrow .v { font-family: var(--util); font-variant-numeric: tabular-nums; white-space: nowrap; }
   .lrow.chg { color: var(--text); font-weight: 700; }
   .lrow.chg .v { color: var(--brass); font-size: 1.12rem; }
-  .lrow.don { color: var(--wine); border-bottom: 0; }
+  .lrow.don { color: #e8b3b3; border-bottom: 0; }
   .lrow.don .v { font-weight: 700; }
-  :root[data-theme="dark"] .lrow.don { color: #e8b3b3; }
-  @media (prefers-color-scheme: dark) { .lrow.don { color: #e8b3b3; } }
   .card.wine .lrow, .card.lead .lrow { border-color: rgba(255,255,255,.18); }
   .fine { font-size: .92rem; font-style: italic; color: var(--text-soft); }
-  .trow.give { color: var(--wine); font-weight: 700; border-top: 1px dashed var(--rule); padding-top: .55rem; }
-  :root[data-theme="dark"] .trow.give { color: #e8b3b3; }
-  @media (prefers-color-scheme: dark) { .trow.give { color: #e8b3b3; } }
+  .trow.give { color: #e8b3b3; font-weight: 700; border-top: 1px dashed var(--rule); padding-top: .55rem; }
   .total { border-top: 2px solid var(--brass); padding-top: 1.1rem; display: grid; gap: .55rem; }
   .trow { display: flex; justify-content: space-between; gap: 1rem; font-size: 1.04rem; color: var(--text-soft); font-variant-numeric: tabular-nums; }
   .trow.sum { font-size: 1.18rem; color: var(--text); font-weight: 700; padding-top: .55rem; border-top: 1px solid var(--rule); }
@@ -311,12 +283,9 @@
   .cite .flag {
     display: inline-block; font-family: var(--util); font-size: .88rem; font-weight: 700;
     letter-spacing: .1em; text-transform: uppercase; padding: .12rem .45rem; border-radius: 3px;
-    background: color-mix(in srgb, var(--wine) 14%, transparent); color: var(--wine);
-    border: 1px solid color-mix(in srgb, var(--wine) 35%, transparent); margin-left: .45rem; vertical-align: 2px;
+    background: rgba(122,46,46,.3); color: #e8b3b3;
+    border: 1px solid #8a5555; margin-left: .45rem; vertical-align: 2px;
   }
-  @media (prefers-color-scheme: dark) { .cite .flag { color: #e8b3b3; border-color: #8a5555; background: rgba(122,46,46,.3); } }
-  :root[data-theme="dark"] .cite .flag { color: #e8b3b3; border-color: #8a5555; background: rgba(122,46,46,.3); }
-  :root[data-theme="light"] .cite .flag { color: var(--wine); border-color: color-mix(in srgb, var(--wine) 35%, transparent); background: color-mix(in srgb, var(--wine) 14%, transparent); }
   table { border-collapse: collapse; width: 100%; font-size: .87rem; min-width: 30rem; }
   th { text-align: left; font-family: var(--util); font-size: .7rem; letter-spacing: .1em; text-transform: uppercase;
        color: var(--text-soft); padding: .5rem .6rem; border-bottom: 2px solid var(--rule); font-weight: 700; }
@@ -353,6 +322,14 @@
     .contact a { padding: .3rem 0; display: inline-block; }
   }
   @media print {
+    /* Paper flips back to the light palette so a printed copy is readable and cheap. */
+    :root, :root[data-theme="dark"], :root[data-theme="light"] {
+      --page: #ffffff; --page-2: #f4efe3; --card: #ffffff;
+      --text: #1b2338; --text-soft: #3f4859; --rule: #ccc3ad;
+      --brass: #8a6720; --ink: #16203a; --ink-2: #22304f;
+    }
+    .eyebrow { color: #7a2e2e; }
+    .lrow.don, .trow.give { color: #7a2e2e; }
     nav.bar { display: none; }
     section { break-inside: avoid; }
     details.src[open] { break-before: page; }
@@ -435,40 +412,17 @@
 <section id="hub">
   <div class="wrap">
     <div class="head">
-      <div class="eyebrow">What I found</div>
-      <h2>Bethel is already a hub. Almost nobody outside these walls knows it.</h2>
-      <p class="lede">Before writing any of this I looked up what this church actually does. Three things stood out, and not one of them shows up anywhere a stranger would look.</p>
+      <div class="eyebrow">What I found, in one breath</div>
+      <h2>Bethel is already a hub. Nobody outside these walls knows it.</h2>
     </div>
 
-    <div class="grid g3">
-      <div class="card">
-        <h3>A city senior center runs in your fellowship hall</h3>
-        <p>Weekday hot meals for neighbors over sixty, operated in the church fellowship hall in partnership with the City of San Antonio. That is not a small thing. That is a congregation trusted by the city to feed its elders five days a week.</p>
-      </div>
-      <div class="card">
-        <h3>Twenty neighborhood children spent the summer reading here</h3>
-        <p>Project Transformation brought a literacy and mentorship program into this building, in a zip code where about six percent of adults hold a bachelor's degree. Those are the families already walking through your doors.</p>
-      </div>
-      <div class="card">
-        <h3>And the neighborhood's meetings</h3>
-        <p>The building hosts community council gatherings, with the district councilman among the people who use the room. Bethel is where this neighborhood already assembles.</p>
-      </div>
-    </div>
-
-    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(min(17rem,100%),1fr))">
-      <figure>
-        <img src="img/pg_seniors.jpg" alt="Older neighbors sharing a midday meal at long tables in a sunlit fellowship hall">
-        <figcaption>Five days a week, in your own building</figcaption>
-      </figure>
-      <figure>
-        <img src="img/pg_literacy.jpg" alt="A volunteer reading a picture book with two children in a sunlit church room">
-        <figcaption>Twenty neighborhood children, one summer</figcaption>
-      </figure>
-    </div>
-
-    <div class="card lead" style="margin-top:1.4rem">
-      <h3>This is the part that matters</h3>
-      <p>A church that feeds its elders, teaches its children to read, and lends its room to the neighborhood is not a church with nothing to say. It is a church whose story is not leaving the building. Everything in this plan exists to fix that one problem.</p>
+    <div class="card lead" style="margin-top:1.6rem">
+      <ul class="list" style="margin-top:.2rem">
+        <li><b>A city senior center</b> feeds neighbors over sixty in your fellowship hall, five days a week.</li>
+        <li><b>Twenty neighborhood children</b> spent the summer learning to read here with Project Transformation.</li>
+        <li><b>The neighborhood's own meetings</b> happen in this building, the district councilman included.</li>
+      </ul>
+      <p style="margin-top:.8rem">A church that feeds its elders, teaches its children to read, and lends the neighborhood its room is not a church with nothing to say. Its story is just not leaving the building. That is the one problem this whole page exists to fix, so the rest of it is about what we do, not what I found.</p>
     </div>
   </div>
 </section>
@@ -547,7 +501,7 @@
       <div class="phase">
         <div class="when">Step 3 &middot; Ongoing</div>
         <div>
-          <p>One stream leaves the building and lands everywhere at once. OBS sends a single feed to a free relay service, and the relay delivers it to the YouTube channel Bethel already owns and to the Facebook page at the same moment, with both platforms' comments readable in one window so a prayer request never goes unanswered. Members who love Zoom keep Zoom. Nothing is taken away. Two platforms is deliberate: Facebook is where Bethel's people already are, YouTube is where the city searches, and every platform past those two only adds ways for a Sunday to break. Short clips for Instagram or TikTok get cut from the recording afterward, which is a weekday job, not a Sunday one.</p>
+          <p>One stream leaves the building and lands everywhere at once. OBS sends a single feed to a free relay service, and the relay delivers it to the YouTube channel Bethel already owns and to the Facebook page at the same moment, with both platforms' comments readable in one window so a prayer request never goes unanswered. <b>And Zoom retires.</b> It was doing a job it was never built for: a meeting room is invitation-only by nature, so no neighbor could ever find the service. Members who watched on Zoom get a simpler door, one public link that works on any phone, and somebody walks them through it once. Two platforms is deliberate: Facebook is where Bethel's people already are, YouTube is where the city searches, and every platform past those two only adds ways for a Sunday to break. Short clips for Instagram or TikTok get cut from the recording afterward, which is a weekday job, not a Sunday one.</p>
         </div>
         <div class="cost">$0</div>
       </div>
@@ -566,6 +520,68 @@
         <div class="cost">$0<small>CCLI already covered. CVLI ~$315/yr only if movie nights happen.</small></div>
       </div>
     </div>
+    <div style="margin-top:2.6rem">
+      <h3 style="font-size:1.3rem">Replacing the Apple TV: the honest menu</h3>
+      <p style="margin-top:.6rem; color:var(--text-soft)">The three TVs were fed by AirPlay, an Apple feature that does not exist on the new Windows machine. There are four ways to replace it. Here they all are, verdicts included, so nobody has to take my word for it.</p>
+    </div>
+    <div class="grid g2">
+      <div class="card">
+        <div class="eyebrow">The pick &middot; $35 to $60</div>
+        <h3>A wired HDMI splitter</h3>
+        <p>One powered box (OREI or gofanco, with EDID control so three mismatched TVs cannot argue about resolution). The Apple TV unplugs, the PC plugs in, every screen shows the same frame at the same instant. Zero delay, nothing to pair, no wifi involved, nothing to break at 10:45.</p>
+      </div>
+      <div class="card">
+        <div class="eyebrow">Only if the cable cannot get there &middot; about $175 to $210</div>
+        <h3>HDMI over network cable</h3>
+        <p>One sender at the desk, a small box behind each TV, cheap Cat6 cable in between (OREI makes the standard 1-to-4 kit). Worth it only if the survey finds runs of 75 feet or more, or walls the cable cannot cross. If a 50-foot cable reaches, skip this.</p>
+      </div>
+      <div class="card">
+        <div class="eyebrow">Skip &middot; $500 to $700 for three screens</div>
+        <h3>Wireless HDMI kits</h3>
+        <p>They run 30 to 150 milliseconds behind, share the same crowded air as the church wifi and every phone in the building, and church users report drops when several run at once. It will hiccup mid-sermon eventually, and nobody can fix it from the booth. Fine for one lobby TV someday. Not for the sanctuary.</p>
+      </div>
+      <div class="card">
+        <div class="eyebrow">Skip &middot; $150 to $240 for three</div>
+        <h3>Streaming sticks (Fire TV, Roku, Chromecast)</h3>
+        <p>Casting means three separate compressed streams over wifi, each buffering on its own schedule, so the three TVs will not even match each other. Add update prompts, screensavers and a pairing ritual every Sunday morning. Great in a youth room. Terrible as the main feed.</p>
+      </div>
+    </div>
+    <p class="note">One rule with no exceptions: no software that fakes AirPlay on Windows. The old system died because Sunday depended on two abandoned apps, and the whole point of this rebuild is that it never depends on unmaintained software again. A cable has no updates, no login, and no vendor to abandon it.</p>
+
+    <div style="margin-top:2.6rem">
+      <h3 style="font-size:1.3rem">The shopping list</h3>
+      <p style="margin-top:.6rem; color:var(--text-soft)">Everything below is billed at cost, with receipts, under the $400 not-to-exceed ceiling, and nothing gets bought without written approval first. Depending on what the room survey finds, the likely basket lands between $150 and $300.</p>
+    </div>
+    <div class="grid g3">
+      <div class="card">
+        <h3>Make Sunday work</h3>
+        <ul class="list">
+          <li><b>Powered 1x4 HDMI splitter</b> with EDID control, $35 to $60</li>
+          <li><b>HDMI cables</b> cut to the measured runs; anything over 25 feet must be an active or fiber cable, $25 to $80 per long run, or short runs cost a few dollars</li>
+          <li><b>USB capture card</b> to bring the camera into OBS: $20 to $30 for a solid budget card, about $100 for the Elgato Cam Link 4K if we want headroom</li>
+          <li><b>USB audio interface</b>, only if the sound board has no USB output: Behringer UM2 about $44</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Organize the room</h3>
+        <ul class="list">
+          <li><b>Label maker</b> (about $30) with flexible wrap-around tape; it stays with the church so anyone can relabel later</li>
+          <li><b>Velcro roll</b> for every cable that ever gets unplugged; zip ties only on permanent runs</li>
+          <li><b>Cable clips</b> to get wires off the floor</li>
+          <li><b>Surge-protecting power strip</b> for the whole desk</li>
+          <li><b>Laminated runbook</b> on the desk, a few dollars at a print counter</li>
+          <li><b>Spares box</b>, labeled: two HDMI, one XLR, one USB cable, and fresh mic batteries, the number one Sunday morning failure</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Worth its own ask</h3>
+        <ul class="list">
+          <li><b>Battery backup (UPS)</b>, $84 to $130: a power blip mid-service no longer kills the stream in front of everybody</li>
+          <li><b>A wired internet drop to the desk</b>, if streaming rides the wifi today; this one upgrade beats everything else on the page for stream reliability</li>
+        </ul>
+      </div>
+    </div>
+
     <p class="note">OBS Studio is the free streaming software the United Methodist Church documents in its own guide on ResourceUMC. This is the standard path, not an experiment.</p>
   </div>
 </section>
@@ -581,7 +597,7 @@
     <div class="split">
       <div>
         <h3 style="font-size:1.3rem">A presence, run for you</h3>
-        <p style="margin-top:.6rem">Facebook for the congregation we have: service reminders, event photos, celebrations, prayer updates. Instagram, TikTok, and any other platform worth being on for the congregation we want, each one set up and run by me: short, joyful videos where people under 35 actually look.</p>
+        <p style="margin-top:.6rem"><b style="color:#fff">Facebook and YouTube first, because that is where Bethel's people actually are.</b> Facebook carries the week: service reminders, event photos, celebrations, prayer updates. YouTube carries the services and gets found in search. Instagram and TikTok come later, as the youth media team's lane: short, joyful videos where people under 35 actually look, made by the young people we train rather than bought as a service.</p>
         <ul class="list" style="margin-top:.8rem">
           <li>Sunday: capture the service and the moments after</li>
           <li>The week's slides and lyrics sent to me ahead of time and ready before service, so nobody is building them at 10:50</li>
@@ -626,7 +642,7 @@
           <li><b>Youth Game Night</b>: cheap to run, exactly what draws teenagers</li>
           <li><b>Rent the space, with sound included.</b> Comparable San Antonio churches charge by the hour for weddings, quincea&ntilde;eras and recitals, and build the sound technician into the price. The fellowship hall and the sanctuary sit empty six days a week.</li>
         </ul>
-        <p class="note" style="border-color:var(--brass-lift)">Sponsor tiers at $250, $500 and $1,000 match what comparable church festivals charge locally. Recognition is always written as a thank-you and never as an advertisement, which is what keeps the money tax-free for the church under IRS sponsorship rules.</p>
+        <p class="note" style="border-color:var(--brass-lift)">Sponsor tiers at $100, $250, $500 and a single $1,000 "presented by" slot match what comparable church festivals actually charge; a nearby parish festival publishes five levels running $50 to $1,000. Recognition is always written as a thank-you and never as an advertisement, which is what keeps the money tax-free for the church under IRS sponsorship rules. The whole discipline in six words: logo yes, sales pitch no.</p>
       </div>
       <div class="grid" style="margin-top:0">
         <figure>
@@ -637,6 +653,21 @@
           <img src="img/pg_quince.jpg" alt="A family celebration filling a church hall, with a sound speaker at the edge of the frame">
           <figcaption>A hall that sits empty six days a week, earning, with sound included</figcaption>
         </figure>
+      </div>
+    </div>
+
+    <div class="grid g3" style="margin-top:1.4rem">
+      <div class="card">
+        <h3>How Food Truck Sunday actually happens</h3>
+        <p>Year one, honestly: the truck wins and the crowd stays, and that is the deal. The church's leverage is a free, guaranteed lunch crowd, not a fee. One truck only, booked by messaging the taco and barbacoa trucks the congregation already knows: "a hundred people walking out hungry at noon, free spot, paved lot, we promote you all week." Trucks need roughly 150 to 300 eaters before a vendor fee makes sense, so the fee conversation opens in year two, after counted crowds. Paperwork is light: the truck carries its own permits and insurance, the church collects a certificate of insurance and signs a property permission letter. Church money in year one: $0 to $100 an event. The real return is the hour the neighborhood spends on the lot.</p>
+      </div>
+      <div class="card">
+        <h3>How sponsors actually happen</h3>
+        <p>Start inside the room: ask the congregation "whose business do we already know," because a connected ask closes about half the time and a cold walk-in closes maybe one in ten. Then the westside list, in order: funeral homes (church families are their whole market), tax preparers and insurance agents, taquerias and panaderias (they often say yes in food instead of money; take it and count it as a tier), credit unions (Generations FCU was born on the West Side), and H-E-B, which runs a formal community program: under $200 the local store can say yes on its own, above that it is an online application needing about eight weeks of lead time. And the math that makes the school drive concrete: 100 filled backpacks cost about $1,000 to $1,500 bought in bulk and packed by volunteers. That is one "presented by" sponsor.</p>
+      </div>
+      <div class="card">
+        <h3>What choir night actually costs</h3>
+        <p>Almost nothing, run right: about $75 to $125 for the first night (dessert and printed songsheets), then $50 to $90 a month. The licensing answer is to run it as what it already is, worship: open with prayer, close with prayer, sing together as a congregation, and the night is a service, which copyright law already covers. Keep it free, use the church's own musician rather than paying a per-night performer, and lean on the old songbook, because the traditional spirituals, Wade in the Water, This Little Light of Mine, are past copyright entirely. If Bethel ever wants ticketed nights or secular songs, a performance license exists at $307 a year. Until then, the cost of auditioning the city for a Music Director is dessert.</p>
       </div>
     </div>
 
@@ -681,11 +712,7 @@
     <div class="split flip" style="margin-top:2.6rem; align-items:center">
       <div>
         <h3 style="font-size:1.3rem">Who the young people here are actually watching</h3>
-        <p style="margin-top:.6rem">None of these people were handed a studio. The first card is the one
-        that should matter most to this church: <b style="color:#fff">Michael Todd ran the sound board at
-        Transformation Church before he was called to pastor it</b>, and that church now reaches more people
-        in a week than most denominations. The teenager Bethel puts behind a camera this year is not doing a
-        chore. They are standing where he stood.</p>
+        <p style="margin-top:.6rem"><b style="color:#fff">Mostly not megachurch pastors, and that is the point.</b> The creators young people actually trust are small: pierced, tattooed, dressed how they dress, listening to what they listen to, and still openly about God. Their whole message is that you do not have to become somebody else first. Nobody is asking a teenager on this block to grow up into a celebrity pastor. The invitation is smaller and more honest: <b style="color:#fff">people who look like you are already doing this, and it counts.</b></p>
         <p class="note" style="border-color:var(--brass-lift)">By one count there were already close to 1,800 active
         Christian creators on TikTok alone, described as "many of them just teenagers posting from their bedrooms."
         Not one of them was waiting for permission, and most of them do not look like a Sunday school poster.
@@ -699,38 +726,54 @@
     </div>
 
         <div class="proof">
-          <a class="pcard hero" href="https://www.instagram.com/iammiketodd/" target="_blank" rel="noopener">
-            <div class="pnum">2M</div>
-            <div class="pwho">Pastor Michael Todd <span>Transformation Church, Tulsa</span></div>
-            <div class="pwhat"><b>He was the church's sound guy before he was its pastor.</b> Today that church has over two million subscribers on YouTube, and they built it largely on phone footage rather than expensive cameras. The person at the back of the room is not a small job.</div>
-          </a>
-          <a class="pcard" href="https://www.instagram.com/chris_gone_crazy/" target="_blank" rel="noopener">
-            <div class="pnum">3.2M</div>
-            <div class="pwho">Chris Gone Crazy <span>Chicago &middot; 2M more on Instagram</span></div>
-            <div class="pwhat">Started posting at about twelve with nothing but a phone. He was one of the <b>120 students at the Hendrix College camp last week</b>, and he won its Best In Room Content award. The young people here already follow him.</div>
-          </a>
-          <a class="pcard" href="https://www.instagram.com/sarahjakesroberts/" target="_blank" rel="noopener">
-            <div class="pnum">3M</div>
-            <div class="pwho">Sarah Jakes Roberts <span>pastor and author</span></div>
-            <div class="pwhat">Preaching to an audience larger than most denominations, from a phone screen.</div>
-          </a>
-          <a class="pcard" href="https://www.instagram.com/kierrasheard/" target="_blank" rel="noopener">
-            <div class="pnum">2M</div>
-            <div class="pwho">Kierra Sheard <span>gospel artist</span></div>
-            <div class="pwhat">Gospel music reaching millions directly, without a label or a radio station deciding first.</div>
-          </a>
-          <a class="pcard" href="https://www.instagram.com/hisdaught3r/" target="_blank" rel="noopener">
-            <div class="pnum">108K</div>
+          <a class="pcard hero" href="https://www.instagram.com/hisdaught3r/" target="_blank" rel="noopener">
+            <div class="pnum">109K</div>
             <div class="pwho">Finley June <span>@hisdaught3r &middot; born 2006</span></div>
-            <div class="pwhat">Bio reads "pierced &amp; praying, follower of Christ." She does not look like the picture most churches carry of a young Christian. That is exactly why they listen.</div>
+            <div class="pwhat"><b>Bio reads "pierced &amp; praying."</b> Chains, dark fits, get-ready-with-me videos for church, and stories about the older church ladies who embraced the alt kid instead of side-eyeing her. The whole message in one person: you can look different, live different, and still be all about God.</div>
+          </a>
+          <a class="pcard" href="https://www.tiktok.com/@ryuturcios" target="_blank" rel="noopener">
+            <div class="pnum">43K</div>
+            <div class="pwho">Ryu Turcios <span>@ryuturcios &middot; TikTok</span></div>
+            <div class="pwhat">Bio literally reads "Goth Christian." Gothic art and reminders that Jesus loves you, with one clip at 629K likes. The darkest look on this page carrying the brightest message, from a Latino creator.</div>
+          </a>
+          <a class="pcard" href="https://www.tiktok.com/@brennatheperson" target="_blank" rel="noopener">
+            <div class="pnum">103K</div>
+            <div class="pwho">Brenna <span>@brennatheperson &middot; TikTok</span></div>
+            <div class="pwhat">Too goth for church and too church for the goths, so she built a community for alt believers who felt unwelcome in both rooms. That is the belonging Bethel's media should carry.</div>
+          </a>
+          <a class="pcard" href="https://www.tiktok.com/@jabbarlewis" target="_blank" rel="noopener">
+            <div class="pnum">134K</div>
+            <div class="pwho">Jabbar Lewis <span>TikTok &middot; 7.6M likes</span></div>
+            <div class="pwhat">A young Black man teaching scripture straight to camera, no church branding behind him, dyed hair and all. Of everyone on this page, this is the template a Bethel teenager could copy tomorrow with one phone.</div>
           </a>
           <a class="pcard" href="https://www.instagram.com/elijah.lamb/" target="_blank" rel="noopener">
             <div class="pnum">101K</div>
             <div class="pwho">Elijah Lamb <span>gave his first testimony at 13</span></div>
             <div class="pwhat">Preached his first sermon at sixteen. Now runs live testimony nights where hundreds of young people show up.</div>
           </a>
+          <a class="pcard" href="https://www.instagram.com/zauntee/" target="_blank" rel="noopener">
+            <div class="pnum">241K</div>
+            <div class="pwho">Zauntee <span>Christian hip-hop</span></div>
+            <div class="pwhat">Sounds like what the teenagers here already have in their headphones, and every song is faith first. Signed to a major label without softening any of it.</div>
+          </a>
+          <a class="pcard" href="https://www.instagram.com/anike/" target="_blank" rel="noopener">
+            <div class="pnum">295K</div>
+            <div class="pwho">Anike <span>Christian rapper &middot; Austin, TX</span></div>
+            <div class="pwhat">"Saved bestie you didn't know you needed." A Black woman rapping her faith 80 miles up I-35. The closest-to-home proof that a Texas church girl can build a real platform.</div>
+          </a>
+          <a class="pcard" href="https://www.instagram.com/1kphew/" target="_blank" rel="noopener">
+            <div class="pnum">273K</div>
+            <div class="pwho">1K Phew <span>Atlanta &middot; gospel over trap</span></div>
+            <div class="pwhat">His whole page runs on "PRAY FOR SOMEBODY." The sound of the block carrying prayer instead of drill talk. A direct answer to "can church sound like us."</div>
+          </a>
+          <a class="pcard" href="https://www.instagram.com/chris_gone_crazy/" target="_blank" rel="noopener">
+            <div class="pnum">3.2M</div>
+            <div class="pwho">Chris Gone Crazy <span>Chicago &middot; 2M more on Instagram</span></div>
+            <div class="pwhat">Started posting at about twelve with nothing but a phone. He was one of the <b>120 students at the Hendrix College camp</b>, and he won its Best In Room Content award. The young people here already follow him.</div>
+          </a>
         </div>
-    <p class="fine" style="margin-top:.8rem; color:var(--on-dark-2); text-align:center">Every card above is a link. Tap any of them and check the numbers yourself.</p>
+    <p class="fine" style="margin-top:1rem; color:var(--on-dark-2)">And the ceiling, for whoever wants it: <a href="https://www.instagram.com/iammiketodd/" target="_blank" rel="noopener" style="color:var(--brass-lift)">Michael Todd</a> (2M) ran the sound board at Transformation Church before he was called to pastor it, and that church was built largely on phone footage. <a href="https://www.instagram.com/sarahjakesroberts/" target="_blank" rel="noopener" style="color:var(--brass-lift)">Sarah Jakes Roberts</a> (3M) and <a href="https://www.instagram.com/kierrasheard/" target="_blank" rel="noopener" style="color:var(--brass-lift)">Kierra Sheard</a> (2M) preach and sing to audiences bigger than denominations, from a phone. Nobody at Bethel has to become them. It just helps to know the road runs that far, and that it starts at the back of the room.</p>
+    <p class="fine" style="margin-top:.8rem; color:var(--on-dark-2); text-align:center">Every name above is a link. Tap any of them and check the numbers yourself.</p>
 
     <div class="grid g3" style="margin-top:2.6rem">
       <div class="card">
@@ -766,9 +809,9 @@
     </div>
 
     <div class="card lead" style="margin-top:2.6rem">
-      <h3>A weekly bulletin, and I grew up in the house where one got made</h3>
-      <p>Every week, a two-campus Catholic parish south of the city puts out a digital bulletin: service times, the week's scriptures, the giving report, the pastor's letter, prayer requests, coming events, and the local businesses that sponsor it along the bottom. I grew up watching my mother put our own parish's bulletin together, so I know this work from the inside. <a href="https://stanthony-olph.org/bulletin" target="_blank" rel="noopener" style="color:var(--brass-lift)">See the working example, live right now</a>.</p>
-      <p style="margin-top:.6rem">A bulletin is the one piece of media the whole congregation already reads, every generation of it, and the sponsor spots are the oldest self-funding model in church media. Bethel's edition is on the menu below: built once, then handed to trained volunteers. And if the church would rather have it produced each week than run it in-house, that service exists too. Ask me.</p>
+      <h3>The weekly word, and I grew up in the house where it got made</h3>
+      <p>Every week, a two-campus Catholic parish south of the city puts out a full digital bulletin: service times, the week's scriptures, the giving report, the pastor's letter, prayer requests, coming events, and the local businesses that sponsor it along the bottom. My mother has done that work for our own parish for years, so I know it from the inside. <a href="https://stanthony-olph.org/bulletin" target="_blank" rel="noopener" style="color:var(--brass-lift)">See it live right now</a>.</p>
+      <p style="margin-top:.6rem">Two honest roads for Bethel. If the church wants a real produced bulletin like that one, I will make the introduction to the professional who makes it, and she prices her own work. What I build is smaller and different on purpose: <b style="color:#fff">This Week at Bethel</b>, one simple weekly rundown that goes out as a Facebook post, an email, and a printed half-sheet in the pews, written and sent by a trained volunteer in under an hour a week. The whole congregation reads one thing, every week, and it costs the church almost nothing to keep alive.</p>
     </div>
   </div>
 </section>
@@ -789,37 +832,37 @@
 
     <div class="grid g2">
       <div class="card">
-        <div class="eyebrow" style="color:var(--wine)">Next on the menu</div>
+        <div class="eyebrow">Next on the menu</div>
         <h3>Trained operators &middot; $250 per person</h3>
         <p>The AV room job trains the first operator. Each additional person gets the same path: two sessions, one shadowed Sunday, then their own. <b>Finish line: that person runs one complete service solo, with me in the room and my hands in my pockets.</b> The goal is three on a rotation, one Sunday every two weeks each, starting with the adults already covering Sundays. Young people join a job that already works, never one that depends on them.</p>
       </div>
 
       <div class="card">
-        <div class="eyebrow" style="color:var(--wine)">The best value on this page</div>
+        <div class="eyebrow">The best value on this page</div>
         <h3>Turn on the nonprofit stack &middot; $400</h3>
         <p>Bethel is a 501(c)(3) through the denomination's group ruling, which qualifies the church for Google's nonprofit grant: up to $10,000 a month of free search advertising, plus free Google Workspace, free Canva for Nonprofits, and Adobe through TechSoup at about $20 a month. <b>Finish line: every account verified, live, and documented in the runbook.</b> One honest catch: the ad grant requires a website that meets Google's standard, and a little monthly upkeep to stay compliant. That is why the website item below exists.</p>
       </div>
 
       <div class="card">
-        <div class="eyebrow" style="color:var(--wine)">New</div>
-        <h3>A weekly digital bulletin &middot; $500 to build and hand over</h3>
-        <p>The system, the template, and the training, on the model described above: service times, announcements, the giving report, the pastor's note, prayer list, events, and sponsor spots that can make it pay for itself under the same IRS sponsorship rules cited below. <b>Finish line: two volunteers publish it weekly without me, template and checklist in hand.</b></p>
+        <div class="eyebrow">New</div>
+        <h3>This Week at Bethel &middot; $300 to build and hand over</h3>
+        <p>One weekly rundown, three places at once: a Facebook post, an email, and a printed half-sheet in the pews. I build the template and the checklist, and I train two volunteers to write and send it in under an hour a week. A single sponsor line at the bottom can cover its printing under the same IRS sponsorship rules cited below. <b>Finish line: two volunteers publish it weekly without me.</b> If Bethel wants the full professionally produced bulletin instead, I will make that introduction; it is a real service, priced by the professional who runs it.</p>
       </div>
 
       <div class="card">
-        <div class="eyebrow" style="color:var(--wine)">A decision, not a default</div>
+        <div class="eyebrow">A decision, not a default</div>
         <h3>The website &middot; $600 or $1,800</h3>
         <p>Two honest options. Restructure the current site for $600: same platform, reordered so the livestream, the calendar and the giving link sit where a stranger looks first. Or rebuild for $1,800: phone-first, large readable text for every generation, and built to the standard Google requires before it hands over the ad grant. <b>Finish line: a stranger can answer the five questions in under a minute, and the ad grant application passes.</b> An agency rebuild runs $2,500 to $10,000, sourced below.</p>
       </div>
 
       <div class="card">
-        <div class="eyebrow" style="color:var(--wine)">The year that earns it</div>
+        <div class="eyebrow">The year that earns it</div>
         <h3>The 60th Anniversary package &middot; $2,400</h3>
         <p>An anniversary film, event coverage through the year, and a filmed interview series with the members who remember the beginning. The first content cohort works on it as their training project, so the church's own young people help make it. <b>Finish line: the film premieres at the anniversary celebration, and every interview is archived for good.</b> The founding generation is a finite blessing. This is the year to record them, not eventually.</p>
       </div>
 
       <div class="card">
-        <div class="eyebrow" style="color:var(--wine)">As needed</div>
+        <div class="eyebrow">As needed</div>
         <h3>Event coverage &middot; $450 per event</h3>
         <p>Filming and a highlight video for events beyond what another item already covers: Food Truck Sunday, Open Mic and Gospel Night, the movie afternoon, a quincea&ntilde;era in the rented hall. <b>Finish line: the highlight video delivered within the week, and the raw footage in the church's archive.</b> Approved one event at a time.</p>
       </div>
@@ -855,8 +898,8 @@
             </label>
             <label class="opt">
               <input type="checkbox" id="optBull">
-              <span><span class="t">Weekly digital bulletin</span><span class="d">Built, templated, and handed to two trained volunteers.</span></span>
-              <span class="amt">$500</span>
+              <span><span class="t">This Week at Bethel</span><span class="d">The weekly rundown: Facebook post, email, printed half-sheet. Built, templated, handed to two trained volunteers.</span></span>
+              <span class="amt">$300</span>
             </label>
             <label class="opt">
               <input type="checkbox" id="anniv">
@@ -965,7 +1008,7 @@
         <ul class="list">
           <li>The AV room finish line: a volunteer runs a full Sunday from the runbook</li>
           <li>A second operator certified, MacBook standing by as the warm backup</li>
-          <li>The nonprofit stack switched on and the bulletin publishing, as approved</li>
+          <li>The nonprofit stack switched on and This Week at Bethel publishing, as approved</li>
           <li>"Take It With You" series begins</li>
         </ul>
       </div>
@@ -1079,6 +1122,42 @@
     </details>
 
     <details class="src">
+      <summary>The events and the gear</summary>
+      <ul class="cites">
+        <li class="cite">
+          <div class="claim">How many people it takes before a food truck's day makes sense</div>
+          <blockquote>The Minnesota Food Truck Association's booking guidance: plan on 150 to 300 attendees per truck when everyone is expected to eat, and trucks look for 45 to 60 sales an hour. A 100-person after-service crowd is honestly borderline, which is why year one carries no vendor fee.</blockquote>
+          <a class="srclink" href="https://mnfoodtruckassociation.org" target="_blank" rel="noopener">mnfoodtruckassociation.org &mdash; before you book a truck</a>
+        </li>
+        <li class="cite">
+          <div class="claim">Vendor fee norms for small events</div>
+          <blockquote>Association guidance puts small-event flat fees at $0 to $150 and percentage deals at 5 to 10 percent of sales, never both at once; a truck wants roughly ten times the fee back in gross sales before a fee is worth paying.</blockquote>
+          <a class="srclink" href="https://www.washingtonfoodtrucks.org" target="_blank" rel="noopener">washingtonfoodtrucks.org &mdash; event organizer guidance</a>
+        </li>
+        <li class="cite">
+          <div class="claim">Sponsor tiers at a comparable parish festival</div>
+          <blockquote>Good Shepherd Catholic Church publishes five festival sponsorship levels at $50, $100, $250, $500 and $1,000, the same ladder this plan uses.</blockquote>
+          <a class="srclink" href="https://gs-cc.org" target="_blank" rel="noopener">gs-cc.org &mdash; festival sponsorship levels</a>
+        </li>
+        <li class="cite">
+          <div class="claim">H-E-B's community giving program and its lead time</div>
+          <blockquote>Requests under $200 can be approved by the local store; larger asks go through the online community investment portal with a 501(c)(3) letter and a minimum of eight weeks of lead time.</blockquote>
+          <a class="srclink" href="https://newsroom.heb.com/donation-guidelines/" target="_blank" rel="noopener">newsroom.heb.com &mdash; donation guidelines</a>
+        </li>
+        <li class="cite">
+          <div class="claim">Why a worship-format choir night needs no new license</div>
+          <blockquote>Federal copyright law exempts performance of religious works in the course of services at a place of worship, and separately exempts free live performances where nobody is paid for the performance. A performance license for everything past that, CCS PERFORMmusic, runs $307 a year at Bethel's size on 2026 pricing.</blockquote>
+          <a class="srclink" href="https://www.law.cornell.edu/uscode/text/17/110" target="_blank" rel="noopener">law.cornell.edu &mdash; 17 U.S. Code &sect; 110</a>
+        </li>
+        <li class="cite">
+          <div class="claim">The gear prices in the shopping list</div>
+          <blockquote>Read from retailer listings in July 2026: OREI 1x4 powered splitter $34.99 to $44.99, OREI 1x4 HDMI-over-Cat6 kit $174.99, Elgato Cam Link 4K typically $99.99, Behringer UM2 $43.90, APC 600VA battery backup $83.99. Street prices move; every purchase is billed at cost with the receipt attached.</blockquote>
+          <a class="srclink" href="https://www.orei.com" target="_blank" rel="noopener">orei.com &mdash; splitters and extenders</a>
+        </li>
+      </ul>
+    </details>
+
+    <details class="src">
       <summary>Bethel's own numbers, and the youth case</summary>
       <ul class="cites">
         <li class="cite">
@@ -1098,7 +1177,7 @@
         </li>
         <li class="cite">
           <div class="claim">Follower counts in the grid, read live</div>
-          <blockquote>Read directly from each profile in July 2026: Michael Todd 2M, Sarah Jakes Roberts 3M, Kierra Sheard 2M, Chris Gone Crazy 2M on Instagram and about 3.2M on TikTok, Finley June 108K, Elijah Lamb 101K.</blockquote>
+          <blockquote>Read directly from each live profile in July 2026: Finley June 109K, Ryu Turcios 43.6K, Brenna 103.9K, Jabbar Lewis 134.6K with 7.6M likes, Elijah Lamb 101K, Zauntee 241K, Anike 295K, 1K Phew 273K, Chris Gone Crazy 2M on Instagram and about 3.2M on TikTok, Michael Todd 2M, Sarah Jakes Roberts 3M, Kierra Sheard 2M. Each creator was additionally screened for political-media affiliation and public controversy before being named on this page; two otherwise strong candidates were left off for exactly that reason.</blockquote>
           <a class="srclink" href="https://www.instagram.com/iammiketodd/" target="_blank" rel="noopener">instagram.com/iammiketodd</a>
         </li>
         <li class="cite">
@@ -1182,7 +1261,7 @@
   function recalc() {
     var web = 0;
     webEls.forEach(function (el) { if (el.checked) { web = parseInt(el.value, 10) || 0; } });
-    var once = (stack.checked ? 400 : 0) + (bull.checked ? 500 : 0) +
+    var once = (stack.checked ? 400 : 0) + (bull.checked ? 300 : 0) +
                (anniv.checked ? 2400 : 0) + (hw.checked ? 400 : 0) + web;
     var ops = operators * 250;
     var ev = events * 450;
