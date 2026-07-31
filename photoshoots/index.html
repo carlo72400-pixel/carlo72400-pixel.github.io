@@ -24,13 +24,56 @@ body{background:var(--paper);color:var(--ink);font-family:Inter,-apple-system,sa
 .kao{white-space:nowrap;display:inline-block;font-family:-apple-system,"Hiragino Sans","Apple SD Gothic Neo","Apple Symbols",Menlo,sans-serif}
 .dots{background-image:radial-gradient(var(--pink) 2.1px,transparent 2.4px);background-size:8px 8px}
 
+
+/* ============ Y2K POSTAL ============
+   Metalheart chrome type + airmail furniture, in the card's pink/ink/paper.
+   Airmail chevrons normally run red/blue; swapped to pink/ink so the page
+   stays a two-colour object like the card. */
+.airmail{height:15px;background:repeating-linear-gradient(-45deg,
+   var(--pink) 0 11px, var(--paper) 11px 22px, var(--ink) 22px 33px, var(--paper) 33px 44px)}
+
+.chrome{background:linear-gradient(176deg,
+   #fff 0%, #ffeaf9 10%, #f9a8e4 26%, #f85ad8 42%, #b8438f 52%, #f85ad8 60%,
+   #ffc9ef 74%, #fff 88%, #ffeaf9 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  -webkit-text-stroke:1.6px var(--ink);
+  filter:drop-shadow(3px 3px 0 rgba(21,19,16,.22))}
+
+/* rubber-stamp overprints */
+.rub{position:absolute;font-family:'JetBrains Mono',monospace;font-weight:800;
+     border:3px solid var(--pink);color:var(--pink);padding:5px 10px;
+     letter-spacing:2.4px;font-size:10px;opacity:.85;background:transparent;
+     border-radius:3px;pointer-events:none;white-space:nowrap}
+.rub.b{border-color:var(--ink);color:var(--ink)}
+
+.pmark{position:absolute;width:112px;opacity:.62;pointer-events:none}
+.pmark svg{width:100%;display:block}
+
+/* customs-declaration header on the form panel */
+.decl{display:flex;justify-content:space-between;align-items:center;
+      border-bottom:3px solid var(--ink);margin:-20px -18px 18px;padding:9px 14px;
+      font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:800;
+      letter-spacing:2.2px;color:var(--ink);background:
+      repeating-linear-gradient(-45deg,rgba(248,90,216,.16) 0 6px,transparent 6px 12px)}
+.decl i{font-style:normal;color:var(--pink)}
+
+/* tracking strip */
+.track-no{margin-top:26px;border:3px solid var(--ink);padding:11px 13px;
+  display:flex;justify-content:space-between;align-items:center;gap:12px}
+.barcode{height:34px;flex:1;background:repeating-linear-gradient(90deg,
+   var(--ink) 0 2px, transparent 2px 4px, var(--ink) 4px 5px, transparent 5px 9px,
+   var(--ink) 9px 12px, transparent 12px 14px)}
+.track-no .n{font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:800;
+  letter-spacing:1.6px;color:var(--ink);white-space:nowrap;text-align:right;line-height:1.5}
+.track-no .n i{font-style:normal;color:var(--pink)}
+
 /* perforated stamp edge, same device as the card */
 .perf{height:30px;position:relative;z-index:2}
 .perf::after{content:'';position:absolute;left:0;right:0;bottom:-14px;height:28px;
   background-image:radial-gradient(circle 13px at 15px 14px,var(--paper) 97%,transparent 100%);
   background-size:30px 28px}
 
-header{padding:26px 0 8px;position:relative}
+header{padding:26px 0 8px;position:relative;overflow:hidden}
 .brandrow{display:flex;align-items:center;gap:14px}
 .mark{width:150px;flex:0 0 150px}
 .mark img{width:100%;display:block}
@@ -114,6 +157,7 @@ footer a{color:var(--dim)}
 </head>
 <body>
 
+<div class="airmail"></div>
 <div class="perf dots"></div>
 
 <header>
@@ -122,8 +166,10 @@ footer a{color:var(--dim)}
       <div class="mark"><img src="assets/mark.svg" alt="Vamppsych"></div>
       <div class="kick">Free<br>San Antonio<br>always open</div>
     </div>
-    <h1 class="disp">Photoshoots <span class="hrt">&lt;3</span></h1>
+    <h1 class="disp"><span class="chrome">Photoshoots</span> <span class="hrt">&lt;3</span></h1>
     <div class="kaotop kao">⋆｡°✩ ₊˚ﾟ</div>
+    <div class="rub" style="top:2px;right:26px;transform:rotate(5deg)">PAR AVION</div>
+    <div class="rub b" style="top:120px;right:22px;transform:rotate(-6deg)">NO POSTAGE NECESSARY</div>
   </div>
 </header>
 
@@ -159,6 +205,7 @@ footer a{color:var(--dim)}
   hit you up when the next one comes around. <span class="kao">(*ﾉωﾉ)</span></p>
 
   <div id="form">
+    <div class="decl"><span>CUSTOMS DECLARATION</span><span><i>&#9679;</i> 1 (ONE) PHOTOSHOOT</span></div>
     <iframe class="tally"
       data-tally-src="https://tally.so/embed/2EgjRe?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
       loading="lazy" title="Photoshoots"></iframe>
@@ -181,6 +228,11 @@ footer a{color:var(--dim)}
       <li><b>About an hour.</b> Wear what you actually wear. You have to be 18 or older.</li>
     </ul>
 
+    <div class="track-no">
+      <div class="barcode"></div>
+      <div class="n">TRACKING<br><i>VP</i>-SATX-0001</div>
+    </div>
+
     <div class="me">
       <div class="nm">Giancarlo Ortiz</div>
       Full Sail University, digital cinematography. Used to shoot photo and video for the
@@ -190,6 +242,7 @@ footer a{color:var(--dim)}
   </div>
 </div>
 
+<div class="airmail"></div>
 <footer><div class="wrap">Giancarlo Ortiz · San Antonio, TX<br>
 <a href="https://carlo72400-pixel.github.io/">carlo72400-pixel.github.io</a></div></footer>
 
