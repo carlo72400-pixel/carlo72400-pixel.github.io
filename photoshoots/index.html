@@ -9,85 +9,148 @@
      the path to anyone who reads that file. -->
 <meta name="robots" content="noindex, nofollow, noarchive">
 <title>Photoshoots · Giancarlo Ortiz</title>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,400..700,0..100,0..1&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="assets/bala-note.webp">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#fbf5f8;--panel:#fff;--panel2:#fdf6fb;--line:#f1dde9;--line2:#e8d2e0;
-      --ink:#4b3d49;--dim:#7d6a77;--rose:#e86a86;--rose-deep:#c23a5c;--pink:#f5b6cf;
-      --lilac:#cdbdea;--mint:#b6e3cf;--butter:#f6e2a4;
-      --mono:'JetBrains Mono',ui-monospace,monospace;--disp:'Fraunces',Georgia,serif}
+:root{--paper:#ffffff;--ink:#151310;--pink:#f85ad8;--dim:#6d6068;--line:#f0d8ec}
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--ink);font-family:Inter,-apple-system,sans-serif;
-     font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
-.wrap{max-width:560px;margin:0 auto;padding:0 20px}
-.disp{font-family:var(--disp);font-variation-settings:'SOFT' 100,'WONK' 0,'opsz' 144;
-      font-weight:660;line-height:1.06;letter-spacing:-.4px}
-.ribbon{height:4px;background:linear-gradient(90deg,var(--rose) 0 20%,var(--pink) 20% 40%,
-        var(--lilac) 40% 60%,var(--mint) 60% 80%,var(--butter) 80% 100%)}
+body{background:var(--paper);color:var(--ink);font-family:Inter,-apple-system,sans-serif;
+     font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.wrap{max-width:560px;margin:0 auto;padding:0 22px;position:relative}
 
-/* --- top: mark, one line, straight into the form --------------------- */
-header{background:linear-gradient(118deg,#fdf3f8 0%,#f9eef5 46%,#f5f0fb 100%);padding:20px 0 17px}
-.brandrow{display:flex;align-items:center;gap:13px}
-.mark{width:50px;height:50px;flex:0 0 50px}
-.kick{font-family:var(--mono);font-size:9px;letter-spacing:3px;color:var(--rose-deep);
-      text-transform:uppercase;margin-bottom:2px}
-h1{font-size:26px}
-.hrt{color:var(--rose);font-size:.78em;letter-spacing:0;vertical-align:2px}
+/* the card's voice, carried over */
+.disp{font-family:'Fraunces',Georgia,serif;
+      font-variation-settings:'SOFT' 100,'WONK' 1,'opsz' 144;font-weight:800;letter-spacing:-1.5px}
+.kao{white-space:nowrap;display:inline-block;font-family:-apple-system,"Hiragino Sans","Apple SD Gothic Neo","Apple Symbols",Menlo,sans-serif}
+.dots{background-image:radial-gradient(var(--pink) 2.1px,transparent 2.4px);background-size:8px 8px}
+
+/* perforated stamp edge, same device as the card */
+.perf{height:30px;position:relative;z-index:2}
+.perf::after{content:'';position:absolute;left:0;right:0;bottom:-14px;height:28px;
+  background-image:radial-gradient(circle 13px at 15px 14px,var(--paper) 97%,transparent 100%);
+  background-size:30px 28px}
+
+header{padding:26px 0 8px;position:relative}
+.brandrow{display:flex;align-items:center;gap:14px}
+.mark{width:150px;flex:0 0 150px}
+.mark img{width:100%;display:block}
+.kick{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2.6px;
+      color:var(--pink);text-transform:uppercase;font-weight:700}
+h1{font-size:44px;line-height:.98;margin-top:20px}
+h1 .hrt{color:var(--pink)}
+.kaotop{font-size:19px;color:var(--pink);letter-spacing:2px;margin-top:8px}
 
 
-.intro{padding:24px 0 20px;font-size:18px}
-.intro b{color:var(--rose-deep);font-weight:600}
+/* IG glimpse: self-hosted tiles, never the official embed widget.
+   These are SNAPSHOTS of the feed, not live — re-pull when stale. */
+.ig{margin:22px 0 4px}
+.igbar{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:10px}
+.igbar .h{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:800;
+          letter-spacing:2.4px;color:var(--ink)}
+.igbar .h i{font-style:normal;color:var(--pink)}
+.igbar a{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.6px;
+         color:var(--pink);font-weight:700;text-decoration:none}
+.igrow{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;
+       scrollbar-width:none;-ms-overflow-style:none}
+.igrow::-webkit-scrollbar{display:none}
+.igrow img{width:104px;height:104px;flex:0 0 104px;object-fit:cover;display:block;
+           border:3px solid var(--ink)}
+@media(max-width:520px){.igrow img{width:92px;height:92px;flex:0 0 92px}}
 
-/* --- the form slot --------------------------------------------------- */
-#form{background:var(--panel);border:1px solid var(--line2);padding:22px 20px}
-.cta{display:block;width:100%;text-align:center;background:var(--rose-deep);color:#fff;
-     font-family:var(--mono);font-size:13px;letter-spacing:2.5px;text-transform:uppercase;
-     padding:19px 16px;text-decoration:none;border:0;cursor:pointer}
-.cta:active{transform:translateY(1px)}
+/* hero */
+.hero{position:relative;margin:6px 0 -6px}
+.hero img{width:100%;display:block;mix-blend-mode:multiply}
+.hero .glow{position:absolute;left:50%;top:6%;width:82%;padding-bottom:82%;
+  transform:translateX(-50%);z-index:-1;opacity:.4;
+  background-image:radial-gradient(var(--pink) 1.6px,transparent 1.9px);background-size:11px 11px;
+  -webkit-mask-image:radial-gradient(circle,#000 14%,transparent 64%);
+          mask-image:radial-gradient(circle,#000 14%,transparent 64%)}
+.charm{position:absolute;width:46px;opacity:.9;z-index:2}
+.charm img{width:100%;display:block;mix-blend-mode:multiply}
+
+.intro{padding:14px 0 22px;font-size:19px;line-height:1.5}
+.intro b{color:var(--pink);font-weight:700}
+
+/* form */
+#form{background:var(--paper);border:3px solid var(--ink);padding:20px 18px 22px;
+      box-shadow:6px 7px 0 rgba(21,19,16,.14)}
 iframe.tally{width:100%;border:0;min-height:560px;display:block}
-.escape{text-align:center;font-size:14.5px;color:var(--dim);margin-top:16px}
-.escape a{color:var(--rose-deep);font-weight:500}
+.escape{text-align:center;font-size:15px;color:var(--dim);margin-top:14px}
+.escape a{color:var(--pink);font-weight:700}
 
-/* --- bottom: the explanation ----------------------------------------- */
-.below{margin-top:40px;padding-top:26px;border-top:1px solid var(--line)}
-h2{font-family:var(--mono);font-size:10px;letter-spacing:3px;text-transform:uppercase;
-   color:var(--rose-deep);margin-bottom:12px}
-.below p{margin-bottom:12px;font-size:15px;color:var(--dim)}
+/* the explanation */
+.below{margin-top:40px;padding-top:26px;border-top:3px solid var(--ink)}
+h2{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;
+   color:var(--pink);margin-bottom:12px;font-weight:800}
+.below p{margin-bottom:14px;font-size:15.5px;color:var(--dim)}
 .below p b{color:var(--ink);font-weight:600}
 .rules{list-style:none;margin:4px 0 0}
-.rules li{padding-left:18px;position:relative;margin-bottom:9px;font-size:15px}
-.rules li::before{content:'';position:absolute;left:0;top:9px;width:7px;height:7px;
-                  background:var(--rose);border-radius:50%}
-.rules li b{font-weight:600}
-.me{margin-top:26px;font-size:14.5px;color:var(--dim)}
-.me .nm{font-family:var(--disp);font-variation-settings:'SOFT' 100,'WONK' 0,'opsz' 144;
-        font-weight:660;font-size:18px;color:var(--ink);margin-bottom:5px}
-.me a{color:var(--rose-deep);font-weight:500}
-footer{padding:30px 0 40px;text-align:center;font-family:var(--mono);font-size:10px;
-       letter-spacing:1.5px;color:#a596a2;text-transform:uppercase;line-height:2}
+.rules li{padding-left:26px;position:relative;margin-bottom:11px;font-size:15.5px}
+.rules li::before{content:'';position:absolute;left:0;top:4px;width:15px;height:15px;
+  background-image:radial-gradient(var(--pink) 1.9px,transparent 2.2px);background-size:5px 5px;
+  border:2px solid var(--ink);border-radius:3px}
+.rules li b{font-weight:700}
+
+.me{margin-top:30px;font-size:15px;color:var(--dim);border-top:2px dashed var(--line);padding-top:22px}
+.me .nm{font-family:'Fraunces',Georgia,serif;
+        font-variation-settings:'SOFT' 100,'WONK' 1,'opsz' 60;font-weight:700;
+        font-size:21px;color:var(--ink);margin-bottom:6px}
+.me a{color:var(--pink);font-weight:600}
+
+footer{padding:30px 0 44px;text-align:center;font-family:'JetBrains Mono',monospace;font-size:10px;
+       letter-spacing:2px;color:#a596a2;text-transform:uppercase;line-height:2}
 footer a{color:var(--dim)}
-@media(max-width:520px){h1{font-size:23px}.mark{width:44px;height:44px;flex:0 0 44px}
-  .wrap{padding:0 16px}.intro{font-size:17px}}
+
+@media(max-width:520px){
+  h1{font-size:37px}.mark{width:128px;flex:0 0 128px}
+  .intro{font-size:17.5px}.charm{width:38px}
+}
 </style>
 </head>
 <body>
 
+<div class="perf dots"></div>
+
 <header>
-  <div class="wrap brandrow">
-    <img class="mark" src="mono.svg" alt="">
-    <div>
-      <div class="kick">Free · San Antonio · always open</div>
-      <h1 class="disp">Photoshoots <span class="hrt">&lt;3</span></h1>
+  <div class="wrap">
+    <div class="brandrow">
+      <div class="mark"><img src="assets/mark.svg" alt="Vamppsych"></div>
+      <div class="kick">Free<br>San Antonio<br>always open</div>
     </div>
+    <h1 class="disp">Photoshoots <span class="hrt">&lt;3</span></h1>
+    <div class="kaotop kao">⋆｡°✩ ₊˚ﾟ</div>
   </div>
 </header>
-<div class="ribbon"></div>
 
+
+<div class="wrap ig">
+  <div class="igbar">
+    <span class="h"><i>@</i>VAMPPSYCH</span>
+    <a href="https://instagram.com/vamppsych" target="_blank" rel="noopener">SEE MORE &rarr;</a>
+  </div>
+  <div class="igrow">
+    <img src="assets/ig1.webp" alt="" width="320" height="320" loading="lazy">
+    <img src="assets/ig2.webp" alt="" width="320" height="320" loading="lazy">
+    <img src="assets/ig3.webp" alt="" width="320" height="320" loading="lazy">
+    <img src="assets/ig4.webp" alt="" width="320" height="320" loading="lazy">
+    <img src="assets/ig5.webp" alt="" width="320" height="320" loading="lazy">
+    <img src="assets/ig6.webp" alt="" width="320" height="320" loading="lazy">
+  </div>
+</div>
+
+<div class="wrap hero">
+  <div class="glow"></div>
+  <img src="assets/bala-note.webp" alt="" width="760" height="1018">
+  <div class="charm" style="left:14px;top:20%"><img src="assets/star.webp" alt=""></div>
+  <div class="charm" style="right:12px;top:42%"><img src="assets/sparkle.webp" alt=""></div>
+  <div class="charm" style="left:18px;top:70%"><img src="assets/cross.webp" alt=""></div>
+</div>
 
 <div class="wrap">
 
   <p class="intro">Want your picture taken? <b>It's free.</b>
   I shoot these in rounds whenever I've got a free week. Leave your info and I'll
-  hit you up when the next one comes around.</p>
+  hit you up when the next one comes around. <span class="kao">(*ﾉωﾉ)</span></p>
 
   <div id="form">
     <iframe class="tally"
