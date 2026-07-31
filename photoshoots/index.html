@@ -152,8 +152,33 @@ h1 .hrt{font-family:'Fraunces','Fraunces fallback',Georgia,serif;font-weight:800
 #form{background:var(--paper);border:3px solid var(--ink);padding:20px 18px 22px;
       box-shadow:6px 7px 0 rgba(21,19,16,.14)}
 iframe.tally{width:100%;border:0;min-height:560px;display:block}
-.escape{text-align:center;font-size:15px;color:var(--dim);margin-top:14px}
-.escape a{color:var(--pink);font-weight:700}
+
+/* ---- the DM as a second door, not an escape hatch ----
+   Was a 24px line of grey text reading "or just DM me, that works too" under a
+   1100px form, i.e. an apology. The "or" rule is what does the actual work here:
+   it makes the two a choice instead of a primary and a fallback. The panel then
+   just borrows #form's border, shadow and .decl bar so they read as siblings.
+   Named Instagram out loud on purpose: "DM" alone is ambiguous when the bigger
+   following is on TikTok but the link goes to IG. */
+.orbar{display:flex;align-items:center;gap:12px;margin:26px 0 18px;
+  font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:800;
+  letter-spacing:2.6px;color:var(--dim);text-transform:uppercase}
+.orbar::before,.orbar::after{content:'';flex:1;height:0;border-top:2px dashed var(--line)}
+#dm{background:var(--paper);border:3px solid var(--ink);padding:20px 18px 18px;
+    box-shadow:6px 7px 0 rgba(21,19,16,.14)}
+.dm-go{display:flex;align-items:center;gap:13px;text-decoration:none;color:var(--ink);
+  border:3px solid var(--pink);padding:13px 14px;min-height:60px;
+  background:repeating-linear-gradient(-45deg,rgba(248,90,216,.09) 0 7px,transparent 7px 14px)}
+.dm-go svg{width:27px;height:27px;flex:0 0 27px;color:var(--pink)}
+.dm-go .t{display:flex;flex-direction:column;line-height:1.25}
+.dm-go .t b{font-size:17px;font-weight:700}
+.dm-go .t i{font-style:normal;font-family:'JetBrains Mono',monospace;font-size:11px;
+  letter-spacing:1.6px;color:var(--pink);font-weight:700}
+.dm-go .arw{margin-left:auto;font-size:22px;color:var(--pink);font-weight:700}
+/* ig.me deep-links into the DM thread on a phone with the app, but dead-ends on
+   a login wall on desktop. The profile URL works logged out, so it is the out. */
+.dm-alt{text-align:center;font-size:12.5px;color:var(--dim);margin-top:11px}
+.dm-alt a{color:var(--dim);text-decoration:underline}
 
 /* the explanation */
 .below{margin-top:40px;padding-top:26px;border-top:3px solid var(--ink)}
@@ -235,7 +260,18 @@ footer a{color:var(--dim)}
       data-tally-src="https://tally.so/embed/2EgjRe?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
       loading="lazy" title="Photoshoots"></iframe>
     <script src="https://tally.so/widgets/embed.js"></script>
-    <div class="escape">or just <a href="https://ig.me/m/vamppsych" target="_blank" rel="noopener">DM me</a>, that works too</div>
+  </div>
+
+  <div class="orbar">or</div>
+
+  <div id="dm">
+    <div class="decl"><span>SEND IT DIRECT</span><span><i>&#9679;</i> NO FORM</span></div>
+    <a class="dm-go" href="https://ig.me/m/vamppsych" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.6" cy="6.4" r="1.25" fill="currentColor" stroke="none"/></svg>
+      <span class="t"><b>DM me on Instagram</b><i>@VAMPPSYCH</i></span>
+      <span class="arw">&rarr;</span>
+    </a>
+    <div class="dm-alt">on a laptop? <a href="https://www.instagram.com/vamppsych" target="_blank" rel="noopener">open the profile instead</a></div>
   </div>
 
   <div class="below">
