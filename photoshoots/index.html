@@ -238,10 +238,57 @@ h2{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;text
 .brm-k{font-family:'JetBrains Mono',monospace;font-size:8.5px;font-weight:800;
   letter-spacing:2.6px;text-transform:uppercase;color:var(--dim);margin-bottom:7px}
 .brm p{font-size:13px;line-height:1.5;color:var(--dim);margin:0 0 11px}
-.brm-tag{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:13px;
-  font-weight:800;letter-spacing:1.4px;color:var(--pink);text-decoration:none;
-  /* padding tuned so the tap target clears 44px, not for looks */
-  border:2px solid var(--pink);border-radius:3px;padding:11px 13px;transform:rotate(-1deg)}
+/* ---- PUT A STAMP ON IT ----
+   He did not want tiers and he wanted it fun, which rules out the Buy-Me-a-Coffee
+   preset-amount pattern. Real postage already solves it: you decide the
+   denomination yourself. So the button is a stamp with the value left blank, a
+   cancellation mark thumped across it, and the amount typed by the giver in Cash
+   App. It also finally makes NO POSTAGE NECESSARY do double duty as the
+   disclaimer AND the joke. */
+.post{display:block;position:relative;text-decoration:none;color:var(--ink);
+  margin:16px auto 4px;width:196px;padding-bottom:2px}
+.post-stamp{--sc:6px;position:relative;z-index:1;display:flex;flex-direction:column;
+  align-items:center;gap:4px;padding:14px 12px 11px;
+  background:
+    radial-gradient(circle var(--sc) at 50% 0,   var(--paper) 96%,transparent 100%) top   /13px 11px repeat-x,
+    radial-gradient(circle var(--sc) at 50% 100%,var(--paper) 96%,transparent 100%) bottom/13px 11px repeat-x,
+    radial-gradient(circle var(--sc) at 0 50%,   var(--paper) 96%,transparent 100%) left  /11px 13px repeat-y,
+    radial-gradient(circle var(--sc) at 100% 50%,var(--paper) 96%,transparent 100%) right /11px 13px repeat-y,
+    #fdeafb;
+  transform:rotate(-2.4deg);transition:transform .25s var(--ease,ease)}
+.post-val{position:absolute;top:9px;left:12px;font-family:'JetBrains Mono',monospace;
+  font-size:15px;font-weight:800;color:var(--pink);line-height:1}
+.post-val b{color:var(--ink)}
+.post-stamp img{width:74px;height:74px;object-fit:contain;display:block}
+.post-nm{font-family:'JetBrains Mono',monospace;font-size:7.5px;font-weight:800;
+  letter-spacing:1.5px;text-transform:uppercase;color:var(--ink)}
+.post-sub{font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:700;
+  letter-spacing:.6px;color:var(--pink)}
+/* the cancellation mark, thumped across the corner */
+.post-mark{position:absolute;z-index:2;top:-15px;right:-21px;width:62px;height:62px;
+  border:2px solid var(--ink);border-radius:50%;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:1px;background:transparent;
+  transform:rotate(-15deg) scale(1);opacity:.82;
+  font-family:'JetBrains Mono',monospace;font-size:5.6px;font-weight:800;
+  letter-spacing:.9px;color:var(--ink);text-transform:uppercase;
+  box-shadow:inset 0 0 0 1.6px var(--paper),inset 0 0 0 3px var(--ink);
+  transition:transform .25s var(--ease,ease),opacity .25s ease}
+.post-mark i{font-style:normal;line-height:1.15}
+.post-go{display:block;text-align:center;margin-top:12px;
+  font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:800;
+  letter-spacing:1.6px;text-transform:uppercase;color:var(--pink)}
+.post-go b{color:var(--ink)}
+/* say where the link goes before it is tapped: it is a payment link handed to
+   strangers off a printed card, so it should never be a mystery destination */
+.post-to{display:block;text-align:center;margin-top:4px;
+  font-family:'JetBrains Mono',monospace;font-size:8.5px;font-weight:700;
+  letter-spacing:1px;text-transform:uppercase;color:var(--dim)}
+/* the whole thing peels up and the postmark thumps down harder */
+.post:hover .post-stamp,.post:focus-visible .post-stamp{transform:rotate(-4.5deg) scale(1.045)}
+.post:hover .post-mark,.post:focus-visible .post-mark{transform:rotate(-26deg) scale(1.1);opacity:1}
+.post:focus-visible{outline:3px solid var(--pink);outline-offset:6px}
+@media(prefers-reduced-motion:reduce){
+  .post-stamp,.post-mark{transition:none}}
 
 .me{margin-top:30px;font-size:15px;color:var(--dim);border-top:2px dashed var(--line);padding-top:22px}
 .me .nm{font-family:'Fraunces',Georgia,serif;
@@ -422,11 +469,22 @@ body>.wrap,body>header,body>footer,body>.airmail,body>.perf{position:relative;z-
     <div class="brm">
       <div class="brm-bars" aria-hidden="true"></div>
       <div class="brm-k">No postage necessary <span class="kao kh">♡</span></div>
-      <p>Sittings are free and they stay free. If you ever feel like throwing
-      something in the jar after yours, it lives here. Nobody gets asked, and it
-      changes nothing about your place in line.</p>
-      <a class="brm-tag" href="https://cash.app/$deadmanifest" target="_blank" rel="noopener">
-        <span aria-hidden="true">$</span>deadmanifest</a>
+      <p>Sittings are free and they stay free. But if yours was a good time and you
+      want to put a stamp on it, the value is blank on purpose. You write the number.
+      Nobody gets asked, and it changes nothing about your place in line.</p>
+
+      <a class="post" href="https://cash.app/$deadmanifest" target="_blank" rel="noopener"
+         aria-label="Put a stamp on it: send whatever you like on Cash App to $deadmanifest">
+        <span class="post-stamp">
+          <span class="post-val kao">¿<b>?</b></span>
+          <img src="assets/camera.webp" alt="" loading="lazy">
+          <span class="post-nm">Vamppsych &middot; SATX</span>
+          <span class="post-sub kao">♡ you write it ♡</span>
+        </span>
+        <span class="post-mark" aria-hidden="true"><i>SAN</i><i>ANTONIO</i><i>&mdash; TX &mdash;</i></span>
+        <span class="post-go">Put a stamp on it <b>&rarr;</b></span>
+        <span class="post-to">cash app &middot; $deadmanifest</span>
+      </a>
     </div>
   </div>
 </div>
