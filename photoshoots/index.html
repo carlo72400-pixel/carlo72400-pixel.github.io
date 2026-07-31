@@ -193,6 +193,24 @@ h2{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;text
   border:2px solid var(--ink);border-radius:3px}
 .rules li b{font-weight:700}
 
+/* ---- tip jar, framed as business-reply mail ----
+   The page's whole promise is "It's free. Nothing to buy, no package, no upsell",
+   so a payment link is the one thing that can undercut it. Housing it in a BRM
+   panel makes the disclaimer the loudest element: real reply mail says NO POSTAGE
+   NECESSARY, which already means you do not have to pay. Sits last on the page,
+   far from the form and far from the free promise, deliberately quiet: the
+   cashtag is the only pink thing and everything above it says "you don't have to". */
+.brm{margin-top:26px;border:2px dashed var(--line);padding:14px 15px 15px;position:relative}
+.brm-bars{height:9px;margin:-14px -15px 11px;
+  background:repeating-linear-gradient(90deg,var(--ink) 0 2px,transparent 2px 6px)}
+.brm-k{font-family:'JetBrains Mono',monospace;font-size:8.5px;font-weight:800;
+  letter-spacing:2.6px;text-transform:uppercase;color:var(--dim);margin-bottom:7px}
+.brm p{font-size:13px;line-height:1.5;color:var(--dim);margin:0 0 11px}
+.brm-tag{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:13px;
+  font-weight:800;letter-spacing:1.4px;color:var(--pink);text-decoration:none;
+  /* padding tuned so the tap target clears 44px, not for looks */
+  border:2px solid var(--pink);border-radius:3px;padding:11px 13px;transform:rotate(-1deg)}
+
 .me{margin-top:30px;font-size:15px;color:var(--dim);border-top:2px dashed var(--line);padding-top:22px}
 .me .nm{font-family:'Fraunces',Georgia,serif;
         font-variation-settings:'SOFT' 100,'WONK' 1,'opsz' 60;font-weight:700;
@@ -299,6 +317,16 @@ footer a{color:var(--dim)}
       Full Sail University, digital cinematography. Used to shoot photo and video for the
       San Antonio Current. <a href="https://www.tiktok.com/@vamp.psych" target="_blank" rel="noopener">@vamp.psych</a> on TikTok.<br>
       <a href="https://carlo72400-pixel.github.io/" target="_blank" rel="noopener">See the full portfolio →</a>
+    </div>
+
+    <div class="brm">
+      <div class="brm-bars" aria-hidden="true"></div>
+      <div class="brm-k">No postage necessary</div>
+      <p>Sittings are free and they stay free. If you ever feel like throwing
+      something in the jar after yours, it lives here. Nobody gets asked, and it
+      changes nothing about your place in line.</p>
+      <a class="brm-tag" href="https://cash.app/$deadmanifest" target="_blank" rel="noopener">
+        <span aria-hidden="true">$</span>deadmanifest</a>
     </div>
   </div>
 </div>
