@@ -9,7 +9,7 @@
      the path to anyone who reads that file. -->
 <meta name="robots" content="noindex, nofollow, noarchive">
 <title>Photoshoots · Giancarlo Ortiz</title>
-<link rel="preload" as="image" href="assets/feed6.webp">
+<link rel="preload" as="image" href="assets/bala-note.webp">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
 <style>
 :root{--paper:#ffffff;--ink:#151310;--pink:#f85ad8;--dim:#6d6068;--line:#f0d8ec}
@@ -40,14 +40,13 @@ body{background:var(--paper);color:var(--ink);font-family:Inter,-apple-system,sa
   filter:drop-shadow(3px 3px 0 rgba(21,19,16,.22))}
 
 /* rubber-stamp overprints */
-.rub{position:absolute;font-family:'JetBrains Mono',monospace;font-weight:800;
-     border:3px solid var(--pink);color:var(--pink);padding:5px 10px;
-     letter-spacing:2.4px;font-size:10px;opacity:.85;background:transparent;
-     border-radius:3px;pointer-events:none;white-space:nowrap}
-.rub.b{border-color:var(--ink);color:var(--ink)}
+.stamps{display:flex;flex-wrap:wrap;gap:9px;margin-top:18px}
+.rub{font-family:'JetBrains Mono',monospace;font-weight:800;
+     border:3px solid var(--pink);color:var(--pink);padding:6px 11px;
+     letter-spacing:2.2px;font-size:9.5px;border-radius:3px;white-space:nowrap;
+     transform:rotate(-1.5deg)}
+.rub.b{border-color:var(--ink);color:var(--ink);transform:rotate(1.5deg)}
 
-.pmark{position:absolute;width:112px;opacity:.62;pointer-events:none}
-.pmark svg{width:100%;display:block}
 
 /* customs-declaration header on the form panel */
 .decl{display:flex;justify-content:space-between;align-items:center;
@@ -84,27 +83,6 @@ h1 .hrt{color:var(--pink)}
 .kaotop{font-size:19px;color:var(--pink);letter-spacing:2px;margin-top:8px}
 
 
-/* IG carousel: self-hosted slides pulled from his real posts via cobalt.
-   SNAPSHOTS, not live — re-pull when the feed moves on. */
-.ig{margin:20px 0 2px}
-.igbar{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:11px}
-.igbar .h{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:800;
-          letter-spacing:2.4px;color:var(--ink)}
-.igbar .h i{font-style:normal;color:var(--pink)}
-.igbar a{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.6px;
-         color:var(--pink);font-weight:700;text-decoration:none}
-.track{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;
-       -webkit-overflow-scrolling:touch;padding:0 22px 2px;
-       scrollbar-width:none;-ms-overflow-style:none}
-.track::-webkit-scrollbar{display:none}
-.slide{flex:0 0 78%;max-width:340px;scroll-snap-align:center;aspect-ratio:4/5;
-       border:3px solid var(--ink);overflow:hidden;background:#f4f0f3}
-.slide img{width:100%;height:100%;object-fit:cover;display:block}
-.dots{display:flex;gap:7px;justify-content:center;margin-top:13px}
-.dot{width:7px;height:7px;border-radius:50%;background:var(--paper);
-     border:2px solid var(--ink);transition:background .18s}
-.dot.on{background:var(--pink)}
-
 /* hero */
 .hero{position:relative;margin:6px 0 -6px}
 .hero img{width:100%;height:auto;display:block;mix-blend-mode:multiply}
@@ -113,8 +91,6 @@ h1 .hrt{color:var(--pink)}
   background-image:radial-gradient(var(--pink) 1.6px,transparent 1.9px);background-size:11px 11px;
   -webkit-mask-image:radial-gradient(circle,#000 14%,transparent 64%);
           mask-image:radial-gradient(circle,#000 14%,transparent 64%)}
-.charm{position:absolute;width:46px;opacity:.9;z-index:2}
-.charm img{width:100%;display:block;mix-blend-mode:multiply}
 
 .intro{padding:14px 0 22px;font-size:19px;line-height:1.5}
 .intro b{color:var(--pink);font-weight:700}
@@ -149,10 +125,13 @@ footer{padding:30px 0 44px;text-align:center;font-family:'JetBrains Mono',monosp
        letter-spacing:2px;color:#a596a2;text-transform:uppercase;line-height:2}
 footer a{color:var(--dim)}
 
+@media(max-width:430px){
+  .rub{font-size:8.5px;letter-spacing:1.5px;padding:5px 9px;border-width:2px}
+  .stamps{gap:7px}
+}
 @media(max-width:520px){
   h1{font-size:37px}.mark{width:128px;flex:0 0 128px}
-  .intro{font-size:17.5px}.charm{width:38px}
-}
+  .intro{font-size:17.5px}}
 </style>
 </head>
 <body>
@@ -164,38 +143,21 @@ footer a{color:var(--dim)}
   <div class="wrap">
     <div class="brandrow">
       <div class="mark"><img src="assets/mark.svg" alt="Vamppsych"></div>
-      <div class="kick">Free<br>San Antonio<br>always open</div>
+      <div class="kick">Portrait sittings<br>San Antonio<br>always open</div>
     </div>
     <h1 class="disp"><span class="chrome">Photoshoots</span> <span class="hrt">&lt;3</span></h1>
     <div class="kaotop kao">⋆｡°✩ ₊˚ﾟ</div>
-    <div class="rub" style="top:2px;right:26px;transform:rotate(5deg)">PAR AVION</div>
-    <div class="rub b" style="top:120px;right:22px;transform:rotate(-6deg)">NO POSTAGE NECESSARY</div>
+    <div class="stamps">
+      <span class="rub">PHOTOGRAPHS &middot; DO NOT BEND</span>
+      <span class="rub b">NO SITTING FEE</span>
+    </div>
   </div>
 </header>
 
 
-<div class="ig">
-  <div class="wrap igbar">
-    <span class="h"><i>@</i>VAMPPSYCH</span>
-    <a href="https://instagram.com/vamppsych" target="_blank" rel="noopener">SEE MORE &rarr;</a>
-  </div>
-  <div class="track" id="track">
-    <div class="slide"><img src="assets/feed6.webp" alt="" loading="eager"></div>
-    <div class="slide"><img src="assets/feed7.webp" alt="" loading="lazy"></div>
-    <div class="slide"><img src="assets/feed8.webp" alt="" loading="lazy"></div>
-    <div class="slide"><img src="assets/feed1.webp" alt="" loading="lazy"></div>
-    <div class="slide"><img src="assets/feed2.webp" alt="" loading="lazy"></div>
-    <div class="slide"><img src="assets/feed5.webp" alt="" loading="lazy"></div>
-  </div>
-  <div class="dots" id="dots"></div>
-</div>
-
 <div class="wrap hero">
   <div class="glow"></div>
   <img src="assets/bala-note.webp" alt="" width="760" height="1018">
-  <div class="charm" style="left:14px;top:20%"><img src="assets/star.webp" alt=""></div>
-  <div class="charm" style="right:12px;top:42%"><img src="assets/sparkle.webp" alt=""></div>
-  <div class="charm" style="left:18px;top:70%"><img src="assets/cross.webp" alt=""></div>
 </div>
 
 <div class="wrap">
@@ -205,7 +167,7 @@ footer a{color:var(--dim)}
   hit you up when the next one comes around. <span class="kao">(*ﾉωﾉ)</span></p>
 
   <div id="form">
-    <div class="decl"><span>CUSTOMS DECLARATION</span><span><i>&#9679;</i> 1 (ONE) PHOTOSHOOT</span></div>
+    <div class="decl"><span>SITTING REQUEST</span><span><i>&#9679;</i> 1 (ONE) SITTING</span></div>
     <iframe class="tally"
       data-tally-src="https://tally.so/embed/2EgjRe?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
       loading="lazy" title="Photoshoots"></iframe>
@@ -230,7 +192,7 @@ footer a{color:var(--dim)}
 
     <div class="track-no">
       <div class="barcode"></div>
-      <div class="n">TRACKING<br><i>VP</i>-SATX-0001</div>
+      <div class="n">ROLL NO.<br><i>VP</i>-SATX-0001</div>
     </div>
 
     <div class="me">
@@ -246,25 +208,5 @@ footer a{color:var(--dim)}
 <footer><div class="wrap">Giancarlo Ortiz · San Antonio, TX<br>
 <a href="https://carlo72400-pixel.github.io/">carlo72400-pixel.github.io</a></div></footer>
 
-<script>
-(function(){
-  var t=document.getElementById('track'), d=document.getElementById('dots');
-  if(!t||!d) return;
-  var n=t.children.length, i;
-  for(i=0;i<n;i++){ var b=document.createElement('div'); b.className='dot'+(i?'':' on'); d.appendChild(b); }
-  var tick;
-  t.addEventListener('scroll', function(){
-    clearTimeout(tick);
-    tick=setTimeout(function(){
-      var mid=t.scrollLeft+t.clientWidth/2, best=0, bd=1e9;
-      for(var k=0;k<n;k++){
-        var el=t.children[k], c=el.offsetLeft+el.offsetWidth/2, dist=Math.abs(c-mid);
-        if(dist<bd){bd=dist;best=k;}
-      }
-      for(var k=0;k<n;k++) d.children[k].className='dot'+(k===best?' on':'');
-    },60);
-  },{passive:true});
-})();
-</script>
 </body>
 </html>
