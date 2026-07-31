@@ -10,7 +10,7 @@
 <meta name="robots" content="noindex, nofollow, noarchive">
 <title>Photoshoots · Giancarlo Ortiz</title>
 <link rel="preload" as="image" href="assets/bala-note.webp">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=Lobster&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
 <style>
 :root{--paper:#ffffff;--ink:#151310;--pink:#f85ad8;--dim:#6d6068;--line:#f0d8ec}
 *{margin:0;padding:0;box-sizing:border-box}
@@ -26,6 +26,16 @@ body{background:var(--paper);color:var(--ink);font-family:Inter,-apple-system,sa
 @font-face{font-family:'Fraunces fallback';
   src:local('Georgia Bold'),local('Georgia'),local('Times New Roman');
   font-weight:400 900;size-adjust:83%}
+
+/* Same guard for the Lobster title. Measured at 375, "Photoshoots" sets 295.5px
+   in Lobster; the untuned fallbacks run 303.9 (Snell Roundhand) to 357.4
+   (Georgia), and anything over ~301 pushes the title past the 331px measure.
+   Two faces because one size-adjust cannot cover both: whichever local() the
+   platform actually has is scaled by its own measured ratio. */
+@font-face{font-family:'Lobster fallback A';
+  src:local('Snell Roundhand'),local('Brush Script MT');size-adjust:97%}
+@font-face{font-family:'Lobster fallback B';
+  src:local('Georgia'),local('Times New Roman');size-adjust:83%}
 
 /* the card's voice, carried over */
 .disp{font-family:'Fraunces','Fraunces fallback',Georgia,serif;
@@ -100,11 +110,22 @@ header{padding:24px 0 8px;position:relative;overflow:hidden}
       color:var(--ink);text-transform:uppercase;font-weight:700;line-height:1.85}
 .kick i{font-style:normal;color:var(--pink)}
 /* the title is locked to the measure: it always sets flush left to flush
-   right inside .wrap, at every width, so the lockup reads as one block */
-h1{font-size:calc((min(100vw,560px) - 44px) / 5.7);
-   line-height:.9;margin-top:11px;white-space:nowrap}
-h1 .hrt{color:var(--pink);font-size:.42em;vertical-align:.82em;
-        letter-spacing:0;margin-left:.04em;-webkit-text-stroke:.028em var(--ink)}
+   right inside .wrap, at every width, so the lockup reads as one block.
+   Lobster overrides .disp entirely: it is a single-weight static face, so
+   Fraunces's weight 800 would only trigger a synthetic bold and its
+   variation settings and -1.5px tracking are meaningless here. Divisor
+   retuned from 5.7 to Lobster's own metrics. */
+/* h1.disp, not bare h1: .disp is a class on this element and would otherwise
+   win on specificity and keep the title on Fraunces. */
+h1.disp{font-family:'Lobster','Lobster fallback A','Lobster fallback B',cursive;
+   font-weight:400;font-variation-settings:normal;letter-spacing:0;
+   font-size:calc((min(100vw,560px) - 44px) / 5.08);
+   line-height:1.02;margin-top:9px;white-space:nowrap}
+/* the heart keeps the serif: Lobster has no '<' glyph at all, so leaving it
+   on the script would silently fall back mid-word anyway. */
+h1 .hrt{font-family:'Fraunces','Fraunces fallback',Georgia,serif;font-weight:800;
+        color:var(--pink);font-size:.4em;vertical-align:.62em;
+        letter-spacing:0;margin-left:.05em;-webkit-text-stroke:.028em var(--ink)}
 /* sparkle rides the divider like a sticker stuck on the rule, so it costs
    the top tier no width and the kick keeps its two clean lines */
 .kaotop{position:absolute;right:0;bottom:-9px;background:var(--paper);
