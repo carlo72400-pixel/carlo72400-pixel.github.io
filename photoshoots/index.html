@@ -15,7 +15,8 @@
 :root{--paper:#ffffff;--ink:#151310;--pink:#f85ad8;--dim:#6d6068;--line:#f0d8ec}
 *{margin:0;padding:0;box-sizing:border-box}
 body{position:relative;background:var(--paper);color:var(--ink);font-family:Inter,-apple-system,sans-serif;
-     font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+     font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+     -webkit-tap-highlight-color:rgba(248,90,216,.18)}
 .wrap{max-width:560px;margin:0 auto;padding:0 22px;position:relative}
 
 /* Metric-matched fallback. The title is white-space:nowrap and sized by calc to
@@ -55,26 +56,35 @@ body{position:relative;background:var(--paper);color:var(--ink);font-family:Inte
 
 /* chrome with a HARD horizon line instead of a wide dark band, so the
    dark stop reads as a reflection edge and never as grey mud */
-.chrome{background:linear-gradient(178deg,
+.chrome{background:
+   linear-gradient(115deg,rgba(255,255,255,0) 40%,rgba(255,255,255,.95) 50%,rgba(255,255,255,0) 60%) no-repeat,
+   linear-gradient(178deg,
    #fff 0%, #ffe0f6 26%, #f9a8e4 46%, #b8438f 47%, #b8438f 51%, #ffc9ef 52%,
    #f85ad8 74%, #ffd9f4 96%, #fff 100%);
   -webkit-background-clip:text;background-clip:text;color:transparent;
   -webkit-text-stroke:.024em var(--ink);
   filter:drop-shadow(.045em .05em 0 rgba(21,19,16,.2));
-  /* Oversize the gradient box and slide it: the specular horizon then travels
-     through the letterforms instead of sitting still. This is the one thing a
-     chrome gradient actually wants to do, and it costs no extra paint. */
-  background-size:100% 260%;background-position:0 22%;
-  animation:sweep 7s ease-in-out infinite alternate}
-@keyframes sweep{from{background-position:0 8%}to{background-position:0 92%}}
-/* the heart beats, on the same slow clock so the two do not fight */
-h1 .hrt{animation:beat 7s ease-in-out infinite;transform-origin:50% 60%}
+  /* Two layers, both clipped to the letterforms. Under: the oversized chrome
+     gradient whose specular horizon drifts up and down. Over: a narrow white
+     glint band, parked off-canvas most of the loop, that sweeps across the
+     word once per cycle right after the camera flash fires in the hero. One
+     9s clock for everything on the page, so events read as one system. */
+  background-size:64% 100%, 100% 260%;
+  background-position:-90% 0, 0 22%;
+  animation:chromelive 9s ease-in-out infinite}
+@keyframes chromelive{
+  0%  {background-position:-90% 0, 0 10%}
+  42% {background-position:-90% 0, 0 88%}
+  50% {background-position:190% 0, 0 82%}
+  100%{background-position:190% 0, 0 10%}}
+/* the heart thumps right after the glint passes through */
+h1 .hrt{animation:beat 9s ease-in-out infinite;transform-origin:50% 60%}
 @keyframes beat{
-  0%,58%,100%{transform:scale(1) rotate(0deg)}
-  63%{transform:scale(1.22) rotate(-6deg)}
-  68%{transform:scale(.97) rotate(2deg)}
-  73%{transform:scale(1.11) rotate(-3deg)}
-  80%{transform:scale(1) rotate(0deg)}}
+  0%,50%,100%{transform:scale(1) rotate(0deg)}
+  55%{transform:scale(1.24) rotate(-6deg)}
+  60%{transform:scale(.97) rotate(2deg)}
+  65%{transform:scale(1.12) rotate(-3deg)}
+  72%{transform:scale(1) rotate(0deg)}}
 
 /* ---- the four facts as a strip of real postage ----
    Was two outlined text boxes that read as generic labels and competed with the
@@ -91,6 +101,8 @@ h1 .hrt{animation:beat 7s ease-in-out infinite;transform-origin:50% 60%}
     radial-gradient(circle var(--sc) at 100% 50%,var(--paper) 96%,transparent 100%) right /9px 11px repeat-y,
     #fdeafb;
   transform:rotate(-2deg)}
+.stamp{transition:transform .2s var(--spring,ease)}
+.stamp:hover{transform:rotate(0deg) scale(1.07)}
 .stamp.b{transform:rotate(2.2deg);background-color:#fff3fc}
 .stamp:nth-child(3){transform:rotate(1.2deg)}
 .stamp:nth-child(4){transform:rotate(-1.4deg)}
@@ -175,7 +187,25 @@ h1 .hrt{font-family:'Fraunces','Fraunces fallback',Georgia,serif;font-weight:800
    still lifts her off the white page without adding a competing texture. */
 .hero .glow{position:absolute;left:50%;top:4%;width:96%;padding-bottom:96%;
   transform:translateX(-50%);z-index:-1;opacity:.38;
-  background:radial-gradient(circle,rgba(248,90,216,.24) 0%,rgba(248,90,216,.09) 38%,transparent 62%)}
+  background:radial-gradient(circle,rgba(248,90,216,.24) 0%,rgba(248,90,216,.09) 38%,transparent 62%);
+  animation:glowpulse 9s ease-in-out infinite}
+@keyframes glowpulse{0%,100%{opacity:.34}42%{opacity:.52}}
+/* she takes your picture once per loop: a starburst pops off the lens, then
+   the title glints. Positioned in % of the hero box so it tracks the lens at
+   every width (the img always fills the measure). */
+/* white rays vanish on white paper, so the burst is pink with a white core */
+.hero .flash{position:absolute;left:27%;top:31%;width:96px;height:96px;
+  margin:-48px 0 0 -48px;pointer-events:none;z-index:2;opacity:0;
+  background:radial-gradient(circle,#fff 0 13%,rgba(248,90,216,.85) 20%,rgba(248,90,216,.30) 38%,transparent 56%);
+  transform:scale(.2) rotate(18deg);animation:camflash 9s ease-out infinite}
+.hero .flash::before,.hero .flash::after{content:'';position:absolute;left:50%;top:0;
+  width:3px;height:100%;transform:translateX(-50%);border-radius:2px;
+  background:linear-gradient(transparent 2%,var(--pink) 30% 70%,transparent 98%)}
+.hero .flash::after{transform:translateX(-50%) rotate(90deg)}
+@keyframes camflash{
+  0%,37%{opacity:0;transform:scale(.2) rotate(18deg)}
+  40%{opacity:1;transform:scale(1.15) rotate(18deg)}
+  45%,100%{opacity:0;transform:scale(1.55) rotate(18deg)}}
 
 .intro{padding:14px 0 22px;font-size:19px;line-height:1.5}
 .intro b{color:var(--pink);font-weight:700}
@@ -200,7 +230,11 @@ iframe.tally{width:100%;border:0;min-height:560px;display:block}
     box-shadow:6px 7px 0 rgba(21,19,16,.14)}
 .dm-go{display:flex;align-items:center;gap:13px;text-decoration:none;color:var(--ink);
   border:3px solid var(--pink);padding:13px 14px;min-height:60px;
-  background:repeating-linear-gradient(-45deg,rgba(248,90,216,.09) 0 7px,transparent 7px 14px)}
+  background:repeating-linear-gradient(-45deg,rgba(248,90,216,.09) 0 7px,transparent 7px 14px);
+  transition:transform .18s ease,box-shadow .18s ease}
+.dm-go:hover,.dm-go:focus-visible{transform:translateY(-2px);box-shadow:4px 5px 0 rgba(248,90,216,.35)}
+.dm-go:active{transform:translateY(1px);box-shadow:none}
+.dm-go:focus-visible{outline:3px solid var(--pink);outline-offset:4px}
 .dm-go svg{width:27px;height:27px;flex:0 0 27px;color:var(--pink)}
 .dm-go .t{display:flex;flex-direction:column;line-height:1.25}
 .dm-go .t b{font-size:17px;font-weight:700}
@@ -285,6 +319,7 @@ h2{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;text
   letter-spacing:1px;text-transform:uppercase;color:var(--dim)}
 /* the whole thing peels up and the postmark thumps down harder */
 .post:hover .post-stamp,.post:focus-visible .post-stamp{transform:rotate(-4.5deg) scale(1.045)}
+.post:active .post-stamp{transform:rotate(-4.5deg) scale(.96)}
 .post:hover .post-mark,.post:focus-visible .post-mark{transform:rotate(-26deg) scale(1.1);opacity:1}
 .post:focus-visible{outline:3px solid var(--pink);outline-offset:6px}
 @media(prefers-reduced-motion:reduce){
@@ -331,7 +366,11 @@ footer a{color:var(--dim)}
 .sk.kf{width:auto;height:auto;font-size:var(--fs);line-height:1;color:var(--pink);
   font-weight:700;white-space:nowrap;transform-origin:50% 50%}
 .sk.kf{rotate:var(--r)}
-.sk img{width:100%;height:100%;object-fit:contain;display:block;transform:rotate(var(--r))}
+.sk img{width:100%;height:100%;object-fit:contain;display:block;transform:rotate(var(--r));
+  /* the `rotate` property composes with the transform, so this wobbles each
+     sticker around its own base angle without fighting the bob on the span */
+  animation:sway calc(var(--d) * .9) ease-in-out var(--dl) infinite alternate}
+@keyframes sway{from{rotate:-5deg}to{rotate:5deg}}
 @keyframes bob{from{transform:translateY(-7px)}to{transform:translateY(7px)}}
 /* Below the 560px column there is no margin left to hide in, so pull the offsets
    in and shrink them: they then ride the two screen edges the whole way down,
@@ -342,8 +381,10 @@ body>.wrap,body>header,body>footer,body>.airmail,body>.perf{position:relative;z-
 
 /* Motion is decoration here, so all of it goes away when the OS asks. */
 @media(prefers-reduced-motion:reduce){
-  .chrome,h1 .hrt,.sk{animation:none}
-  .chrome{background-position:0 22%}
+  .chrome,h1 .hrt,.sk,.sk img,.hero .glow,.hero .flash{animation:none}
+  .chrome{background-position:-90% 0, 0 22%}
+  .hero .flash{opacity:0}
+  .dm-go,.stamp,.post-stamp,.post-mark{transition:none}
 }
 </style>
 </head>
@@ -410,6 +451,7 @@ body>.wrap,body>header,body>footer,body>.airmail,body>.perf{position:relative;z-
 
 <div class="wrap hero">
   <div class="glow"></div>
+  <span class="flash" aria-hidden="true"></span>
   <img src="assets/bala-cam.webp" alt="Bala, the Vamppsych scene-girl mascot, aiming a point-and-shoot camera at you like a pistol" width="1040" height="1584">
 </div>
 
