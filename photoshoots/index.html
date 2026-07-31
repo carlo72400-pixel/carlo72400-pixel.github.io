@@ -18,8 +18,17 @@ body{background:var(--paper);color:var(--ink);font-family:Inter,-apple-system,sa
      font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 .wrap{max-width:560px;margin:0 auto;padding:0 22px;position:relative}
 
+/* Metric-matched fallback. The title is white-space:nowrap and sized by calc to
+   sit flush inside the measure, so a wider fallback face clips it on the right.
+   Fraunces loads with display=swap, which means EVERY cold load paints Georgia
+   first, so this is not just the font-blocked path. Measured at 375: Fraunces
+   323.9px vs Georgia 389.9px on the same string, so scale Georgia to 83%. */
+@font-face{font-family:'Fraunces fallback';
+  src:local('Georgia Bold'),local('Georgia'),local('Times New Roman');
+  font-weight:400 900;size-adjust:83%}
+
 /* the card's voice, carried over */
-.disp{font-family:'Fraunces',Georgia,serif;
+.disp{font-family:'Fraunces','Fraunces fallback',Georgia,serif;
       font-variation-settings:'SOFT' 100,'WONK' 1,'opsz' 144;font-weight:800;letter-spacing:-1.5px}
 .kao{white-space:nowrap;display:inline-block;font-family:-apple-system,"Hiragino Sans","Apple SD Gothic Neo","Apple Symbols",Menlo,sans-serif}
 .dots{background-image:radial-gradient(var(--pink) 2.1px,transparent 2.4px);background-size:8px 8px}
@@ -32,15 +41,17 @@ body{background:var(--paper);color:var(--ink);font-family:Inter,-apple-system,sa
 .airmail{height:15px;background:repeating-linear-gradient(-45deg,
    var(--pink) 0 11px, var(--paper) 11px 22px, var(--ink) 22px 33px, var(--paper) 33px 44px)}
 
-.chrome{background:linear-gradient(176deg,
-   #fff 0%, #ffeaf9 10%, #f9a8e4 26%, #f85ad8 42%, #b8438f 52%, #f85ad8 60%,
-   #ffc9ef 74%, #fff 88%, #ffeaf9 100%);
+/* chrome with a HARD horizon line instead of a wide dark band, so the
+   dark stop reads as a reflection edge and never as grey mud */
+.chrome{background:linear-gradient(178deg,
+   #fff 0%, #ffe0f6 26%, #f9a8e4 46%, #b8438f 47%, #b8438f 51%, #ffc9ef 52%,
+   #f85ad8 74%, #ffd9f4 96%, #fff 100%);
   -webkit-background-clip:text;background-clip:text;color:transparent;
-  -webkit-text-stroke:1.6px var(--ink);
-  filter:drop-shadow(3px 3px 0 rgba(21,19,16,.22))}
+  -webkit-text-stroke:.024em var(--ink);
+  filter:drop-shadow(.045em .05em 0 rgba(21,19,16,.2))}
 
 /* rubber-stamp overprints */
-.stamps{display:flex;flex-wrap:wrap;gap:9px;margin-top:18px}
+.stamps{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin-top:14px}
 .rub{font-family:'JetBrains Mono',monospace;font-weight:800;
      border:3px solid var(--pink);color:var(--pink);padding:6px 11px;
      letter-spacing:2.2px;font-size:9.5px;border-radius:3px;white-space:nowrap;
@@ -72,19 +83,40 @@ body{background:var(--paper);color:var(--ink);font-family:Inter,-apple-system,sa
   background-image:radial-gradient(circle 13px at 15px 14px,var(--paper) 97%,transparent 100%);
   background-size:30px 28px}
 
-header{padding:26px 0 8px;position:relative;overflow:hidden}
-.brandrow{display:flex;align-items:center;gap:14px}
-.mark{width:150px;flex:0 0 150px}
+header{padding:24px 0 8px;position:relative;overflow:hidden}
+
+/* ---- MASTHEAD LOCKUP ----
+   The VAMPPSYCH mark and the title are one composed unit, not two
+   competing wordmarks: mark demoted to a return-address tag on the top
+   tier, ruled off, title carries the whole measure underneath. */
+.mast{border-top:3px solid var(--ink);border-bottom:3px solid var(--ink);
+      padding:11px 0 12px}
+.mast-top{position:relative;display:flex;align-items:center;gap:10px;
+          padding-bottom:10px;border-bottom:2px dotted var(--line)}
+.mark{width:94px;flex:0 0 94px}
 .mark img{width:100%;display:block}
-.kick{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2.6px;
-      color:var(--pink);text-transform:uppercase;font-weight:700}
-h1{font-size:44px;line-height:.98;margin-top:20px}
-h1 .hrt{color:var(--pink)}
-.kaotop{font-size:19px;color:var(--pink);letter-spacing:2px;margin-top:8px}
+.mast-top .kick{margin-left:auto;text-align:right}
+.kick{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:2.2px;
+      color:var(--ink);text-transform:uppercase;font-weight:700;line-height:1.85}
+.kick i{font-style:normal;color:var(--pink)}
+/* the title is locked to the measure: it always sets flush left to flush
+   right inside .wrap, at every width, so the lockup reads as one block */
+h1{font-size:calc((min(100vw,560px) - 44px) / 5.7);
+   line-height:.9;margin-top:11px;white-space:nowrap}
+h1 .hrt{color:var(--pink);font-size:.42em;vertical-align:.82em;
+        letter-spacing:0;margin-left:.04em;-webkit-text-stroke:.028em var(--ink)}
+/* sparkle rides the divider like a sticker stuck on the rule, so it costs
+   the top tier no width and the kick keeps its two clean lines */
+.kaotop{position:absolute;right:0;bottom:-9px;background:var(--paper);
+        padding:0 3px 0 7px;font-size:15px;line-height:1;
+        color:var(--pink);letter-spacing:1px;transform:rotate(-2deg)}
 
 
 /* hero */
-.hero{position:relative;margin:6px 0 0}
+/* margin must keep the auto sides: the bare `6px 0 0` shorthand was overriding
+   .wrap's `margin:0 auto`, which left-aligned the drawing on any viewport wider
+   than the 560px wrap while the rest of the page stayed centred. */
+.hero{position:relative;margin:6px auto 0}
 .hero img{width:100%;height:auto;display:block;mix-blend-mode:multiply}
 .hero .glow{position:absolute;left:50%;top:6%;width:82%;padding-bottom:82%;
   transform:translateX(-50%);z-index:-1;opacity:.4;
@@ -129,8 +161,16 @@ footer a{color:var(--dim)}
   .rub{font-size:8.5px;letter-spacing:1.5px;padding:5px 9px;border-width:2px}
   .stamps{gap:7px}
 }
+@media(max-width:360px){
+  .mark{width:80px;flex:0 0 80px}
+  .kick{font-size:8px;letter-spacing:1.6px}
+}
+@media(min-width:521px){
+  .mark{width:112px;flex:0 0 112px}
+  .mast{padding:13px 0 15px}
+  h1{margin-top:14px}
+}
 @media(max-width:520px){
-  h1{font-size:37px}.mark{width:128px;flex:0 0 128px}
   .intro{font-size:17.5px}}
 </style>
 </head>
@@ -141,12 +181,14 @@ footer a{color:var(--dim)}
 
 <header>
   <div class="wrap">
-    <div class="brandrow">
-      <div class="mark"><img src="assets/mark.svg" alt="Vamppsych"></div>
-      <div class="kick">Portrait sittings<br>San Antonio<br>always open</div>
+    <div class="mast">
+      <div class="mast-top">
+        <div class="mark"><img src="assets/mark.svg" alt="Vamppsych"></div>
+        <span class="kaotop kao">⋆｡°✩</span>
+        <div class="kick">Portrait sittings<br>San Antonio <i>&#9679;</i> always open</div>
+      </div>
+      <h1 class="disp"><span class="chrome">Photoshoots</span><span class="hrt">&lt;3</span></h1>
     </div>
-    <h1 class="disp"><span class="chrome">Photoshoots</span> <span class="hrt">&lt;3</span></h1>
-    <div class="kaotop kao">⋆｡°✩ ₊˚ﾟ</div>
     <div class="stamps">
       <span class="rub">PHOTOGRAPHS &middot; DO NOT BEND</span>
       <span class="rub b">NO SITTING FEE</span>
