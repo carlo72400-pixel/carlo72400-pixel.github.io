@@ -52,6 +52,40 @@ tightened prose or moved one tap deep. Rates section carried the most: 497 -> 33
 - Verified: no console errors, no horizontal overflow at 375px, disclosure bodies do not
   overflow their container open or closed, headless renders checked at 1100px and 500px.
 
+## Repeated-image audit (Jul 30 2026, his ask "there some pics that repeat")
+
+Hashed every image on the page (md5 + dhash/ahash), built contact sheets per gallery, then ran
+a 5-lens adversarial workflow. THREE real repeats found and fixed:
+
+1. **`assets/hero.jpg` IS `assets/stills/01_globe-wide.jpg`** (identical dhash `fcf4f4fed6caaa51`).
+   The full-bleed hero was showing again as the first PHOTO MODE tile. Worst one, since it is
+   the first thing anyone sees. FIX: dropped `01_globe-wide` from the `stills` array in
+   `assets/js/main.js`. The hero keeps the frame.
+   **This one was invisible to a DOM `<img>` scan** because the hero is a CSS background in
+   `layout/_hero.css`. Any future image audit MUST include CSS `url()` refs.
+2. **`03_beam-dome` vs `04_moon-dome`**: same moon, same beam, seconds apart, in ADJACENT tiles.
+   FIX: dropped `04`, kept `03` (wider, shows the beam and the performer).
+3. **`photo_06` vs `photo_10`** in the SA Current STILLS PULL: same guest in a crown at the gold
+   sequin backdrop, two frames of one burst, sitting at both ends of the row. FIX: removed
+   `photo_10.jpg` + `thumb_10.jpg` (deleted, kept `06` which is 1000px wide vs 900 and has more
+   contrast). Grid is now 9. Placeholder alts ("Top Shelf event photo N of 10") replaced with
+   real descriptions while in there.
+
+**DO NOT delete `01_globe-wide.jpg` or `04_moon-dome.jpg` from disk.** `/steel/`, `/dream/`, and
+`index-camera.html` all still list them in their own gallery arrays. They are unreferenced by the
+homepage only. Caught this after `git rm` and restored them; check every alt face before removing
+any shared asset.
+
+Checked and found CLEAN (do not "fix" these, they are correct):
+- thumb_NN matching its own photo_NN, and `_web` matching its own `_full` (kit cards, contact card)
+- `grade_source` vs `grade_sludge` (deliberately one frame, two states, for the A/B slider)
+- the contact card appearing in both the footer and the SHARE sheet (deliberate)
+- `blue/` (8 frames, one model) and `projects/` LIT sessions (3 subjects) are portrait SERIES,
+  not repeats
+- `assets/feed/bw_*.jpg` and `color_*.jpg` are unreferenced leftovers on disk, only
+  `tt_avatar.jpg` is used. Not shown on the page, left alone.
+- decorative repeats are intentional: `ribbon_bow.png` x3, `charm.png` x2, washi tapes on most tiles
+
 ## Live
 - Homepage: https://carlo72400-pixel.github.io/  (this is the front door now)
 - Repo: carlo72400-pixel/carlo72400-pixel.github.io, source in this folder.

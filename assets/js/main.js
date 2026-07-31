@@ -93,11 +93,12 @@ chip.addEventListener('click',()=>{
 document.querySelectorAll('.mq-track').forEach(t=>{ t.innerHTML += t.innerHTML; });
 
 /* ---- photo mode gallery ---- */
+/* 01_globe-wide.jpg is NOT in this list on purpose: it is the same frame as the full-bleed
+   hero (assets/hero.jpg), so showing it here read as the page repeating itself. Same reason
+   04_moon-dome.jpg is out, it was the same moon beat as 03 seconds later. */
 const stills = [
-  ["01_globe-wide.jpg","Globe wide","EDITORIAL SLUDGE"],
   ["02_red-dome.jpg","Red dome","EDITORIAL SLUDGE"],
   ["03_beam-dome.jpg","Beam dome","EDITORIAL SLUDGE"],
-  ["04_moon-dome.jpg","Moon dome","EDITORIAL SLUDGE"],
   ["05_at-the-mic.jpg","At the mic","EDITORIAL SLUDGE"],
   ["06_pov-armup.jpg","From the pit","EDITORIAL SLUDGE"],
   ["07_red-crowd.jpg","Red crowd","SLEAZE"],
