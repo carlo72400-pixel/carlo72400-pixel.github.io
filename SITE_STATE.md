@@ -150,8 +150,8 @@ INFO (Editor first + FIELD KIT camera cards) -> PHOTO MODE (concert stills + A/B
 - RIBBON ASSETS re-keyed Jul 16 (`ribbon_bow.png`, `ribbon_frame_clean.png`; originals in `Reference/kawaii-src/pre-rekey-backup/`). Both had 1-bit mattes with the white background still baked in opaque. Rebuilt from `Reference/kawaii-src/ribbon_frame_src.jpg` via `scratchpad/key_ribbon.py`. THE LESSON if they ever need redoing: key on CHROMA, not brightness. The cast shadow is pink-tinted and the satin HIGHLIGHTS run sat 21-32, so the flood threshold must sit BELOW them (sat<10) or the fill leaks through a highlight and bites chunks out of the bow. Pearls survive because pink encloses them. `binary_fill_holes` also seals the picture window, so punch it back out.
 - `.reel-frame` border-image slice is MEASURED (108 113 110 107) off the 837x825 asset, never guessed. The old value 235 reached past the ~110px ribbon into the source's white margin and drew it as a white box. `background-clip:padding-box` is also load-bearing: `background:#fff` was painting under the transparent border.
 - QR share sticker: qr_sticker.jpg.
-- IG reels: reels/reel1_web.mp4 (+_poster), reels/reel2_web.mp4. Originals + all generated source PNGs archived in ~/Desktop/Vamppsych/Reference/kawaii-src/.
-- CONTACT CARD (added Jul 16): `assets/kawaii/card/card_{front,back}_full.png` (lightbox, PNG so QR scans) + `_web.jpg` (display). Shown in the #contact footer ("Let's cut something") as 2 washi-taped `.polaroid` + `.kitzoom` lightbox cards, AND in the SHARE sheet. Full-art highlighter style; built by `~/Desktop/Vamppsych/contact-card/build_fullart_card.py` (that folder has the source PNGs). Front QR uses ERROR_CORRECT_L so it scans small.
+- IG reels: reels/reel1_web.mp4 (+_poster), reels/reel2_web.mp4. Originals + all generated source PNGs archived in ~/Desktop/Vamppsych/05_REFERENCE/Reference/kawaii-src/.
+- CONTACT CARD (added Jul 16): `assets/kawaii/card/card_{front,back}_full.png` (lightbox, PNG so QR scans) + `_web.jpg` (display). Shown in the #contact footer ("Let's cut something") as 2 washi-taped `.polaroid` + `.kitzoom` lightbox cards, AND in the SHARE sheet. Full-art highlighter style; built by `~/Desktop/Vamppsych/03_PROJECTS/contact-card/build_fullart_card.py` (that folder has the source PNGs). Front QR uses ERROR_CORRECT_L so it scans small.
   - BACK bg (Jul 16) = generated stained-glass filmmaking window `contact-card/glass_A.png` (lens-iris rose window, Super 8, reel, clapperboards, film-strip vine, projector, upright crosses, rose border). `glass_B.png` is the alternate. Retune with env vars: `GLASS_STRENGTH=soft|bold` (default bold) and `GLASS_PLATE=glass_B.png`.
   - Card `.panel` top is 565, NOT 600: content is ~429px and 600 only gave it 404, so it overflowed and the foot got sliced by the lacy frame (frame z-index 6 > panel 5). `justify-content:flex-end` makes any future overflow go UP into the art.
   - ALWAYS re-verify both QRs after touching the card. Real decoder, no eyeballing:
@@ -181,8 +181,8 @@ INFO (Editor first + FIELD KIT camera cards) -> PHOTO MODE (concert stills + A/B
 - Local server: `cd portfolio-site && python3 -m http.server 8931`.
 
 ## His source files (organized Jul 15)
-- Shoot originals moved out of Downloads into `~/Desktop/Vamppsych/Shoots/`: blue-hair-editorial (20), lit-portraits (12), top-shelf-night (5), gear-flatlay (4), generated-art (2), footage (1), misc-photos (5).
-- `~/Desktop/Vamppsych/Reference/` loose files sorted into photos/, aesthetic-saves/, product-refs/, tutorial-grabs/; `vamppsych_holic_default_register.png` kept at Reference root.
+- Shoot originals moved out of Downloads into `~/Desktop/Vamppsych/04_PRODUCTION/Shoots/`: blue-hair-editorial (20), lit-portraits (12), top-shelf-night (5), gear-flatlay (4), generated-art (2), footage (1), misc-photos (5).
+- `~/Desktop/Vamppsych/05_REFERENCE/Reference/` loose files sorted into photos/, aesthetic-saves/, product-refs/, tutorial-grabs/; `vamppsych_holic_default_register.png` kept at Reference root.
 - Site source assets + reel originals archived in `Reference/kawaii-src/` (+ reels-src/).
 
 ## Still his court (not blocking)
