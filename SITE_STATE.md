@@ -190,3 +190,22 @@ INFO (Editor first + FIELD KIT camera cards) -> PHOTO MODE (concert stills + A/B
 - Releases OK for the two portrait models (blue-hair + rooftop scene-girl) before those stay public.
 - Editor REEL: the one real content gap; needs the VMP drive.
 - Literal Rogue font: download from his Envato Elements, then a one-line CSS swap.
+
+## DESIGN section + Arcade block (Aug 12 2026)
+
+Section order is now 8 stops: INFO 01, PHOTO MODE 02, ARCHIVE 03, **DESIGN 04**,
+PLAYBACK 05, FEED 06, RATES 07, STANDBY 08 (bands.js PAGES + hardcoded `/ 08`
+in the pagebreak; nav `<ul>` carries the Design link after Archive).
+
+- **DESIGN section** (`#design`, new): leads with the **The Mix "City Meets the
+  Underground" event poster** (`assets/design/themix.jpg`), then 3 collage
+  treatments of the arcade shoot: candy decora / y2k chrome / goth xerox
+  (`assets/design/{candyclaw,chrome,xerox}.jpg`). Uses the existing
+  `.sac-photos`/`.sacp` gallery (4/5 cover, opens the lightbox modal). Heading
+  "I build the whole graphic" — backs the hero-sub "…and design end to end".
+- **ARCADE · REDEMPTION block** added inside `#archive` after BLUE: 8 graded
+  frames from the Aug 11 arcade shoot (`assets/arcade/arc_01..08.jpg`), using
+  the `.blue-grid`/`.bluep` pattern (arc_06 bwide, arc_01 bhero; opens full jpg
+  like the neighboring BLUE block). Source: 04_PRODUCTION/Shoots/arcade-aug11.
+- No new CSS: both blocks reuse existing proven classes. Only bands.js changed
+  (bumped to `?v=20260812`); HTML mirrored to index-kawaii.html.
