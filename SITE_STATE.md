@@ -109,6 +109,11 @@ Checked and found CLEAN (do not "fix" these, they are correct):
   `03_PROJECTS/0ff-the-print/index.html`. Do not decoden it, it is not a portfolio page.
   Source of truth is `03_PROJECTS/0ff-the-print/interviews/TREATMENT-02-the-ink.html`; this
   copy is that file with a `<head>` wrapped around it, so edit there and re-wrap.
+- `/brujas/` — same thing for 0FF THE PRINT Interview 03, THE PAGE (Angel, @avocado__papi,
+  creator of the Brujas comic). Source of truth is
+  `03_PROJECTS/0ff-the-print/interviews/TREATMENT-03-brujas.html`. Slug is the comic, not
+  the seat, deliberately: `/thepage/` is one letter off `/theplan/` and he would send the
+  wrong link. Every new interview treatment goes here the same way.
 
 ## Register
 Pastel decoden / "kawaii AND professional." Ennaria pastels (blush, lilac, mint, baby blue, butter, peach) + silver chrome + white lace. Display font = Fraunces pushed to its Rogue-most axis (SOFT 100 / weight 640-680 / WONK 0). Body Inter, OSD JetBrains Mono. The real Kanye/Alamodome shot leads the hero full-bleed and regrades via the PP chip.
