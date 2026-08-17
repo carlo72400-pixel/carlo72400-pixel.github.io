@@ -102,6 +102,13 @@ Checked and found CLEAN (do not "fix" these, they are correct):
   sources, 12 Golden Hour Sanctuary plates in `bethel/img/`. Source of truth for rebuilds is the
   scratchpad template + `slideart/` `slideart2/`; the page carries its own `<head>` and OG card
   (`preview.jpg`, 1200x630) so the link previews when he texts or emails it.
+- `/theink/` — SUBJECT-FACING TREATMENT for 0FF THE PRINT Interview 02 (Smiley Onerr,
+  tattoo artist at Legion Ink). Same pattern as `/bethel/`: standalone, `noindex`, NOT in the
+  nav, own `<head>` + OG card so it previews in an IG DM. Register is the OUTLET's, not this
+  site's: 0FF THE PRINT pink/chrome/feral-black, tokens copied from
+  `03_PROJECTS/0ff-the-print/index.html`. Do not decoden it, it is not a portfolio page.
+  Source of truth is `03_PROJECTS/0ff-the-print/interviews/TREATMENT-02-the-ink.html`; this
+  copy is that file with a `<head>` wrapped around it, so edit there and re-wrap.
 
 ## Register
 Pastel decoden / "kawaii AND professional." Ennaria pastels (blush, lilac, mint, baby blue, butter, peach) + silver chrome + white lace. Display font = Fraunces pushed to its Rogue-most axis (SOFT 100 / weight 640-680 / WONK 0). Body Inter, OSD JetBrains Mono. The real Kanye/Alamodome shot leads the hero full-bleed and regrades via the PP chip.
