@@ -145,6 +145,19 @@ ul.need li::before{content:"★";position:absolute;left:6px;color:var(--gold);-w
 .who{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:baseline;margin-top:10px;font-size:14px}
 .who a{font-family:var(--mono);font-size:13px}
 
+a.src{font-family:var(--mono);font-size:.55em;vertical-align:super;color:var(--terra);
+  text-decoration:none;font-weight:700;letter-spacing:0;padding-left:2px}
+a.src:hover{color:var(--terra-deep)}
+ol.sources{list-style:none;counter-reset:src;max-width:680px}
+ol.sources li{counter-increment:src;position:relative;padding:10px 0 10px 40px;
+  border-bottom:1px dashed var(--line);font-size:13px;line-height:1.5}
+ol.sources li::before{content:counter(src,decimal-leading-zero);position:absolute;left:0;top:12px;
+  font-family:var(--sign);font-size:11px;color:var(--paper);background:var(--terra);
+  padding:2px 5px;border-radius:3px;box-shadow:1.5px 1.5px 0 var(--gold)}
+ol.sources b{display:block;font-size:13.5px}
+ol.sources a{font-family:var(--mono);font-size:12px;word-break:break-all}
+.srcnote{font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--terra);
+  font-weight:600;margin-top:18px;max-width:640px}
 footer{margin-top:8px}
 .foot-in{text-align:center;padding:22px 16px;color:var(--dim);font-family:var(--mono);font-size:11px;letter-spacing:.12em}
 </style>
@@ -174,19 +187,19 @@ footer{margin-top:8px}
   <div class="tag">02 · The receipts</div>
   <h2>You have been covered for years. <span class="em">You own none of it.</span></h2>
   <div class="receipts">
-    <div class="rc"><b>KSAT / SA Live</b><span>Featured four times and counting</span></div>
-    <div class="rc"><b>Amazon Prime</b><span>In a feature documentary about Filipino food, and you hosted the screening in your own dining room</span></div>
-    <div class="rc"><b>Eat Drink Local</b><span>A full YouTube feature</span></div>
-    <div class="rc"><b>The Spurs</b><span>Voted into the arena by the fans themselves</span></div>
+    <div class="rc"><b>KSAT / SA Live <a class="src" href="#s1">1</a><a class="src" href="#s2">2</a><a class="src" href="#s3">3</a><a class="src" href="#s4">4</a></b><span>Featured four times since 2022, most recently May 2026</span></div>
+    <div class="rc"><b>Amazon Prime <a class="src" href="#s5">5</a></b><span>In a feature documentary about Filipino food, and you hosted the screening in your own dining room</span></div>
+    <div class="rc"><b>Eat Drink Local <a class="src" href="#s6">6</a></b><span>A full YouTube feature</span></div>
+    <div class="rc"><b>The Spurs <a class="src" href="#s7">7</a></b><span>Voted into the arena by the fans themselves</span></div>
   </div>
-  <div class="punch">Every frame of that belongs to somebody else. Thirty years in, and there is not one asset you can post tomorrow. That gap is the whole plan.</div>
+  <div class="punch">Every frame of that belongs to somebody else. Thirty years in,<a class="src" href="#s8" style="color:var(--gold)">8</a> and there is not one asset you can post tomorrow. That gap is the whole plan.</div>
 </section>
 
 <section>
   <div class="tag">03 · The idea</div>
   <h2>Stop running a restaurant feed. Run <span class="em">the feed for Filipino San Antonio.</span></h2>
   <p class="big">The restaurant is the room it all happens in.</p>
-  <p>Your own name already says it. A sari-sari store is the store the whole neighborhood passes through. The city drew a cultural heritage district around your corridor, and nobody covers it. There is no Filipino outlet in San Antonio. There is no competitor to beat. The chair is just empty, and you are the only ones old enough and big enough to sit in it.</p>
+  <p>Your own name already says it. A sari-sari store is the store the whole neighborhood passes through. The city drew a cultural heritage district around your corridor,<a class="src" href="#s9">9</a> and nobody covers it. There is no Filipino outlet in San Antonio. There is no competitor to beat. The chair is just empty, and you are the only ones old enough and big enough to sit in it.</p>
 </section>
 
 <section>
@@ -228,13 +241,13 @@ footer{margin-top:8px}
 <section>
   <div class="tag">06 · The calendar</div>
   <h2>October is not a coincidence.</h2>
-  <p>October is Filipino American History Month. It marks the first documented Filipinos to land in the continental US, October 18, 1587. The month the algorithm goes looking for this content is the month we will already be posting it.</p>
+  <p>October is Filipino American History Month. It marks the first documented Filipinos to land in the continental US, October 18, 1587.<a class="src" href="#s10">10</a> The month the algorithm goes looking for this content is the month we will already be posting it.</p>
   <div class="cal">
     <div class="crow"><div class="ctag">SEPT</div><div class="cb"><b>Bank the first month.</b><span>One content morning before the rush, and the thirty-years interview gets shot early, while nobody is stressed.</span></div></div>
     <div class="crow"><div class="ctag">OCT 1</div><div class="cb"><b>PASALUBONG launches.</b><span>Episode one is the store itself. Three posts a week, all month, out of the September bank.</span></div></div>
     <div class="crow"><div class="ctag">OCT 18</div><div class="cb"><b>The 1587 post.</b><span>The tentpole. Same month, the three commercials from my school project get shot in your rooms, and those cost you nothing.</span></div></div>
     <div class="crow"><div class="ctag">NOV</div><div class="cb"><b>The bakery episode.</b><span>Simbang Gabi buying starts in November. The case is the star.</span></div></div>
-    <div class="crow"><div class="ctag">DEC 16-24</div><div class="cb"><b>Simbang Gabi.</b><span>Nine days of bibingka and puto bumbong. Shoot it once, properly, and it runs every December for the rest of the store's life.</span></div></div>
+    <div class="crow"><div class="ctag">DEC 16-24</div><div class="cb"><b>Simbang Gabi.<a class="src" href="#s11">11</a></b><span>Nine days of bibingka and puto bumbong. Shoot it once, properly, and it runs every December for the rest of the store's life.</span></div></div>
   </div>
 </section>
 
@@ -246,7 +259,7 @@ footer{margin-top:8px}
     <p>One morning, ten vertical pieces, twenty photos, delivered in 48 hours. If it works, there are monthly plans, and anybody who starts before the end of October keeps the student rate locked for twelve months. The whole sheet, all three options and the plain terms, is one page:</p>
     <a class="btn" href="https://carlo72400-pixel.github.io/s/t/2356fecb73/#8ec12019da665f3fbb943f496a5221d6">SEE THE RATE SHEET →</a>
   </div>
-  <p class="dim" style="margin-top:14px;font-size:13.5px">The three October commercials are separate. That is my Visual Realization client project at Full Sail, it is already approved, and it costs you nothing.</p>
+  <p class="dim" style="margin-top:14px;font-size:13.5px">The market numbers behind these rates are published, not mine: agencies run $500 to $5,000 a month for social media management<a class="src" href="#s12">12</a><a class="src" href="#s13">13</a> and one videographer day averages about $960 nationally.<a class="src" href="#s14">14</a> The rate sheet carries the same links. The three October commercials are separate. That is my Visual Realization client project at Full Sail, it is already approved, and it costs you nothing.</p>
 </section>
 
 <section>
@@ -269,6 +282,29 @@ footer{margin-top:8px}
     <a href="mailto:carlo72400@gmail.com">carlo72400@gmail.com</a>
     <a href="https://carlo72400-pixel.github.io/">carlo72400-pixel.github.io</a>
   </div>
+</section>
+
+<section id="sources">
+  <div class="tag">10 · The sources</div>
+  <h2>Every claim above has a <span class="em">receipt.</span></h2>
+  <p class="dim">Nothing on this page is my word alone. Tap any number.</p>
+  <ol class="sources">
+    <li id="s1"><b>KSAT SA Live, March 2022</b> Sari Sari Supper Club feature. <a href="https://www.ksat.com/video/sa-live/2022/03/21/sari-sari-supper-club-is-the-newest-restaurant-on-the-far-west-side-of-san-antonio--sa-live--ksat-12/">ksat.com</a></li>
+    <li id="s2"><b>KSAT SA Live, October 17, 2024</b> Filipino American History Month street food segment. <a href="https://www.ksat.com/video/sa-live/2024/10/17/sari-sari-celebrates-filipino-american-history-month-with-street-food-favorites/">ksat.com</a></li>
+    <li id="s3"><b>KSAT SA Live, August 13, 2025</b> New menu items for Culinaria. <a href="https://www.ksat.com/video/sa-live/2025/08/13/filipino-flavors-take-over/">ksat.com</a></li>
+    <li id="s4"><b>KSAT SA Live, May 21, 2026</b> Taste of the Spurs: Dylan Harper's chicken adobo, shot at Sari-Sari. <a href="https://www.ksat.com/video/sa-live/2026/05/21/taste-of-the-spurs-dylan-harper-inspired-filipino-menu/">ksat.com</a></li>
+    <li id="s5"><b>Authentic or Not: The Filipino Food Revolution, 2025</b> Feature documentary, streaming on Prime Video. <a href="https://www.amazon.com/Authentic-Not-Filipino-Food-Revolution/dp/B0F172NMKB">amazon.com</a></li>
+    <li id="s6"><b>Eat Drink Local: San Antonio</b> Full episode on the restaurant, market, and bakery. <a href="https://www.youtube.com/watch?v=5XI0Vc152u4">youtube.com</a></li>
+    <li id="s7"><b>KSAT News, December 31, 2025</b> Spurs Culinary Residence at the Frost Bank Center: eleven picked by the organization, two by public fan vote, and Sari-Sari was one of the two. <a href="https://www.ksat.com/news/local/2025/12/31/13-local-restaurants-part-of-frost-bank-centers-spurs-culinary-residence-program/">ksat.com</a></li>
+    <li id="s8"><b>MySA, August 2026</b> "Sari-Sari keeps Filipino food on the table after 30 years in San Antonio." <a href="https://www.yahoo.com/lifestyle/articles/sari-sari-keeps-filipino-food-140300356.html">via yahoo.com</a></li>
+    <li id="s9"><b>San Antonio Report, December 2024</b> The Silk Road Cultural Heritage District, the city's fourth, designated on the Wurzbach corridor. <a href="https://sanantonioreport.org/san-antonio-silk-road-cultural-heritage-district-hdrc-vote/">sanantonioreport.org</a></li>
+    <li id="s10"><b>Filipino American National Historical Society</b> October is Filipino American History Month, marking the October 18, 1587 landing at Morro Bay. <a href="https://www.fanhs-national.org/october-is-filipino-history-month">fanhs-national.org</a></li>
+    <li id="s11"><b>Catholic Review</b> Simbang Gabi, the nine dawn masses of December 16 to 24, and how the tradition has rooted in the US. <a href="https://catholicreview.org/filipino-simbang-gabi-masses-more-and-more-rooted-in-the-us/">catholicreview.org</a></li>
+    <li id="s12"><b>WebFX, 2026</b> Published social media management pricing: $500 to $5,000 a month. <a href="https://www.webfx.com/blog/social-media/social-media-pricing/">webfx.com</a></li>
+    <li id="s13"><b>Sprout Social, 2026</b> Social media management pricing for businesses. <a href="https://sproutsocial.com/insights/social-media-management-cost/">sproutsocial.com</a></li>
+    <li id="s14"><b>Thumbtack</b> National videographer pricing data: most people pay around $960. <a href="https://www.thumbtack.com/p/videography-prices">thumbtack.com</a></li>
+  </ol>
+  <div class="srcnote">★ THE FEED GETS HELD TO THIS SAME STANDARD. THAT IS THE WHOLE POINT OF AN OUTLET.</div>
 </section>
 
 </main>
