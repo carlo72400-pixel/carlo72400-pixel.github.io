@@ -235,3 +235,32 @@ in the pagebreak; nav `<ul>` carries the Design link after Archive).
   like the neighboring BLUE block). Source: 04_PRODUCTION/Shoots/arcade-aug11.
 - No new CSS: both blocks reuse existing proven classes. Only bands.js changed
   (bumped to `?v=20260812`); HTML mirrored to index-kawaii.html.
+
+
+## /0fftheprint/ — THE OUTLET IS LIVE (Aug 19 2026)
+
+0FF THE PRINT shipped as a subfolder site: **https://carlo72400-pixel.github.io/0fftheprint/**
+The repo copy is now the source of truth; the old build at `03_PROJECTS/0ff-the-print/` is the
+May archive (interviews/, releases/, CAM.md still live THERE, the site does not).
+
+- Single index.html + `content/*.json` (site/creators/take/rotation/desk/roster). Edit the JSON,
+  push, done. No Decap, no Netlify, no service worker — all stripped for Pages.
+- Positioning (his call, Aug 19): "We are the underground. The city pulses because we pump it."
+  Pulse banner up top, SATX → ATX → HTX → DTX route strip. INSERT COIN splash is original May work.
+- Roster: KAV-MAN (THE VOICE EX) + VIRGOSGATEWAY (THE ENGINEER) are NAMED members. The Ink (002,
+  Smiley, unnamed on the public page until it airs) + The Page (003, no yes yet, unnamed) run
+  "pending plates" — cards with `"photo": null` render a stamped classified plate
+  (`pending_glyph` + `pending_stamp` keys). NO album names, NO dates on the public page until
+  the artists announce; the campaign plans stay in /rise/ and /gateway/ (noindex, never linked
+  from the outlet).
+- The Rooms sidebar card: Zenhouse Fridays, The Mix, Rah Rah Room, Paper Tiger (his Aug 19 list).
+- Pitch section = IG DM buttons (@vamppsych / @cam_dyed). The fake @0fftheprint handles and
+  hello@ email are GONE — never reintroduce them.
+- FONT FIX that applies everywhere: Saira Condensed has NO italic on Google Fonts. Requesting
+  `ital,wght@1,900` makes Google silently omit the family (the May build always fell back to
+  Inter). Correct request is `Saira+Condensed:wght@900` + `font-style:italic` (synthetic slant).
+- Grid fix: .roster/.curators-grid were repeat(4,1fr) and blew out horizontally below ~1500px;
+  now repeat(auto-fill,minmax(200px,1fr)) + min-width:0 on main.feed/aside.sidebar.
+- OG: og_src.html → assets/preview.jpg (1200x630). Headless Chrome will NOT load Google Fonts
+  from file:// or localhost here — download the woff2s and @font-face them locally to render
+  (see scratchpad pattern), or reuse the existing preview.
