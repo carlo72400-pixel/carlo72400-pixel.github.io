@@ -114,7 +114,8 @@ Checked and found CLEAN (do not "fix" these, they are correct):
   `preview.jpg`). Register is Texas trill (Alfa Slab One + Permanent Marker + Inter/JBM,
   screwed purple + gold), NOT the site's decoden. Content: ACL 2026 reality check, Sept
   forge / Oct Austin / Nov-Dec circuit / SXSW 2027 phases, whiteboard-v2 redraw card,
-  venue outreach list + pitch template. OG card source: session scratchpad `og_rise.html`.
+  venue outreach list + pitch template. OG card source: `rise/og_rise.html` (headless
+  1200x630 → `preview.jpg`). Source board photo + flat scan: `03_PROJECTS/kavman/`.
 - `/gateway/` — THE 9.29 FILE (added Aug 18 2026): drop plan for VIRGOSGATEWAY (homie
   producer/engineer, IG @virgosgateway, NOT Kavman), same pattern as `/bethel/` (standalone,
   `noindex`, not in nav, own `<head>` + OG card `preview.jpg`). Register is declassified-file
