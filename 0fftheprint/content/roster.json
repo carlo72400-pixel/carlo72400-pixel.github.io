@@ -32,7 +32,7 @@
     {
       "name": "VIRGOSGATEWAY",
       "type": "signal",
-      "type_label": "THE ENGINEER",
+      "type_label": "THE SIGNAL",
       "hp": 180,
       "rarity": "tera-ex",
       "photo": "assets/voice-10-virgosgateway.jpg",
@@ -48,15 +48,15 @@
         },
         {
           "cost": "ggg",
-          "name": "Final Bounce",
+          "name": "Transmission",
           "damage": 160,
-          "desc": "Prints the master. Everything in the mix hits at once."
+          "desc": "Every speaker in range obeys."
         }
       ],
       "platform": "IG",
       "link": "https://instagram.com/virgosgateway",
       "theme_song": "",
-      "lore": "Producer and engineer. Credits scattered across records you already play. Check the fine print.\n\nSecond artist on the roster. Sessions are closed, and what's coming out of them is classified until it isn't.\n\nWhen the file opens, the desk has the frames."
+      "lore": "Rapper. San Antonio. Punk on the surface, trap in the bones, anarchy on the hook.\n\nSecond artist on the roster. Sessions are closed, and what's coming out of them is classified until it isn't.\n\nWhen the file opens, the desk has the frames."
     },
     {
       "name": "The Ink",

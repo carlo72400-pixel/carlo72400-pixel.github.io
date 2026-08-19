@@ -14,7 +14,7 @@
         "rare-holo",
         "tera-ex"
       ],
-      "photo": "assets/curator-vamppsych-real.jpg",
+      "photo": "assets/curator-vamppsych-xerox.jpg",
       "flavor": "Sees first. Cuts last.",
       "moves": [
         {
@@ -35,7 +35,9 @@
       "theme_song": "https://open.spotify.com/track/27OqNFBwYkOOZKhXShri4n",
       "lore": "Gianni grew up watching the scene through a viewfinder. Full Sail Digital Cinematography, Sony FX6, Insta360. The gear is the diary.\n\nWent all in on the camera in 2026: directed VOLUME, shoots the rooms the city actually moves in. Zenhouse on Fridays, The Mix on the Strip, Paper Tiger, the raves. Cuts gothic essays as Vamppsych. Started 0FF THE PRINT when he realized the underground didn't need coverage, it needed its own outlet.\n\nThe lens is the proof. Final cut is final word.",
       "open_seat": false
-    },
+    }
+  ],
+  "_benched_revisit_later": [
     {
       "name": "@cam_dyed",
       "role": "The Color",
