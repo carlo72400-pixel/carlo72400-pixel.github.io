@@ -109,6 +109,12 @@ Checked and found CLEAN (do not "fix" these, they are correct):
   `03_PROJECTS/0ff-the-print/index.html`. Do not decoden it, it is not a portfolio page.
   Source of truth is `03_PROJECTS/0ff-the-print/interviews/TREATMENT-02-the-ink.html`; this
   copy is that file with a `<head>` wrapped around it, so edit there and re-wrap.
+- `/rise/` — THE TEXAS TAKEOVER (added Aug 18 2026): Kavman x Vamppsych plan page, same
+  pattern as `/bethel/` (standalone, `noindex`, not in nav, own `<head>` + OG card
+  `preview.jpg`). Register is Texas trill (Alfa Slab One + Permanent Marker + Inter/JBM,
+  screwed purple + gold), NOT the site's decoden. Content: ACL 2026 reality check, Sept
+  forge / Oct Austin / Nov-Dec circuit / SXSW 2027 phases, whiteboard-v2 redraw card,
+  venue outreach list + pitch template. OG card source: session scratchpad `og_rise.html`.
 - `/brujas/` — same thing for 0FF THE PRINT Interview 03, THE PAGE (Angel, @avocado__papi,
   creator of the Brujas comic). Source of truth is
   `03_PROJECTS/0ff-the-print/interviews/TREATMENT-03-brujas.html`. Slug is the comic, not
