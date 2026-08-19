@@ -1,0 +1,46 @@
+{
+  "items": [
+    {
+      "title": "The Voice · KAV-MAN",
+      "lanes": ["music", "interview"],
+      "platform": "SATX",
+      "thumb": "assets/scene-02-sick-new-world.jpg",
+      "link": "#roster"
+    },
+    {
+      "title": "The Engineer · VIRGOSGATEWAY",
+      "lanes": ["music"],
+      "platform": "instagram",
+      "thumb": "assets/voice-04-label-head.jpg",
+      "link": "https://instagram.com/virgosgateway"
+    },
+    {
+      "title": "002 · The Ink",
+      "lanes": ["interview", "scene"],
+      "platform": "0FF",
+      "thumb": "assets/voice-06-painter.jpg",
+      "link": "#take"
+    },
+    {
+      "title": "The Mix on St Mary's · live",
+      "lanes": ["scene", "music"],
+      "platform": "instagram",
+      "thumb": "assets/scene-01-paper-tiger.jpg",
+      "link": "https://instagram.com/vamppsych"
+    },
+    {
+      "title": "Blade Rave · after hours",
+      "lanes": ["scene", "music"],
+      "platform": "instagram",
+      "thumb": "assets/voice-03-dj.jpg",
+      "link": "https://instagram.com/vamppsych"
+    },
+    {
+      "title": "001 · The format",
+      "lanes": ["hair", "interview"],
+      "platform": "0FF",
+      "thumb": "assets/take-02-hairstylist.jpg",
+      "link": "#take"
+    }
+  ]
+}

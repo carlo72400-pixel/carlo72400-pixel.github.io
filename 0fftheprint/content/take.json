@@ -1,0 +1,48 @@
+{
+  "items": [
+    {
+      "title": "We are {{accent}}.",
+      "accent": "the pulse",
+      "tag": "Manifesto",
+      "label": "0ff The Print · vol. 1",
+      "meta": "Manifesto · vol. 1",
+      "photo": "assets/take-01-manifesto.jpg",
+      "photo_alt": "Editorial still life: chrome italic 0 sculpture wrapped in pink leopard print ribbon with electric blue dye drip on glossy black surface",
+      "body": "Every city has an underground. Most of them wait for a camera to find it. Ours doesn't wait. We *are* the camera, the chair, the bench, the board. The set that ended before the algorithm woke up, the ink going in on a Friday afternoon, the master printing at 4AM. That current runs through this desk.\n\nFridays at Zenhouse. The Mix on the Strip. Rah Rah Room. Paper Tiger. The rooms know us by name now, and the names on our roster aren't archetypes anymore.\n\nWe're not covering the scene. We're the reason it has a pulse you can find. San Antonio first. Then Texas: Austin, Houston, Dallas. The state hears it from us or it doesn't hear it.\n\nYou find us through the work. That's still the deal.",
+      "likes": 47
+    },
+    {
+      "title": "The roster stopped being {{accent}}.",
+      "accent": "hypothetical",
+      "tag": "The Desk",
+      "label": "Seats are filling",
+      "meta": "Roster · two names in",
+      "photo": "assets/scene-01-paper-tiger.jpg",
+      "photo_alt": "Editorial live-scene still: stage wash and crowd silhouettes in pink and blue light",
+      "body": "The roster started as archetypes, the seats a scene needs filled before it can call itself one. Two of them just got names.\n\nTHE VOICE: KAV-MAN. San Antonio rapper. What he's loading stays off the page until it drops. When it drops, it drops with our frames on it.\n\nTHE ENGINEER: VIRGOSGATEWAY. Producer, engineer, credits already sitting in your library without his name on your lips. Sessions closed. File pending.\n\nNot subjects. Members. The takeover has a soundtrack now. Pull the cards below.",
+      "likes": 36
+    },
+    {
+      "title": "The format moves to {{accent}}.",
+      "accent": "the bench",
+      "tag": "Interview 002",
+      "label": "The Ink",
+      "meta": "Interview 002 · In production",
+      "photo": "assets/take-02-hairstylist.jpg",
+      "photo_alt": "Back-of-head editorial portrait of long pastel-pink dyed hair with chrome scissors in frame, pink leopard belt accent",
+      "body": "The rule since 001: the subject does their work on camera while they talk. Never a sit-down against a wall. The chair set it, color happening mid-conversation, gothic essay energy with foils in.\n\n002 takes the same rule to a tattoo bench. Black and grey by appointment, oil on canvas after hours. Two cameras, four to six minutes, room light stays the room light. No grade fighting the subject's own work.\n\nThe subject sees the cut before anyone else does. That's the house rule, and it's in writing.",
+      "likes": 23
+    },
+    {
+      "title": "Why {{accent}}.",
+      "accent": "no comments",
+      "tag": "Editorial",
+      "label": "Off the record · stays off the record",
+      "meta": "Editorial · House rules",
+      "photo": "assets/take-03-editorial.jpg",
+      "photo_alt": "Editorial still life: vintage chrome microphone on glossy black with torn pink leopard fabric strip, closed pink notebook with chrome lock, single blue dye drop",
+      "body": "Because we said so. This isn't a place for people to fight. It's a place for the work. If you want to talk to the desk, DM *@vamppsych*. Off the record stays off the record.",
+      "likes": 89
+    }
+  ]
+}
