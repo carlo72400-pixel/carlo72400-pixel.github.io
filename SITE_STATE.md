@@ -115,6 +115,13 @@ Checked and found CLEAN (do not "fix" these, they are correct):
   screwed purple + gold), NOT the site's decoden. Content: ACL 2026 reality check, Sept
   forge / Oct Austin / Nov-Dec circuit / SXSW 2027 phases, whiteboard-v2 redraw card,
   venue outreach list + pitch template. OG card source: session scratchpad `og_rise.html`.
+- `/gateway/` — THE 9.29 FILE (added Aug 18 2026): drop plan for VIRGOSGATEWAY (homie
+  producer/engineer, IG @virgosgateway, NOT Kavman), same pattern as `/bethel/` (standalone,
+  `noindex`, not in nav, own `<head>` + OG card `preview.jpg`). Register is declassified-file
+  punk: manila paper, Special Elite/Courier Prime/Allerta Stencil/Permanent Marker, ransom-note
+  letter chips, tap-to-unredact buttons, Zener card SVGs. Briefly lived at `/rise/929/` under
+  the wrong artist (assumed Kavman) before being moved here; that URL is dead, don't revive it.
+  OG card source: `gateway/og_src.html` (in-repo; render recipe in its top comment).
 - `/brujas/` — same thing for 0FF THE PRINT Interview 03, THE PAGE (Angel, @avocado__papi,
   creator of the Brujas comic). Source of truth is
   `03_PROJECTS/0ff-the-print/interviews/TREATMENT-03-brujas.html`. Slug is the comic, not
