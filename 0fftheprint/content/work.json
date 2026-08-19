@@ -1,0 +1,59 @@
+{
+  "items": [
+    {
+      "src": "assets/work/w06-arcade-godzilla.jpg",
+      "label": "REDEMPTION · arcade · 08.11",
+      "alt": "Goth model in black corset dress in front of a giant Godzilla arcade screen, neon arcade lighting"
+    },
+    {
+      "src": "assets/work/w02-night-diner.jpg",
+      "label": "NIGHT SET · the strip · 08.17",
+      "alt": "Night portrait in a diner booth by the window, teal light"
+    },
+    {
+      "src": "assets/work/w08-arcade-300.jpg",
+      "label": "REDEMPTION · arcade · 08.11",
+      "alt": "Model standing centered in front of a glowing ticket machine reading 300"
+    },
+    {
+      "src": "assets/work/w04-night-pinkwall.jpg",
+      "label": "NIGHT SET · the strip · 08.17",
+      "alt": "Flash portrait against a pink corrugated wall at night"
+    },
+    {
+      "src": "assets/work/w10-tiangge-band.jpg",
+      "label": "TIANGGE · night market · 08.07",
+      "alt": "Band playing under string lights at a night market"
+    },
+    {
+      "src": "assets/work/w03-night-mural.jpg",
+      "label": "NIGHT SET · the strip · 08.17",
+      "alt": "Subject leaning on a mural wall with a painted face, night"
+    },
+    {
+      "src": "assets/work/w07-arcade-claw.jpg",
+      "label": "REDEMPTION · arcade · 08.11",
+      "alt": "Claw machine aisle in pink and blue neon"
+    },
+    {
+      "src": "assets/work/w05-night-lights.jpg",
+      "label": "NIGHT SET · the strip · 08.17",
+      "alt": "Crouched night portrait against a wall of fairy lights"
+    },
+    {
+      "src": "assets/work/w11-tiangge-vendor.jpg",
+      "label": "TIANGGE · night market · 08.07",
+      "alt": "Vendor table of art prints under canopy lights at a night market"
+    },
+    {
+      "src": "assets/work/w09-arcade-racers.jpg",
+      "label": "REDEMPTION · arcade · 08.11",
+      "alt": "Model on a racing arcade cabinet, screens glowing"
+    },
+    {
+      "src": "assets/work/w01-night-tunnel.jpg",
+      "label": "NIGHT SET · the strip · 08.17",
+      "alt": "Figure between graffiti tunnel columns at night"
+    }
+  ]
+}

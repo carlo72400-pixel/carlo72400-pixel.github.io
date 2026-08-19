@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>0FF THE PRINT — the underground itself · San Antonio, TX</title>
-<meta name="description" content="San Antonio's underground, publishing itself. Music, ink, color, interviews, the take. The city pulses because we pump it. SATX first, then Texas.">
+<title>0FF THE PRINT — underground media house · San Antonio, TX</title>
+<meta name="description" content="San Antonio's underground media house. Real frames, our rooms, our roster. The city pulses because we pump it. SATX first, then Texas.">
 <meta name="theme-color" content="#0a0a0d">
 <meta name="color-scheme" content="dark">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -16,7 +16,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="0FF THE PRINT">
 <meta property="og:title" content="0FF THE PRINT — we are the underground">
-<meta property="og:description" content="The city pulses because we pump it. San Antonio first, then Texas. Music, ink, color, interviews, the take.">
+<meta property="og:description" content="The city pulses because we pump it. A media house run from inside the underground. San Antonio first, then Texas.">
 <meta property="og:image" content="https://carlo72400-pixel.github.io/0fftheprint/assets/preview.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -2172,6 +2172,12 @@
   main.feed{min-width:0;}
   aside.sidebar{min-width:0;}
 
+  /* ===== THE WORK ===== */
+  .work-grid{columns:3 250px;column-gap:14px;}
+  .work-item{break-inside:avoid;margin:0 0 14px;position:relative;border-radius:10px;overflow:hidden;border:1px solid var(--line);background:var(--panel);}
+  .work-item img{width:100%;display:block;}
+  .work-item figcaption{position:absolute;left:0;right:0;bottom:0;padding:22px 10px 8px;font-family:var(--f-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--pink);background:linear-gradient(180deg,transparent,rgba(10,10,13,.88));}
+
   /* ===== PULSE BANNER ===== */
   .pulse-banner{position:relative;z-index:1;max-width:1240px;margin:30px auto 4px;padding:0 18px;text-align:center;}
   .pulse-kick{font-family:var(--f-mono);font-size:11px;letter-spacing:.34em;color:var(--muted);text-transform:uppercase;}
@@ -2275,19 +2281,20 @@
 
 <!-- ========== NAV ========== -->
 <nav class="site">
-  <a href="#curators">Curators</a>
+  <a href="#curators">This Is Us</a>
+  <a href="#work">The Work</a>
   <a href="#take">The Take</a>
   <a href="#music">Music</a>
-  <a href="#desk">The Desk</a>
+  <a href="#desk">Catalog</a>
   <a href="#roster">Roster</a>
-  <a href="#pitch">Pitch</a>
+  <a href="#pitch">DM</a>
   <span class="spacer"></span>
   <a href="#" target="_blank" rel="noopener" class="cta" id="nav-follow">Follow</a>
 </nav>
 
 <!-- ========== PULSE BANNER ========== -->
 <header class="pulse-banner">
-  <div class="pulse-kick">San Antonio, TX · Underground-culture media</div>
+  <div class="pulse-kick">San Antonio, TX · Underground media house</div>
   <h1 class="pulse-line">We are the underground.<br>The city pulses <span class="blue">because we pump it.</span></h1>
   <div class="pulse-route"><b>SATX</b> <span class="nx">first</span> · ATX · HTX · DTX <span class="nx">· all of Texas hears it</span></div>
 </header>
@@ -2399,10 +2406,19 @@
     <!-- ===== CURATORS HERO (landing — the crew is the brand) ===== -->
     <section id="curators" class="curators-hero">
       <div class="section-head">
-        <h2>The Curators <span class="accent">behind the desk</span></h2>
-        <div class="sub">the crew &nbsp;·&nbsp; the eyes &nbsp;·&nbsp; the cuts</div>
+        <h2>This Is Us <span class="accent">the media house</span></h2>
+        <div class="sub">founded 2026 &nbsp;·&nbsp; san antonio &nbsp;·&nbsp; run from inside</div>
       </div>
       <div class="curators-grid" id="curators-mount"></div>
+    </section>
+
+    <!-- ===== THE WORK (real frames) ===== -->
+    <section id="work">
+      <div class="section-head">
+        <h2>The Work <span class="accent">shot by the house</span></h2>
+        <div class="sub">real frames &nbsp;·&nbsp; our rooms &nbsp;·&nbsp; no stock</div>
+      </div>
+      <div class="work-grid" id="work-grid"><!-- JS populates --></div>
     </section>
 
     <!-- ===== THE TAKE (front & center — read first, look second) ===== -->
@@ -2436,8 +2452,8 @@
     <!-- ===== THE DESK · filterable culture feed ===== -->
     <section id="desk">
       <div class="section-head">
-        <h2>The Desk <span class="accent">latest drops</span></h2>
-        <div class="sub">videos &nbsp;·&nbsp; scene &nbsp;·&nbsp; interviews</div>
+        <h2>The Catalog <span class="accent">numbered drops</span></h2>
+        <div class="sub">0TP numbers &nbsp;·&nbsp; scene &nbsp;·&nbsp; interviews</div>
       </div>
       <div class="desk-filters" id="desk-filters">
         <button class="filter-pill active" data-lane="all" type="button">All</button>
@@ -2540,18 +2556,19 @@
   ).join('');
 
   // ============ Fetch all content ============
-  let site, creators, take, rotation, desk, roster;
+  let site, creators, take, rotation, desk, roster, work;
   try {
-    const [s, c, t, m, d, r] = await Promise.all([
+    const [s, c, t, m, d, r, w] = await Promise.all([
       fetch('content/site.json').then(r => r.json()),
       fetch('content/creators.json').then(r => r.json()),
       fetch('content/take.json').then(r => r.json()),
       fetch('content/rotation.json').then(r => r.json()),
       fetch('content/desk.json').then(r => r.json()),
       fetch('content/roster.json').then(r => r.json()),
+      fetch('content/work.json').then(r => r.json()),
     ]);
     site = s; creators = c.items; take = t.items;
-    rotation = m.items; desk = d.items; roster = r.items;
+    rotation = m.items; desk = d.items; roster = r.items; work = w.items;
   } catch (err) {
     console.error('Content load failed', err);
     document.body.innerHTML = '<div style="padding:40px;color:#fff;font-family:system-ui;text-align:center;">Content failed to load. Refresh, or DM <a href="https://instagram.com/vamppsych" style="color:#ff79c6;">@vamppsych</a>.</div>';
@@ -2588,7 +2605,7 @@
   if (hqa && site.house_quote_attribution) hqa.textContent = '— ' + site.house_quote_attribution;
 
   const fm = document.getElementById('footer-meta');
-  if (fm) fm.innerHTML = '© 2026 · ' + esc(site.site_name) + ' · Underground-culture media · ' + esc(site.city);
+  if (fm) fm.innerHTML = '© 2026 · ' + esc(site.site_name) + ' · Underground media house · ' + esc(site.city);
   const fs = document.getElementById('footer-social');
   if (fs && site.social) {
     fs.querySelectorAll('a[data-social]').forEach(a => {
@@ -2735,6 +2752,16 @@
         item.classList.toggle('hidden', lane !== 'all' && !lanes.includes(lane));
       });
     });
+  }
+
+  // ============ The Work (real frames) ============
+  const wMount = document.getElementById('work-grid');
+  if (wMount && work) {
+    wMount.innerHTML = work.map(it => `
+      <figure class="work-item">
+        <img src="${esc(it.src)}" alt="${esc(it.alt || it.label || '')}" loading="lazy" decoding="async">
+        <figcaption>${esc(it.label || '')}</figcaption>
+      </figure>`).join('');
   }
 
   // ============ Roster ============
