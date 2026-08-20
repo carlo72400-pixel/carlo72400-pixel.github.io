@@ -1,47 +1,40 @@
 {
   "items": [
     {
-      "title": "SOMEBODY IS GOOD AT SOMETHING. {{accent}}",
-      "accent": "WE SHOW UP.",
-      "tag": "THE JOB",
-      "label": "FIG. 01 / IN THE ROOM",
-      "meta": "FILE 01 · SAN ANTONIO · ONGOING",
-      "photo": "assets/work/w2-mix-010.jpg",
-      "photo_alt": "Window light across a worn couch inside The Mix before the room fills",
-      "body": "Somebody is good at something. We show up and film it.\n\nThat covers a lot. Tattoos, sets, a room at 1am, a guy fixing his own gear in the parking lot. If the work is real, it shoots.\n\nWe don't build a set for it. We go where it already happens and stay out of the way. *Mostly.* No plan longer than a night.\n\nSmall crew, decent cameras, worse sleep than you.",
+      "author": "vamppsych",
+      "pinned": true,
+      "date": "2026-08-20T02:10:00",
+      "text": "This is the timeline. If you hold a card you can post here.\n\nArt, thoughts, a photo from last night, a bad opinion about a mix. No login, no app, nothing to argue under. Send it to the desk and it goes up.",
+      "likes": 52
+    },
+    {
+      "author": "vamppsych",
+      "date": "2026-08-20T01:35:00",
+      "text": "Somebody is good at something. We show up and film it.\n\nThat covers a lot. Tattoos, sets, a room at 1am, a guy fixing his own gear in the parking lot. If the work is real, it shoots.",
+      "image": "assets/work/w2-mix-010.jpg",
+      "image_alt": "Window light across a worn couch inside The Mix before the room fills",
       "likes": 47
     },
     {
-      "title": "A ROOM FULL OF {{accent}}",
-      "accent": "ONE-TRICK MONSTERS",
-      "tag": "THE CREW",
-      "label": "ROSTER / NO FILLER",
-      "meta": "FILE 02 · NAMES, NOT SLOTS",
-      "photo": "assets/work/w2-blade-181.jpg",
-      "photo_alt": "A packed room in full red wash at Paper Tiger",
-      "body": "There's a vampire running the camera. That's Gianni. He quit the day job for this, and he'll stand in a parking lot at 1 AM until he gets the shot.\n\nKAV-MAN raps. Virgo raps a different way, punk on the surface, trap in the bones. Both of them go crazy. Neither one needs us to explain them.\n\nWrathfol is on the boards. San Antonio by way of Houston, produces anything, and every beat tells a story. Subtle has never once been the move.\n\nNobody here is well rounded. Everybody was already the best person we know at *exactly one thing.* We stacked the specific ones and aimed them at each other.\n\nNobody works for anybody.",
-      "likes": 36
-    },
-    {
-      "title": "NOBODY SITS {{accent}}",
-      "accent": "AGAINST A WALL",
-      "tag": "THE FORMAT",
-      "label": "HANDS, NOT HEADS",
-      "meta": "0TP SERIES · TWO CAMERAS · ROOM LIGHT",
-      "photo": "assets/work/w2-mix-037.jpg",
-      "photo_alt": "Performer working the mic in green stage wash",
-      "body": "The interview happens while the subject works. Needle in the skin. Bleach on the foil. Beat loading. They talk, they keep going, we roll.\n\nTwo cameras. One on the face and hands, one locked over the shoulder. We don't bring lights. The room already has some.\n\nPeople say better things when their hands are busy. A sit-down against a wall gets you a press release. We'd rather watch the needle.\n\nEvery one gets a number. 0TP-001, 0TP-002, on down.",
+      "author": "vamppsych",
+      "date": "2026-08-19T23:50:00",
+      "text": "Nobody sits against a wall.\n\nThe interview happens while the subject works. Needle in the skin. Bleach on the foil. Beat loading. People say better things when their hands are busy.",
+      "image": "assets/work/w2-mix-037.jpg",
+      "image_alt": "Performer working the mic in green stage wash",
       "likes": 23
     },
     {
-      "title": "THE {{accent}} ARE SHORT",
-      "accent": "HOUSE RULES",
-      "tag": "THE RULES",
-      "label": "FIG. 04 / POSTED",
-      "meta": "WE SAY IT BEFORE THE CAMERA COMES OUT",
-      "photo": "assets/work/w2-night-121.jpg",
-      "photo_alt": "Quiet diner booth by the window late at night",
-      "body": "No comments. No accounts. Nothing to log into. You came to look at the work, not to argue under it.\n\nOff the record stays off the record. Say it, then say don't use it, and it's gone. We don't keep a copy.\n\nThe subject sees the cut before anybody else does. Hate it and we fix it or we shelve it. We'd rather lose a story than burn somebody who let us in the room.\n\nWe already liked you or the camera wouldn't be out. None of this is a stance. It's just how we'd want to be filmed.",
+      "author": "vamppsych",
+      "date": "2026-08-19T22:15:00",
+      "text": "Blade Rave gallery is up. 44 frames.\n\nIn one of them and want the full res? Just ask. It's yours, it's free, it was always yours.",
+      "image": "assets/work/w2-blade-181.jpg",
+      "image_alt": "A packed room in full red wash at Paper Tiger",
+      "likes": 36
+    },
+    {
+      "author": "vamppsych",
+      "date": "2026-08-19T20:05:00",
+      "text": "House rules are short.\n\nNo comments. No accounts. Off the record stays off the record. The subject sees the cut before anybody else does. We'd rather lose a story than burn somebody who let us in the room.",
       "likes": 89
     }
   ]
