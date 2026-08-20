@@ -3,137 +3,191 @@
     {
       "src": "assets/work/w2-mix-010.jpg",
       "label": "THE MIX · st mary's · 08.16",
-      "alt": "Window light across a worn couch inside The Mix"
+      "alt": "Window light across a worn couch inside The Mix",
+      "w": 1400,
+      "h": 787
     },
     {
       "src": "assets/work/w2-blade-025.jpg",
       "label": "PAPER TIGER · after hours · 08.14",
-      "alt": "Portrait in front of the red Paper Tiger snake mural"
+      "alt": "Portrait in front of the red Paper Tiger snake mural",
+      "w": 1400,
+      "h": 1050
     },
     {
       "src": "assets/work/w2-mix-037.jpg",
       "label": "THE MIX · st mary's · 08.16",
-      "alt": "Performer on the mic in green stage wash"
+      "alt": "Performer on the mic in green stage wash",
+      "w": 1400,
+      "h": 787
     },
     {
       "src": "assets/work/w2-blade-037.jpg",
       "label": "PAPER TIGER · after hours · 08.14",
-      "alt": "Stage beams cutting over the crowd"
+      "alt": "Stage beams cutting over the crowd",
+      "w": 1400,
+      "h": 1050
     },
     {
       "src": "assets/work/w2-night-037.jpg",
       "label": "NIGHT SET · the strip · 08.17",
-      "alt": "Face lit hot pink against graffiti at night"
+      "alt": "Face lit hot pink against graffiti at night",
+      "w": 1400,
+      "h": 787
     },
     {
       "src": "assets/work/w2-mix-109.jpg",
       "label": "THE MIX · st mary's · 08.16",
-      "alt": "Performer swinging the mic cable under red light"
+      "alt": "Performer swinging the mic cable under red light",
+      "w": 1400,
+      "h": 787
     },
     {
       "src": "assets/work/w2-blade-049.jpg",
       "label": "PAPER TIGER · after hours · 08.14",
-      "alt": "Wide of the patio floor under string lights"
+      "alt": "Wide of the patio floor under string lights",
+      "w": 1400,
+      "h": 787
     },
     {
       "src": "assets/work/w06-arcade-godzilla.jpg",
       "label": "REDEMPTION · arcade · 08.11",
-      "alt": "Goth model in front of a giant Godzilla arcade screen"
+      "alt": "Goth model in front of a giant Godzilla arcade screen",
+      "w": 787,
+      "h": 1400
     },
     {
       "src": "assets/work/w2-mix-046.jpg",
       "label": "THE MIX · st mary's · 08.16",
-      "alt": "Dartboard corner, bar texture"
+      "alt": "Dartboard corner, bar texture",
+      "w": 1400,
+      "h": 787
     },
     {
       "src": "assets/work/w2-blade-013.jpg",
       "label": "PAPER TIGER · after hours · 08.14",
-      "alt": "Vendor jewelry table in pink light"
+      "alt": "Vendor jewelry table in pink light",
+      "w": 1400,
+      "h": 787
     },
     {
       "src": "assets/work/w02-night-diner.jpg",
       "label": "NIGHT SET · the strip · 08.17",
-      "alt": "Night portrait in a diner booth by the window"
+      "alt": "Night portrait in a diner booth by the window",
+      "w": 1400,
+      "h": 787
     },
     {
       "src": "assets/work/w2-mix-127.jpg",
       "label": "THE MIX · st mary's · 08.16",
-      "alt": "Bar portrait in neon"
+      "alt": "Bar portrait in neon",
+      "w": 1400,
+      "h": 787
     },
     {
       "src": "assets/work/w2-blade-181.jpg",
       "label": "PAPER TIGER · after hours · 08.14",
-      "alt": "The pit in full red wash"
+      "alt": "The pit in full red wash",
+      "w": 1400,
+      "h": 1050
     },
     {
       "src": "assets/work/w08-arcade-300.jpg",
       "label": "REDEMPTION · arcade · 08.11",
-      "alt": "Model centered on a glowing ticket machine reading 300"
+      "alt": "Model centered on a glowing ticket machine reading 300",
+      "w": 787,
+      "h": 1400
     },
     {
       "src": "assets/work/w2-night-150.jpg",
       "label": "NIGHT SET · the strip · 08.17",
-      "alt": "Small figure against a giant painted face mural"
+      "alt": "Small figure against a giant painted face mural",
+      "w": 1400,
+      "h": 787
     },
     {
       "src": "assets/work/w10-tiangge-band.jpg",
       "label": "TIANGGE · night market · 08.07",
-      "alt": "Band playing under string lights at a night market"
+      "alt": "Band playing under string lights at a night market",
+      "w": 1050,
+      "h": 1400
     },
     {
       "src": "assets/work/w04-night-pinkwall.jpg",
       "label": "NIGHT SET · the strip · 08.17",
-      "alt": "Flash portrait against a pink corrugated wall"
+      "alt": "Flash portrait against a pink corrugated wall",
+      "w": 1400,
+      "h": 787
     },
     {
       "src": "assets/work/w07-arcade-claw.jpg",
       "label": "REDEMPTION · arcade · 08.11",
-      "alt": "Claw machine aisle in pink and blue neon"
+      "alt": "Claw machine aisle in pink and blue neon",
+      "w": 1400,
+      "h": 787
     },
     {
       "src": "assets/work/w2-night-121.jpg",
       "label": "NIGHT SET · the strip · 08.17",
-      "alt": "Diner table by the window, second angle"
+      "alt": "Diner table by the window, second angle",
+      "w": 1400,
+      "h": 787
     },
     {
       "src": "assets/work/w05-night-lights.jpg",
       "label": "NIGHT SET · the strip · 08.17",
-      "alt": "Crouched portrait against a wall of fairy lights"
+      "alt": "Crouched portrait against a wall of fairy lights",
+      "w": 1400,
+      "h": 787
     },
     {
       "src": "assets/work/w2-night-164.jpg",
       "label": "NIGHT SET · the strip · 08.17",
-      "alt": "Leaning on a skull-painted pole, street at night"
+      "alt": "Leaning on a skull-painted pole, street at night",
+      "w": 1400,
+      "h": 787
     },
     {
       "src": "assets/work/w09-arcade-racers.jpg",
       "label": "REDEMPTION · arcade · 08.11",
-      "alt": "Model on a racing arcade cabinet, screens glowing"
+      "alt": "Model on a racing arcade cabinet, screens glowing",
+      "w": 1400,
+      "h": 787
     },
     {
       "src": "assets/work/w2-night-093.jpg",
       "label": "NIGHT SET · the strip · 08.17",
-      "alt": "Motion blur in sunglasses at night"
+      "alt": "Motion blur in sunglasses at night",
+      "w": 1400,
+      "h": 787
     },
     {
       "src": "assets/work/w11-tiangge-vendor.jpg",
       "label": "TIANGGE · night market · 08.07",
-      "alt": "Vendor table of art prints under canopy lights"
+      "alt": "Vendor table of art prints under canopy lights",
+      "w": 1400,
+      "h": 1050
     },
     {
       "src": "assets/work/w03-night-mural.jpg",
       "label": "NIGHT SET · the strip · 08.17",
-      "alt": "Leaning on a mural wall with a painted face"
+      "alt": "Leaning on a mural wall with a painted face",
+      "w": 1400,
+      "h": 787
     },
     {
       "src": "assets/work/w2-night-221.jpg",
       "label": "NIGHT SET · the strip · 08.17",
-      "alt": "Climbing a pole over the city street"
+      "alt": "Climbing a pole over the city street",
+      "w": 1400,
+      "h": 787
     },
     {
       "src": "assets/work/w01-night-tunnel.jpg",
       "label": "NIGHT SET · the strip · 08.17",
-      "alt": "Figure between graffiti tunnel columns"
+      "alt": "Figure between graffiti tunnel columns",
+      "w": 1400,
+      "h": 787
     }
   ]
 }

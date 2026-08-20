@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>0FF THE PRINT — underground media house · San Antonio, TX</title>
-<meta name="description" content="San Antonio's underground media house. Real frames, our rooms, our roster. The city pulses because we pump it. SATX first, then Texas.">
+<meta name="description" content="Underground media house in San Antonio. Interviews, night photos, shows, music visuals, all of it shot while the work is happening.">
 <meta name="theme-color" content="#0a0a0d">
 <meta name="color-scheme" content="dark">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -16,7 +16,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="0FF THE PRINT">
 <meta property="og:title" content="0FF THE PRINT — we are the underground">
-<meta property="og:description" content="The city pulses because we pump it. A media house run from inside the underground. San Antonio first, then Texas.">
+<meta property="og:description" content="Underground media house in San Antonio. Interviews, night photos, shows, music visuals, all of it shot while the work is happening.">
 <meta property="og:image" content="https://carlo72400-pixel.github.io/0fftheprint/assets/preview.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -25,7 +25,7 @@
 <link rel="canonical" href="https://carlo72400-pixel.github.io/0fftheprint/">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="0FF THE PRINT">
-<meta name="twitter:description" content="We are the underground. The city pulses because we pump it.">
+<meta name="twitter:description" content="Underground media house. San Antonio, TX.">
 <meta name="twitter:image" content="https://carlo72400-pixel.github.io/0fftheprint/assets/preview.jpg">
 
 <!-- Favicons + app icons -->
@@ -35,23 +35,28 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@900&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Allerta+Stencil&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Special+Elite&family=Permanent+Marker&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#0a0a0d;
-    --bg-2:#0e0d12;
-    --panel:#121218;
-    --line:#23222b;
-    --ink:#f4eef2;
-    --muted:#9a93a3;
-    --pink:#f7b9dd;
-    --pink-deep:#f48fc8;
-    --pink-glow:#ff79c6;
-    --dye-blue:#2f6bff;
+    /* THE PINK FILE — declassified document. Paper page, dark plates, pink stamps. */
+    --bg:#f7f5ef;          /* document paper */
+    --bg-2:#ece7db;        /* aged edge */
+    --panel:#fffdf8;       /* white form card */
+    --line:#cdc5b3;        /* rule line */
+    --ink:#17150f;         /* typed ink, 15.9:1 on paper */
+    --muted:#4d473d;       /* carbon copy, 7.6:1 on paper */
+    --pink:#f9c9e0;        /* soft fill */
+    --pink-deep:#e5378f;   /* stamp pink, borders + display */
+    --pink-glow:#c2185b;   /* deep pink, text-safe 5.6:1 */
+    --dye-blue:#2b3a67;    /* form-field navy, used sparingly */
+    --plate:#0d0c0b;       /* photo plate stock */
+    --plate-2:#141310;
 
-    --f-display:'Saira Condensed','Inter',system-ui,sans-serif;
-    --f-body:'Inter',system-ui,-apple-system,'Helvetica Neue',sans-serif;
-    --f-mono:'JetBrains Mono',ui-monospace,monospace;
+    --f-display:'Allerta Stencil','Saira Condensed',system-ui,sans-serif;
+    --f-body:'Courier Prime',ui-monospace,'Courier New',monospace;
+    --f-mono:'Courier Prime',ui-monospace,'Courier New',monospace;
+    --f-stamp:'Special Elite','Courier Prime',serif;
+    --f-hand:'Permanent Marker','Courier Prime',cursive;
   }
 
   *{box-sizing:border-box;margin:0;padding:0;}
@@ -1511,77 +1516,6 @@
     100%{transform:translate(calc(-50% + var(--tx,0px)), calc(-50% + var(--ty,0px))) scale(1.2) rotate(180deg);opacity:0;}
   }
 
-  /* INSERT COIN splash */
-  .insert-coin{
-    position:fixed;inset:0;z-index:10000;
-    background:
-      radial-gradient(ellipse at center, #1d0f1f 0%, #0a0a0d 70%),
-      linear-gradient(180deg, #0a0a0d, #110a16);
-    display:none;
-    align-items:center;justify-content:center;flex-direction:column;
-    text-align:center;cursor:pointer;
-    padding:32px;
-    overflow:hidden;
-  }
-  .insert-coin.show{display:flex;}
-  .insert-coin.out{
-    opacity:0;
-    transition:opacity .65s cubic-bezier(.2,.7,.3,1);
-  }
-  .insert-coin::before{
-    content:'';position:absolute;inset:0;
-    background:repeating-linear-gradient(0deg, rgba(255,121,198,.05) 0 2px, transparent 2px 6px);
-    pointer-events:none;
-  }
-  .insert-coin-mark{
-    font-family:var(--f-display);
-    font-style:italic;font-weight:900;
-    font-size:clamp(56px,11vw,140px);
-    letter-spacing:-.02em;line-height:1.12;
-    text-transform:uppercase;color:#fff;
-    text-shadow:0 0 30px rgba(255,121,198,.4);
-    padding:8px 4px;
-    overflow:visible;
-  }
-  .insert-coin-mark .zero{
-    position:relative;
-    display:inline-block;
-    line-height:1;
-    padding:0 .04em;
-    background:linear-gradient(180deg,#fff 0%,#ffcfeb 28%,#ff79c6 52%,#f7b9dd 76%,#fff 100%);
-    -webkit-background-clip:text;background-clip:text;
-    -webkit-text-fill-color:transparent;color:transparent;
-    filter:drop-shadow(0 0 22px rgba(255,121,198,.7));
-  }
-  /* Sick slashed-zero — diagonal chrome+pink reticle stripe through the 0 */
-  .insert-coin-mark .zero::after{
-    content:'';
-    position:absolute;
-    top:50%;left:6%;right:6%;
-    height:10px;
-    background:linear-gradient(90deg, transparent 0%, #ff79c6 14%, #ffffff 50%, #ff79c6 86%, transparent 100%);
-    transform:translateY(-50%) rotate(-22deg);
-    filter:drop-shadow(0 0 14px rgba(255,121,198,.95)) drop-shadow(0 0 4px #ffffff);
-    pointer-events:none;
-    border-radius:3px;
-    z-index:2;
-  }
-  .insert-coin-text{
-    margin-top:28px;
-    font-family:var(--f-display);font-style:italic;font-weight:900;
-    font-size:clamp(20px,3.6vw,32px);
-    color:var(--pink-glow);
-    letter-spacing:.22em;
-    text-shadow:0 0 14px rgba(255,121,198,.7);
-    animation:blink 1s steps(2) infinite;
-  }
-  .insert-coin-sub{
-    margin-top:14px;
-    font-family:var(--f-mono);font-size:11px;
-    color:var(--muted);letter-spacing:.34em;
-    text-transform:uppercase;
-  }
-  @keyframes blink{50%{opacity:.25;}}
 
   /* Scroll-to-top button */
   .scroll-top{
@@ -2205,16 +2139,372 @@
   .pitch-btn.blue b{color:#9db9ff;}
   .pitch-btn.blue:hover{border-color:var(--dye-blue);}
   .pitch-fine{color:var(--muted);font-size:12.5px;line-height:1.6;}
+
+
+  /* ==========================================================
+     THE PINK FILE — declassified override.
+     The page is paper. The photographs are plates on dark stock.
+     The cards stay dark: objects set down on the document.
+     ========================================================== */
+
+  body{
+    background:var(--bg) !important;
+    color:var(--ink);
+    font-family:var(--f-body);
+    font-size:14px;
+    line-height:1.6;
+  }
+  /* kill the neon header wash, replace with paper grain */
+  body::before{
+    background:
+      repeating-linear-gradient(0deg, rgba(23,21,15,.022) 0 1px, transparent 1px 3px),
+      radial-gradient(120% 60% at 50% 0%, rgba(229,55,143,.05), transparent 70%) !important;
+    mix-blend-mode:multiply !important;
+    opacity:1 !important;
+    height:100% !important;
+    mask-image:none !important;
+    -webkit-mask-image:none !important;
+  }
+
+  /* ---- perforation strip replaces the leopard bar ---- */
+  .leopard-bar{
+    height:12px !important;
+    background:
+      repeating-linear-gradient(90deg, var(--ink) 0 16px, transparent 16px 26px) !important;
+    opacity:.85;
+  }
+
+  /* ---- ticker = classification banner ---- */
+  .ticker{
+    background:var(--pink-deep) !important;
+    border-top:1px solid var(--ink);
+    border-bottom:1px solid var(--ink);
+  }
+  .ticker marquee, #ticker{
+    color:#fffdf8 !important;
+    font-family:var(--f-mono) !important;
+    font-size:11.5px !important;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+    text-shadow:none !important;
+  }
+
+  /* ---- nav = document tab strip ---- */
+  nav.site{
+    background:var(--bg) !important;
+    border-bottom:2px solid var(--ink) !important;
+    backdrop-filter:none !important;
+  }
+  nav.site a{
+    color:var(--ink) !important;
+    font-family:var(--f-mono) !important;
+    font-size:11px !important;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    text-shadow:none !important;
+  }
+  nav.site a:hover{ color:var(--pink-glow) !important; background:var(--pink) !important; }
+  nav.site a.cta{
+    background:var(--ink) !important;
+    color:var(--bg) !important;
+    border:none !important;
+    border-radius:0 !important;
+    box-shadow:3px 3px 0 var(--pink-deep) !important;
+  }
+  nav.site a.cta:hover{ background:var(--pink-glow) !important; color:#fff !important; }
+
+  /* ---- hero = case heading with a misregistered second plate ---- */
+  .pulse-kick{
+    font-family:var(--f-mono) !important;
+    color:var(--muted) !important;
+    font-size:10.5px !important;
+    letter-spacing:.26em;
+  }
+  .pulse-line{
+    font-family:var(--f-display) !important;
+    font-style:normal !important;
+    font-weight:400 !important;
+    letter-spacing:.005em !important;
+    line-height:1.02 !important;
+    font-size:clamp(30px,5.2vw,68px) !important;
+    background:none !important;
+    -webkit-background-clip:border-box !important;
+    background-clip:border-box !important;
+    color:var(--ink) !important;
+    -webkit-text-fill-color:var(--ink) !important;
+    filter:none !important;
+    text-shadow:3px 3px 0 var(--pink-deep) !important;
+  }
+  .pulse-line .blue{
+    background:none !important;
+    -webkit-background-clip:border-box !important;
+    background-clip:border-box !important;
+    color:var(--pink-glow) !important;
+    -webkit-text-fill-color:var(--pink-glow) !important;
+    text-shadow:3px 3px 0 rgba(23,21,15,.22) !important;
+  }
+  .pulse-route{
+    font-family:var(--f-mono) !important;
+    background:none !important;
+    border:2px solid var(--ink) !important;
+    border-radius:0 !important;
+    color:var(--ink) !important;
+    font-size:11px !important;
+    letter-spacing:.14em;
+    box-shadow:4px 4px 0 var(--pink) !important;
+  }
+
+  /* ---- section heads = stencilled file headers ---- */
+  .section-head h2{
+    font-family:var(--f-display) !important;
+    font-style:normal !important;
+    font-weight:400 !important;
+    color:var(--ink) !important;
+    letter-spacing:.01em !important;
+    -webkit-text-fill-color:var(--ink) !important;
+  }
+  .section-head h2 .accent{
+    color:var(--pink-glow) !important;
+    -webkit-text-fill-color:var(--pink-glow) !important;
+    background:none !important;
+    text-shadow:none !important;
+  }
+  .section-head .sub{
+    font-family:var(--f-mono) !important;
+    color:var(--muted) !important;
+    letter-spacing:.14em;
+  }
+  .section-head{ border-bottom:1px solid var(--line); }
+
+  /* ---- sidebar cards = stapled form sheets ---- */
+  .card{
+    background:var(--panel) !important;
+    border:1px solid var(--line) !important;
+    border-radius:0 !important;
+    box-shadow:3px 3px 0 rgba(23,21,15,.07) !important;
+  }
+  .card h3{
+    font-family:var(--f-stamp) !important;
+    color:var(--ink) !important;
+    letter-spacing:.08em;
+    border-bottom:2px solid var(--pink-deep);
+    padding-bottom:6px;
+    text-shadow:none !important;
+  }
+  .card p, .card .lead{ color:var(--muted) !important; }
+  .featured{ color:var(--ink) !important; }
+  .featured em{ color:var(--pink-glow) !important; font-style:normal; font-weight:700; }
+  .brand-card{ background:var(--panel) !important; }
+  .brand-card .handle{
+    font-family:var(--f-mono) !important;
+    color:var(--muted) !important;
+    letter-spacing:.24em;
+  }
+  .brand-card .strip{ background:repeating-linear-gradient(90deg, var(--ink) 0 10px, transparent 10px 18px) !important; }
+  .details dt{ font-family:var(--f-mono) !important; color:var(--muted) !important; }
+  .details dd{ color:var(--ink) !important; }
+  .pink-glow-text{ color:var(--pink-glow) !important; text-shadow:none !important; }
+
+  /* ---- creator spotlight rows ---- */
+  .creator{ background:var(--bg-2) !important; border:1px solid var(--line) !important; border-radius:0 !important; }
+  .creator:hover{ background:var(--pink) !important; }
+  .creator-name{ color:var(--ink) !important; font-family:var(--f-mono) !important; }
+  .creator-tag{ color:var(--muted) !important; }
+  .creator-platform{ background:var(--ink) !important; color:var(--bg) !important; border-radius:0 !important; font-family:var(--f-mono) !important; }
+  .creator-platform.tba{ background:var(--muted) !important; }
+  .creator-pic{ border-radius:0 !important; font-family:var(--f-display) !important; color:#fff !important; }
+
+  /* ---- THE WORK = photo plate section on dark stock ---- */
+  #work{
+    background:var(--plate);
+    margin:0 -22px;
+    padding:26px 22px 30px;
+    border-top:2px solid var(--ink);
+    border-bottom:2px solid var(--ink);
+  }
+  #work .section-head{ border-bottom:1px solid rgba(255,255,255,.14); }
+  #work .section-head h2{ color:#f4f1e8 !important; -webkit-text-fill-color:#f4f1e8 !important; }
+  #work .section-head .sub{ color:#a49c8c !important; }
+  .work-item{
+    background:var(--plate-2) !important;
+    border:1px solid rgba(255,255,255,.10) !important;
+    border-radius:0 !important;
+  }
+  .work-item figcaption{
+    font-family:var(--f-mono) !important;
+    color:#f9c9e0 !important;
+    background:linear-gradient(180deg, transparent, rgba(0,0,0,.86)) !important;
+    letter-spacing:.14em;
+  }
+
+  /* ---- take posts = typed reports with mounted prints ---- */
+  .post{
+    background:var(--panel) !important;
+    border:1px solid var(--line) !important;
+    border-radius:0 !important;
+    box-shadow:4px 4px 0 rgba(23,21,15,.07) !important;
+  }
+  .post-photo{ background:var(--plate) !important; border-bottom:2px solid var(--ink); }
+  .post .content{ background:var(--panel) !important; }
+  .post .meta{ font-family:var(--f-mono) !important; color:var(--muted) !important; letter-spacing:.16em; }
+  .post h4{
+    font-family:var(--f-display) !important;
+    font-style:normal !important; font-weight:400 !important;
+    color:var(--ink) !important; -webkit-text-fill-color:var(--ink) !important;
+    letter-spacing:.01em !important;
+  }
+  .post h4 .accent{ color:var(--pink-glow) !important; -webkit-text-fill-color:var(--pink-glow) !important; background:none !important; text-shadow:none !important; }
+  .post p{ color:var(--ink) !important; }
+  .post em{ color:var(--pink-glow) !important; }
+  .post-photo .tag{
+    background:var(--pink-deep) !important; color:#fffdf8 !important;
+    font-family:var(--f-mono) !important; border-radius:0 !important;
+    border:none !important; letter-spacing:.16em;
+  }
+  .post-photo .label{ font-family:var(--f-stamp) !important; color:#f9c9e0 !important; text-shadow:none !important; }
+  .post-photo .strip{ background:repeating-linear-gradient(90deg, var(--pink-deep) 0 12px, transparent 12px 20px) !important; }
+  .react-bar{ border-top:1px solid var(--line) !important; }
+  .react-btn{
+    background:var(--bg-2) !important; border:1px solid var(--line) !important;
+    border-radius:0 !important; color:var(--ink) !important; font-family:var(--f-mono) !important;
+  }
+  .react-btn.voted{ background:var(--pink) !important; border-color:var(--pink-deep) !important; }
+
+  /* ---- catalog tiles ---- */
+  .desk-item{
+    background:var(--panel) !important; border:1px solid var(--line) !important;
+    border-radius:0 !important; box-shadow:3px 3px 0 rgba(23,21,15,.07) !important;
+  }
+  .desk-thumb{ background-color:var(--plate) !important; border-bottom:1px solid var(--ink); }
+  .desk-meta{ background:var(--panel) !important; }
+  .desk-num{ font-family:var(--f-mono) !important; color:var(--pink-glow) !important; letter-spacing:.2em; }
+  .desk-title{ font-family:var(--f-stamp) !important; color:var(--ink) !important; }
+  .desk-lane{ background:var(--bg-2) !important; color:var(--muted) !important; border:1px solid var(--line) !important; border-radius:0 !important; font-family:var(--f-mono) !important; }
+  .desk-platform{ border-radius:0 !important; font-family:var(--f-mono) !important; }
+  .filter-pill{
+    background:var(--panel) !important; border:1px solid var(--ink) !important;
+    color:var(--ink) !important; border-radius:0 !important; font-family:var(--f-mono) !important;
+    text-shadow:none !important;
+  }
+  .filter-pill.active{ background:var(--ink) !important; color:var(--bg) !important; }
+
+  /* ---- rotation tiles keep dark art, paper frame ---- */
+  .track{ background:var(--panel) !important; border:1px solid var(--line) !important; border-radius:0 !important; }
+  .track-title{ color:var(--ink) !important; font-family:var(--f-stamp) !important; }
+  .track-artist, .track-hint{ color:var(--muted) !important; font-family:var(--f-mono) !important; }
+
+  /* ---- DM panel = request form ---- */
+  .pitch-dm{
+    background:var(--panel) !important; border:2px solid var(--ink) !important;
+    border-radius:0 !important; box-shadow:5px 5px 0 var(--pink) !important;
+  }
+  .pitch-lead{ color:var(--ink) !important; font-family:var(--f-stamp) !important; font-size:17px; }
+  .pitch-btn{
+    background:var(--bg-2) !important; border:1px solid var(--ink) !important;
+    border-radius:0 !important;
+  }
+  .pitch-btn:hover{ background:var(--pink) !important; transform:translate(-2px,-2px); box-shadow:4px 4px 0 var(--ink); }
+  .pitch-btn b{ font-family:var(--f-display) !important; color:var(--ink) !important; font-style:normal !important; }
+  .pitch-btn span{ color:var(--muted) !important; font-family:var(--f-mono) !important; }
+  .pitch-fine{ color:var(--muted) !important; }
+
+  /* ---- experts block ---- */
+  .expert-block{ background:var(--panel) !important; border:1px solid var(--line) !important; border-radius:0 !important; }
+  .expert-block h3{ font-family:var(--f-display) !important; color:var(--ink) !important; font-style:normal !important; }
+  .expert-block h3 .role{ color:var(--pink-glow) !important; }
+  .expert-block li{ color:var(--muted) !important; }
+  .expert-block li::marker{ color:var(--pink-deep); }
+
+  /* ---- footer = file stamp block ---- */
+  footer.site{
+    background:var(--bg) !important;
+    border-top:2px solid var(--ink) !important;
+    color:var(--muted) !important;
+  }
+  footer.site .mark{
+    font-family:var(--f-display) !important; font-style:normal !important; font-weight:400 !important;
+    color:var(--ink) !important; -webkit-text-fill-color:var(--ink) !important;
+    text-shadow:2px 2px 0 var(--pink-deep) !important;
+  }
+  footer.site .mark .zero{
+    background:none !important; -webkit-background-clip:border-box !important; background-clip:border-box !important;
+    color:var(--ink) !important; -webkit-text-fill-color:var(--ink) !important; filter:none !important;
+  }
+  footer.site a{ color:var(--pink-glow) !important; }
+  footer.site, footer.site *{ text-shadow:none; }
+  footer.site .mark{ text-shadow:2px 2px 0 var(--pink-deep) !important; }
+
+  /* ---- back to top ---- */
+  .scroll-top{
+    background:var(--ink) !important; border:2px solid var(--ink) !important;
+    color:var(--bg) !important; border-radius:0 !important; box-shadow:3px 3px 0 var(--pink-deep) !important;
+  }
+
+  /* ---- modal sits on the dark plate side ---- */
+  .modal{ background:rgba(23,21,15,.86) !important; }
+
+  /* ---- the cards stay dark on purpose: objects on the document ---- */
+  .poke .poke-name, .poke .poke-type, .poke .poke-flavor{ font-family:var(--f-stamp); }
+  .pend-seat{ font-family:var(--f-display) !important; font-style:normal !important; }
+  .pend-stamp{ font-family:var(--f-mono) !important; }
+
+  @media (max-width:980px){
+    #work{ margin:0 -14px; padding:20px 14px 24px; }
+  }
+
+  /* ---- fix pass 1: inline-styled dark leftovers in the sidebar ---- */
+  .featured{
+    background:var(--bg-2) !important;
+    border:1px solid var(--line) !important;
+    border-left:3px solid var(--pink-deep) !important;
+    border-radius:0 !important;
+    padding:8px 10px !important;
+    color:var(--ink) !important;
+  }
+  .featured, .featured *, .featured span, .featured em, .featured b{
+    color:var(--ink) !important;
+    text-shadow:none !important;
+  }
+  .featured em{ color:var(--pink-glow) !important; font-style:normal !important; font-weight:700 !important; }
+  .featured span[style*="color:var(--muted)"], .featured .muted{ color:var(--muted) !important; }
+  .featured .dot{
+    background:var(--pink-deep) !important;
+    box-shadow:none !important;
+    border-radius:0 !important;
+    width:8px !important; height:8px !important;
+  }
+  .on-rotation-list .featured span[style*="pink-glow"]{ color:var(--pink-glow) !important; }
+
+  /* house quote: stencil has no italic or 900, use the typewriter instead */
+  .card .lead{
+    font-family:var(--f-stamp) !important;
+    font-weight:400 !important;
+    font-style:normal !important;
+    font-size:17px !important;
+    line-height:1.35 !important;
+    text-transform:none !important;
+    color:var(--ink) !important;
+    letter-spacing:0 !important;
+  }
+
+  /* ---- fix pass 2: stable masonry. Images carry real dimensions so the
+     column algorithm balances before the lazy loads land. ---- */
+  .work-grid{ column-fill:balance; }
+  .work-item{ display:block; width:100%; }
+  .work-item img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+  /* ---- footer stamp asset ---- */
+  .footer-stamp{ display:block; width:min(300px,72vw); height:auto; margin:0 0 4px -6px; }
+
+  /* ---- mobile: lighten the misregistration so small type stays crisp ---- */
+  @media (max-width:620px){
+    .pulse-line{ text-shadow:2px 2px 0 var(--pink-deep) !important; }
+    .pulse-line .blue{ text-shadow:2px 2px 0 rgba(23,21,15,.20) !important; }
+    footer.site .mark{ text-shadow:1px 1px 0 var(--pink-deep) !important; }
+  }
 </style>
 </head>
 <body>
-
-<!-- ========== INSERT COIN SPLASH (first visit only) ========== -->
-<div id="insert-coin" class="insert-coin" role="dialog" aria-label="Insert coin to start">
-  <div class="insert-coin-mark"><span class="zero">0</span>FF&nbsp;THE&nbsp;PRINT</div>
-  <div class="insert-coin-text">INSERT COIN ▼</div>
-  <div class="insert-coin-sub">click anywhere to start</div>
-</div>
 
 <!-- ========== CARD DETAIL MODAL ========== -->
 <div id="card-modal" class="modal" role="dialog" aria-label="Card detail">
@@ -2294,9 +2584,9 @@
 
 <!-- ========== PULSE BANNER ========== -->
 <header class="pulse-banner">
-  <div class="pulse-kick">San Antonio, TX · Underground media house</div>
-  <h1 class="pulse-line">We are the underground.<br>The city pulses <span class="blue">because we pump it.</span></h1>
-  <div class="pulse-route"><b>SATX</b> <span class="nx">first</span> · ATX · HTX · DTX <span class="nx">· all of Texas hears it</span></div>
+  <div class="pulse-kick">MEDIA HOUSE · SAN ANTONIO TX · SINCE WE FELT LIKE IT</div>
+  <h1 class="pulse-line">WE GOT A VAMPIRE ON THIS.<br><span class="blue">NOBODY'S COMPLAINED YET.</span></h1>
+  <div class="pulse-route">ZENHOUSE FRI · THE MIX · RAH RAH ROOM · PAPER TIGER · HOME BY 3</div>
 </header>
 
 <!-- ========== MAIN GRID ========== -->
@@ -2306,7 +2596,7 @@
   <aside class="sidebar">
 
     <section class="card brand-card">
-      <img src="assets/logo-xerox-white.png" alt="0FF THE PRINT — xerox print-stamp wordmark, white toner ink" width="280" height="280" decoding="async" style="display:block;width:100%;height:auto;margin:-6px -4px 8px;border-radius:8px;">
+      <img src="assets/logo-xerox-black.png" alt="0FF THE PRINT — xerox print-stamp wordmark" width="280" height="280" decoding="async" style="display:block;width:100%;height:auto;margin:-6px -4px 8px;">
       <div class="handle" style="text-align:center;">SAN ANTONIO · TX</div>
       <div class="strip"></div>
     </section>
@@ -2423,7 +2713,7 @@
     <section id="curators" class="curators-hero">
       <div class="section-head">
         <h2>This Is Us <span class="accent">the media house</span></h2>
-        <div class="sub">founded 2026 &nbsp;·&nbsp; san antonio &nbsp;·&nbsp; run from inside</div>
+        <div class="sub">who's actually on this</div>
       </div>
       <div class="curators-grid" id="curators-mount"></div>
     </section>
@@ -2432,7 +2722,7 @@
     <section id="work">
       <div class="section-head">
         <h2>The Work <span class="accent">shot by the house</span></h2>
-        <div class="sub">the cuts IG doesn&rsquo;t get &nbsp;·&nbsp; our rooms &nbsp;·&nbsp; no stock</div>
+        <div class="sub">nights, shops, stages, back rooms</div>
       </div>
       <div class="work-grid" id="work-grid"><!-- JS populates --></div>
     </section>
@@ -2441,7 +2731,7 @@
     <section id="take">
       <div class="section-head">
         <h2>The Take <span class="accent">what we&rsquo;re saying</span></h2>
-        <div class="sub">editorial &nbsp;·&nbsp; off the record &nbsp;·&nbsp; with teeth</div>
+        <div class="sub">what we do, kept short</div>
       </div>
 
       <div id="take-mount"></div>
@@ -2469,7 +2759,7 @@
     <section id="desk">
       <div class="section-head">
         <h2>The Catalog <span class="accent">numbered drops</span></h2>
-        <div class="sub">0TP numbers &nbsp;·&nbsp; scene &nbsp;·&nbsp; interviews</div>
+        <div class="sub">numbered drops, oldest at the bottom</div>
       </div>
       <div class="desk-filters" id="desk-filters">
         <button class="filter-pill active" data-lane="all" type="button">All</button>
@@ -2486,7 +2776,7 @@
     <section id="roster">
       <div class="section-head">
         <h2>The Roster <span class="accent">voices we&rsquo;ve tapped</span></h2>
-        <div class="sub">tapped &nbsp;·&nbsp; trusted &nbsp;·&nbsp; on the record</div>
+        <div class="sub">each one goes crazy at one thing</div>
       </div>
       <div class="roster" id="roster-mount"></div>
     </section>
@@ -2495,7 +2785,7 @@
     <section id="pitch">
       <div class="section-head">
         <h2>Pitch Us <span class="accent">get on the desk</span></h2>
-        <div class="sub">subject &nbsp;·&nbsp; story &nbsp;·&nbsp; future curator</div>
+        <div class="sub">slide it under the door. we answer it ourselves.</div>
       </div>
       <div class="pitch-dm">
         <p class="pitch-lead">No forms. No inbox nobody reads. The desk answers DMs.</p>
@@ -2533,7 +2823,7 @@
 <footer class="site">
   <div class="row">
     <div>
-      <div class="mark"><span class="zero">0</span>FF THE PRINT</div>
+      <img class="footer-stamp" src="assets/stamp-otp.png" alt="0FF THE PRINT, San Antonio TX, file copy" width="900" height="399" decoding="async">
       <div style="margin-top:6px;" id="footer-meta">© 2026 · Underground-culture media · Curated by the desk</div>
     </div>
     <div style="text-align:right;" id="footer-social">
@@ -2763,8 +3053,8 @@
   const wMount = document.getElementById('work-grid');
   if (wMount && work) {
     wMount.innerHTML = work.map(it => `
-      <figure class="work-item">
-        <img src="${esc(it.src)}" alt="${esc(it.alt || it.label || '')}" loading="lazy" decoding="async">
+      <figure class="work-item"${it.w && it.h ? ` style="aspect-ratio:${it.w}/${it.h}"` : ''}>
+        <img src="${esc(it.src)}" alt="${esc(it.alt || it.label || '')}"${it.w ? ` width="${it.w}" height="${it.h}"` : ''} loading="lazy" decoding="async">
         <figcaption>${esc(it.label || '')}</figcaption>
       </figure>`).join('');
   }
@@ -3228,26 +3518,6 @@
         el.style.transform = '';
       });
     });
-  }
-
-  // INSERT COIN splash
-  const splash = document.getElementById('insert-coin');
-  if (splash) {
-    if (localStorage.getItem('otp-coin-inserted')) {
-      splash.remove();
-    } else {
-      splash.classList.add('show');
-      const dismiss = () => {
-        if (splash._dismissed) return;
-        splash._dismissed = true;
-        splash.classList.add('out');
-        localStorage.setItem('otp-coin-inserted', '1');
-        setTimeout(() => splash.remove(), 650);
-      };
-      splash.addEventListener('click', dismiss);
-      document.addEventListener('keydown', dismiss, { once: true });
-      setTimeout(() => document.addEventListener('scroll', dismiss, { once: true, passive: true }), 200);
-    }
   }
 
   // Scroll-to-top button
