@@ -20,6 +20,10 @@
   const safeUrl = u => {
     const v = String(u ?? '').trim();
     if (!v) return '';
+    // '#anchor' has to be allowed explicitly. It cannot execute anything, and
+    // leaving it out silently killed every in-page link that came through here
+    // (the #roster catalog tile, a card holder's avatar with no external link).
+    if (/^#[\w-]*$/.test(v)) return v;
     if (/^(https?:)?\/\//i.test(v) || /^\/(?!\/)/.test(v) || /^[\w./-]+$/.test(v)) {
       return /^\s*(javascript|data|vbscript):/i.test(v) ? '' : v.replace(/["']/g, '');
     }

@@ -40,7 +40,7 @@
 <script src="supabase-config.js?v=f1348482" defer></script>
 <script src="assets/js/desk.js?v=e5f8b208" defer></script>
 <script src="assets/js/door.js?v=cb068ae4" defer></script>
-<script src="assets/js/composer.js?v=fe4bff81" defer></script>
+<script src="assets/js/composer.js?v=51127ffa" defer></script>
 <style>
   :root{
     --bg:#0a0a0d;
@@ -3223,6 +3223,10 @@
   const safeUrl = u => {
     const v = String(u ?? '').trim();
     if (!v) return '';
+    // '#anchor' has to be allowed explicitly. It cannot execute anything, and
+    // leaving it out silently killed every in-page link that came through here
+    // (the #roster catalog tile, a card holder's avatar with no external link).
+    if (/^#[\w-]*$/.test(v)) return v;
     if (/^(https?:)?\/\//i.test(v) || /^\/(?!\/)/.test(v) || /^[\w./-]+$/.test(v)) {
       return /^\s*(javascript|data|vbscript):/i.test(v) ? '' : v.replace(/["']/g, '');
     }
