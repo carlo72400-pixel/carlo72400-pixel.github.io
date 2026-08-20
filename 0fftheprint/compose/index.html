@@ -57,7 +57,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script src="../supabase-config.js?v=f1348482"></script>
-<script src="../assets/js/desk.js?v=e5f8b208"></script>
+<script src="../assets/js/desk.js?v=128f5421"></script>
 <script>
 (async () => {
   const $ = id => document.getElementById(id);
@@ -99,7 +99,11 @@
     </div>
     <button class="btn" id="go" type="button">Post it</button>
     <div class="msg" id="msg"></div>
-    <div class="note">Edit it, delete it, whatever. If the desk pulls a post it locks, and that is on purpose.</div>`;
+    <div class="note">Edit it, delete it, whatever. If the desk pulls a post it locks, and that is on purpose.</div>
+
+    <label>Your color</label>
+    <div class="swatches" id="sw"></div>
+    <div class="note" id="swnote">This colors your posts on the timeline, and these pages while you're logged in.</div>`;
 
   const msg = (t, k) => { const m = $('msg'); m.textContent = t; m.className = 'msg show ' + k; };
   let file = null;
@@ -172,6 +176,35 @@
       $('go').disabled = false; $('go').textContent = 'Post it';
     }
   };
+
+  /* ================= YOUR COLOR ================= */
+  // The key is all that travels. The hexes live in auth.css and index.html and
+  // nowhere else, so nothing here can ever put a color into the page.
+  const NAMES = { acid:'Acid', gold:'Gold', ember:'Ember', pink:'Pink', violet:'Violet', ice:'Ice' };
+  const paintBody = k => {
+    document.body.className = document.body.className.replace(/\bacc-\S+/g, '').trim();
+    if (OTP.ACCENTS.indexOf(k) !== -1) document.body.classList.add('acc-' + k);
+  };
+
+  function renderSwatches(current) {
+    paintBody(current);
+    $('sw').innerHTML = OTP.ACCENTS.map(k =>
+      `<button class="sw sw-${k}${k === current ? ' on' : ''}" data-k="${k}"
+               type="button" title="${NAMES[k]}" aria-label="${NAMES[k]}"></button>`).join('');
+    $('sw').querySelectorAll('[data-k]').forEach(b => b.onclick = async () => {
+      const k = b.dataset.k;
+      $('sw').querySelectorAll('.sw').forEach(x => x.classList.toggle('on', x === b));
+      paintBody(k);                                  // instant, before the round trip
+      try {
+        await OTP.setAccent(k);
+        $('swnote').textContent = NAMES[k] + '. Saved. Your posts on the timeline use it too.';
+      } catch (e) {
+        $('swnote').textContent = 'That did not save. ' + (e.message || '');
+        renderSwatches(current);                     // put it back
+      }
+    });
+  }
+  renderSwatches(me.profile.accent || null);
 
   /* ================= YOUR POSTS ================= */
   const mine = $('mine');

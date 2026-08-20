@@ -106,3 +106,29 @@ grant select on public.feed to anon, authenticated;
 -- also needs a grant for that column. The view does not inherit anything.
 -- ============================================================
 grant select (accent) on public.profiles to anon, authenticated;
+
+
+-- ============================================================
+-- 7. my_profile() predates the accent column and does not return it, so the
+--    picker had no way to show which color is already chosen. A RETURNS TABLE
+--    signature change needs a drop first, CREATE OR REPLACE cannot alter it.
+-- ============================================================
+drop function if exists public.my_profile();
+create function public.my_profile()
+returns table (id uuid, display_name text, card_slug text, requested_slug text,
+               approved boolean, is_admin boolean, accent public.accent,
+               created_at timestamptz)
+language sql stable security definer
+set search_path = public, pg_temp as $fn$
+  select p.id, p.display_name, p.card_slug, p.requested_slug,
+         p.approved, p.is_admin, p.accent, p.created_at
+    from public.profiles p
+   where p.id = auth.uid();
+$fn$;
+
+revoke execute on function public.my_profile() from public, anon;
+grant  execute on function public.my_profile() to authenticated;
+
+select 'my_profile returns accent' as check,
+       (select count(*) from information_schema.columns
+         where table_name = 'my_profile' and column_name = 'accent')::text as ok;

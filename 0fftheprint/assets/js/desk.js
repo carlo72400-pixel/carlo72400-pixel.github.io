@@ -176,6 +176,20 @@
       }
     },
 
+    // The six keys, frozen. The column is a Postgres enum, so a bad value is
+    // rejected by the database too, not just here.
+    ACCENTS: ['acid','gold','ember','pink','violet','ice'],
+
+    async setAccent(key) {
+      const c = sb(); if (!c) throw new Error("Backend not configured yet.");
+      const { data: { user } } = await c.auth.getUser();
+      if (!user) throw new Error("Log in first.");
+      const v = OTP.ACCENTS.indexOf(key) !== -1 ? key : null;
+      const { error } = await c.from("profiles").update({ accent: v }).eq("id", user.id);
+      if (error) throw error;
+      return v;
+    },
+
     async myPosts(limit = 30) {
       const c = sb(); if (!c) return [];
       const { data: { user } } = await c.auth.getUser();
@@ -210,6 +224,7 @@
         pinned: !!r.pinned,
         date: r.created_at,
         edited: r.edited_at || null,
+        accent: r.accent || null,
         live: true,
       }));
     },
