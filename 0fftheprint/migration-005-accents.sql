@@ -91,3 +91,18 @@ grant select on public.feed to anon, authenticated;
 --      update profiles set accent='gold' where id = auth.uid();      -- succeeds
 --      update profiles set card_slug='vamppsych' where id = auth.uid(); -- silently pinned back
 --      update profiles set accent='chartreuse' where id = auth.uid();   -- 22P02, rejected
+
+-- ============================================================
+-- 6. THE GRANT THIS MIGRATION ORIGINALLY FORGOT, AND IT CAUSED A LIVE OUTAGE.
+--
+-- The feed view is security_invoker, so it runs as the CALLER. Migration 002
+-- revoked anon's table-wide SELECT on profiles and replaced it with COLUMN
+-- level grants. Adding pr.accent to the view without adding it to that grant
+-- list meant every anonymous read of the feed failed with
+--     42501  permission denied for table profiles
+-- and the public timeline went blank for everyone who was not signed in.
+--
+-- RULE: with column-level grants, adding a column to a security_invoker view
+-- also needs a grant for that column. The view does not inherit anything.
+-- ============================================================
+grant select (accent) on public.profiles to anon, authenticated;
