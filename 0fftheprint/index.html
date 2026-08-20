@@ -2200,6 +2200,51 @@
     font-size:44px;letter-spacing:-.02em;color:var(--pink-deep);
     text-shadow:0 0 22px rgba(255,121,198,.5);opacity:.9;
   }
+
+  /* ===== DIAMOND = FULL-ART SECRET RARE (shiny Charizard register):
+     art bleeds under everything, text floats on translucent plates ===== */
+  .poke.diamond-rare .poke-art{
+    position:absolute;inset:0;z-index:0;border-radius:10px;
+    filter:saturate(1.18) contrast(1.05);
+  }
+  .poke.diamond-rare .poke-head,
+  .poke.diamond-rare .poke-type,
+  .poke.diamond-rare .poke-moves,
+  .poke.diamond-rare .poke-foot{position:relative;z-index:2;}
+  /* the absolute art leaves the 1fr row empty; pin the flow children so the
+     moves plate doesn't slide up into it and stretch over the photo */
+  .poke.diamond-rare .poke-head{grid-row:1;}
+  .poke.diamond-rare .poke-type{grid-row:2;}
+  .poke.diamond-rare .poke-moves{grid-row:4;align-self:end;}
+  .poke.diamond-rare .poke-foot{grid-row:5;}
+  .poke.diamond-rare .poke-inner{
+    box-shadow:inset 0 0 0 2px rgba(224,246,255,.6), inset 0 0 0 4px rgba(96,138,178,.35), inset 0 0 46px rgba(0,0,0,.35);
+  }
+  .poke.diamond-rare .poke-name{filter:drop-shadow(0 1px 3px rgba(0,0,0,.95)) drop-shadow(0 0 8px rgba(0,0,0,.6));}
+  .poke.diamond-rare .poke-hp{color:#dfeefb;text-shadow:0 1px 2px rgba(0,0,0,.9);}
+  .poke.diamond-rare .poke-hp b{filter:drop-shadow(0 1px 3px rgba(0,0,0,.95));}
+  .poke.diamond-rare .poke-type{
+    background:rgba(5,10,18,.58);color:#dff6ff;border-color:rgba(190,235,255,.65);
+    font-weight:900;text-shadow:none;
+    backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);
+  }
+  .poke.diamond-rare .poke-moves{
+    background:rgba(5,9,16,.64);
+    border:1px solid rgba(190,235,255,.4);
+    border-radius:9px;padding:7px 8px;
+    backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
+  }
+  .poke.diamond-rare .poke-move{border-top-color:rgba(190,235,255,.18);}
+  .poke.diamond-rare .poke-move-name{color:#eafcff;}
+  .poke.diamond-rare .poke-move-desc{color:#c9dbe8;}
+  .poke.diamond-rare .poke-dmg{color:#ffd6f2;}
+  .poke.diamond-rare .poke-foot{
+    background:rgba(5,9,16,.64);
+    border:1px solid rgba(190,235,255,.35);
+    border-radius:8px;padding:5px 8px;
+    backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
+  }
+  .poke.diamond-rare .poke-flavor{color:#dff6ff;}
 </style>
 </head>
 <body>
