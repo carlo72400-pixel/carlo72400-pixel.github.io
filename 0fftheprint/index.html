@@ -659,9 +659,14 @@
   .track:hover .track-hint{opacity:1;}
 
   /* Roster — Pokémon TCG holographic cards */
+  /* The FIXED-count rules below use minmax(0,1fr), not 1fr: a 1fr track will
+     not shrink below its content, so three 252px cards overflowed a 391px
+     column on every phone in landscape. This auto-fill track keeps its 200px
+     minimum on purpose, because auto-fill needs a real minimum to work out how
+     many columns fit. */
   .roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:18px;perspective:1000px;}
-  @media (max-width:980px){.roster{grid-template-columns:repeat(3,1fr);}}
-  @media (max-width:720px){.roster{grid-template-columns:repeat(2,1fr);gap:12px;}}
+  @media (max-width:980px){.roster{grid-template-columns:repeat(3,minmax(0,1fr));}}
+  @media (max-width:720px){.roster{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}}
   @media (max-width:460px){.roster{grid-template-columns:1fr;}}
   .poke{
     --mx:50%;--my:50%;
@@ -1628,8 +1633,8 @@
     gap:18px;
     perspective:1000px;
   }
-  @media (max-width:1100px){.curators-grid{grid-template-columns:repeat(3,1fr);}}
-  @media (max-width:780px){.curators-grid{grid-template-columns:repeat(2,1fr);gap:12px;}}
+  @media (max-width:1100px){.curators-grid{grid-template-columns:repeat(3,minmax(0,1fr));}}
+  @media (max-width:780px){.curators-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}}
   @media (max-width:460px){.curators-grid{grid-template-columns:1fr;}}
 
   /* ===== BOOSTER PACK card ===== */
@@ -1667,7 +1672,10 @@
   /* ===== CARD DETAIL MODAL ===== */
   .modal{
     position:fixed;inset:0;z-index:9000;
-    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    /* 'safe center' centers only while it fits. Plain center pushes the overflow
+       off the TOP of a scroll container and no browser lets you scroll back to it,
+       so on a phone in landscape the card name and HP row were unreachable. */
+    display:flex;flex-direction:column;align-items:center;justify-content:safe center;
     gap:14px;padding:30px 20px;
     padding-top:calc(30px + env(safe-area-inset-top,0px));
     padding-bottom:calc(30px + env(safe-area-inset-bottom,0px));
@@ -1677,7 +1685,8 @@
   }
   .modal.open{opacity:1;pointer-events:auto;}
   .modal-close{
-    position:absolute;top:calc(18px + env(safe-area-inset-top,0px));right:22px;
+    /* fixed, not absolute: it used to scroll off the top with a tall card */
+    position:fixed;top:calc(18px + env(safe-area-inset-top,0px));right:22px;
     width:48px;height:48px;border-radius:50%;
     background:rgba(0,0,0,.6);border:1px solid rgba(255,121,198,.4);
     color:#fff;font-size:24px;line-height:1;cursor:pointer;
@@ -1689,6 +1698,7 @@
     width:min(420px, 90vw);
     display:flex;flex-direction:column;gap:12px;align-items:center;
     perspective:1400px;flex-shrink:0;
+    margin:auto 0;          /* fallback where 'safe' is unsupported */
   }
   .modal-card .poke{width:100%;aspect-ratio:2.5/3.5;}
   .modal-card .poke:hover{--ty:0px;}
@@ -1789,7 +1799,10 @@
   /* ===== BOOSTER MINI-GAME OVERLAY ===== */
   .booster-overlay{
     position:fixed;inset:0;z-index:9100;
-    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    /* 'safe center' centers only while it fits. Plain center pushes the overflow
+       off the TOP of a scroll container and no browser lets you scroll back to it,
+       so on a phone in landscape the card name and HP row were unreachable. */
+    display:flex;flex-direction:column;align-items:center;justify-content:safe center;
     gap:14px;padding:30px 20px;
     padding-top:calc(30px + env(safe-area-inset-top,0px));
     padding-bottom:calc(30px + env(safe-area-inset-bottom,0px));
@@ -2757,6 +2770,13 @@
 
   /* ===== THE TAKE as a timeline ===== */
   .feed{border-top:1px solid var(--line);}
+  /* A grid item defaults to min-width:auto, so one unbroken URL in a post
+     forces the whole column wider than the phone and the SITE scrolls
+     sideways. Measured at 375px: a pasted Spotify link took the document to
+     502px. /compose/ and /desk/ already had this; the public page never did,
+     and pasting a link is the most likely thing anybody will do here. */
+  .post-main{min-width:0;}
+  .post-body{overflow-wrap:anywhere;}
   .post-t{
     display:grid;grid-template-columns:52px 1fr;gap:12px;
     padding:16px 4px;border-bottom:1px solid var(--line);
@@ -3976,8 +3996,14 @@
     boosterOverlay.classList.add('open');
     document.body.style.overflow = 'hidden';
   }
+  let boosterRevealTimer = null;
   function closeBooster(){
     if (!boosterOverlay) return;
+    // The reveal sits on a 700ms fuse. Closing before it landed used to leave
+    // the fuse burning: it repopulated a dismissed overlay, played the chime,
+    // and mounted an AUTOPLAYING Spotify embed behind an invisible screen with
+    // no way to find or stop it. The overlay is only opacity:0, so it was live.
+    if (boosterRevealTimer) { clearTimeout(boosterRevealTimer); boosterRevealTimer = null; }
     boosterOverlay.classList.remove('open');
     document.body.style.overflow = '';
     boosterStage.classList.remove('opening','opened');
@@ -3991,7 +4017,9 @@
     boosterBurst.style.animation = 'none';
     void boosterBurst.offsetWidth;
     boosterBurst.style.animation = 'burst 1s .3s ease-out forwards';
-    setTimeout(() => {
+    boosterRevealTimer = setTimeout(() => {
+      boosterRevealTimer = null;
+      if (!boosterOverlay.classList.contains('open')) return;   // they closed it
       const pull = weightedPull();
       if (pull) {
         boosterReveal.innerHTML = renderPokeCard(pull.card, pull.type, 0) + spotifyEmbed(pull.card.theme_song, true, pull.card.theme_start);

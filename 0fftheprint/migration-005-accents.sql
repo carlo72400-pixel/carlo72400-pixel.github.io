@@ -55,13 +55,27 @@ alter table public.posts validate constraint posts_image_url_ours;
 --    This view runs as its owner and does NOT apply the RLS policies on posts or
 --    profiles. The only gate is the WHERE below. Do not add a column here you
 --    would not print on a poster.
-create or replace view public.feed as
-  select p.id, p.text, p.image_url, p.image_alt, p.pinned, p.created_at,
+-- CREATE OR REPLACE cannot reorder or rename a view's columns (42P16), and
+-- adding accent shifts every position after created_at. Drop and recreate.
+--
+-- Two corrections to what was originally written here, both caught by running it:
+--   1. edited_at was MISSING from the select list. Migration 002's view has it,
+--      and the timeline's EDITED pill reads it. Replacing the view without it
+--      would have silently killed that pill.
+--   2. security_invoker = on must be carried forward. 002 sets it deliberately
+--      so the view honours RLS instead of running as its owner.
+drop view if exists public.feed;
+create view public.feed
+with (security_invoker = on) as
+  select p.id, p.text, p.image_url, p.image_alt, p.pinned,
+         p.created_at, p.edited_at,
          pr.display_name, pr.card_slug, pr.accent
-  from public.posts p
-  join public.profiles pr on pr.id = p.author_id
-  where p.published = true
-  order by p.pinned desc, p.created_at desc;
+    from public.posts p
+    join public.profiles pr on pr.id = p.author_id
+   where p.published = true
+   order by p.pinned desc, p.created_at desc;
+
+grant select on public.feed to anon, authenticated;
 
 
 -- 4. NO RLS CHANGE. Verified against the file, not assumed.
