@@ -3,10 +3,10 @@
     {
       "name": "KAV-MAN",
       "type": "voice",
-      "type_label": "THE VOICE EX",
+      "type_label": "WAR CHANT",
       "hp": 200,
-      "rarity": "stone",
-      "photo": "assets/card-kavman-stone.jpg",
+      "rarity": "warlord",
+      "photo": "assets/card-kavman-warlord.jpg",
       "pending_glyph": "KAV",
       "pending_stamp": "TRANSMISSION LOADING",
       "flavor": "The city knew the name before the algorithm did.",
@@ -28,7 +28,9 @@
       "link": "#roster",
       "theme_song": "https://open.spotify.com/track/0KJIm3Ukd82n0d7VOCQWWI",
       "lore": "San Antonio rapper. First artist on the roster. Not a subject, a member: the desk shoots every frame of what comes next.\n\nWhat he's loading stays off the page until it drops. When it drops, it drops with our footage on it.\n\nTexas first. Then everywhere else.",
-      "theme_start": 123
+      "theme_start": 123,
+      "cost_orb": 7,
+      "power": 9000
     },
     {
       "name": "VIRGOSGATEWAY",
@@ -62,10 +64,10 @@
     {
       "name": "WRATHFOL",
       "type": "board",
-      "type_label": "THE BOARD EX",
+      "type_label": "HEAVY HITTER",
       "hp": 220,
-      "rarity": "gold-rare",
-      "photo": "assets/card-wrathfol.jpg",
+      "rarity": "amazing",
+      "photo": "assets/card-wrathfol-amazing.jpg",
       "pending_glyph": "W",
       "pending_stamp": "NOT SUBTLE",
       "flavor": "Tells the story. Loudly.",
@@ -86,7 +88,9 @@
       "platform": "IG",
       "link": "https://www.instagram.com/wrathfol/",
       "theme_song": "",
-      "lore": "Producer. San Antonio by way of Houston. Jack of all trades, produces anything, and every beat carries a story.\n\nEnergetic, fun, built for everybody in the room. Subtle was never the assignment. Heavy hitter.\n\nOff the boards he's an adventurer. Ask where he's been, then listen to what he made when he got back."
+      "lore": "Producer. San Antonio by way of Houston. Jack of all trades, produces anything, and every beat carries a story.\n\nEnergetic, fun, built for everybody in the room. Subtle was never the assignment. Heavy hitter.\n\nOff the boards he's an adventurer. Ask where he's been, then listen to what he made when he got back.",
+      "cost_orb": 6,
+      "power": 8000
     },
     {
       "name": "The Ink",
