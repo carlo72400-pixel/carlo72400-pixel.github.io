@@ -15,7 +15,7 @@
   .post-row.no-img{grid-template-columns:1fr}
   .post-row:last-child{border-bottom:0}
   .pthumb{width:56px;height:56px;border-radius:9px;background:#0d0c11 center/cover no-repeat;
-    border:1px solid var(--line);flex:0 0 auto}
+    border:1px solid var(--line);flex:0 0 auto;object-fit:cover}
   .post-row .txt{font-size:14px;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere}
   .post-row .meta{font-family:var(--f-mono);font-size:10.5px;color:var(--muted);letter-spacing:.1em;
     margin-top:7px;display:flex;gap:7px;align-items:center;flex-wrap:wrap}
@@ -148,7 +148,11 @@
           const full = p.text || '';
           const clipped = full.length > 400;
           return `<div class="post-row ${p.image_url ? '' : 'no-img'} ${pulled || hidden ? 'gone' : ''}" data-id="${p.id}">
-            ${p.image_url ? `<div class="pthumb" data-bg="${esc(p.image_url)}"></div>` : ''}
+            ${p.image_url
+                ? (OTP.isVideo(p.image_url)
+                    ? `<video class="pthumb" src="${esc(p.image_url)}" preload="metadata" muted playsinline></video>`
+                    : `<div class="pthumb" data-bg="${esc(p.image_url)}"></div>`)
+                : ''}
             <div>
               <div class="txt" data-full="${esc(full)}">${esc(clipped ? full.slice(0,400) + '…' : full)}</div>
               ${clipped ? `<button class="more" data-more="1" type="button">more</button>` : ''}

@@ -14,7 +14,7 @@
     font-family:var(--f-mono);font-size:11.5px;letter-spacing:.14em;color:var(--muted);cursor:pointer;text-transform:uppercase}
   .drop:hover,.drop.over{border-color:var(--pink-deep);color:var(--pink-glow)}
   .prev{margin-top:12px;position:relative;border-radius:12px;overflow:hidden;border:1px solid var(--line);display:none}
-  .prev img{width:100%;display:block;max-height:340px;object-fit:cover}
+  .prev img,.prev video{width:100%;display:block;max-height:340px;object-fit:cover;background:#000}
   .prev button{position:absolute;top:8px;right:8px;background:rgba(10,10,13,.85);border:1px solid var(--line);
     color:var(--ink);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:16px}
   .cnt{text-align:right;font-family:var(--f-mono);font-size:10.5px;color:var(--muted);margin-top:6px}
@@ -27,7 +27,7 @@
   .mrow{display:grid;grid-template-columns:auto 1fr;gap:12px;padding:15px 0;border-bottom:1px solid var(--line)}
   .mrow:last-child{border-bottom:0}
   .mthumb{width:54px;height:54px;border-radius:9px;background:#0d0c11 center/cover no-repeat;
-    border:1px solid var(--line);flex:0 0 auto}
+    border:1px solid var(--line);flex:0 0 auto;object-fit:cover}
   .mrow.no-img{grid-template-columns:1fr}
   .mtext{font-size:14px;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere}
   .mmeta{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.1em;color:var(--muted);margin-top:6px;
@@ -90,8 +90,8 @@
     <label for="text">What's up</label>
     <textarea id="text" maxlength="800" placeholder="art, a thought, a bad opinion about a mix"></textarea>
     <div class="cnt" id="cnt">0 / 800</div>
-    <div class="drop" id="drop">Tap to attach a photo</div>
-    <input type="file" id="file" accept="image/*" hidden>
+    <div class="drop" id="drop">Tap to attach a photo, GIF or clip</div>
+    <input type="file" id="file" accept="image/*,video/*" hidden>
     <div class="prev" id="prev"><img id="previmg" alt=""><button id="rm" type="button">&times;</button></div>
     <div id="altwrap" style="display:none">
       <label for="alt">Describe the photo (optional)</label>
@@ -126,12 +126,30 @@
   function setFile(f) {
     // The bucket enforces both of these server side too. This is just a faster,
     // friendlier no than a failed upload.
-    if (!f.type.startsWith('image/')) { msg('Images only.', 'err'); return; }
-    if (f.size > 8 * 1024 * 1024) { msg('That photo is over 8MB. Shrink it first.', 'err'); return; }
+    // Kept in step with the homepage box and with what the bucket actually
+    // accepts (50MB, images + mp4/mov/webm/m4v). This page said "photo" and
+    // 8MB for a while after the bucket had already moved.
+    const isVid = /^video\//.test(f.type || '') || /\.(mp4|mov|webm|m4v)$/i.test(f.name || '');
+    if (!isVid && !/^image\//.test(f.type || '')
+        && !/\.(jpe?g|png|gif|webp|heic|heif|avif)$/i.test(f.name || '')) {
+      msg('Photos, GIFs and video clips only.', 'err'); return;
+    }
+    if (f.size > 50 * 1024 * 1024) {
+      msg(isVid ? 'That clip is over 50MB. Trim it or drop the quality a notch.'
+                : 'That photo is over 50MB. Shrink it first.', 'err');
+      return;
+    }
     file = f;
-    $('previmg').src = URL.createObjectURL(f);
+    // Swap the preview element to match what they picked, or a video renders
+    // as a broken image icon.
+    const old = $('previmg');
+    const el = document.createElement(isVid ? 'video' : 'img');
+    el.id = 'previmg';
+    if (isVid) { el.controls = true; el.playsInline = true; }
+    el.src = URL.createObjectURL(f);
+    old.replaceWith(el);
     $('prev').style.display = 'block';
-    $('altwrap').style.display = 'block';
+    $('altwrap').style.display = isVid ? 'none' : 'block';
   }
 
   $('go').onclick = async () => {
@@ -169,7 +187,13 @@
     box.innerHTML = rows.map(p => {
       const pulled = !p.published;
       return `<div class="mrow ${p.image_url ? '' : 'no-img'}" data-id="${p.id}">
-        ${p.image_url ? `<div class="mthumb" data-bg="${esc(p.image_url)}"></div>` : ''}
+        ${p.image_url
+            ? (OTP.isVideo(p.image_url)
+                // a background-image of an mp4 renders nothing, so video gets a
+                // real element and shows its first frame
+                ? `<video class="mthumb" src="${esc(p.image_url)}" preload="metadata" muted playsinline></video>`
+                : `<div class="mthumb" data-bg="${esc(p.image_url)}"></div>`)
+            : ''}
         <div>
           <div class="mtext">${esc(p.text)}</div>
           <div class="mmeta">
