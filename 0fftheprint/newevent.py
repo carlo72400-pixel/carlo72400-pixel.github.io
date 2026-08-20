@@ -21,6 +21,7 @@ folders run 0.5-4GB each. Every image ships as a small grid thumb plus a
 web-size full view, so a 60-photo event costs ~15MB instead of gigabytes.
 """
 import argparse, json, os, re, shutil, subprocess, sys
+import numpy as np
 from datetime import datetime
 
 try:
@@ -56,12 +57,46 @@ def dir_size(p):
                for dp, _, fs in os.walk(p) for f in fs)
 
 
-def pick(files, limit):
-    """Evenly sample across the shoot so the night's arc survives the cull."""
+def score_frame(path):
+    """Cheap keeper score: sharpness, minus penalties for dead or blown frames.
+
+    Even-sampling a shoot pulls duds (lens-cap blacks, floor shots, motion mush).
+    A photo dump should read like selects, so score first and keep the best.
+    """
+    try:
+        im = load_image(path)
+    except Exception:
+        return -1e9
+    g = im.convert("L")
+    g.thumbnail((320, 320), Image.LANCZOS)
+    a = np.asarray(g, dtype=np.float32)
+    # Laplacian variance = focus/detail
+    lap = (a[:-2, 1:-1] + a[2:, 1:-1] + a[1:-1, :-2] + a[1:-1, 2:] - 4 * a[1:-1, 1:-1])
+    sharp = float(lap.var())
+    mean = float(a.mean())
+    dark = float((a < 12).mean())      # near-black coverage
+    blown = float((a > 245).mean())
+    s = sharp
+    if dark > 0.55: s *= 0.15          # mostly a black frame
+    elif dark > 0.40: s *= 0.5
+    if mean < 26: s *= 0.35            # underexposed throwaway
+    if blown > 0.22: s *= 0.5
+    return s
+
+
+def pick(files, limit, folder=None, mode="best"):
+    """Keep the strongest frames, then restore shoot order so the night still reads."""
     if not limit or limit >= len(files):
         return files
-    step = len(files) / limit
-    return [files[int(i * step)] for i in range(limit)]
+    if mode != "best" or folder is None:
+        step = len(files) / limit
+        return [files[int(i * step)] for i in range(limit)]
+    print("  scoring frames…", end="\r")
+    scored = [(score_frame(os.path.join(folder, f)), i, f) for i, f in enumerate(files)]
+    keep = sorted(scored, key=lambda t: t[0], reverse=True)[:limit]
+    dropped = len(files) - len(keep)
+    print(f"  scored {len(files)}, kept {len(keep)}, dropped {dropped} weak frames")
+    return [f for _, _, f in sorted(keep, key=lambda t: t[1])]
 
 
 def load_image(path):
@@ -70,12 +105,12 @@ def load_image(path):
     return im.convert("RGB")
 
 
-def build_photos(src, out_dir, limit):
+def build_photos(src, out_dir, limit, mode='best'):
     files = sorted(f for f in os.listdir(src)
                    if os.path.splitext(f)[1] in PHOTO_EXT and not f.startswith("."))
     if not files:
         sys.exit(f"no photos found in {src}")
-    chosen = pick(files, limit)
+    chosen = pick(files, limit, src, mode)
     os.makedirs(out_dir, exist_ok=True)
     items = []
     for i, fn in enumerate(chosen, 1):
@@ -105,7 +140,7 @@ def build_videos(src, out_dir, limit):
         return []
     files = sorted(f for f in os.listdir(src)
                    if os.path.splitext(f)[1] in VIDEO_EXT and not f.startswith("."))
-    chosen = pick(files, limit)
+    chosen = pick(files, limit, mode='even')
     items = []
     for i, fn in enumerate(chosen, 1):
         stem = f"v{i:02d}"
@@ -282,6 +317,8 @@ def main():
     ap.add_argument("--date", required=True, help="YYYY-MM-DD")
     ap.add_argument("--videos", help="folder of clips (optional)")
     ap.add_argument("--limit", type=int, default=60, help="max photos (0 = all)")
+    ap.add_argument("--pick", choices=["best", "even"], default="best",
+                    help="best = score and keep the keepers (default); even = sample across the shoot")
     ap.add_argument("--video-limit", type=int, default=6)
     ap.add_argument("--slug", help="override the url slug")
     a = ap.parse_args()
@@ -296,7 +333,7 @@ def main():
     os.makedirs(media_dir, exist_ok=True)
 
     print(f"\nBuilding {slug}")
-    items = build_photos(a.source, media_dir, a.limit)
+    items = build_photos(a.source, media_dir, a.limit, a.pick)
     if a.videos:
         items += build_videos(a.videos, media_dir, a.video_limit)
 

@@ -143,8 +143,8 @@
       "type": "photo",
       "src": "media/020.jpg",
       "thumb": "media/020_t.jpg",
-      "w": 1600,
-      "h": 900
+      "w": 900,
+      "h": 1600
     },
     {
       "type": "photo",
