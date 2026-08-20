@@ -1,0 +1,318 @@
+{
+  "slug": "2026-08-14-blade-rave",
+  "title": "Blade Rave",
+  "venue": "Paper Tiger",
+  "date": "2026-08-14",
+  "date_short": "08.14.26",
+  "count": 44,
+  "media": [
+    {
+      "type": "photo",
+      "src": "media/001.jpg",
+      "thumb": "media/001_t.jpg",
+      "w": 1600,
+      "h": 900
+    },
+    {
+      "type": "photo",
+      "src": "media/002.jpg",
+      "thumb": "media/002_t.jpg",
+      "w": 1600,
+      "h": 900
+    },
+    {
+      "type": "photo",
+      "src": "media/003.jpg",
+      "thumb": "media/003_t.jpg",
+      "w": 1600,
+      "h": 900
+    },
+    {
+      "type": "photo",
+      "src": "media/004.jpg",
+      "thumb": "media/004_t.jpg",
+      "w": 1600,
+      "h": 900
+    },
+    {
+      "type": "photo",
+      "src": "media/005.jpg",
+      "thumb": "media/005_t.jpg",
+      "w": 1600,
+      "h": 1200
+    },
+    {
+      "type": "photo",
+      "src": "media/006.jpg",
+      "thumb": "media/006_t.jpg",
+      "w": 1600,
+      "h": 1200
+    },
+    {
+      "type": "photo",
+      "src": "media/007.jpg",
+      "thumb": "media/007_t.jpg",
+      "w": 1600,
+      "h": 1200
+    },
+    {
+      "type": "photo",
+      "src": "media/008.jpg",
+      "thumb": "media/008_t.jpg",
+      "w": 1600,
+      "h": 1200
+    },
+    {
+      "type": "photo",
+      "src": "media/009.jpg",
+      "thumb": "media/009_t.jpg",
+      "w": 1600,
+      "h": 1200
+    },
+    {
+      "type": "photo",
+      "src": "media/010.jpg",
+      "thumb": "media/010_t.jpg",
+      "w": 1600,
+      "h": 1200
+    },
+    {
+      "type": "photo",
+      "src": "media/011.jpg",
+      "thumb": "media/011_t.jpg",
+      "w": 1600,
+      "h": 1200
+    },
+    {
+      "type": "photo",
+      "src": "media/012.jpg",
+      "thumb": "media/012_t.jpg",
+      "w": 1600,
+      "h": 900
+    },
+    {
+      "type": "photo",
+      "src": "media/013.jpg",
+      "thumb": "media/013_t.jpg",
+      "w": 1600,
+      "h": 1200
+    },
+    {
+      "type": "photo",
+      "src": "media/014.jpg",
+      "thumb": "media/014_t.jpg",
+      "w": 1600,
+      "h": 1200
+    },
+    {
+      "type": "photo",
+      "src": "media/015.jpg",
+      "thumb": "media/015_t.jpg",
+      "w": 1600,
+      "h": 1200
+    },
+    {
+      "type": "photo",
+      "src": "media/016.jpg",
+      "thumb": "media/016_t.jpg",
+      "w": 1600,
+      "h": 1200
+    },
+    {
+      "type": "photo",
+      "src": "media/017.jpg",
+      "thumb": "media/017_t.jpg",
+      "w": 1600,
+      "h": 1200
+    },
+    {
+      "type": "photo",
+      "src": "media/018.jpg",
+      "thumb": "media/018_t.jpg",
+      "w": 1600,
+      "h": 1200
+    },
+    {
+      "type": "photo",
+      "src": "media/019.jpg",
+      "thumb": "media/019_t.jpg",
+      "w": 1600,
+      "h": 1200
+    },
+    {
+      "type": "photo",
+      "src": "media/020.jpg",
+      "thumb": "media/020_t.jpg",
+      "w": 1600,
+      "h": 1200
+    },
+    {
+      "type": "photo",
+      "src": "media/021.jpg",
+      "thumb": "media/021_t.jpg",
+      "w": 1600,
+      "h": 1200
+    },
+    {
+      "type": "photo",
+      "src": "media/022.jpg",
+      "thumb": "media/022_t.jpg",
+      "w": 1600,
+      "h": 1200
+    },
+    {
+      "type": "photo",
+      "src": "media/023.jpg",
+      "thumb": "media/023_t.jpg",
+      "w": 1600,
+      "h": 1200
+    },
+    {
+      "type": "photo",
+      "src": "media/024.jpg",
+      "thumb": "media/024_t.jpg",
+      "w": 1600,
+      "h": 1200
+    },
+    {
+      "type": "photo",
+      "src": "media/025.jpg",
+      "thumb": "media/025_t.jpg",
+      "w": 1600,
+      "h": 1200
+    },
+    {
+      "type": "photo",
+      "src": "media/026.jpg",
+      "thumb": "media/026_t.jpg",
+      "w": 1600,
+      "h": 1200
+    },
+    {
+      "type": "photo",
+      "src": "media/027.jpg",
+      "thumb": "media/027_t.jpg",
+      "w": 1600,
+      "h": 1200
+    },
+    {
+      "type": "photo",
+      "src": "media/028.jpg",
+      "thumb": "media/028_t.jpg",
+      "w": 1600,
+      "h": 1200
+    },
+    {
+      "type": "photo",
+      "src": "media/029.jpg",
+      "thumb": "media/029_t.jpg",
+      "w": 1600,
+      "h": 1200
+    },
+    {
+      "type": "photo",
+      "src": "media/030.jpg",
+      "thumb": "media/030_t.jpg",
+      "w": 1600,
+      "h": 1200
+    },
+    {
+      "type": "photo",
+      "src": "media/031.jpg",
+      "thumb": "media/031_t.jpg",
+      "w": 1600,
+      "h": 1200
+    },
+    {
+      "type": "photo",
+      "src": "media/032.jpg",
+      "thumb": "media/032_t.jpg",
+      "w": 1600,
+      "h": 1200
+    },
+    {
+      "type": "photo",
+      "src": "media/033.jpg",
+      "thumb": "media/033_t.jpg",
+      "w": 1600,
+      "h": 1200
+    },
+    {
+      "type": "photo",
+      "src": "media/034.jpg",
+      "thumb": "media/034_t.jpg",
+      "w": 1600,
+      "h": 1200
+    },
+    {
+      "type": "photo",
+      "src": "media/035.jpg",
+      "thumb": "media/035_t.jpg",
+      "w": 1600,
+      "h": 1200
+    },
+    {
+      "type": "photo",
+      "src": "media/036.jpg",
+      "thumb": "media/036_t.jpg",
+      "w": 1600,
+      "h": 1200
+    },
+    {
+      "type": "photo",
+      "src": "media/037.jpg",
+      "thumb": "media/037_t.jpg",
+      "w": 1600,
+      "h": 1200
+    },
+    {
+      "type": "photo",
+      "src": "media/038.jpg",
+      "thumb": "media/038_t.jpg",
+      "w": 1600,
+      "h": 1200
+    },
+    {
+      "type": "photo",
+      "src": "media/039.jpg",
+      "thumb": "media/039_t.jpg",
+      "w": 1600,
+      "h": 1200
+    },
+    {
+      "type": "photo",
+      "src": "media/040.jpg",
+      "thumb": "media/040_t.jpg",
+      "w": 1600,
+      "h": 900
+    },
+    {
+      "type": "photo",
+      "src": "media/041.jpg",
+      "thumb": "media/041_t.jpg",
+      "w": 1600,
+      "h": 1200
+    },
+    {
+      "type": "photo",
+      "src": "media/042.jpg",
+      "thumb": "media/042_t.jpg",
+      "w": 1600,
+      "h": 1200
+    },
+    {
+      "type": "photo",
+      "src": "media/043.jpg",
+      "thumb": "media/043_t.jpg",
+      "w": 1600,
+      "h": 1200
+    },
+    {
+      "type": "photo",
+      "src": "media/044.jpg",
+      "thumb": "media/044_t.jpg",
+      "w": 1600,
+      "h": 1200
+    }
+  ]
+}
