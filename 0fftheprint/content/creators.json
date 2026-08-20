@@ -8,13 +8,11 @@
       "type": "lens",
       "type_label": "THE LENS EX",
       "hp": 300,
-      "rarity": "gold-rare",
+      "rarity": "vampy",
       "rarities": [
-        "gold-rare",
-        "rare-holo",
-        "tera-ex"
+        "vampy"
       ],
-      "photo": "assets/card-vamp-sir.jpg",
+      "photo": "assets/card-vamp-vampy.jpg",
       "flavor": "Sees first. Cuts last.",
       "moves": [
         {

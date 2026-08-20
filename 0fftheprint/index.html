@@ -35,7 +35,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@900&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@900&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&family=Pirata+One&family=Luckiest+Guy&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg:#0a0a0d;
@@ -2243,6 +2243,133 @@
     backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
   }
   .poke.diamond-rare .poke-flavor{color:#dff6ff;}
+
+  /* ==========================================================
+     BESPOKE FRAMES — whole card redesigned per member, so the
+     card carries the flavor instead of the art doing it alone.
+     ========================================================== */
+
+  /* ---------- VAMPY: reliquary / holy-teetering ---------- */
+  .poke.vampy{--foil-1:#ff5d7e;--foil-2:#ffd9e2;--foil-3:#7a0f22;--foil-4:#c2185b;}
+  .poke.vampy::before{animation-duration:6s;}
+  .poke.vampy .poke-inner{
+    background:
+      radial-gradient(ellipse 110% 70% at 50% 22%, rgba(255,60,100,.16), transparent 68%),
+      linear-gradient(172deg, #1a0610 0%, #2a0a16 55%, #0c0308 100%);
+    box-shadow:
+      inset 0 0 0 2px rgba(214,168,92,.55),
+      inset 0 0 0 5px rgba(90,10,26,.9),
+      inset 0 0 0 6px rgba(214,168,92,.28),
+      inset 0 0 60px rgba(0,0,0,.6);
+    border-radius:12px;
+  }
+  /* cathedral arch cut over the art */
+  .poke.vampy .poke-art{
+    border-radius:46% 46% 8px 8px / 26% 26% 8px 8px;
+    box-shadow:inset 0 0 0 2px rgba(214,168,92,.5), inset 0 -30px 50px rgba(20,2,8,.75);
+    filter:saturate(1.05) contrast(1.06);
+  }
+  .poke.vampy .poke-art::before{
+    content:'';position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:
+      radial-gradient(circle at 50% 14%, rgba(255,120,160,.28), transparent 46%),
+      linear-gradient(180deg, transparent 55%, rgba(26,3,12,.55) 100%);
+    mix-blend-mode:screen;
+  }
+  .poke.vampy .poke-name{
+    font-family:'Pirata One','Saira Condensed',serif;
+    font-style:normal;font-weight:400;font-size:23px;letter-spacing:.02em;
+    color:#ffe3ea;text-shadow:0 0 12px rgba(255,60,100,.8), 0 2px 2px rgba(0,0,0,.9);
+  }
+  .poke.vampy .poke-hp{color:#e8b7c4;}
+  .poke.vampy .poke-hp b{font-family:'Pirata One',serif;font-style:normal;color:#ff5d7e;text-shadow:0 0 10px rgba(255,60,100,.9);}
+  .poke.vampy .poke-type{
+    background:linear-gradient(90deg, rgba(122,15,34,.9), rgba(60,6,18,.9));
+    color:#ffd9e2;border-color:rgba(214,168,92,.6);
+    font-family:'Pirata One',serif;font-style:normal;font-weight:400;letter-spacing:.14em;
+  }
+  .poke.vampy .poke-move-name{color:#ffd9e2;font-family:'Pirata One',serif;font-weight:400;font-size:12.5px;letter-spacing:.02em;}
+  .poke.vampy .poke-move{border-top-color:rgba(214,168,92,.22);}
+  .poke.vampy .poke-dmg{color:#ff5d7e;}
+  .poke.vampy .poke-foot{border-top-style:solid;border-top-color:rgba(214,168,92,.3);}
+  .poke.vampy .poke-flavor{color:#e8b7c4;font-family:'Pirata One',serif;font-style:normal;font-size:10.5px;}
+  .poke.vampy .poke-rare{color:#d6a85c;}
+  .poke.vampy .poke-cross{
+    position:absolute;top:8px;right:46px;z-index:4;
+    width:15px;height:20px;
+  }
+  .poke.vampy .poke-cross::before,
+  .poke.vampy .poke-cross::after{
+    content:'';position:absolute;background:linear-gradient(180deg,#f0d9a0,#c9982b);
+    box-shadow:0 0 8px rgba(240,217,160,.8);
+  }
+  .poke.vampy .poke-cross::before{left:6px;top:0;width:3.5px;height:20px;}
+  .poke.vampy .poke-cross::after{left:0;top:5.5px;width:15px;height:3.5px;}
+  .poke.vampy:hover .poke-art{filter:saturate(1.14) contrast(1.1) brightness(1.06);}
+
+  /* ---------- STONE: prehistoric slab x battle card ---------- */
+  .poke.stone{--foil-1:#ffd479;--foil-2:#fff1c9;--foil-3:#8a5a25;--foil-4:#6ee77f;}
+  .poke.stone::before{animation-duration:4.5s;}
+  .poke.stone .poke-inner{
+    background:
+      radial-gradient(ellipse 100% 60% at 50% 30%, rgba(110,231,127,.12), transparent 65%),
+      linear-gradient(168deg, #4a3a26 0%, #6b5537 45%, #33281a 100%);
+    box-shadow:
+      inset 0 0 0 3px #2a2013,
+      inset 0 3px 0 rgba(255,241,201,.22),
+      inset 0 -4px 0 rgba(0,0,0,.5),
+      inset 0 0 50px rgba(0,0,0,.45);
+    /* chipped rock silhouette */
+    border-radius:16px 8px 18px 7px / 10px 20px 8px 16px;
+  }
+  .poke.stone .poke-art{
+    border-radius:10px 4px 12px 5px / 6px 14px 5px 11px;
+    box-shadow:inset 0 0 0 3px #2a2013, inset 0 0 30px rgba(0,0,0,.55);
+    filter:saturate(1.08) contrast(1.05);
+  }
+  .poke.stone .poke-name{
+    font-family:'Luckiest Guy','Saira Condensed',cursive;
+    font-style:normal;font-weight:400;font-size:20px;letter-spacing:.03em;
+    color:#fff1c9;
+    text-shadow:2px 2px 0 #2a2013, 4px 4px 0 rgba(0,0,0,.4), 0 0 14px rgba(255,212,121,.5);
+  }
+  .poke.stone .poke-hp{color:#e2cfa4;}
+  .poke.stone .poke-hp b{
+    font-family:'Luckiest Guy',cursive;font-style:normal;color:#ffd479;
+    text-shadow:2px 2px 0 #2a2013;
+  }
+  .poke.stone .poke-type{
+    background:linear-gradient(180deg, #7a6242, #4a3a26);
+    color:#fff1c9;border-color:#2a2013;border-width:2px;
+    font-family:'Luckiest Guy',cursive;font-style:normal;letter-spacing:.1em;
+    text-shadow:1px 1px 0 #2a2013;
+    border-radius:6px 3px 7px 3px;
+  }
+  .poke.stone .poke-moves{
+    background:rgba(30,23,14,.5);
+    border:2px solid #2a2013;
+    border-radius:8px 4px 9px 4px;
+    padding:7px 8px;
+  }
+  .poke.stone .poke-move-name{
+    color:#fff1c9;font-family:'Luckiest Guy',cursive;font-weight:400;
+    font-size:12px;letter-spacing:.02em;text-shadow:1px 1px 0 #2a2013;
+  }
+  .poke.stone .poke-move{border-top-color:rgba(255,241,201,.18);}
+  .poke.stone .poke-move-desc{color:#ddcba4;}
+  .poke.stone .poke-dmg{color:#ffd479;font-family:'Luckiest Guy',cursive;text-shadow:1px 1px 0 #2a2013;}
+  .poke.stone .poke-foot{border-top-color:rgba(255,241,201,.25);}
+  .poke.stone .poke-flavor{color:#e2cfa4;}
+  .poke.stone .poke-rare{color:#ffd479;}
+  .poke.stone .poke-bone{
+    position:absolute;top:9px;right:46px;z-index:4;
+    font-family:'Luckiest Guy',cursive;font-size:10px;letter-spacing:.08em;
+    background:linear-gradient(180deg,#fff1c9,#c9a86a);
+    color:#2a2013;padding:2px 8px;
+    border-radius:7px 3px 8px 3px;
+    box-shadow:0 2px 0 #2a2013, 0 0 10px rgba(255,212,121,.5);
+  }
+  .poke.stone:hover .poke-art{filter:saturate(1.18) contrast(1.1) brightness(1.08);}
 </style>
 </head>
 <body>
@@ -2845,9 +2972,15 @@
     const isTagTeam = rarity === 'tag-team' || v.kind === 'tag-team';
     const isTera = rarity === 'tera-ex';
     const isDiamond = rarity === 'diamond-rare';
+    const isVampy = rarity === 'vampy';
+    const isStone = rarity === 'stone';
     const isTrainer = v.kind === 'trainer';
     const cornersHtml = isTagTeam ? `<div class="poke-corners"></div>` : '';
-    const teraHtml = isTera ? `<div class="poke-tera">Tera</div>` : (isDiamond ? `<div class="poke-diamond">&#9670; DIAMOND</div>` : '');
+    const teraHtml = isTera ? `<div class="poke-tera">Tera</div>`
+      : isDiamond ? `<div class="poke-diamond">&#9670; DIAMOND</div>`
+      : isVampy ? `<div class="poke-cross"></div>`
+      : isStone ? `<div class="poke-bone">PREHISTORIC</div>`
+      : '';
     const trainerClass = isTrainer ? ' trainer' : '';
     const tagTeamClass = isTagTeam ? ' tag-team' : '';
     const sourceClass = ' poke-' + source;
@@ -2994,6 +3127,8 @@
     'tera-ex':      [{f:1568,d:80,  t:'sawtooth', v:.07},          {f:1760,d:120, t:'square',   v:.07, delay:80},    {f:2093,d:320, t:'sine', v:.16, delay:200}],
     'gold-rare':    [{f:131, d:220, t:'sine',     v:.18},          {f:659, d:340, t:'sine',     v:.14, delay:60},    {f:1319,d:450, t:'sine', v:.13, delay:200}],
     'tag-team':     [{f:262, d:140, t:'sine',     v:.16},          {f:392, d:140, t:'sine',     v:.16, delay:140},   {f:523, d:140, t:'sine', v:.16, delay:280}, {f:784, d:480, t:'sine', v:.18, delay:420}],
+    'vampy':        [{f:196, d:260, t:'sine',     v:.16},          {f:294, d:220, t:'sine',     v:.13, delay:150},   {f:392, d:520, t:'sine', v:.14, delay:320}],
+    'stone':        [{f:98,  d:200, t:'square',   v:.10},          {f:147, d:160, t:'triangle', v:.12, delay:120},   {f:220, d:420, t:'triangle', v:.14, delay:250}],
     'diamond-rare': [{f:1568,d:90,  t:'sine',     v:.12},          {f:2093,d:90,  t:'sine',     v:.12, delay:90},    {f:2637,d:110, t:'sine', v:.13, delay:180}, {f:3136,d:420, t:'sine', v:.14, delay:280}],
   };
   function playChime(rarity){
