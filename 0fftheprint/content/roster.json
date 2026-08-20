@@ -60,6 +60,35 @@
       "lore": "Rapper. San Antonio. Punk on the surface, trap in the bones, anarchy on the hook.\n\nSecond artist on the roster. Sessions are closed, and what's coming out of them is classified until it isn't.\n\nWhen the file opens, the desk has the frames."
     },
     {
+      "name": "WRATHFOL",
+      "type": "board",
+      "type_label": "THE BOARD EX",
+      "hp": 220,
+      "rarity": "gold-rare",
+      "photo": null,
+      "pending_glyph": "W",
+      "pending_stamp": "NOT SUBTLE",
+      "flavor": "Tells the story. Loudly.",
+      "moves": [
+        {
+          "cost": "b",
+          "name": "Any Genre",
+          "damage": 50,
+          "desc": "Produces anything. Copy any move in play."
+        },
+        {
+          "cost": "bbb",
+          "name": "Full Send",
+          "damage": 200,
+          "desc": "Not subtle. Everything in the room takes it."
+        }
+      ],
+      "platform": "IG",
+      "link": "https://www.instagram.com/wrathfol/",
+      "theme_song": "",
+      "lore": "Producer. San Antonio by way of Houston. Jack of all trades, produces anything, and every beat carries a story.\n\nEnergetic, fun, built for everybody in the room. Subtle was never the assignment. Heavy hitter.\n\nOff the boards he's an adventurer. Ask where he's been, then listen to what he made when he got back."
+    },
+    {
       "name": "The Ink",
       "type": "ink",
       "type_label": "THE INK · 002",
