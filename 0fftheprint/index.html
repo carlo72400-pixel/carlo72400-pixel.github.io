@@ -39,6 +39,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js" defer></script>
 <script src="supabase-config.js" defer></script>
 <script src="assets/js/desk.js" defer></script>
+<script src="assets/js/door.js" defer></script>
 <style>
   :root{
     --bg:#0a0a0d;
@@ -251,6 +252,20 @@
   }
   nav.site .cta:hover{color:#0a0a0d;background:linear-gradient(180deg,#fff,var(--pink));}
   nav.site .cta::after{display:none;}
+
+  /* The door. Plain nav treatment on purpose, the dot carries the state.
+     Grey = signed out or waiting on approval. Pink = you are in. */
+  nav.site a.key{display:inline-flex;align-items:center;gap:7px;}
+  nav.site a.key::before{
+    content:'';width:6px;height:6px;border-radius:50%;flex:0 0 auto;
+    background:#4a454f;
+    transition:background .2s,box-shadow .2s;
+  }
+  nav.site a.key.on::before{background:var(--pink-glow);box-shadow:0 0 8px rgba(255,121,198,.7);}
+  nav.site a.key .n{
+    font-family:var(--f-body);font-size:9px;line-height:1;font-weight:800;letter-spacing:.04em;
+    padding:2px 5px;border-radius:999px;background:var(--pink-glow);color:#0a0a0d;
+  }
 
   /* ============ LAYOUT ============ */
   .wrap{
@@ -1346,6 +1361,8 @@
       letter-spacing:.14em;
       flex-shrink:0;
     }
+    nav.site a.key::before{width:5px;height:5px;}
+    nav.site a.key{gap:6px;}
 
     /* Reorder: main content first, sidebar second */
     .wrap{
@@ -2861,6 +2878,7 @@
 
 <!-- ========== NAV ========== -->
 <nav class="site">
+  <a href="join/" id="nav-key" class="key" title="Card holders log in here.">Log in</a>
   <a href="#curators">This Is Us</a>
   <a href="#take">The Take</a>
   <a href="#work">The Work</a>
@@ -3025,9 +3043,9 @@
         <div class="sub">card holders only &nbsp;·&nbsp; art, thoughts, whatever</div>
       </div>
       <div class="feed" id="take-mount"></div>
-      <a class="feed-cta" href="https://instagram.com/vamppsych" target="_blank" rel="noopener">
-        <b>Got a card? Send it to the desk.</b>
-        <span>Text or DM it and it goes up. No login, no app, no algorithm.</span>
+      <a class="feed-cta" id="take-cta" href="join/">
+        <b>Got a card? Log in.</b>
+        <span>Card holders post straight to the timeline. The desk hands out the cards in person, and the DMs are always open.</span>
       </a>
     </section>
 
@@ -3091,7 +3109,7 @@
         <div class="sub">slide it under the door. we answer it ourselves.</div>
       </div>
       <div class="pitch-dm">
-        <p class="pitch-lead">No forms. No inbox nobody reads. The desk answers DMs.</p>
+        <p class="pitch-lead">No inbox nobody reads. The desk answers DMs.</p>
         <div class="pitch-actions">
           <a class="pitch-btn" href="https://instagram.com/vamppsych" target="_blank" rel="noopener"><b>DM The Lens</b><span>@vamppsych · interviews · scene tips · footage · bookings</span></a>
         </div>
@@ -3134,8 +3152,8 @@
       &nbsp;·&nbsp; <a href="#" target="_blank" rel="noopener" data-social="instagram">IG</a>
       / <a href="#" target="_blank" rel="noopener" data-social="tiktok">TikTok</a>
       / <a href="#" target="_blank" rel="noopener" data-social="youtube">YouTube</a><br>
-      <span style="color:#5a5560;">No comments. Off the record stays off the record.</span><br>
-      <a href="join/" style="font-size:11px;">Card holders: log in &rarr;</a>
+      <a href="join/" id="footer-key" style="font-size:12px;">Card holders: log in &rarr;</a><br>
+      <span style="color:#5a5560;">No comments. Off the record stays off the record.</span>
     </div>
   </div>
 </footer>

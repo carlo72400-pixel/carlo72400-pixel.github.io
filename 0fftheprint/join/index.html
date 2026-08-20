@@ -16,6 +16,8 @@
   <a class="back" href="../">&larr; 0FF THE PRINT</a>
   <h1 id="ttl">Join the Desk</h1>
   <div class="sub">card holders only &nbsp;·&nbsp; the desk approves by hand</div>
+  <p class="door-note">Card holders only. If you don't have one, this page can't give you one.</p>
+  <p class="door-note">The desk hands them out in person. The DMs are open and that's usually where it starts anyway.</p>
 
   <div class="setup" id="setup" style="display:none">
     <b>Backend not switched on yet</b>
@@ -76,8 +78,8 @@
     if (me.profile?.is_admin) { location.href = '../desk/'; return; }
     if (me.profile?.approved)  { location.href = '../compose/'; return; }
     $('panel').innerHTML = `<b style="font-family:var(--f-display);font-style:italic;font-size:26px;text-transform:uppercase">You're in the queue.</b>
-      <div class="note">Signed in as ${me.user.email}. The desk has to approve you before you can post.
-      Nudge Gianni if it's been a minute.</div>
+      <div class="note">Signed in as ${me.user.email}. You're in the queue. The desk approves by hand,
+      usually after it wakes up.</div>
       <button class="btn ghost" id="out" type="button">Sign out</button>`;
     $('out').onclick = async () => { await OTP.signOut(); location.reload(); };
     return;
