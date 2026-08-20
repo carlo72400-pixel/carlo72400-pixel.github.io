@@ -19,6 +19,29 @@
     color:var(--ink);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:16px}
   .cnt{text-align:right;font-family:var(--f-mono);font-size:10.5px;color:var(--muted);margin-top:6px}
   .cnt.over{color:var(--bad)}
+
+  /* ---- your posts ---- */
+  .mine{margin-top:22px}
+  .mine h2{font-family:var(--f-display);font-style:italic;font-weight:900;font-size:24px;
+    text-transform:uppercase;margin-bottom:4px}
+  .mrow{display:grid;grid-template-columns:auto 1fr;gap:12px;padding:15px 0;border-bottom:1px solid var(--line)}
+  .mrow:last-child{border-bottom:0}
+  .mthumb{width:54px;height:54px;border-radius:9px;background:#0d0c11 center/cover no-repeat;
+    border:1px solid var(--line);flex:0 0 auto}
+  .mrow.no-img{grid-template-columns:1fr}
+  .mtext{font-size:14px;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere}
+  .mmeta{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.1em;color:var(--muted);margin-top:6px;
+    display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .tag{font-family:var(--f-mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;
+    border:1px solid var(--line);border-radius:3px;padding:2px 6px}
+  .tag.edited{color:var(--muted)}
+  .tag.pulled{color:var(--bad);border-color:rgba(255,93,126,.45)}
+  /* 44px minimum tap target. These are people on phones, not on a mouse. */
+  .macts{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+  .macts .btn{width:auto;margin:0;min-height:44px;font-size:14px;padding:9px 18px}
+  .macts .btn:disabled{opacity:.35}
+  .locked{font-family:var(--f-mono);font-size:11px;color:var(--muted);margin-top:8px}
+  .mrow textarea{min-height:110px;margin-top:2px}
 </style>
 </head>
 <body>
@@ -29,6 +52,7 @@
   <div class="sub" id="sub">the timeline &nbsp;·&nbsp; goes live instantly</div>
 
   <div class="card" id="panel"><div class="empty">checking your card…</div></div>
+  <div class="mine" id="mine"></div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
@@ -38,6 +62,8 @@
 (async () => {
   const $ = id => document.getElementById(id);
   const panel = $('panel');
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const when = iso => { const d = new Date(iso); return isNaN(d) ? '' : d.toLocaleDateString(undefined,{month:'short',day:'numeric'}) + ', ' + d.toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit'}); };
 
   if (!OTP.configured) {
     panel.innerHTML = `<div class="setup"><b>Backend not switched on yet</b>
@@ -48,24 +74,32 @@
   if (!me) { location.href = '../join/'; return; }
   if (!me.profile?.approved) {
     panel.innerHTML = `<b style="font-family:var(--f-display);font-style:italic;font-size:26px;text-transform:uppercase">Not approved yet.</b>
-      <div class="note">Signed in as ${me.user.email}. The desk approves by hand. Once you're in, this becomes your post box.</div>
+      <div class="note">Signed in as ${esc(me.user.email)}. The desk approves by hand. Once you're in, this becomes your post box.</div>
       <button class="btn ghost" id="out" type="button">Sign out</button>`;
     $('out').onclick = async () => { await OTP.signOut(); location.href = '../join/'; };
     return;
   }
 
+  // card_slug is desk-granted now, so a freshly approved member legitimately has none.
+  const noCard = !me.profile.card_slug;
+
   panel.innerHTML = `
-    <div class="who">posting as <b>${me.profile.display_name}</b>
+    <div class="who">posting as <b>${esc(me.profile.display_name)}</b>
       <button class="btn ghost sm" id="out" type="button">Sign out</button></div>
+    ${noCard ? `<div class="note">No card on you yet, so your posts run under your name until the desk hands one over.</div>` : ''}
     <label for="text">What's up</label>
     <textarea id="text" maxlength="800" placeholder="art, a thought, a bad opinion about a mix"></textarea>
     <div class="cnt" id="cnt">0 / 800</div>
     <div class="drop" id="drop">Tap to attach a photo</div>
     <input type="file" id="file" accept="image/*" hidden>
     <div class="prev" id="prev"><img id="previmg" alt=""><button id="rm" type="button">&times;</button></div>
+    <div id="altwrap" style="display:none">
+      <label for="alt">Describe the photo (optional)</label>
+      <input id="alt" type="text" maxlength="180" placeholder="for anybody who can't see it">
+    </div>
     <button class="btn" id="go" type="button">Post it</button>
     <div class="msg" id="msg"></div>
-    <div class="note">No editing after it's up, but you can delete your own. The desk can pull anything.</div>`;
+    <div class="note">Edit it, delete it, whatever. If the desk pulls a post it locks, and that is on purpose.</div>`;
 
   const msg = (t, k) => { const m = $('msg'); m.textContent = t; m.className = 'msg show ' + k; };
   let file = null;
@@ -84,14 +118,20 @@
     if (e.dataTransfer.files[0]) setFile(e.dataTransfer.files[0]);
   };
   $('file').onchange = e => { if (e.target.files[0]) setFile(e.target.files[0]); };
-  $('rm').onclick = () => { file = null; $('prev').style.display = 'none'; $('file').value = ''; };
+  $('rm').onclick = () => {
+    file = null; $('prev').style.display = 'none'; $('file').value = '';
+    $('altwrap').style.display = 'none'; $('alt').value = '';
+  };
 
   function setFile(f) {
+    // The bucket enforces both of these server side too. This is just a faster,
+    // friendlier no than a failed upload.
     if (!f.type.startsWith('image/')) { msg('Images only.', 'err'); return; }
     if (f.size > 8 * 1024 * 1024) { msg('That photo is over 8MB. Shrink it first.', 'err'); return; }
     file = f;
     $('previmg').src = URL.createObjectURL(f);
     $('prev').style.display = 'block';
+    $('altwrap').style.display = 'block';
   }
 
   $('go').onclick = async () => {
@@ -101,16 +141,101 @@
     try {
       let url = null;
       if (file) { $('go').textContent = 'Uploading photo…'; url = await OTP.uploadImage(file); }
-      await OTP.post({ text, imageUrl: url });
-      msg('Up. Refresh the homepage and it is there.', 'good');
+      await OTP.post({ text, imageUrl: url, imageAlt: $('alt').value.trim() || null });
+      msg('Up. It is on the homepage now.', 'good');
       $('text').value = ''; $('cnt').textContent = '0 / 800';
-      file = null; $('prev').style.display = 'none'; $('file').value = '';
+      $('rm').click();
+      renderMine();
     } catch (e) {
-      msg(e.message || 'That did not go through.', 'err');
+      // The database writes these for humans already, so pass them straight through.
+      const m = e.message || '';
+      msg(/^(Slow down|That is twenty|The desk pulled|Log in first)/.test(m) ? m : (m || 'That did not go through.'), 'err');
     } finally {
       $('go').disabled = false; $('go').textContent = 'Post it';
     }
   };
+
+  /* ================= YOUR POSTS ================= */
+  const mine = $('mine');
+
+  async function renderMine() {
+    const rows = await OTP.myPosts();
+    if (!rows.length) {
+      mine.innerHTML = `<h2>Your posts</h2><div class="empty">nothing up yet</div>`;
+      return;
+    }
+    mine.innerHTML = `<h2>Your posts</h2><div class="card" id="minecard"></div>`;
+    const box = $('minecard');
+    box.innerHTML = rows.map(p => {
+      const pulled = !p.published;
+      return `<div class="mrow ${p.image_url ? '' : 'no-img'}" data-id="${p.id}">
+        ${p.image_url ? `<div class="mthumb" data-bg="${esc(p.image_url)}"></div>` : ''}
+        <div>
+          <div class="mtext">${esc(p.text)}</div>
+          <div class="mmeta">
+            <span>${esc(when(p.created_at))}</span>
+            ${p.edited_at ? '<span class="tag edited">EDITED</span>' : ''}
+            ${pulled ? '<span class="tag pulled">PULLED</span>' : ''}
+            ${p.pinned ? '<span class="tag">PINNED</span>' : ''}
+          </div>
+          ${pulled
+            ? `<div class="locked">The desk has this one. Text Gianni.</div>
+               <div class="macts">
+                 <button class="btn ghost" disabled type="button">Edit</button>
+                 <button class="btn bad" disabled type="button">Delete</button>
+               </div>`
+            : `<div class="macts">
+                 <button class="btn ghost" data-edit="${p.id}" type="button">Edit</button>
+                 <button class="btn bad" data-del="${p.id}" type="button">Delete</button>
+               </div>`}
+        </div>
+      </div>`;
+    }).join('');
+
+    // Thumbnails through the CSSOM, never an inline style attribute.
+    box.querySelectorAll('.mthumb[data-bg]').forEach(el => {
+      el.style.backgroundImage = 'url("' + el.dataset.bg + '")';
+    });
+
+    box.querySelectorAll('[data-del]').forEach(b => b.onclick = async () => {
+      if (!confirm('Delete this post? The photo goes with it. No undo.')) return;
+      b.disabled = true;
+      try { await OTP.deletePost(b.dataset.del); renderMine(); }
+      catch (e) { alert(e.message); b.disabled = false; }
+    });
+
+    box.querySelectorAll('[data-edit]').forEach(b => b.onclick = () => {
+      const row = b.closest('.mrow');
+      const p = rows.find(r => String(r.id) === b.dataset.edit);
+      const holder = row.querySelector('.mtext').parentElement;
+      holder.innerHTML = `
+        <label for="e${p.id}">Fix it up</label>
+        <textarea id="e${p.id}" maxlength="800">${esc(p.text)}</textarea>
+        ${p.image_url ? `<label for="a${p.id}">Describe the photo</label>
+          <input id="a${p.id}" type="text" maxlength="180" value="${esc(p.image_alt || '')}">` : ''}
+        <div class="macts">
+          <button class="btn" data-save="${p.id}" type="button">Save changes</button>
+          <button class="btn ghost" data-cancel="1" type="button">Never mind</button>
+        </div>
+        <div class="msg" id="m${p.id}"></div>`;
+      holder.querySelector('[data-cancel]').onclick = () => renderMine();
+      holder.querySelector('[data-save]').onclick = async (ev) => {
+        const btn = ev.currentTarget;
+        const t = document.getElementById('e' + p.id).value.trim();
+        const a = p.image_url ? document.getElementById('a' + p.id).value.trim() : undefined;
+        if (!t) { const m = document.getElementById('m' + p.id); m.textContent = 'It needs to say something.'; m.className = 'msg show err'; return; }
+        btn.disabled = true; btn.textContent = 'Saving…';
+        try { await OTP.updatePost(p.id, { text: t, imageAlt: a }); renderMine(); }
+        catch (e) {
+          const m = document.getElementById('m' + p.id);
+          m.textContent = e.message; m.className = 'msg show err';
+          btn.disabled = false; btn.textContent = 'Save changes';
+        }
+      };
+    });
+  }
+
+  renderMine();
 })();
 </script>
 </body>
