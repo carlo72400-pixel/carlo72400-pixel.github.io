@@ -2724,6 +2724,10 @@
     text-shadow:1px 1px 0 #fff, 2px 2px 0 rgba(58,215,232,.55);
   }
   .poke.amazing:hover .poke-art{filter:saturate(1.3) contrast(1.08) brightness(1.04);}
+
+  /* an unknown HP is a statement, so let it flicker */
+  .poke-hp b.unknown{letter-spacing:.06em;animation:hp-flicker 2.8s ease-in-out infinite;}
+  @keyframes hp-flicker{0%,100%{opacity:1;}45%{opacity:.5;}52%{opacity:1;}58%{opacity:.72;}}
 </style>
 </head>
 <body>
@@ -3337,12 +3341,13 @@
       : isDiamond ? `<div class="poke-diamond">&#9670; DIAMOND</div>`
       : isVampy ? `<div class="poke-cross"></div>`
       : isStone ? `<div class="poke-bone">PREHISTORIC</div>`
-      : (isDarkLord || isWarlord || isAmazing) ? `<div class="poke-orb">${esc(v.cost_orb || (v.moves||[]).length || 2)}</div><div class="poke-power">${esc(v.power || (hp ? hp * 20 : 4000))}</div>`
+      : (isDarkLord || isWarlord || isAmazing) ? `<div class="poke-orb">${esc(v.cost_orb || (v.moves||[]).length || 2)}</div><div class="poke-power">${esc(v.power || (Number.isFinite(+hp) && +hp ? +hp * 20 : 4000))}</div>`
       : '';
     const trainerClass = isTrainer ? ' trainer' : '';
     const tagTeamClass = isTagTeam ? ' tag-team' : '';
     const sourceClass = ' poke-' + source;
-    const hpHtml = hp ? `<div class="poke-hp">HP <b>${esc(hp)}</b></div>` : '';
+    const hpUnknown = typeof hp === 'string' && !Number.isFinite(+hp);
+    const hpHtml = hp ? `<div class="poke-hp">HP <b class="${hpUnknown ? 'unknown' : ''}">${esc(hp)}</b></div>` : '';
     return `<div class="poke ${esc(rarity)}${trainerClass}${tagTeamClass}${sourceClass}" data-src="${esc(source)}" data-idx="${i}" data-type="${esc(type)}" data-link="${esc(v.link || '#')}">
       ${cornersHtml}${teraHtml}
       <div class="poke-inner">

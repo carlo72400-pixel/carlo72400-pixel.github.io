@@ -36,7 +36,7 @@
       "name": "VIRGOSGATEWAY",
       "type": "signal",
       "type_label": "THE SIGNAL",
-      "hp": 180,
+      "hp": "???",
       "rarity": "diamond-rare",
       "photo": "assets/card-virgo-crystal.jpg",
       "pending_glyph": "V",
