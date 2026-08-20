@@ -2139,6 +2139,16 @@
   .work-grid{ column-fill:balance; }
   .work-item{ display:block; width:100%; }
   .work-item img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+  .track-art.no-art{
+    background:linear-gradient(140deg,#241226,#0d0c11 60%);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .track-mark{
+    font-family:var(--f-display);font-style:italic;font-weight:900;
+    font-size:44px;letter-spacing:-.02em;color:var(--pink-deep);
+    text-shadow:0 0 22px rgba(255,121,198,.5);opacity:.9;
+  }
 </style>
 </head>
 <body>
@@ -2275,7 +2285,8 @@
         <span style="color:var(--pink-glow);">♪</span>&nbsp; BKtheRula — <em style="color:var(--pink);">DEAD</em><br>
         <span style="color:var(--pink-glow);">♪</span>&nbsp; 2hollis — <em style="color:var(--pink);">trust</em><br>
         <span style="color:var(--pink-glow);">♪</span>&nbsp; KAV-MAN — <em style="color:var(--pink);">[loading]</em><br>
-        <span style="color:var(--pink-glow);">♪</span>&nbsp; VIRGOSGATEWAY — <em style="color:var(--pink);">[classified]</em>
+        <span style="color:var(--pink-glow);">♪</span>&nbsp; VIRGOSGATEWAY — <em style="color:var(--pink);">2 HI</em><br>
+        <span style="color:var(--pink-glow);">♪</span>&nbsp; VIRGOSGATEWAY — <em style="color:var(--pink);">you tried it</em>
       </div>
     </section>
 
@@ -2491,13 +2502,15 @@
   let site, creators, take, rotation, desk, roster, work;
   try {
     const [s, c, t, m, d, r, w] = await Promise.all([
-      fetch('content/site.json').then(r => r.json()),
-      fetch('content/creators.json').then(r => r.json()),
-      fetch('content/take.json').then(r => r.json()),
-      fetch('content/rotation.json').then(r => r.json()),
-      fetch('content/desk.json').then(r => r.json()),
-      fetch('content/roster.json').then(r => r.json()),
-      fetch('content/work.json').then(r => r.json()),
+      // no-cache: the JSON *is* the CMS, so an edit must show up on the next load.
+      // ETags still make this a cheap revalidation, not a full re-download.
+      fetch('content/site.json', {cache:'no-cache'}).then(r => r.json()),
+      fetch('content/creators.json', {cache:'no-cache'}).then(r => r.json()),
+      fetch('content/take.json', {cache:'no-cache'}).then(r => r.json()),
+      fetch('content/rotation.json', {cache:'no-cache'}).then(r => r.json()),
+      fetch('content/desk.json', {cache:'no-cache'}).then(r => r.json()),
+      fetch('content/roster.json', {cache:'no-cache'}).then(r => r.json()),
+      fetch('content/work.json', {cache:'no-cache'}).then(r => r.json()),
     ]);
     site = s; creators = c.items; take = t.items;
     rotation = m.items; desk = d.items; roster = r.items; work = w.items;
@@ -2600,9 +2613,9 @@
       tile.href = entry.link || '#';
       if (entry.link && /^https?:\/\//.test(entry.link)) { tile.target = '_blank'; tile.rel = 'noopener'; }
       tile.innerHTML = `
-        <div class="track-art" style="background-image:url('${esc(entry.art)}')"></div>
+        <div class="track-art${entry.art ? '' : ' no-art'}" style="${entry.art ? `background-image:url('${esc(entry.art)}')` : ''}">${entry.art ? '' : `<span class="track-mark">${esc((entry.artist||'').slice(0,3))}</span>`}</div>
         <div class="track-platform ${esc(entry.platform)}">${esc(labels[entry.platform] || entry.platform)}</div>
-        <div class="track-hint">${entry.preview ? 'hover · move to center for volume' : 'click to open'}</div>
+        <div class="track-hint">${entry.preview ? 'hover · move to center for volume' : (entry.start ? 'opens at ' + Math.floor(entry.start/60) + ':' + String(entry.start%60).padStart(2,'0') : 'click to open')}</div>
         <div class="track-info">
           <div class="track-title">${esc(entry.title)}</div>
           <div class="track-artist">${esc(entry.artist)}</div>
@@ -2789,11 +2802,64 @@
     const m = String(s).match(/(?:track\/|spotify:track:)([A-Za-z0-9]{22})/) || String(s).match(/^([A-Za-z0-9]{22})$/);
     return m ? m[1] : null;
   }
-  function spotifyEmbed(theme, autoplay){
+  // Spotify IFrame API, loaded once, so an embed can start at a timestamp.
+  let _spApiPromise = null;
+  function loadSpotifyApi(){
+    if (_spApiPromise) return _spApiPromise;
+    _spApiPromise = new Promise(resolve => {
+      let settled = false;
+      const done = v => { if (!settled){ settled = true; resolve(v); } };
+      window.onSpotifyIframeApiReady = API => done(API);
+      const sc = document.createElement('script');
+      sc.src = 'https://open.spotify.com/embed/iframe-api/v1';
+      sc.onerror = () => done(null);
+      document.head.appendChild(sc);
+      setTimeout(() => done(null), 8000);
+    });
+    return _spApiPromise;
+  }
+
+  function spotifyEmbed(theme, autoplay, startSec){
     const id = parseSpotifyId(theme);
     if (!id) return '';
-    const ap = autoplay ? '&autoplay=1' : '';
-    return `<div class="theme-song"><iframe class="theme-iframe" src="https://open.spotify.com/embed/track/${esc(id)}?utm_source=generator&theme=0${ap}" width="100%" height="80" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div>`;
+    const start = parseInt(startSec, 10) || 0;
+    // No start offset: the plain iframe is lighter and never depends on the API.
+    if (!start){
+      const ap = autoplay ? '&autoplay=1' : '';
+      return `<div class="theme-song"><iframe class="theme-iframe" src="https://open.spotify.com/embed/track/${esc(id)}?utm_source=generator&theme=0${ap}" width="100%" height="80" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div>`;
+    }
+    return `<div class="theme-song"><div class="sp-seek" data-track="${esc(id)}" data-start="${start}" data-autoplay="${autoplay ? 1 : 0}"></div></div>`;
+  }
+
+  // Mounts any pending timestamped embeds inside root.
+  function wireSpotifyEmbeds(root){
+    if (!root) return;
+    root.querySelectorAll('.sp-seek:not([data-mounted])').forEach(host => {
+      host.setAttribute('data-mounted', '1');
+      const id = host.dataset.track;
+      const start = parseInt(host.dataset.start, 10) || 0;
+      const autoplay = host.dataset.autoplay === '1';
+      loadSpotifyApi().then(API => {
+        if (!API){
+          // API blocked or offline: fall back to a normal embed, just without the offset.
+          host.innerHTML = `<iframe class="theme-iframe" src="https://open.spotify.com/embed/track/${id}?utm_source=generator&theme=0" width="100%" height="80" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>`;
+          return;
+        }
+        API.createController(host, { uri: 'spotify:track:' + id, width: '100%', height: 80 }, ctrl => {
+          let jumped = false;
+          ctrl.addListener('playback_update', e => {
+            const d = e && e.data;
+            if (!d || jumped) return;
+            // Jump once, on the first real play, while still near the top of the track.
+            if (d.isPaused === false && d.position < 2000){
+              jumped = true;
+              try { ctrl.seek(start); } catch (err) {}
+            }
+          });
+          if (autoplay){ try { ctrl.play(); } catch (err) {} }
+        });
+      });
+    });
   }
   function slugify(s){ return String(s||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,''); }
 
@@ -2930,8 +2996,9 @@
         <div class="flip-front">${frontHtml}</div>
         <div class="flip-back">${backHtml}</div>
       </div>
-      ${spotifyEmbed(data.theme_song)}
+      ${spotifyEmbed(data.theme_song, false, data.theme_start)}
     `;
+    wireSpotifyEmbeds(modalCardMount);
     // Actions — primary OPEN IG (full width) + secondary row (FLIP / SHARE / CLOSE)
     const link = data.link || '#';
     const isExt = /^https?:\/\//.test(link);
@@ -3051,7 +3118,8 @@
     setTimeout(() => {
       const pull = weightedPull();
       if (pull) {
-        boosterReveal.innerHTML = renderPokeCard(pull.card, pull.type, 0) + spotifyEmbed(pull.card.theme_song, true);
+        boosterReveal.innerHTML = renderPokeCard(pull.card, pull.type, 0) + spotifyEmbed(pull.card.theme_song, true, pull.card.theme_start);
+        wireSpotifyEmbeds(boosterReveal);
         playChime(pull.card.rarity);
       }
       boosterStage.classList.remove('opening');

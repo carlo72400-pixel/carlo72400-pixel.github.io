@@ -2,6 +2,28 @@
   "items": [
     {
       "platform": "spotify",
+      "title": "Stardust Breaker",
+      "artist": "KAV-MAN",
+      "art": "https://image-cdn-fa.spotifycdn.com/image/ab67616d0000b273824a32b56f258d90d1aeaa01",
+      "link": "https://open.spotify.com/track/0KJIm3Ukd82n0d7VOCQWWI?t=123",
+      "start": 123
+    },
+    {
+      "platform": "spotify",
+      "title": "2 HI",
+      "artist": "VIRGOSGATEWAY",
+      "art": "https://image-cdn-fa.spotifycdn.com/image/ab67616d0000b2737a49561a1eb3f079d7e4f4f7",
+      "link": "https://open.spotify.com/track/0sKUd3PxqITdWs8NqzpCBV"
+    },
+    {
+      "platform": "spotify",
+      "title": "YOU TRIED IT",
+      "artist": "VIRGOSGATEWAY",
+      "art": "https://image-cdn-fa.spotifycdn.com/image/ab67616d0000b2737278fa6c7ec6e3598a7338b6",
+      "link": "https://open.spotify.com/track/1PkGP1pjnPXpi081HVv7zr"
+    },
+    {
+      "platform": "spotify",
       "title": "Under Your Spell",
       "artist": "Snow Strippers",
       "art": "https://i.scdn.co/image/ab67616d0000b27317dbd78819c31da3641cb8ca",
