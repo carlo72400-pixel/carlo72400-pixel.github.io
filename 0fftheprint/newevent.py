@@ -203,9 +203,16 @@ def build_videos(src, out_dir, stage_dir, tag, limit):
         subprocess.run(["ffmpeg", "-y", "-i", outv, "-vf",
                         f"thumbnail,scale={THUMB_W}:-2", "-frames:v", "1", poster],
                        capture_output=True)
+        pw = ph = None
+        try:
+            with Image.open(poster) as pim:
+                pw, ph = pim.size
+        except Exception:
+            pass
         items.append({"type": "video",
                       "src":   f"{REL_BASE}/{tag}/{stem}.mp4",
-                      "thumb": f"media/{stem}_t.jpg"})
+                      "thumb": f"media/{stem}_t.jpg",
+                      "w": pw, "h": ph})
         print(f"  [{i}/{len(chosen)}] {fn} -> {human(size)}")
     return items
 
@@ -281,7 +288,13 @@ background:linear-gradient(180deg,#fff 10%,var(--pink) 45%,#8f8a97 60%,var(--pin
 .grid{columns:4 260px;column-gap:12px;margin-top:26px}
 .tile{break-inside:avoid;margin:0 0 12px;position:relative;display:block;width:100%;
 border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--panel);cursor:zoom-in}
-.tile img{width:100%;height:auto;display:block;transition:transform .35s ease,filter .35s ease}
+/* width/height on the img give it an intrinsic ratio so the tile has a real
+   height BEFORE the picture arrives. Without that the column collapses to 2px,
+   nothing intersects the viewport, loading="lazy" never fires, and the grid
+   stays empty forever. That deadlock shipped and nobody caught it. */
+.tile img{width:100%;height:auto;display:block;aspect-ratio:16/9;
+transition:transform .35s ease,filter .35s ease}
+.tile img[width][height]{aspect-ratio:auto}
 .tile:hover img{transform:scale(1.03);filter:brightness(1.08)}
 .tile.vid::after{content:'▶';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
 width:52px;height:52px;border-radius:50%;background:rgba(10,10,13,.72);border:1px solid var(--pink-deep);
@@ -334,7 +347,8 @@ const MEDIA = __MEDIA__;
 const grid = document.getElementById('grid');
 grid.innerHTML = MEDIA.map((m,i) =>
   `<a class="tile${m.type==='video'?' vid':''}" data-i="${i}" href="${m.src}">
-     <img src="${m.thumb}" alt="Frame ${i+1}" loading="lazy" decoding="async">
+     <img src="${m.thumb}" alt="Frame ${i+1}" loading="lazy" decoding="async"
+          width="${m.w||16}" height="${m.h||9}">
    </a>`).join('');
 const lb=document.getElementById('lb'), stage=document.getElementById('lbstage'), count=document.getElementById('lbc');
 let cur=0;
