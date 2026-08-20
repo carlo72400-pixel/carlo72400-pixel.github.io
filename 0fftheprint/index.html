@@ -2431,6 +2431,138 @@
     border-radius:8px 4px 9px 4px;padding:5px 8px;
     backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
   }
+
+  /* ==========================================================
+     DARK LORD — Duel Masters black-frame structure crossed with
+     Mega Darkrai marble + acid-green. Full-art.
+     ========================================================== */
+  .poke.darklord{--foil-1:#a3e635;--foil-2:#e8ffd0;--foil-3:#1a2b0c;--foil-4:#65a30d;}
+  .poke.darklord::before{animation-duration:5.5s;}
+  .poke.darklord .poke-inner{
+    background:linear-gradient(170deg,#07080a 0%,#0d1005 55%,#040506 100%);
+    border-radius:9px;
+    /* heavy black border with a silver metallic inner edge */
+    box-shadow:
+      inset 0 0 0 5px #000,
+      inset 0 0 0 7px rgba(196,208,196,.55),
+      inset 0 0 0 8px #000,
+      inset 0 0 70px rgba(0,0,0,.75);
+    padding:13px 13px 12px;
+  }
+  /* full-art */
+  .poke.darklord .poke-art{
+    position:absolute;inset:0;z-index:0;border-radius:9px;
+    filter:saturate(1.05) contrast(1.12) brightness(.96);
+  }
+  /* marbled swirl + acid-green ember wash over the photo */
+  .poke.darklord .poke-art::before{
+    content:'';position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:
+      radial-gradient(circle at 22% 18%, rgba(163,230,53,.30), transparent 16%),
+      radial-gradient(circle at 78% 62%, rgba(163,230,53,.24), transparent 14%),
+      radial-gradient(circle at 46% 88%, rgba(163,230,53,.18), transparent 15%),
+      conic-gradient(from 160deg at 34% 40%, transparent 0 120deg, rgba(232,255,208,.16) 150deg 190deg, transparent 220deg 360deg),
+      conic-gradient(from 20deg at 70% 74%, transparent 0 120deg, rgba(232,255,208,.12) 150deg 190deg, transparent 220deg 360deg),
+      linear-gradient(180deg, rgba(4,6,5,.72) 0%, transparent 26%, transparent 56%, rgba(4,6,5,.88) 100%);
+    mix-blend-mode:screen;
+  }
+  .poke.darklord .poke-art::after{
+    /* etched black smoke creeping in from the edges */
+    content:'';position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:
+      radial-gradient(ellipse 60% 45% at 0% 50%, rgba(0,0,0,.8), transparent 70%),
+      radial-gradient(ellipse 60% 45% at 100% 50%, rgba(0,0,0,.8), transparent 70%);
+  }
+  .poke.darklord .poke-head,
+  .poke.darklord .poke-type,
+  .poke.darklord .poke-moves,
+  .poke.darklord .poke-foot{position:relative;z-index:2;}
+  .poke.darklord .poke-head{grid-row:1;}
+  .poke.darklord .poke-type{grid-row:2;}
+  .poke.darklord .poke-moves{grid-row:4;align-self:end;}
+  .poke.darklord .poke-foot{grid-row:5;}
+
+  /* name bar, Duel Masters style: white blackletter on black */
+  .poke.darklord .poke-head{
+    background:linear-gradient(180deg,rgba(0,0,0,.92),rgba(0,0,0,.72));
+    border-bottom:1px solid rgba(196,208,196,.35);
+    padding:3px 7px 4px;border-radius:4px;
+  }
+  .poke.darklord .poke-name{
+    font-family:'Pirata One','Saira Condensed',serif;
+    font-style:normal;font-weight:400;font-size:23px;letter-spacing:.01em;
+    color:#fff;text-shadow:0 0 14px rgba(163,230,53,.55), 0 2px 3px #000;
+  }
+  .poke.darklord .poke-hp{color:#b9c9a8;}
+  .poke.darklord .poke-hp b{
+    font-family:'Saira Condensed',sans-serif;font-style:italic;font-weight:900;
+    color:#e8ffd0;text-shadow:0 0 12px rgba(163,230,53,.85), 0 2px 2px #000;
+  }
+  /* DARK LORD banner */
+  .poke.darklord .poke-type{
+    background:linear-gradient(90deg, rgba(0,0,0,.9), rgba(26,43,12,.9), rgba(0,0,0,.9));
+    color:#e8ffd0;border-color:rgba(196,208,196,.45);
+    font-family:'Saira Condensed',sans-serif;font-style:normal;font-weight:900;
+    letter-spacing:.3em;text-align:center;text-shadow:0 0 8px rgba(163,230,53,.6);
+    border-radius:2px;
+  }
+  .poke.darklord .poke-moves{
+    background:rgba(3,5,3,.8);
+    border:1px solid rgba(196,208,196,.32);
+    border-radius:4px;padding:7px 9px;
+    backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
+  }
+  .poke.darklord .poke-move{border-top-color:rgba(196,208,196,.16);}
+  .poke.darklord .poke-move-name{
+    color:#fff;font-family:'Pirata One',serif;font-weight:400;font-size:12.5px;
+  }
+  .poke.darklord .poke-move-desc{color:#c3d2b4;}
+  .poke.darklord .poke-dmg{
+    color:#a3e635;font-family:'Saira Condensed',sans-serif;font-style:italic;font-weight:900;
+    text-shadow:0 0 8px rgba(163,230,53,.6);
+  }
+  .poke.darklord .poke-cost i{background:#a3e635;box-shadow:0 0 6px rgba(163,230,53,.8);}
+  .poke.darklord .poke-foot{
+    background:rgba(3,5,3,.8);
+    border:1px solid rgba(196,208,196,.28);
+    border-radius:4px;padding:5px 8px;
+    backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
+    border-top-style:solid;
+  }
+  .poke.darklord .poke-flavor{color:#c3d2b4;font-style:italic;}
+  .poke.darklord .poke-rare{color:#a3e635;}
+  .poke.darklord .poke-platform{color:#e8ffd0;}
+  /* cost orb, top-left, Duel Masters */
+  .poke.darklord .poke-orb{
+    position:absolute;top:11px;left:11px;z-index:5;
+    width:30px;height:30px;border-radius:50%;
+    background:radial-gradient(circle at 34% 30%, #2a3a18, #06080a 70%);
+    border:2px solid rgba(196,208,196,.65);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Saira Condensed',sans-serif;font-style:italic;font-weight:900;font-size:17px;
+    color:#e8ffd0;text-shadow:0 0 8px rgba(163,230,53,.9);
+    box-shadow:0 2px 8px rgba(0,0,0,.9), inset 0 1px 0 rgba(255,255,255,.18);
+  }
+  /* power number, bottom-left */
+  .poke.darklord .poke-power{
+    position:absolute;left:14px;bottom:9px;z-index:5;
+    font-family:'Saira Condensed',sans-serif;font-style:italic;font-weight:900;
+    font-size:23px;line-height:1;color:#fff;
+    text-shadow:0 0 12px rgba(163,230,53,.7), 0 2px 3px #000;
+  }
+  .poke.darklord:hover .poke-art{filter:saturate(1.14) contrast(1.18) brightness(1.04);}
+  .poke.darklord:hover .poke-art::before{animation:dl-ember 2.6s ease-in-out infinite;}
+  @keyframes dl-ember{
+    0%,100%{filter:brightness(1);}
+    50%{filter:brightness(1.45);}
+  }
+
+  /* dark lord: make room for the cost orb and the power number */
+  .poke.darklord .poke-head{padding-left:38px;}
+  .poke.darklord .poke-foot{padding-left:62px;min-height:26px;align-items:center;}
+  .poke.darklord .poke-flavor{max-width:60%;}
+  .poke.darklord .poke-orb{top:13px;left:13px;width:27px;height:27px;font-size:15px;}
+  .poke.darklord .poke-power{left:17px;bottom:14px;font-size:21px;}
 </style>
 </head>
 <body>
@@ -3035,12 +3167,14 @@
     const isDiamond = rarity === 'diamond-rare';
     const isVampy = rarity === 'vampy';
     const isStone = rarity === 'stone';
+    const isDarkLord = rarity === 'darklord';
     const isTrainer = v.kind === 'trainer';
     const cornersHtml = isTagTeam ? `<div class="poke-corners"></div>` : '';
     const teraHtml = isTera ? `<div class="poke-tera">Tera</div>`
       : isDiamond ? `<div class="poke-diamond">&#9670; DIAMOND</div>`
       : isVampy ? `<div class="poke-cross"></div>`
       : isStone ? `<div class="poke-bone">PREHISTORIC</div>`
+      : isDarkLord ? `<div class="poke-orb">${esc(v.cost_orb || (v.moves||[]).length || 2)}</div><div class="poke-power">${esc(v.power || (hp ? hp * 20 : 4000))}</div>`
       : '';
     const trainerClass = isTrainer ? ' trainer' : '';
     const tagTeamClass = isTagTeam ? ' tag-team' : '';
@@ -3188,6 +3322,7 @@
     'tera-ex':      [{f:1568,d:80,  t:'sawtooth', v:.07},          {f:1760,d:120, t:'square',   v:.07, delay:80},    {f:2093,d:320, t:'sine', v:.16, delay:200}],
     'gold-rare':    [{f:131, d:220, t:'sine',     v:.18},          {f:659, d:340, t:'sine',     v:.14, delay:60},    {f:1319,d:450, t:'sine', v:.13, delay:200}],
     'tag-team':     [{f:262, d:140, t:'sine',     v:.16},          {f:392, d:140, t:'sine',     v:.16, delay:140},   {f:523, d:140, t:'sine', v:.16, delay:280}, {f:784, d:480, t:'sine', v:.18, delay:420}],
+    'darklord':     [{f:110, d:340, t:'sine',     v:.17},          {f:165, d:280, t:'triangle', v:.13, delay:180},   {f:220, d:600, t:'sine', v:.15, delay:380}],
     'vampy':        [{f:196, d:260, t:'sine',     v:.16},          {f:294, d:220, t:'sine',     v:.13, delay:150},   {f:392, d:520, t:'sine', v:.14, delay:320}],
     'stone':        [{f:98,  d:200, t:'square',   v:.10},          {f:147, d:160, t:'triangle', v:.12, delay:120},   {f:220, d:420, t:'triangle', v:.14, delay:250}],
     'diamond-rare': [{f:1568,d:90,  t:'sine',     v:.12},          {f:2093,d:90,  t:'sine',     v:.12, delay:90},    {f:2637,d:110, t:'sine', v:.13, delay:180}, {f:3136,d:420, t:'sine', v:.14, delay:280}],
