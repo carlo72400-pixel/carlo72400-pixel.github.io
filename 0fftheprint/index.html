@@ -38,8 +38,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@900&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&family=Pirata+One&family=Luckiest+Guy&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js" defer></script>
 <script src="supabase-config.js?v=f1348482" defer></script>
-<script src="assets/js/desk.js?v=41c8584c" defer></script>
+<script src="assets/js/desk.js?v=e5f8b208" defer></script>
 <script src="assets/js/door.js?v=cb068ae4" defer></script>
+<script src="assets/js/composer.js?v=fe4bff81" defer></script>
 <style>
   :root{
     --bg:#0a0a0d;
@@ -406,15 +407,20 @@
 
   /* Now featured */
   .featured{
-    display:flex;align-items:center;gap:10px;
+    display:flex;align-items:flex-start;gap:10px;
     background:#0a0a0d;
     border:1px solid var(--line);
     border-radius:10px;
     padding:12px 14px;
     font-family:var(--f-mono);font-size:13px;color:var(--ink);
+    /* A flex item defaults to min-width:auto, which refuses to shrink below its
+       content. With a name like VIRGOSGATEWAY in a mono face that pushed the text
+       clean out the side of the card. */
+    min-width:0;
   }
+  .featured > span{min-width:0;overflow-wrap:anywhere;line-height:1.5;}
   .featured .dot{
-    width:9px;height:9px;border-radius:50%;
+    width:9px;height:9px;border-radius:50%;flex:0 0 auto;margin-top:.42em;
     background:var(--pink-glow);
     box-shadow:0 0 8px var(--pink-glow),0 0 14px var(--pink-glow);
     animation:pulse 1.4s ease-in-out infinite;
@@ -2789,6 +2795,71 @@
   .post-body p:last-child{margin-bottom:0;}
   .post-body em{color:var(--pink-glow);font-style:italic;}
   .post-img{display:block;margin-top:10px;border-radius:12px;overflow:hidden;border:1px solid var(--line);}
+  .post-vid video{width:100%;display:block;max-height:520px;background:#000;}
+
+  /* ============ THE COMPOSER (top of the timeline) ============ */
+  .cbox{
+    background:var(--panel);border:1px solid var(--line);border-radius:14px;
+    padding:14px;margin-bottom:16px;
+  }
+  .cbox.prompt{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+  .cbox .cav{
+    width:42px;height:42px;border-radius:50%;flex:0 0 auto;
+    background:#0d0c11 center/cover no-repeat;border:2px solid var(--pink-deep);
+  }
+  .cbox .cav.plain{border-color:var(--line);}
+  .crow{display:flex;gap:12px;align-items:flex-start;}
+  .cgrow{flex:1;min-width:0;}
+  .cbox textarea{
+    width:100%;background:transparent;border:0;color:var(--ink);resize:none;
+    font-family:var(--f-body);font-size:15.5px;line-height:1.5;padding:9px 2px;
+    min-height:52px;outline:none;
+  }
+  .cbox textarea::placeholder{color:var(--muted);}
+  .cprev{margin-top:10px;position:relative;border-radius:11px;overflow:hidden;border:1px solid var(--line);display:none;}
+  .cprev img,.cprev video{width:100%;display:block;max-height:300px;object-fit:cover;background:#000;}
+  .cprev button{
+    position:absolute;top:8px;right:8px;background:rgba(10,10,13,.9);border:1px solid var(--line);
+    color:var(--ink);width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:15px;line-height:1;
+  }
+  .cbar{display:flex;align-items:center;gap:10px;margin-top:10px;border-top:1px solid var(--line);padding-top:10px;flex-wrap:wrap;}
+  .cattach{
+    display:inline-flex;align-items:center;gap:7px;cursor:pointer;
+    font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:8px 13px;
+    background:transparent;transition:border-color .15s,color .15s;
+  }
+  .cattach:hover{border-color:var(--pink-deep);color:var(--pink-glow);}
+  .cspacer{flex:1;}
+  .ccount{font-family:var(--f-mono);font-size:11px;color:var(--muted);}
+  .ccount.over{color:#ff5d7e;}
+  .cpost{
+    border:0;border-radius:999px;cursor:pointer;
+    background:linear-gradient(180deg,var(--pink-deep),#d4589f);color:#1a0a14;
+    font-family:var(--f-display);font-style:italic;font-weight:900;font-size:17px;
+    letter-spacing:.03em;text-transform:uppercase;padding:10px 22px;min-height:44px;
+    transition:transform .15s,filter .15s;
+  }
+  .cpost:hover{transform:translateY(-1px);filter:brightness(1.08);}
+  .cpost:disabled{opacity:.45;cursor:not-allowed;transform:none;}
+  .cmsg{margin-top:9px;font-size:13px;display:none;}
+  .cmsg.show{display:block;}
+  .cmsg.err{color:#ffb3c4;}
+  .cmsg.good{color:#bff5c6;}
+  .cnote{font-family:var(--f-mono);font-size:11px;color:var(--muted);line-height:1.6;}
+  .cnote a{color:var(--pink-glow);}
+  .cbox .clink{
+    font-family:var(--f-display);font-style:italic;font-weight:900;text-transform:uppercase;
+    font-size:19px;color:var(--ink);text-decoration:none;
+  }
+  .cbox .clink:hover{color:var(--pink-glow);}
+  @media (max-width:560px){
+    .cbox{padding:12px;}
+    .cbox .cav{width:36px;height:36px;}
+    .crow{gap:9px;}
+    .cbox textarea{font-size:16px;}   /* 16px or iOS zooms the whole page on focus */
+    .cpost{font-size:15px;padding:9px 17px;}
+  }
   .post-img img{width:100%;display:block;max-height:520px;object-fit:cover;}
   .post-t .react-bar{margin-top:9px;border-top:0;padding-top:0;gap:6px;}
   .feed-cta{
@@ -2914,15 +2985,15 @@
       <h3>On The Slate</h3>
       <div class="featured" style="margin-bottom:8px;">
         <span class="dot"></span>
-        <span><em>Interview 002</em>&nbsp;·&nbsp;The Ink&nbsp;<span style="color:var(--muted);">(in production)</span></span>
+        <span><em>Interview 002</em> · The Ink <span style="color:var(--muted);">(in production)</span></span>
       </div>
       <div class="featured" style="margin-bottom:8px;">
         <span class="dot" style="background:var(--dye-blue);box-shadow:0 0 8px var(--dye-blue),0 0 14px var(--dye-blue);"></span>
-        <span><em>The Voice</em>&nbsp;·&nbsp;KAV-MAN&nbsp;<span style="color:var(--muted);">(loading)</span></span>
+        <span><em>The Voice</em> · KAV-MAN <span style="color:var(--muted);">(loading)</span></span>
       </div>
       <div class="featured">
         <span class="dot" style="background:#fff;box-shadow:0 0 8px #fff,0 0 14px #fff;"></span>
-        <span><em>The Signal</em>&nbsp;·&nbsp;VIRGOSGATEWAY&nbsp;<span style="color:var(--muted);">(classified)</span></span>
+        <span><em>The Signal</em> · VIRGOSGATEWAY <span style="color:var(--muted);">(classified)</span></span>
       </div>
     </section>
 
@@ -3032,6 +3103,7 @@
         <h2>The Take <span class="accent">the timeline</span></h2>
         <div class="sub">card holders only &nbsp;·&nbsp; art, thoughts, whatever</div>
       </div>
+      <div id="composer"></div>
       <div class="feed" id="take-mount"></div>
       <a class="feed-cta" id="take-cta" href="join/">
         <b>Got a card? Log in.</b>
@@ -3315,10 +3387,16 @@
       const isExt = /^https?:\/\//.test(who.link || '');
       const body = md(p.text || p.body || '');
       const imgUrl = safeUrl(p.image);
-      const img = imgUrl
-        ? `<a class="post-img" href="${esc(imgUrl)}" target="_blank" rel="noopener">
-             <img src="${esc(imgUrl)}" alt="${esc(p.image_alt || '')}" loading="lazy" decoding="async"></a>`
-        : '';
+      const vid = imgUrl && (window.OTP && OTP.isVideo ? OTP.isVideo(imgUrl)
+                             : /\.(mp4|mov|webm|m4v)(\?|#|$)/i.test(imgUrl));
+      const img = !imgUrl ? ''
+        : vid
+          // playsinline or iOS hijacks it fullscreen. No autoplay: a wall of
+          // clips all firing at once on a phone is a data bill and a headache.
+          ? `<div class="post-img post-vid"><video src="${esc(imgUrl)}" controls playsinline
+               preload="metadata" ${p.image_alt ? `aria-label="${esc(p.image_alt)}"` : ''}></video></div>`
+          : `<a class="post-img" href="${esc(imgUrl)}" target="_blank" rel="noopener">
+               <img src="${esc(imgUrl)}" alt="${esc(p.image_alt || '')}" loading="lazy" decoding="async"></a>`;
       const pin = p.pinned ? `<span class="pin">PINNED</span>` : '';
       return `<article class="post-t${p.pinned ? ' pinned' : ''}">
         <a class="post-av" href="${esc(safeUrl(who.link) || '#')}" ${isExt ? 'target="_blank" rel="noopener"' : ''}>${av}</a>

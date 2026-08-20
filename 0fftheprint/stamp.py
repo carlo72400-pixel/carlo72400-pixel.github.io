@@ -20,7 +20,7 @@ import sys
 ROOT = pathlib.Path(__file__).resolve().parent
 
 # script path (relative to ROOT)  ->  how it appears in src="..."
-TRACKED = ["assets/js/desk.js", "assets/js/door.js", "supabase-config.js"]
+TRACKED = ["assets/js/desk.js", "assets/js/door.js", "assets/js/composer.js", "supabase-config.js"]
 
 # every document that loads them
 DOCS = ["index.html", "join/index.html", "compose/index.html", "desk/index.html"]

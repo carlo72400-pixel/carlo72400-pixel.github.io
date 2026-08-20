@@ -11,11 +11,20 @@
 
   const FEED_CAP = 8;                       // how many posts the homepage shows
   const NO_DASH = t => String(t == null ? "" : t).replace(/—/g, ",");
-  const EXTS = ["jpg", "png", "webp", "gif", "heic", "heif", "avif"];
+  const STILL_EXTS = ["jpg", "png", "webp", "gif", "heic", "heif", "avif"];
+  const VIDEO_EXTS = ["mp4", "mov", "webm", "m4v"];
+  const EXTS = STILL_EXTS.concat(VIDEO_EXTS);
   const MIME = {
     jpg: "image/jpeg", png: "image/png", webp: "image/webp",
     gif: "image/gif", heic: "image/heic", heif: "image/heif", avif: "image/avif",
+    // quicktime is what an iPhone actually hands you when you pick a clip
+    mp4: "video/mp4", mov: "video/quicktime", webm: "video/webm", m4v: "video/x-m4v",
   };
+  const MAX_BYTES = 50 * 1024 * 1024;          // the Supabase free tier ceiling
+  // Used by the renderers to decide between <img> and <video>. Extension only,
+  // because the URL is all the public timeline ever has to go on.
+  const isVideo = url => VIDEO_EXTS.indexOf(
+    (String(url || "").split(/[?#]/)[0].split(".").pop() || "").toLowerCase()) !== -1;
   // Pull the storage object key back out of a public URL. uploadImage only ever
   // returned the URL, so without this nothing could delete the file afterwards
   // and the bucket filled up with photos belonging to deleted posts.
@@ -82,19 +91,28 @@
     },
 
     /* ---- images ---- */
+    isVideo,
+
     async uploadImage(file) {
       const c = sb(); if (!c) throw new Error("Backend not configured yet.");
       const { data: { user } } = await c.auth.getUser();
       if (!user) throw new Error("Log in first.");
-      if (!/^image\//.test(file.type || "") && !/\.[a-z0-9]+$/i.test(file.name || "")) {
-        throw new Error("Images only.");
-      }
-      if (file.size > 8 * 1024 * 1024) throw new Error("That photo is over 8MB. Shrink it first.");
-
       const m = /\.([A-Za-z0-9]+)$/.exec(file.name || "");
       let ext = (m ? m[1] : "").toLowerCase();
       if (ext === "jpeg") ext = "jpg";
-      if (EXTS.indexOf(ext) === -1) ext = "jpg";
+      if (ext === "qt") ext = "mov";
+      if (EXTS.indexOf(ext) === -1) {
+        // Fall back to what the picker claimed before giving up on it.
+        const t = String(file.type || "");
+        if (/^video\//.test(t)) ext = "mp4";
+        else if (/^image\//.test(t)) ext = "jpg";
+        else throw new Error("Photos, GIFs and video clips only.");
+      }
+      if (file.size > MAX_BYTES) {
+        throw new Error(VIDEO_EXTS.indexOf(ext) !== -1
+          ? "That clip is over 50MB. Trim it or drop the quality a notch."
+          : "That photo is over 50MB, which is a lot of photo. Shrink it first.");
+      }
 
       // The key MUST start with <uid>/ or the storage policy refuses it. That is
       // what stops one member from touching another member's photos.
