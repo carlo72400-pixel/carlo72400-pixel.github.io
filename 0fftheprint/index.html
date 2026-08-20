@@ -3278,6 +3278,17 @@
     }
     return '';
   };
+
+  // Paint every background-image through the CSSOM. Never build one in an
+  // inline style attribute: the HTML parser decodes entities BEFORE the CSS
+  // parser reads them, so an escaped quote still breaks out of url(). A bad
+  // value here is rejected by the CSS parser instead of injecting a declaration.
+  const paintBg = root => (root || document).querySelectorAll('[data-bg]').forEach(el => {
+    const u = el.dataset.bg;
+    if (u) el.style.backgroundImage = 'url("' + u + '")';
+    el.removeAttribute('data-bg');
+  });
+
   const md = txt => esc(txt).split(/\n\s*\n/).map(p =>
     '<p>' + p.replace(/\*([^*]+)\*/g, '<em>$1</em>').replace(/\n/g, '<br>') + '</p>'
   ).join('');
@@ -3475,11 +3486,7 @@
         </div>
       </article>`;
     }).join('');
-    // Avatars painted through the CSSOM, never through a style attribute. A malformed
-    // value here is rejected by the CSS parser instead of injecting a second declaration.
-    tMount.querySelectorAll('.av[data-bg]').forEach(el => {
-      el.style.backgroundImage = 'url("' + el.dataset.bg + '")';
-    });
+    paintBg(tMount);   // avatars, same one path as every other background
     wireReactions(tMount);
   }
 
@@ -3606,11 +3613,20 @@
   // ============ The Work (real frames) ============
   const wMount = document.getElementById('work-grid');
   if (wMount && work) {
-    wMount.innerHTML = work.map(it => `
-      <figure class="work-item"${it.w && it.h ? ` style="aspect-ratio:${it.w}/${it.h}"` : ''}>
-        <img src="${esc(it.src)}" alt="${esc(it.alt || it.label || '')}"${it.w ? ` width="${it.w}" height="${it.h}"` : ''} loading="lazy" decoding="async">
+    // w and h are STRUCTURAL here: they feed aspect-ratio and the img width and
+    // height attributes, which is what stops the lazy-image deadlock in a
+    // columns layout. Coerced to Number so a stray string cannot land inside a
+    // style attribute. src goes through the same allowlist as every other URL.
+    wMount.innerHTML = work.map(it => {
+      const w = Number(it.w) || 0, h = Number(it.h) || 0;
+      const u = safeUrl(it.src);
+      if (!u) return '';
+      return `
+      <figure class="work-item"${w && h ? ` style="aspect-ratio:${w}/${h}"` : ''}>
+        <img src="${esc(u)}" alt="${esc(it.alt || it.label || '')}"${w && h ? ` width="${w}" height="${h}"` : ''} loading="lazy" decoding="async">
         <figcaption>${esc(it.label || '')}</figcaption>
-      </figure>`).join('');
+      </figure>`;
+    }).join('');
   }
 
   // ============ Roster ============
@@ -3673,7 +3689,7 @@
           ${hpHtml}
         </div>
         <div class="poke-type">${esc(v.type_label || type.toUpperCase())}</div>
-        ${v.photo ? `<div class="poke-art" style="background-image:url('${esc(v.photo)}')"></div>` : `<div class="poke-art poke-art-pending"><span class="pend-seat">${esc(v.pending_glyph || '0FF')}</span><span class="pend-stamp">${esc(v.pending_stamp || 'FOOTAGE PENDING')}</span></div>`}
+        ${safeUrl(v.photo) ? `<div class="poke-art" data-bg="${esc(safeUrl(v.photo))}"></div>` : `<div class="poke-art poke-art-pending"><span class="pend-seat">${esc(v.pending_glyph || '0FF')}</span><span class="pend-stamp">${esc(v.pending_stamp || 'FOOTAGE PENDING')}</span></div>`}
         <div class="poke-moves">${movesHtml}</div>
         <div class="poke-foot">
           <span class="poke-flavor">${esc(v.flavor||'')}</span>
@@ -3693,6 +3709,7 @@
     </div>`;
   }
   function wirePokeCards(mount){
+    paintBg(mount);   // card art arrives as data-bg, never as an inline style
     // Click-only — no pointer tilt or shine tracking on the grid (all CSS-only :hover + foil-spin)
     mount.querySelectorAll('.poke').forEach(card => {
       card.setAttribute('tabindex', '0');
@@ -3930,9 +3947,10 @@
       </div>
       ${spotifyEmbed(data.theme_song, true, data.theme_start)}
     `;
+    paintBg(modalCardMount);
     wireSpotifyEmbeds(modalCardMount);
     // Actions — primary OPEN IG (full width) + secondary row (FLIP / SHARE / CLOSE)
-    const link = data.link || '#';
+    const link = safeUrl(data.link) || '#';
     const isExt = /^https?:\/\//.test(link);
     const primaryHtml = (link && link !== '#')
       ? `<a class="btn-primary" href="${esc(link)}" ${isExt?'target="_blank" rel="noopener"':''}>${isExt?'Open '+(data.platform||'Instagram'):'Jump to roster'} →</a>`
@@ -4059,6 +4077,7 @@
       const pull = weightedPull();
       if (pull) {
         boosterReveal.innerHTML = renderPokeCard(pull.card, pull.type, 0) + spotifyEmbed(pull.card.theme_song, true, pull.card.theme_start);
+        paintBg(boosterReveal);
         wireSpotifyEmbeds(boosterReveal);
         playChime(pull.card.rarity);
       }
