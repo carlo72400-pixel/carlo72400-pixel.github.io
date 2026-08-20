@@ -264,3 +264,49 @@ May archive (interviews/, releases/, CAM.md still live THERE, the site does not)
 - OG: og_src.html → assets/preview.jpg (1200x630). Headless Chrome will NOT load Google Fonts
   from file:// or localhost here — download the woff2s and @font-face them locally to render
   (see scratchpad pattern), or reuse the existing preview.
+
+
+## NIGHTS section + brand marks + 0FF THE PRINT (Aug 20 2026)
+
+His ask: "update my main website, make sure it has updated work on it." The homepage had not
+been touched since Aug 12; everything shot Aug 13-19 was missing.
+
+**Section order is now 9 stops:** INFO 01, PHOTO MODE 02, **NIGHTS 03**, ARCHIVE 04, DESIGN 05,
+PLAYBACK 06, FEED 07, RATES 08, STANDBY 09. `bands.js` PAGES updated and the hardcoded `/ 08`
+in the pagebreak bumped to `/ 09` (stamp `?v=20260820`). Nav `<ul>` carries the Nights link
+after Photo, which is also what draws the mobile swipe chip.
+
+- **`#nights` (new section)** sits between PHOTO MODE and ARCHIVE, deliberately ABOVE the
+  archive so the newest paying-lane work leads instead of opening on a 2024 internship.
+  Two blocks, both on the existing `.blue-grid` / `.bluep` pattern (no new CSS):
+  - **BLADE RAVE · PAPER TIGER** (Aug 14), `assets/bladerave/br_01..08.jpg`. br_01 `bwide`
+    (crowd), br_02 `bhero` (performer). Source: the Drive vault's `client18/` set, i.e. the
+    grain-18 CLIENT cut, not his personal grain-25 set.
+  - **THE MIX · N ST MARY'S** (Aug 16), `assets/themix/mix_01..08.jpg`. mix_01 `bwide`
+    (EVENT_136 green-flood crew, landscape so the 2:1.05 cell does not gut it), mix_02 `bhero`.
+    mix_03..07 are the `08 Carousel/HALO_*` ring-flash portraits, mix_08 is EVENT_106.
+  - Both sets exported by `scratchpad/export.py`: 1500px long edge q84 for Blade Rave, 1400px
+    q78 for the HALO frames (they are grainy high-ISO and were 650KB each at q84).
+    UnsharpMask(1.2, 95, 3) AFTER the downscale, same rule as the IG export.
+- **DESIGN gained a 0FF THE PRINT block** (`assets/design/otp_01..04.jpg`): four 4:5 crops off a
+  headless capture of the LIVE outlet. Recipe: `--window-size=1100,9000` full-page screenshot of
+  `https://carlo72400-pixel.github.io/0fftheprint/`, then PIL-crop 1375-tall bands at y=0 (hero),
+  2870 (THE WORK grid), 6150 (music + catalog), 7050 (the roster cards). 1100x1375 is exactly the
+  4:5 the `.sacp` cell wants. Fragment URLs (`#roster`) do NOT work for this, headless fires the
+  screenshot before the fragment scroll settles and you get a blank frame. Section kicker and
+  intro copy widened from "Print + Collage" to cover sites.
+- **RATES gained a BRAND MARKS disclosure** between COMMERCIAL WORK and ADD-ONS: Single Mark
+  $650 / Mark + Alternates $900 / Full Set $1,200, plus Print + Stitch Pack $600, Cover Art $300,
+  Logo Sting $400. **Standing rates only.** The intro column from
+  `00_ADMIN/Invoices/RATE-SHEET_brand-marks.md` is deliberately NOT on the page: intro is a
+  per-quote 21-day device and printing it as a tier kills it on every other sheet he owns.
+  Fine print carries the three rules that matter: the unit is the SET, merch needs the stitch
+  pack, working files stay with him.
+- **HELD OUT on his call:** the Aug 17 Homie Night set (30 selects, Editorial Night + mono
+  SCARLET). Strongest recent portraits but it is a friend's face and there is no public post of
+  it. Do not put it up without asking again.
+- Also not on the site and deliberately so: the Aug 16 Bethel interview stills (church
+  congregants, no release), and the Looney Goon Savage marks (built on spec, nothing sent).
+- Verified: bands render REEL 01/09 through 09/09 in order, nav has 9 links, zero console
+  errors, every new asset 200s, and the 375px layout checked through a `width:375px` iframe
+  inside a 520px headless window (the 500px-minimum trap).

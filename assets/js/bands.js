@@ -1,12 +1,13 @@
 (function(){
   var PAGES=[['about','01','INFO','the studio'],['stills','02','PHOTO MODE','frames from the floor'],
-    ['archive','03','ARCHIVE','client work'],['design','04','DESIGN','posters + collage'],
-    ['playback','05','PLAYBACK','the film'],['feed','06','FEED','on the grid'],
-    ['rates','07','RATES','the rate card'],['contact','08','STANDBY','let us cut something']];
+    ['nights','03','NIGHTS','venue + event'],['archive','04','ARCHIVE','client work'],
+    ['design','05','DESIGN','posters, collage, sites'],['playback','06','PLAYBACK','the film'],
+    ['feed','07','FEED','on the grid'],['rates','08','RATES','the rate card'],
+    ['contact','09','STANDBY','let us cut something']];
   PAGES.forEach(function(pg){
     var sec=document.getElementById(pg[0]); if(!sec) return;
     var b=document.createElement('div'); b.className='pagebreak'; b.setAttribute('data-page',pg[0]); b.setAttribute('aria-hidden','true');
-    b.innerHTML='<span class="pb-no">REEL '+pg[1]+' / 08</span><span class="pb-name">'+pg[2]+'</span><span class="pb-desc">'+pg[3]+'</span>';
+    b.innerHTML='<span class="pb-no">REEL '+pg[1]+' / 09</span><span class="pb-name">'+pg[2]+'</span><span class="pb-desc">'+pg[3]+'</span>';
     sec.parentNode.insertBefore(b, sec);
   });
   document.querySelectorAll('a[href^="#"]').forEach(function(a){
