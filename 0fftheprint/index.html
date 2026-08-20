@@ -2831,11 +2831,8 @@
     const id = parseSpotifyId(theme);
     if (!id) return '';
     const start = parseInt(startSec, 10) || 0;
-    // No start offset: the plain iframe is lighter and never depends on the API.
-    if (!start){
-      const ap = autoplay ? '&autoplay=1' : '';
-      return `<div class="theme-song"><iframe class="theme-iframe" src="https://open.spotify.com/embed/track/${esc(id)}?utm_source=generator&theme=0${ap}" width="100%" height="80" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div>`;
-    }
+    // Everything mounts through the IFrame API: the plain embed URL ignores
+    // autoplay=1, and play() only works when gated on the controller's ready event.
     return `<div class="theme-song"><div class="sp-seek" data-track="${esc(id)}" data-start="${start}" data-autoplay="${autoplay ? 1 : 0}"></div></div>`;
   }
 
@@ -2854,17 +2851,30 @@
           return;
         }
         API.createController(host, { uri: 'spotify:track:' + id, width: '100%', height: 80 }, ctrl => {
-          let jumped = false;
+          let jumped = !start;
           ctrl.addListener('playback_update', e => {
             const d = e && e.data;
             if (!d || jumped) return;
             // Jump once, on the first real play, while still near the top of the track.
             if (d.isPaused === false && d.position < 2000){
               jumped = true;
-              try { ctrl.seek(start); } catch (err) {}
+              // Logged-out listeners get a ~30s preview; seeking past its end kills
+              // playback instantly. Only jump when the full track is actually loaded.
+              if (d.duration && d.duration > (start + 5) * 1000){
+                try { ctrl.seek(start); } catch (err) {}
+              }
             }
           });
-          if (autoplay){ try { ctrl.play(); } catch (err) {} }
+          if (autoplay){
+            // play() before the embed is ready gets dropped; gate it on 'ready'.
+            let played = false;
+            const go = () => {
+              if (played) return; played = true;
+              try { ctrl.play(); } catch (err) {}
+            };
+            ctrl.addListener('ready', go);
+            setTimeout(go, 2500); // belt-and-suspenders if 'ready' already fired or never arrives
+          }
         });
       });
     });
