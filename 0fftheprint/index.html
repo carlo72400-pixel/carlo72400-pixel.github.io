@@ -37,9 +37,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@900&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&family=Pirata+One&family=Luckiest+Guy&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js" defer></script>
-<script src="supabase-config.js" defer></script>
-<script src="assets/js/desk.js" defer></script>
-<script src="assets/js/door.js" defer></script>
+<script src="supabase-config.js?v=20260820" defer></script>
+<script src="assets/js/desk.js?v=20260820" defer></script>
+<script src="assets/js/door.js?v=20260820" defer></script>
 <style>
   :root{
     --bg:#0a0a0d;
@@ -2938,19 +2938,9 @@
       </div>
     </section>
 
-    <section class="card on-rotation-list">
-      <h3>On Rotation</h3>
-      <div class="featured" style="font-size:12px;line-height:1.7;display:block;color:#d6d0da;">
-        <span style="color:var(--pink-glow);">♪</span>&nbsp; playboi carti — <em style="color:var(--pink);">rather lie</em><br>
-        <span style="color:var(--pink-glow);">♪</span>&nbsp; ken carson — <em style="color:var(--pink);">singapore</em><br>
-        <span style="color:var(--pink-glow);">♪</span>&nbsp; snow strippers — <em style="color:var(--pink);">give it</em><br>
-        <span style="color:var(--pink-glow);">♪</span>&nbsp; BKtheRula — <em style="color:var(--pink);">DEAD</em><br>
-        <span style="color:var(--pink-glow);">♪</span>&nbsp; 2hollis — <em style="color:var(--pink);">trust</em><br>
-        <span style="color:var(--pink-glow);">♪</span>&nbsp; KAV-MAN — <em style="color:var(--pink);">[loading]</em><br>
-        <span style="color:var(--pink-glow);">♪</span>&nbsp; VIRGOSGATEWAY — <em style="color:var(--pink);">2 HI</em><br>
-        <span style="color:var(--pink-glow);">♪</span>&nbsp; VIRGOSGATEWAY — <em style="color:var(--pink);">you tried it</em>
-      </div>
-    </section>
+    <!-- The hand-typed "On Rotation" sidebar list was deleted 8/20. It had drifted
+         (it still said KAV-MAN [loading]) and it was hidden below 820px, so no phone
+         ever saw it. content/rotation.json is the single source of truth for music. -->
 
 
     <!-- ===== CREATOR SPOTLIGHT =====
@@ -3059,15 +3049,6 @@
     </section>
 
     <!-- ===== MUSIC · SPOTIFY ROTATION ===== -->
-    <!--
-      EDIT THE ROTATION:
-      Scroll to the bottom of this file, find:   const ROTATION = [ ... ]
-      Each entry is { id: "SPOTIFY_TRACK_ID" }
-      Track ID is the part after /track/ in any Spotify URL.
-        e.g. https://open.spotify.com/track/5q0N5SaFhROG9UQiPukv9p
-             →  id: "5q0N5SaFhROG9UQiPukv9p"
-      Set id to null for an empty placeholder slot.
-    -->
     <section id="music">
       <div class="section-head">
         <h2>Music <span class="accent">on rotation</span></h2>
@@ -3082,14 +3063,10 @@
         <h2>The Catalog <span class="accent">numbered drops</span></h2>
         <div class="sub">numbered drops, oldest at the bottom</div>
       </div>
-      <div class="desk-filters" id="desk-filters">
-        <button class="filter-pill active" data-lane="all" type="button">All</button>
-        <button class="filter-pill" data-lane="hair" type="button">Hair</button>
-        <button class="filter-pill" data-lane="music" type="button">Music</button>
-        <button class="filter-pill" data-lane="scene" type="button">Scene</button>
-        <button class="filter-pill" data-lane="fashion" type="button">Fashion</button>
-        <button class="filter-pill" data-lane="interview" type="button">Interview</button>
-      </div>
+      <!-- Pills are generated from the lanes actually present in the catalog.
+           Hardcoded ones drifted: Hair and Fashion matched zero items and
+           filtered the grid to empty. -->
+      <div class="desk-filters" id="desk-filters"></div>
       <div class="desk-grid" id="desk-grid"><!-- JS populates --></div>
     </section>
 
@@ -3186,19 +3163,30 @@
   // ============ Fetch all content ============
   let site, creators, take, rotation, desk, roster, work;  // `take` gets live posts merged in below
   try {
+    // FAULT-ISOLATED ON PURPOSE. This used to be seven bare fetches under one catch,
+    // so a single malformed JSON file blanked the entire homepage. Now one bad file
+    // costs one section and the rest of the page still renders.
+    // no-cache: the JSON *is* the CMS, so an edit must show up on the next load.
+    // ETags still make this a cheap revalidation, not a full re-download.
+    const grab = (file, fallback) =>
+      fetch('content/' + file, {cache:'no-cache'})
+        .then(r => { if (!r.ok) throw new Error(file + ' HTTP ' + r.status); return r.json(); })
+        .catch(err => { console.error('Content load failed:', file, err); return fallback; });
+
+    const EMPTY = {items: []};
     const [s, c, t, m, d, r, w] = await Promise.all([
-      // no-cache: the JSON *is* the CMS, so an edit must show up on the next load.
-      // ETags still make this a cheap revalidation, not a full re-download.
-      fetch('content/site.json', {cache:'no-cache'}).then(r => r.json()),
-      fetch('content/creators.json', {cache:'no-cache'}).then(r => r.json()),
-      fetch('content/take.json', {cache:'no-cache'}).then(r => r.json()),
-      fetch('content/rotation.json', {cache:'no-cache'}).then(r => r.json()),
-      fetch('content/desk.json', {cache:'no-cache'}).then(r => r.json()),
-      fetch('content/roster.json', {cache:'no-cache'}).then(r => r.json()),
-      fetch('content/work.json', {cache:'no-cache'}).then(r => r.json()),
+      grab('site.json', {}),
+      grab('creators.json', EMPTY),
+      grab('take.json', EMPTY),
+      grab('rotation.json', EMPTY),
+      grab('desk.json', EMPTY),
+      grab('roster.json', EMPTY),
+      grab('work.json', EMPTY),
     ]);
-    site = s; creators = c.items; take = t.items;
-    rotation = m.items; desk = d.items; roster = r.items; work = w.items;
+    site = s || {};
+    creators = (c && c.items) || []; take = (t && t.items) || [];
+    rotation = (m && m.items) || []; desk = (d && d.items) || [];
+    roster = (r && r.items) || []; work = (w && w.items) || [];
   } catch (err) {
     console.error('Content load failed', err);
     document.body.innerHTML = '<div style="padding:40px;color:#fff;font-family:system-ui;text-align:center;">Content failed to load. Refresh, or DM <a href="https://instagram.com/vamppsych" style="color:#ff79c6;">@vamppsych</a>.</div>';
@@ -3359,20 +3347,29 @@
     rotation.forEach(entry => {
       const tile = document.createElement('a');
       tile.className = 'track';
-      tile.href = entry.link || '#';
-      if (entry.link && /^https?:\/\//.test(entry.link)) { tile.target = '_blank'; tile.rel = 'noopener'; }
+      const tLink = safeUrl(entry.link);
+      const tArt  = safeUrl(entry.art);
+      tile.href = tLink || '#';
+      if (/^https?:\/\//.test(tLink)) { tile.target = '_blank'; tile.rel = 'noopener'; }
       tile.innerHTML = `
-        <div class="track-art${entry.art ? '' : ' no-art'}" style="${entry.art ? `background-image:url('${esc(entry.art)}')` : ''}">${entry.art ? '' : `<span class="track-mark">${esc((entry.artist||'').slice(0,3))}</span>`}</div>
+        <div class="track-art${tArt ? '' : ' no-art'}">${tArt ? '' : `<span class="track-mark">${esc((entry.artist||'').slice(0,3))}</span>`}</div>
         <div class="track-platform ${esc(entry.platform)}">${esc(labels[entry.platform] || entry.platform)}</div>
         <div class="track-hint">${entry.preview ? 'hover · move to center for volume' : (entry.start ? 'opens at ' + Math.floor(entry.start/60) + ':' + String(entry.start%60).padStart(2,'0') : 'click to open')}</div>
         <div class="track-info">
           <div class="track-title">${esc(entry.title)}</div>
           <div class="track-artist">${esc(entry.artist)}</div>
         </div>`;
+      // Art through the CSSOM, never an inline style attribute. Same reason as the
+      // timeline avatars: entities decode before CSS parses, so an escaped quote
+      // still breaks out of url().
+      if (tArt) tile.querySelector('.track-art').style.backgroundImage = 'url("' + tArt + '")';
       rMount.appendChild(tile);
 
-      if (!entry.preview) return;
-      const audio = new Audio(entry.preview);
+      // TOUCH devices never fire the hover that plays this, so building the Audio
+      // there is pure waste on the phones most of this traffic is on.
+      const tPrev = safeUrl(entry.preview);
+      if (!tPrev || TOUCH) return;
+      const audio = new Audio(tPrev);
       audio.loop = true;
       audio.preload = 'metadata';
       audio.volume = 0;
@@ -3416,21 +3413,31 @@
   const dFilters = document.getElementById('desk-filters');
   if (dMount && desk) {
     const platformLabel = { youtube:'YouTube', tiktok:'TikTok', instagram:'Instagram', spotify:'Spotify' };
+    // Build the filter bar from what is really in the catalog, never a fixed list.
+    if (dFilters) {
+      const lanes = [...new Set(desk.flatMap(x => x.lanes || []))].sort();
+      const cap = w => w.charAt(0).toUpperCase() + w.slice(1);
+      dFilters.innerHTML = `<button class="filter-pill active" data-lane="all" type="button">All</button>`
+        + lanes.map(l => `<button class="filter-pill" data-lane="${esc(l)}" type="button">${esc(cap(l))}</button>`).join('');
+    }
     desk.forEach((it, i) => {
       const el = document.createElement('a');
       el.className = 'desk-item';
-      el.href = it.link || '#';
-      if (it.link && /^https?:\/\//.test(it.link)) { el.target='_blank'; el.rel='noopener'; }
+      const cLink  = safeUrl(it.link);
+      const cThumb = safeUrl(it.thumb);
+      el.href = cLink || '#';
+      if (/^https?:\/\//.test(cLink)) { el.target='_blank'; el.rel='noopener'; }
       el.dataset.lanes = (it.lanes || []).join(',');
       const lanesHtml = (it.lanes || []).map(l => `<span class="desk-lane">${esc(l)}</span>`).join('');
       el.innerHTML = `
-        <div class="desk-thumb" style="background-image:url('${esc(it.thumb)}')"></div>
+        <div class="desk-thumb"></div>
         <div class="desk-platform ${esc(it.platform)}">${esc(platformLabel[it.platform] || it.platform)}</div>
         <div class="desk-lanes">${lanesHtml}</div>
         <div class="desk-meta">
           <div class="desk-num">Drop ${String(i+1).padStart(2,'0')}</div>
           <div class="desk-title">${esc(it.title)}</div>
         </div>`;
+      if (cThumb) el.querySelector('.desk-thumb').style.backgroundImage = 'url("' + cThumb + '")';
       dMount.appendChild(el);
     });
   }

@@ -58,8 +58,8 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
-<script src="../supabase-config.js"></script>
-<script src="../assets/js/desk.js"></script>
+<script src="../supabase-config.js?v=20260820"></script>
+<script src="../assets/js/desk.js?v=20260820"></script>
 <script>
 (async () => {
   const $ = id => document.getElementById(id);
@@ -118,7 +118,7 @@
         if (!$('name').value.trim()) throw new Error('Need a name.');
         await OTP.signUp($('email').value.trim(), $('pw').value,
                          $('name').value.trim(), $('card').value);
-        msg("Request sent. Check your email to confirm, then the desk approves you by hand.", 'good');
+        msg("Request sent. You're in the queue now, the desk approves by hand.", 'good');
         $('form').reset();
       } else {
         await OTP.signIn($('email').value.trim(), $('pw').value);
