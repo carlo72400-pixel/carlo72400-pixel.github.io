@@ -36,6 +36,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@900&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&family=Pirata+One&family=Luckiest+Guy&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js" defer></script>
+<script src="supabase-config.js" defer></script>
+<script src="assets/js/desk.js" defer></script>
 <style>
   :root{
     --bg:#0a0a0d;
@@ -3131,7 +3134,8 @@
       &nbsp;·&nbsp; <a href="#" target="_blank" rel="noopener" data-social="instagram">IG</a>
       / <a href="#" target="_blank" rel="noopener" data-social="tiktok">TikTok</a>
       / <a href="#" target="_blank" rel="noopener" data-social="youtube">YouTube</a><br>
-      <span style="color:#5a5560;">No comments. No accounts. Off the record stays off the record.</span>
+      <span style="color:#5a5560;">No comments. Off the record stays off the record.</span><br>
+      <a href="join/" style="font-size:11px;">Card holders: log in &rarr;</a>
     </div>
   </div>
 </footer>
@@ -3151,7 +3155,7 @@
   ).join('');
 
   // ============ Fetch all content ============
-  let site, creators, take, rotation, desk, roster, work;
+  let site, creators, take, rotation, desk, roster, work;  // `take` gets live posts merged in below
   try {
     const [s, c, t, m, d, r, w] = await Promise.all([
       // no-cache: the JSON *is* the CMS, so an edit must show up on the next load.
@@ -3254,6 +3258,19 @@
       const days = Math.floor(hrs / 24);
       if (days < 7) return days + 'd';
       return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+    }
+
+    // Live posts from approved card holders sit on top of the JSON seeds.
+    // If the backend is not configured, this is a no-op and the seeds show alone.
+    if (window.OTP && OTP.configured) {
+      try {
+        const live = await OTP.feed(60);
+        if (live.length) {
+          const seeds = take.filter(p => !p.pinned);
+          const pinned = [...live, ...take].filter(p => p.pinned);
+          take = [...pinned.slice(0, 1), ...live.filter(p => !p.pinned), ...seeds];
+        }
+      } catch (e) { console.warn('live feed skipped:', e.message); }
     }
 
     tMount.innerHTML = take.map((p, i) => {

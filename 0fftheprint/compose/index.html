@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Post · 0FF THE PRINT</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0a0a0d">
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/auth.css">
+<style>
+  .drop{margin-top:14px;border:1px dashed var(--line);border-radius:12px;padding:18px;text-align:center;
+    font-family:var(--f-mono);font-size:11.5px;letter-spacing:.14em;color:var(--muted);cursor:pointer;text-transform:uppercase}
+  .drop:hover,.drop.over{border-color:var(--pink-deep);color:var(--pink-glow)}
+  .prev{margin-top:12px;position:relative;border-radius:12px;overflow:hidden;border:1px solid var(--line);display:none}
+  .prev img{width:100%;display:block;max-height:340px;object-fit:cover}
+  .prev button{position:absolute;top:8px;right:8px;background:rgba(10,10,13,.85);border:1px solid var(--line);
+    color:var(--ink);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:16px}
+  .cnt{text-align:right;font-family:var(--f-mono);font-size:10.5px;color:var(--muted);margin-top:6px}
+  .cnt.over{color:var(--bad)}
+</style>
+</head>
+<body>
+<div class="leopard-bar"></div>
+<div class="wrap">
+  <a class="back" href="../">&larr; 0FF THE PRINT</a>
+  <h1>New Post</h1>
+  <div class="sub" id="sub">the timeline &nbsp;·&nbsp; goes live instantly</div>
+
+  <div class="card" id="panel"><div class="empty">checking your card…</div></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="../supabase-config.js"></script>
+<script src="../assets/js/desk.js"></script>
+<script>
+(async () => {
+  const $ = id => document.getElementById(id);
+  const panel = $('panel');
+
+  if (!OTP.configured) {
+    panel.innerHTML = `<div class="setup"><b>Backend not switched on yet</b>
+      Wire up Supabase first, see <code>SUPABASE_SETUP.md</code>.</div>`;
+    return;
+  }
+  const me = await OTP.me();
+  if (!me) { location.href = '../join/'; return; }
+  if (!me.profile?.approved) {
+    panel.innerHTML = `<b style="font-family:var(--f-display);font-style:italic;font-size:26px;text-transform:uppercase">Not approved yet.</b>
+      <div class="note">Signed in as ${me.user.email}. The desk approves by hand. Once you're in, this becomes your post box.</div>
+      <button class="btn ghost" id="out" type="button">Sign out</button>`;
+    $('out').onclick = async () => { await OTP.signOut(); location.href = '../join/'; };
+    return;
+  }
+
+  panel.innerHTML = `
+    <div class="who">posting as <b>${me.profile.display_name}</b>
+      <button class="btn ghost sm" id="out" type="button">Sign out</button></div>
+    <label for="text">What's up</label>
+    <textarea id="text" maxlength="800" placeholder="art, a thought, a bad opinion about a mix"></textarea>
+    <div class="cnt" id="cnt">0 / 800</div>
+    <div class="drop" id="drop">Tap to attach a photo</div>
+    <input type="file" id="file" accept="image/*" hidden>
+    <div class="prev" id="prev"><img id="previmg" alt=""><button id="rm" type="button">&times;</button></div>
+    <button class="btn" id="go" type="button">Post it</button>
+    <div class="msg" id="msg"></div>
+    <div class="note">No editing after it's up, but you can delete your own. The desk can pull anything.</div>`;
+
+  const msg = (t, k) => { const m = $('msg'); m.textContent = t; m.className = 'msg show ' + k; };
+  let file = null;
+
+  $('out').onclick = async () => { await OTP.signOut(); location.href = '../join/'; };
+  $('text').oninput = () => {
+    const n = $('text').value.length;
+    $('cnt').textContent = `${n} / 800`;
+    $('cnt').classList.toggle('over', n > 800);
+  };
+  $('drop').onclick = () => $('file').click();
+  $('drop').ondragover = e => { e.preventDefault(); $('drop').classList.add('over'); };
+  $('drop').ondragleave = () => $('drop').classList.remove('over');
+  $('drop').ondrop = e => {
+    e.preventDefault(); $('drop').classList.remove('over');
+    if (e.dataTransfer.files[0]) setFile(e.dataTransfer.files[0]);
+  };
+  $('file').onchange = e => { if (e.target.files[0]) setFile(e.target.files[0]); };
+  $('rm').onclick = () => { file = null; $('prev').style.display = 'none'; $('file').value = ''; };
+
+  function setFile(f) {
+    if (!f.type.startsWith('image/')) { msg('Images only.', 'err'); return; }
+    if (f.size > 8 * 1024 * 1024) { msg('That photo is over 8MB. Shrink it first.', 'err'); return; }
+    file = f;
+    $('previmg').src = URL.createObjectURL(f);
+    $('prev').style.display = 'block';
+  }
+
+  $('go').onclick = async () => {
+    const text = $('text').value.trim();
+    if (!text) { msg('Say something first.', 'err'); return; }
+    $('go').disabled = true; $('go').textContent = 'Posting…';
+    try {
+      let url = null;
+      if (file) { $('go').textContent = 'Uploading photo…'; url = await OTP.uploadImage(file); }
+      await OTP.post({ text, imageUrl: url });
+      msg('Up. Refresh the homepage and it is there.', 'good');
+      $('text').value = ''; $('cnt').textContent = '0 / 800';
+      file = null; $('prev').style.display = 'none'; $('file').value = '';
+    } catch (e) {
+      msg(e.message || 'That did not go through.', 'err');
+    } finally {
+      $('go').disabled = false; $('go').textContent = 'Post it';
+    }
+  };
+})();
+</script>
+</body>
+</html>
