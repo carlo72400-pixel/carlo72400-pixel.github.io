@@ -3578,7 +3578,11 @@
         <div class="desk-platform ${esc(it.platform)}">${esc(platformLabel[it.platform] || it.platform)}</div>
         <div class="desk-lanes">${lanesHtml}</div>
         <div class="desk-meta">
-          <div class="desk-num">Drop ${String(i+1).padStart(2,'0')}</div>
+          <!-- A stored num wins. Position is only the fallback, because a number
+               computed from array position renumbers the whole catalog on every
+               insert and nothing ever keeps its identity. The Ink was literally
+               titled 0TP-002 while rendering as Drop 03. -->
+          <div class="desk-num">${it.num ? esc(it.num) : 'Drop ' + String(i+1).padStart(2,'0')}</div>
           <div class="desk-title">${esc(it.title)}</div>
         </div>`;
       if (cThumb) el.querySelector('.desk-thumb').style.backgroundImage = 'url("' + cThumb + '")';

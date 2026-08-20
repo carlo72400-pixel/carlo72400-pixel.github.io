@@ -20,14 +20,15 @@
       "link": "https://instagram.com/virgosgateway"
     },
     {
-      "title": "0TP-002 · The Ink",
+      "title": "The Ink",
       "lanes": [
         "interview",
         "scene"
       ],
       "platform": "SITE",
-      "thumb": "assets/voice-06-painter.jpg",
-      "link": "https://smiley-one98.merlin.site/"
+      "thumb": null,
+      "link": "https://smiley-one98.merlin.site/",
+      "num": "0TP-002"
     },
     {
       "title": "The Mix on St Mary's · live",
