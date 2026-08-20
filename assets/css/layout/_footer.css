@@ -3,7 +3,7 @@ footer{padding:80px 0 60px;position:relative;text-align:center}
 footer h2{margin-bottom:18px}
 .standby{font-family:var(--mono);font-size:11px;letter-spacing:2.5px;color:var(--dim);margin-bottom:14px}
 .standby i{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--mint);box-shadow:0 0 8px var(--mint);margin-right:8px;animation:recblink 2s steps(1) infinite;vertical-align:middle}
-.email{display:inline-block;font-family:var(--disp);font-weight:600;letter-spacing:.3px;font-size:clamp(14px,4.6vw,36px);color:var(--rose-deep);text-decoration:none;border:2px solid var(--rose);border-radius:999px;padding:12px clamp(14px,4vw,34px);max-width:100%;box-sizing:border-box;background:#fff;transition:background .25s,color .25s,transform .1s ease-out}
+.email{display:inline-block;font-family:var(--disp);font-weight:600;letter-spacing:.3px;font-size:clamp(22px,3.6vw,36px);color:var(--rose-deep);text-decoration:none;border:2px solid var(--rose);border-radius:999px;padding:12px 34px;background:#fff;transition:background .25s,color .25s,transform .1s ease-out}
 .email:hover{background:var(--rose);color:#fff}
 .email-wrap{position:relative;display:inline-block}
 .email-stk{position:absolute;image-rendering:pixelated;z-index:3;pointer-events:none}
