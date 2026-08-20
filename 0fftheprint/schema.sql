@@ -90,9 +90,15 @@ language plpgsql
 security definer set search_path = public
 as $$
 begin
-  if not public.is_admin() then
-    new.approved := old.approved;
-    new.is_admin := old.is_admin;
+  -- auth.uid() is NULL in the Supabase SQL editor. If we guarded that path too,
+  -- the very first admin could never be seeded (it bit us once already).
+  if auth.uid() is not null and not public.is_admin() then
+    new.approved   := old.approved;
+    new.is_admin   := old.is_admin;
+    -- card_slug IS the identity key: the timeline resolves name, avatar and seat
+    -- from it. Member-writable meant a member could wear somebody else's face.
+    new.card_slug  := old.card_slug;
+    new.created_at := old.created_at;
   end if;
   return new;
 end;
@@ -110,7 +116,12 @@ create table if not exists public.posts (
   id          bigint generated always as identity primary key,
   author_id   uuid not null references public.profiles(id) on delete cascade,
   text        text not null check (char_length(text) between 1 and 800),
-  image_url   text,
+  -- image_url lands in an <a href> on a page strangers load, and HTML escaping
+  -- does not stop "javascript:". Constrained to our own bucket, nothing else.
+  image_url   text check (
+                image_url is null
+                or image_url like 'https://frqpvcpyglhmerwpvosl.supabase.co/storage/v1/object/public/posts/%'
+              ),
   image_alt   text,
   pinned      boolean not null default false,
   published   boolean not null default true,

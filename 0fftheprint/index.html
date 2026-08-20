@@ -3168,6 +3168,17 @@
   const TOUCH = window.matchMedia('(hover: none)').matches;
 
   const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  // esc() makes text safe INSIDE an attribute, it does NOT make a URL safe.
+  // "javascript:..." survives escaping untouched and stays a live href, so any
+  // URL that came from a member's row gets its scheme checked here first.
+  const safeUrl = u => {
+    const v = String(u ?? '').trim();
+    if (!v) return '';
+    if (/^(https?:)?\/\//i.test(v) || /^\/(?!\/)/.test(v) || /^[\w./-]+$/.test(v)) {
+      return /^\s*(javascript|data|vbscript):/i.test(v) ? '' : v.replace(/["']/g, '');
+    }
+    return '';
+  };
   const md = txt => esc(txt).split(/\n\s*\n/).map(p =>
     '<p>' + p.replace(/\*([^*]+)\*/g, '<em>$1</em>').replace(/\n/g, '<br>') + '</p>'
   ).join('');
@@ -3296,18 +3307,23 @@
         name: p.author_name || p.author || 'THE DESK',
         photo: p.avatar || '', link: '#', handle: p.handle || '', seat: ''
       };
-      const av = who.photo
-        ? `<span class="av" style="background-image:url('${esc(who.photo)}')"></span>`
+      // NOT an inline style attribute: the HTML parser decodes entities before the
+      // CSS parser sees them, so an escaped quote still breaks out of url(). Painted
+      // through the CSSOM below instead, where a bad value is rejected, not executed.
+      const avUrl = safeUrl(who.photo);
+      const av = avUrl
+        ? `<span class="av" data-bg="${esc(avUrl)}"></span>`
         : `<span class="av av-fallback">${esc((who.name || '0')[0])}</span>`;
       const isExt = /^https?:\/\//.test(who.link || '');
       const body = md(p.text || p.body || '');
-      const img = p.image
-        ? `<a class="post-img" href="${esc(p.image)}" target="_blank" rel="noopener">
-             <img src="${esc(p.image)}" alt="${esc(p.image_alt || '')}" loading="lazy" decoding="async"></a>`
+      const imgUrl = safeUrl(p.image);
+      const img = imgUrl
+        ? `<a class="post-img" href="${esc(imgUrl)}" target="_blank" rel="noopener">
+             <img src="${esc(imgUrl)}" alt="${esc(p.image_alt || '')}" loading="lazy" decoding="async"></a>`
         : '';
       const pin = p.pinned ? `<span class="pin">PINNED</span>` : '';
       return `<article class="post-t${p.pinned ? ' pinned' : ''}">
-        <a class="post-av" href="${esc(who.link || '#')}" ${isExt ? 'target="_blank" rel="noopener"' : ''}>${av}</a>
+        <a class="post-av" href="${esc(safeUrl(who.link) || '#')}" ${isExt ? 'target="_blank" rel="noopener"' : ''}>${av}</a>
         <div class="post-main">
           <div class="post-who">
             <b>${esc(who.name)}</b>
@@ -3327,6 +3343,11 @@
         </div>
       </article>`;
     }).join('');
+    // Avatars painted through the CSSOM, never through a style attribute. A malformed
+    // value here is rejected by the CSS parser instead of injecting a second declaration.
+    tMount.querySelectorAll('.av[data-bg]').forEach(el => {
+      el.style.backgroundImage = 'url("' + el.dataset.bg + '")';
+    });
     wireReactions(tMount);
   }
 
