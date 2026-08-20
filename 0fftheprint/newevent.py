@@ -16,11 +16,27 @@ gallery page under events/<slug>/ and adds it to the events index.
 
 Then: git add . && git commit && git push.
 
-WHY IT COMPRESSES SO HARD: GitHub Pages wants the repo under ~1GB. Raw shoot
-folders run 0.5-4GB each. Every image ships as a small grid thumb plus a
-web-size full view, so a 60-photo event costs ~15MB instead of gigabytes.
+WHERE THE MEDIA LIVES (changed 2026-08-20):
+
+Only the small grid THUMBS get committed to the site repo, about 1.4MB an
+event. The full quality frames and the video go up as RELEASE ASSETS on a
+separate repo (0tp-media) and the gallery points at those URLs.
+
+GitHub release assets have no total size limit and no bandwidth limit, and the
+per-file ceiling is 2GiB instead of 100MB. That is what killed the old
+compress-until-it-fits rules: the lightbox went from 1600px to 2560px, video
+went from 720p CRF30 to 1080p CRF20, and the rule that DELETED any clip over
+90MB is gone. Committed cost per event dropped from ~15MB to ~1.6MB.
+
+Verified before building on it: GitHub serves these assets as
+application/octet-stream with content-disposition attachment and nosniff, which
+looks like it should break an <img>. It does not. Cross-origin <img>, <video>
+and <a href> all work, and range requests return 206 so video scrubbing works.
+What does NOT work is fetch(), because there is no CORS header. This gallery
+never fetches media, it puts the URL straight into src/href, which is why this
+is safe here and would not be safe somewhere else.
 """
-import argparse, json, os, re, shutil, subprocess, sys
+import argparse, json, os, re, shutil, subprocess, sys, tempfile
 import numpy as np
 from datetime import datetime
 
@@ -35,9 +51,13 @@ EVENTS = os.path.join(ROOT, "events")
 PHOTO_EXT = {".jpg", ".jpeg", ".png", ".heic", ".HEIC", ".webp"}
 VIDEO_EXT = {".mp4", ".mov", ".m4v", ".MP4", ".MOV"}
 
-THUMB_W, THUMB_Q = 520, 72          # grid tile
-FULL_W,  FULL_Q  = 1600, 82         # lightbox view
-VIDEO_H, VIDEO_CRF = 720, 30        # compressed clip
+MEDIA_REPO = "carlo72400-pixel/0tp-media"   # release assets live here
+REL_BASE   = f"https://github.com/{MEDIA_REPO}/releases/download"
+
+THUMB_W, THUMB_Q = 520, 72          # grid tile, the ONLY thing committed
+LIGHT_W, LIGHT_Q = 2560, 90         # lightbox view, on the release
+NATIVE_Q         = 92               # full native export, on the release
+VIDEO_H, VIDEO_CRF = 1080, 20       # clip, on the release. 4K: set 2160/22.
 
 
 def slugify(s):
@@ -105,13 +125,15 @@ def load_image(path):
     return im.convert("RGB")
 
 
-def build_photos(src, out_dir, limit, mode='best'):
+def build_photos(src, out_dir, stage_dir, tag, limit, mode='best'):
+    """Thumbs -> out_dir (committed). Lightbox + native -> stage_dir (released)."""
     files = sorted(f for f in os.listdir(src)
                    if os.path.splitext(f)[1] in PHOTO_EXT and not f.startswith("."))
     if not files:
         sys.exit(f"no photos found in {src}")
     chosen = pick(files, limit, src, mode)
     os.makedirs(out_dir, exist_ok=True)
+    os.makedirs(stage_dir, exist_ok=True)
     items = []
     for i, fn in enumerate(chosen, 1):
         try:
@@ -120,53 +142,107 @@ def build_photos(src, out_dir, limit, mode='best'):
             print(f"  skip {fn}: {e}")
             continue
         stem = f"{i:03d}"
-        full = im.copy()
-        full.thumbnail((FULL_W, FULL_W), Image.LANCZOS)
-        full.save(os.path.join(out_dir, f"{stem}.jpg"), quality=FULL_Q, optimize=True)
+
+        # lightbox copy, goes on the release
+        light = im.copy()
+        light.thumbnail((LIGHT_W, LIGHT_W), Image.LANCZOS)
+        light.save(os.path.join(stage_dir, f"{stem}.jpg"), quality=LIGHT_Q, optimize=True)
+
+        # the native export, untouched size, also on the release
+        im.save(os.path.join(stage_dir, f"{stem}_full.jpg"), quality=NATIVE_Q, optimize=True)
+
+        # the only thing that gets committed
         th = im.copy()
         th.thumbnail((THUMB_W, THUMB_W), Image.LANCZOS)
         th.save(os.path.join(out_dir, f"{stem}_t.jpg"), quality=THUMB_Q, optimize=True)
-        items.append({"type": "photo", "src": f"media/{stem}.jpg",
+
+        items.append({"type": "photo",
+                      "src":   f"{REL_BASE}/{tag}/{stem}.jpg",
+                      "full":  f"{REL_BASE}/{tag}/{stem}_full.jpg",
                       "thumb": f"media/{stem}_t.jpg",
-                      "w": full.width, "h": full.height})
+                      "w": light.width, "h": light.height})
         print(f"  [{i}/{len(chosen)}] {fn}", end="\r")
     print(f"  {len(items)} photos" + " " * 40)
     return items
 
 
-def build_videos(src, out_dir, limit):
+def build_videos(src, out_dir, stage_dir, tag, limit):
+    """Clip -> stage_dir (released). Poster frame -> out_dir (committed)."""
     if not shutil.which("ffmpeg"):
         print("  ffmpeg not found, skipping videos")
         return []
     files = sorted(f for f in os.listdir(src)
                    if os.path.splitext(f)[1] in VIDEO_EXT and not f.startswith("."))
     chosen = pick(files, limit, mode='even')
+    os.makedirs(stage_dir, exist_ok=True)
     items = []
     for i, fn in enumerate(chosen, 1):
         stem = f"v{i:02d}"
-        outv = os.path.join(out_dir, f"{stem}.mp4")
+        outv = os.path.join(stage_dir, f"{stem}.mp4")
         subprocess.run([
             "ffmpeg", "-y", "-i", os.path.join(src, fn),
             "-vf", f"scale=-2:{VIDEO_H}", "-c:v", "libx264", "-crf", str(VIDEO_CRF),
-            "-preset", "veryfast", "-c:a", "aac", "-b:a", "96k",
+            "-preset", "veryfast", "-c:a", "aac", "-b:a", "160k",
+            # faststart puts the index at the front so it plays before it finishes
+            # downloading. On a release asset that is the difference between
+            # "instant" and "stares at a black box".
             "-movflags", "+faststart", outv,
         ], capture_output=True)
         if not os.path.exists(outv):
             print(f"  video failed: {fn}")
             continue
         size = os.path.getsize(outv)
-        if size > 90 * 1024 * 1024:           # GitHub hard-rejects >100MB
-            print(f"  {fn} still {human(size)} after compression, left out")
+        # No size gate any more. The old one deleted anything over 90MB because
+        # GitHub rejects files over 100MB inside a repo. Release assets take 2GiB,
+        # which is why both shipped events contain zero video.
+        if size > 2 * 1024 * 1024 * 1024:
+            print(f"  {fn} is {human(size)}, over the 2GiB release ceiling, left out")
             os.remove(outv)
             continue
         poster = os.path.join(out_dir, f"{stem}_t.jpg")
         subprocess.run(["ffmpeg", "-y", "-i", outv, "-vf",
                         f"thumbnail,scale={THUMB_W}:-2", "-frames:v", "1", poster],
                        capture_output=True)
-        items.append({"type": "video", "src": f"media/{stem}.mp4",
+        items.append({"type": "video",
+                      "src":   f"{REL_BASE}/{tag}/{stem}.mp4",
                       "thumb": f"media/{stem}_t.jpg"})
         print(f"  [{i}/{len(chosen)}] {fn} -> {human(size)}")
     return items
+
+
+def publish_release(tag, stage_dir, title):
+    """Push everything in stage_dir to a release on the media repo."""
+    if not shutil.which("gh"):
+        sys.exit("needs the GitHub CLI: brew install gh")
+    files = sorted(os.path.join(stage_dir, f) for f in os.listdir(stage_dir)
+                   if not f.startswith("."))
+    if not files:
+        return 0
+    total = sum(os.path.getsize(f) for f in files)
+    print(f"  uploading {len(files)} files ({human(total)}) to {MEDIA_REPO} @ {tag}")
+
+    # Recreate rather than append, so a rebuild never leaves stale frames behind.
+    subprocess.run(["gh", "release", "delete", tag, "--repo", MEDIA_REPO,
+                    "--yes", "--cleanup-tag"], capture_output=True)
+    r = subprocess.run(["gh", "release", "create", tag, "--repo", MEDIA_REPO,
+                        "--title", title, "--notes",
+                        "Full quality assets for this dump. The gallery links here."],
+                       capture_output=True, text=True)
+    if r.returncode != 0:
+        sys.exit(f"  release create failed: {r.stderr.strip()}")
+
+    # Upload in batches. One giant argv both risks the arg limit and gives you
+    # nothing to look at for several minutes.
+    B = 20
+    for i in range(0, len(files), B):
+        batch = files[i:i + B]
+        u = subprocess.run(["gh", "release", "upload", tag, "--repo", MEDIA_REPO,
+                            "--clobber"] + batch, capture_output=True, text=True)
+        if u.returncode != 0:
+            sys.exit(f"  upload failed: {u.stderr.strip()}")
+        print(f"    {min(i + B, len(files))}/{len(files)}", end="\r")
+    print(f"    {len(files)}/{len(files)} uploaded" + " " * 20)
+    return total
 
 
 PAGE = """<!DOCTYPE html>
@@ -224,6 +300,10 @@ color:var(--ink);width:46px;height:46px;border-radius:50%;cursor:pointer;font-si
 .lb-p{left:18px;top:50%;transform:translateY(-50%)}
 .lb-n{right:18px;top:50%;transform:translateY(-50%)}
 .lb-x:hover,.lb-n:hover,.lb-p:hover{border-color:var(--pink-deep);color:var(--pink-glow)}
+.lb-dl{position:fixed;left:18px;bottom:18px;z-index:12;font-family:var(--f-mono,monospace);
+font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#f7b9dd;text-decoration:none;
+border:1px solid rgba(255,121,198,.45);border-radius:999px;padding:8px 14px;background:rgba(10,10,13,.75)}
+.lb-dl:hover{color:#0a0a0d;background:#f7b9dd}
 .lb-count{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);
 font-family:var(--f-mono);font-size:11px;letter-spacing:.2em;color:var(--muted)}
 @media (max-width:640px){.grid{columns:2 150px;column-gap:8px}.tile{margin-bottom:8px}
@@ -247,6 +327,7 @@ font-family:var(--f-mono);font-size:11px;letter-spacing:.2em;color:var(--muted)}
   <button class="lb-n" id="lbn" aria-label="Next">&#8250;</button>
   <div id="lbstage"></div>
   <div class="lb-count" id="lbc"></div>
+  <a class="lb-dl" id="lbdl" href="#" target="_blank" rel="noopener">full res &darr;</a>
 </div>
 <script>
 const MEDIA = __MEDIA__;
@@ -263,6 +344,11 @@ function show(i){
   stage.innerHTML = m.type==='video'
     ? `<video src="${m.src}" controls autoplay playsinline></video>`
     : `<img src="${m.src}" alt="Frame ${cur+1}">`;
+  // The native export sits on the same release. download attr is ignored
+  // cross-origin, but GitHub already sends content-disposition: attachment,
+  // so it saves rather than navigating anyway.
+  const dl=document.getElementById('lbdl');
+  if(m.full){dl.href=m.full;dl.style.display='';}else{dl.style.display='none';}
   count.textContent=`${cur+1} / ${MEDIA.length}`;
   lb.classList.add('open'); document.body.style.overflow='hidden';
 }
@@ -321,6 +407,8 @@ def main():
                     help="best = score and keep the keepers (default); even = sample across the shoot")
     ap.add_argument("--video-limit", type=int, default=6)
     ap.add_argument("--slug", help="override the url slug")
+    ap.add_argument("--no-upload", action="store_true",
+                    help="build everything but skip the release upload (dry run)")
     a = ap.parse_args()
 
     title = a.title or a.venue
@@ -331,16 +419,26 @@ def main():
     out = os.path.join(EVENTS, slug)
     media_dir = os.path.join(out, "media")
     os.makedirs(media_dir, exist_ok=True)
+    # Staging sits OUTSIDE the repo on purpose. Nothing in here is ever committed;
+    # it exists only to be uploaded to the release and then thrown away.
+    stage = os.path.join(tempfile.gettempdir(), f"otp-stage-{slug}")
+    shutil.rmtree(stage, ignore_errors=True)
+    os.makedirs(stage, exist_ok=True)
 
     print(f"\nBuilding {slug}")
-    items = build_photos(a.source, media_dir, a.limit, a.pick)
+    items = build_photos(a.source, media_dir, stage, slug, a.limit, a.pick)
     if a.videos:
-        items += build_videos(a.videos, media_dir, a.video_limit)
+        items += build_videos(a.videos, media_dir, stage, slug, a.video_limit)
 
-    # OG card from the first frame of the night
-    first = os.path.join(media_dir, "001.jpg")
+    # OG card off the first LIGHTBOX frame, which lives in staging now
+    first = os.path.join(stage, "001.jpg")
     if os.path.exists(first):
         make_og(first, os.path.join(out, "preview.jpg"), title, a.venue, datelong)
+
+    # NOTE: the upload happens at the END, after the page and data.json are
+    # written. It used to run here, and when a release failed the whole run died
+    # before writing anything, so an event that had already spent ten minutes
+    # encoding video came out with no video in it.
 
     page = (PAGE.replace("__MEDIA__", json.dumps(items))
                 .replace("__TITLE__", title)
@@ -365,9 +463,21 @@ def main():
 
     size = dir_size(out)
     print(f"\n  {out}")
-    print(f"  {len(items)} items, {human(size)}")
-    if size > 40 * 1024 * 1024:
-        print("  heads up: over 40MB. Lower --limit to keep the repo lean.")
+    print(f"  {len(items)} items, {human(size)} committed (thumbs + page only)")
+    # 40MB used to be the warning line because the full frames lived here. Only
+    # thumbs are committed now, so anything near 10MB means something is wrong.
+    if size > 10 * 1024 * 1024:
+        print("  heads up: over 10MB committed. Full frames should be on the release,")
+        print("  not in the repo. Check that publish_release actually ran.")
+    # Page is on disk and correct at this point, so an upload failure is
+    # recoverable: fix whatever broke and re-upload the same staging folder.
+    if a.no_upload:
+        print(f"\n  --no-upload: {len(os.listdir(stage))} files left in {stage}")
+    else:
+        released = publish_release(slug, stage, f"{title} · {datelong}")
+        print(f"  released {human(released)} to {MEDIA_REPO}")
+        shutil.rmtree(stage, ignore_errors=True)
+
     print(f"\n  live at /0fftheprint/events/{slug}/ once pushed")
     print("  git add -A && git commit -m 'event: " + slug + "' && git push\n")
 
