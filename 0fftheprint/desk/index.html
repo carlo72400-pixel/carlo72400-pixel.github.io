@@ -55,7 +55,7 @@
   const when = iso => { const d = new Date(iso); return isNaN(d) ? '' : d.toLocaleDateString(undefined,{month:'short',day:'numeric'}); };
 
   // Survives a re-render so the undo strip does not vanish under him.
-  let lastBatch = null, lastBatchN = 0, lastBatchWho = '';
+  let lastBatch = null, lastBatchN = 0, lastBatchWho = '', lastRetired = null;
 
   if (!OTP.configured) {
     panel.innerHTML = `<div class="setup"><b>Backend not switched on yet</b>
@@ -182,15 +182,28 @@
       el.style.backgroundImage = 'url("' + el.dataset.bg + '")';
     });
 
+    // render() sits in a finally, not the success path. "Approve + give card" is
+    // two requests: if the approve commits and the card assignment throws
+    // (somebody already holds it), skipping the re-render left the person
+    // approved in the database while the screen still listed them as waiting,
+    // with the pending count unchanged and both buttons live.
     const rerun = fn => async (ev) => {
       const b = ev.currentTarget; b.disabled = true;
-      try { await fn(b); render(); }
-      catch (e) { alert(e.message || 'That did not go through.'); b.disabled = false; }
+      try { await fn(b); }
+      catch (e) { alert(e.message || 'That did not go through.'); }
+      finally { render(); }
     };
 
     $('out').onclick = async () => { await OTP.signOut(); location.href = '../join/'; };
     if ($('undo')) $('undo').onclick = rerun(async () => {
-      await OTP.restoreBatch(lastBatch); lastBatch = null;
+      // Retiring does TWO writes: it revokes the person AND pulls their posts.
+      // Undo used to reverse only the second, so the posts came back "published"
+      // while their author was still unapproved, and the public feed hides an
+      // unapproved author's posts. Nothing actually returned to the site, and the
+      // confirm dialog had promised it would. Re-approve FIRST, then republish.
+      if (lastRetired) await OTP.setApproved(lastRetired, true);
+      await OTP.restoreBatch(lastBatch);
+      lastBatch = null; lastRetired = null;
     });
 
     panel.querySelectorAll('[data-ok]').forEach(b => b.onclick = rerun(b => OTP.setApproved(b.dataset.ok, true)));
@@ -212,6 +225,7 @@
         const batch = await OTP.retireMember(b.dataset.retire);
         const n = (await OTP.allPosts(200)).filter(p => p.pull_batch === batch).length;
         lastBatch = batch; lastBatchN = n; lastBatchWho = name;
+        lastRetired = b.dataset.retire;
         render();
       } catch (e) { alert(e.message); b.disabled = false; }
     });
