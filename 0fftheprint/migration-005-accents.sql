@@ -1,0 +1,79 @@
+-- ============================================================
+-- 0FF THE PRINT — SEAT ACCENTS. Idempotent. Safe to re-run.
+-- Paste into the Supabase SQL Editor, then paste the same blocks
+-- into schema.sql so a fresh project comes up identical.
+-- ============================================================
+
+-- 1. THE KEY.
+--    This column stores a KEY, never a color. The six hexes live in CSS only,
+--    in index.html and assets/css/auth.css. An enum makes a bad value
+--    unrepresentable rather than merely rejected: PostgREST, supabase-js, curl
+--    and psql all fail the cast identically with SQLSTATE 22P02, and the
+--    "admin updates profiles" policy widens WHICH rows an admin may write, not
+--    WHAT values the column accepts. Admins do not bypass this.
+do $$ begin
+  create type public.accent as enum ('acid','gold','ember','pink','violet','ice');
+exception when duplicate_object then null; end $$;
+
+alter table public.profiles
+  add column if not exists accent public.accent;   -- NULL means "never picked"
+
+-- Deliberately NULLABLE with NO DEFAULT. A default of 'pink' would make
+-- "I picked pink" indistinguishable from "I never touched it", which breaks the
+-- per-seat card defaults. NULL is a real third state that falls through to the card.
+
+comment on column public.profiles.accent is
+  'Accent KEY, not a color. Six enum slugs mapped to hardcoded CSS classes in index.html and assets/css/auth.css. Never store a hex here. Never widen this column to text: four separate consumers rely on the enum as their second lock.';
+
+-- Adding a seventh accent later, for the record:
+--   alter type public.accent add value if not exists 'slug';
+-- Must run OUTSIDE a transaction block, and the CSS rule ships in the same commit
+-- or that member renders pink.
+
+
+-- 2. Make the image_url constraint actually exist.
+--    It was added inline inside "create table if not exists public.posts" on
+--    2026-08-20. The table already existed, so the whole CREATE short-circuits
+--    and the constraint was never created on the live table. This is the ALTER
+--    that lands it. Leave the inline copy in schema.sql for fresh projects.
+alter table public.posts drop constraint if exists posts_image_url_ours;
+alter table public.posts add constraint posts_image_url_ours check (
+  image_url is null
+  or image_url like 'https://frqpvcpyglhmerwpvosl.supabase.co/storage/v1/object/public/posts/%'
+) not valid;
+-- NOT VALID first so the ALTER cannot fail on legacy rows, then prove it clean.
+-- If this next line errors, it names the offending row. Fix or null that row, re-run.
+alter table public.posts validate constraint posts_image_url_ours;
+
+
+-- 3. Expose the key to the public feed.
+--    "create or replace view" can only APPEND columns, never reorder or remove,
+--    so accent goes last. This is not optional styling: it is what makes a live
+--    post carry its author's color to a logged-out phone.
+--
+--    !! ANYTHING IN THIS SELECT LIST IS WORLD READABLE. !!
+--    This view runs as its owner and does NOT apply the RLS policies on posts or
+--    profiles. The only gate is the WHERE below. Do not add a column here you
+--    would not print on a poster.
+create or replace view public.feed as
+  select p.id, p.text, p.image_url, p.image_alt, p.pinned, p.created_at,
+         pr.display_name, pr.card_slug, pr.accent
+  from public.posts p
+  join public.profiles pr on pr.id = p.author_id
+  where p.published = true
+  order by p.pinned desc, p.created_at desc;
+
+
+-- 4. NO RLS CHANGE. Verified against the file, not assumed.
+--    "own display name" is a bare row-level policy:
+--        for update using (auth.uid() = id) with check (auth.uid() = id)
+--    RLS is row-level, not column-level, so it already covers accent. The
+--    guard_profile_privileges trigger pins approved, is_admin, card_slug and
+--    created_at back to their old values for non-admins, and does not touch
+--    accent. Result: a member can set their own color and nothing else.
+--    That is exactly right. Nothing to add here.
+--
+--    Sanity check after running, as a logged-in non-admin member:
+--      update profiles set accent='gold' where id = auth.uid();      -- succeeds
+--      update profiles set card_slug='vamppsych' where id = auth.uid(); -- silently pinned back
+--      update profiles set accent='chartreuse' where id = auth.uid();   -- 22P02, rejected
