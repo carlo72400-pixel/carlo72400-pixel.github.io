@@ -37,9 +37,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@900&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&family=Pirata+One&family=Luckiest+Guy&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js" defer></script>
-<script src="supabase-config.js?v=20260820" defer></script>
-<script src="assets/js/desk.js?v=20260820" defer></script>
-<script src="assets/js/door.js?v=20260820" defer></script>
+<script src="supabase-config.js?v=f1348482" defer></script>
+<script src="assets/js/desk.js?v=41c8584c" defer></script>
+<script src="assets/js/door.js?v=cb068ae4" defer></script>
 <style>
   :root{
     --bg:#0a0a0d;
@@ -3245,6 +3245,9 @@
   }
 
   // ============ The Take ============
+  // How many posts the homepage shows, tops. OTP.FEED_CAP when the backend is
+  // loaded, otherwise the same number, so the JSON-only path caps identically.
+  const FEED_CAP = (window.OTP && OTP.FEED_CAP) || 8;
   const tMount = document.getElementById('take-mount');
   if (tMount && take) {
     // Authors resolve out of the roster + curator cards, so a member's avatar
@@ -3281,7 +3284,7 @@
     // If the backend is not configured, this is a no-op and the seeds show alone.
     if (window.OTP && OTP.configured) {
       try {
-        const live = await OTP.feed(60);
+        const live = await OTP.feed(FEED_CAP);
         if (live.length) {
           const seeds = take.filter(p => !p.pinned);
           const pinned = [...live, ...take].filter(p => p.pinned);
@@ -3290,7 +3293,14 @@
       } catch (e) { console.warn('live feed skipped:', e.message); }
     }
 
-    tMount.innerHTML = take.map((p, i) => {
+    // The pin is hoisted to the front BEFORE the slice, so it can never fall off
+    // the bottom of the window no matter how take.json gets reordered.
+    const pinnedPost = take.find(p => p.pinned);
+    const visible = (pinnedPost
+      ? [pinnedPost, ...take.filter(p => p !== pinnedPost)]
+      : take).slice(0, FEED_CAP);
+
+    tMount.innerHTML = visible.map((p, i) => {
       const who = cardPeople[slugify(p.author || '')] || {
         name: p.author_name || p.author || 'THE DESK',
         photo: p.avatar || '', link: '#', handle: p.handle || '', seat: ''
@@ -3322,7 +3332,7 @@
           </div>
           <div class="post-body">${body}</div>
           ${img}
-          <div class="react-bar" data-post="${i}" data-base-likes="${parseInt(p.likes)||0}">
+          <div class="react-bar" data-post="${esc(String(p.id != null ? 'p' + p.id : 's' + i))}" data-base-likes="${parseInt(p.likes)||0}">
             <button class="react-btn" data-emoji="heart" type="button" aria-label="Heart"><span class="em">♥</span><span class="ct">0</span></button>
             <button class="react-btn" data-emoji="fire" type="button" aria-label="Fire"><span class="em">🔥</span><span class="ct">0</span></button>
             <button class="react-btn" data-emoji="skull" type="button" aria-label="Skull"><span class="em">💀</span><span class="ct">0</span></button>

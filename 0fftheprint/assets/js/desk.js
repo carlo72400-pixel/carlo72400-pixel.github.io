@@ -1,9 +1,28 @@
 /* 0FF THE PRINT — shared auth + posting helpers.
    Loaded by /join/, /compose/, /desk/ and the timeline on the homepage.
-   Everything degrades quietly when the backend is not configured yet. */
+   Everything degrades quietly when the backend is not configured yet.
+
+   Every method here is a REQUEST, not a permission. The database decides.
+   If a call comes back with zero rows it means RLS refused, which is the
+   correct answer, and the message says so in plain words. */
 (function (w) {
   const CFG = w.OTP_SUPABASE || {};
   const READY = !!(CFG.url && CFG.anonKey);
+
+  const FEED_CAP = 8;                       // how many posts the homepage shows
+  const NO_DASH = t => String(t == null ? "" : t).replace(/—/g, ",");
+  const EXTS = ["jpg", "png", "webp", "gif", "heic", "heif", "avif"];
+  const MIME = {
+    jpg: "image/jpeg", png: "image/png", webp: "image/webp",
+    gif: "image/gif", heic: "image/heic", heif: "image/heif", avif: "image/avif",
+  };
+  // Pull the storage object key back out of a public URL. uploadImage only ever
+  // returned the URL, so without this nothing could delete the file afterwards
+  // and the bucket filled up with photos belonging to deleted posts.
+  const objectName = url => {
+    const bits = String(url || "").split("/storage/v1/object/public/posts/");
+    return bits.length < 2 ? null : (bits[1].split(/[?#]/)[0] || null);
+  };
 
   let client = null;
   function sb() {
@@ -18,11 +37,22 @@
   const OTP = {
     configured: READY,
     sb,
+    FEED_CAP,
 
     async me() {
       const c = sb(); if (!c) return null;
       const { data: { user } } = await c.auth.getUser();
       if (!user) return null;
+
+      // Preferred path: is_admin stops being a readable column once migration
+      // 002 lands, so it comes back through an RPC that only ever returns the
+      // caller's own row. Nobody gets to enumerate who runs the desk.
+      const rpc = await c.rpc("my_profile");
+      if (!rpc.error && rpc.data && rpc.data[0]) {
+        return { user, profile: rpc.data[0] };
+      }
+      // Fallback for the pre-002 schema, so this file is safe to deploy before
+      // the migration runs. Remove once 002 is live everywhere.
       const { data: profile } = await c
         .from("profiles")
         .select("id, display_name, card_slug, approved, is_admin")
@@ -33,19 +63,17 @@
 
     async signUp(email, password, displayName, cardSlug) {
       const c = sb(); if (!c) throw new Error("Backend not configured yet.");
-      const { data, error } = await c.auth.signUp({
+      const { error } = await c.auth.signUp({
         email, password,
         options: { data: { display_name: displayName, card_slug: cardSlug } },
       });
       if (error) throw error;
-      return data;
     },
 
     async signIn(email, password) {
       const c = sb(); if (!c) throw new Error("Backend not configured yet.");
-      const { data, error } = await c.auth.signInWithPassword({ email, password });
+      const { error } = await c.auth.signInWithPassword({ email, password });
       if (error) throw error;
-      return data;
     },
 
     async signOut() {
@@ -53,38 +81,109 @@
       await c.auth.signOut();
     },
 
-    /* ---- posting ---- */
+    /* ---- images ---- */
     async uploadImage(file) {
       const c = sb(); if (!c) throw new Error("Backend not configured yet.");
-      const ext = (file.name.split(".").pop() || "jpg").toLowerCase();
-      const name = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+      const { data: { user } } = await c.auth.getUser();
+      if (!user) throw new Error("Log in first.");
+      if (!/^image\//.test(file.type || "") && !/\.[a-z0-9]+$/i.test(file.name || "")) {
+        throw new Error("Images only.");
+      }
+      if (file.size > 8 * 1024 * 1024) throw new Error("That photo is over 8MB. Shrink it first.");
+
+      const m = /\.([A-Za-z0-9]+)$/.exec(file.name || "");
+      let ext = (m ? m[1] : "").toLowerCase();
+      if (ext === "jpeg") ext = "jpg";
+      if (EXTS.indexOf(ext) === -1) ext = "jpg";
+
+      // The key MUST start with <uid>/ or the storage policy refuses it. That is
+      // what stops one member from touching another member's photos.
+      const name = `${user.id}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
       const { error } = await c.storage.from("posts").upload(name, file, {
-        cacheControl: "3600", upsert: false,
+        cacheControl: "3600",
+        upsert: false,
+        // Explicit, because phones lie. Some Android pickers report image/jpg,
+        // some report nothing at all, and the bucket allowlist bounces both.
+        contentType: MIME[ext] || "image/jpeg",
       });
       if (error) throw error;
       return c.storage.from("posts").getPublicUrl(name).data.publicUrl;
     },
 
+    async deleteImage(url) {
+      const c = sb(); if (!c) return;
+      const name = objectName(url);
+      if (!name) return;
+      const { error } = await c.storage.from("posts").remove([name]);
+      if (error) throw error;
+    },
+
+    /* ---- posting: your own stuff, no approval needed ---- */
     async post({ text, imageUrl, imageAlt }) {
       const c = sb(); if (!c) throw new Error("Backend not configured yet.");
       const { data: { user } } = await c.auth.getUser();
       if (!user) throw new Error("Log in first.");
-      const { error } = await c.from("posts").insert({
+      const { data, error } = await c.from("posts").insert({
         author_id: user.id,
-        text: text.replace(/—/g, ","),   // em-dash reads as AI in the house voice
+        text: NO_DASH(text),
         image_url: imageUrl || null,
         image_alt: imageAlt || null,
-      });
+      }).select("id, text, image_url, image_alt, published, created_at, edited_at").single();
       if (error) throw error;
+      return data;
     },
 
-    /* ---- the public feed ---- */
-    async feed(limit = 60) {
+    async updatePost(id, { text, imageUrl, imageAlt }) {
+      const c = sb(); if (!c) throw new Error("Backend not configured yet.");
+      const patch = {};
+      if (text !== undefined)     patch.text = NO_DASH(text);
+      if (imageUrl !== undefined) patch.image_url = imageUrl || null;
+      if (imageAlt !== undefined) patch.image_alt = imageAlt || null;
+      const { data, error } = await c.from("posts").update(patch).eq("id", id)
+        .select("id, text, image_url, image_alt, published, created_at, edited_at");
+      if (error) throw error;
+      // Zero rows means RLS refused, not that the post vanished.
+      if (!data || !data.length) {
+        throw new Error("That one is not yours to edit any more. The desk has it.");
+      }
+      return data[0];
+    },
+
+    async deletePost(id) {
+      const c = sb(); if (!c) throw new Error("Backend not configured yet.");
+      const { data, error } = await c.from("posts").delete().eq("id", id).select("id");
+      if (error) throw error;
+      if (!data || !data.length) {
+        throw new Error("That one is not yours to delete any more. The desk has it.");
+      }
+    },
+
+    async myPosts(limit = 30) {
       const c = sb(); if (!c) return [];
-      const { data, error } = await c
-        .from("feed").select("*").limit(limit);
+      const { data: { user } } = await c.auth.getUser();
+      if (!user) return [];
+      const { data, error } = await c.from("posts")
+        .select("id, text, image_url, image_alt, pinned, published, created_at, edited_at")
+        .eq("author_id", user.id)
+        .order("created_at", { ascending: false })
+        .limit(limit);
+      if (error) { console.warn("your posts unavailable:", error.message); return []; }
+      return data || [];
+    },
+
+    /* ---- the public timeline ---- */
+    async feed(limit = FEED_CAP) {
+      const c = sb(); if (!c) return [];
+      // The ORDER BY is restated here on purpose. A view's own ORDER BY is not
+      // guaranteed to survive a LIMIT, and with 8 slots "which 8" has to be
+      // decided rather than hoped for.
+      const { data, error } = await c.from("feed").select("*")
+        .order("pinned", { ascending: false })
+        .order("created_at", { ascending: false })
+        .limit(limit);
       if (error) { console.warn("feed unavailable:", error.message); return []; }
       return (data || []).map(r => ({
+        id: r.id,                       // carried so reactions key on the post, not its slot
         author: r.card_slug || "",
         author_name: r.display_name,
         text: r.text,
@@ -92,28 +191,25 @@
         image_alt: r.image_alt || "",
         pinned: !!r.pinned,
         date: r.created_at,
+        edited: r.edited_at || null,
         live: true,
       }));
     },
 
-    /* ---- admin ---- */
-    async pending() {
+    /* ---- the desk: his side ---- */
+    async deskProfiles() {
       const c = sb(); if (!c) return [];
+      const rpc = await c.rpc("desk_profiles");
+      if (!rpc.error) return rpc.data || [];
+      // pre-002 fallback
       const { data } = await c.from("profiles")
-        .select("id, display_name, card_slug, approved, created_at")
-        .eq("approved", false)
+        .select("id, display_name, card_slug, approved, is_admin, created_at")
         .order("created_at", { ascending: false });
       return data || [];
     },
 
-    async members() {
-      const c = sb(); if (!c) return [];
-      const { data } = await c.from("profiles")
-        .select("id, display_name, card_slug, approved, is_admin, created_at")
-        .eq("approved", true)
-        .order("created_at", { ascending: false });
-      return data || [];
-    },
+    async pending() { return (await OTP.deskProfiles()).filter(p => !p.approved); },
+    async members() { return (await OTP.deskProfiles()).filter(p => p.approved); },
 
     async setApproved(id, approved) {
       const c = sb(); if (!c) throw new Error("Backend not configured yet.");
@@ -121,18 +217,83 @@
       if (error) throw error;
     },
 
-    async pullPost(id) {
+    async setCard(id, slug) {
       const c = sb(); if (!c) throw new Error("Backend not configured yet.");
-      const { error } = await c.from("posts").update({ published: false }).eq("id", id);
+      const { data, error } = await c.rpc("admin_set_card", { p_id: id, p_slug: slug || null });
+      if (error) throw error;
+      return data;
+    },
+
+    async retireMember(id) {
+      const c = sb(); if (!c) throw new Error("Backend not configured yet.");
+      const { data, error } = await c.rpc("admin_retire_member", { p_author: id });
+      if (error) throw error;
+      return data;               // pull_batch uuid, hand it to restoreBatch to undo
+    },
+
+    async restoreBatch(batch) {
+      const c = sb(); if (!c) throw new Error("Backend not configured yet.");
+      const { data, error } = await c.rpc("admin_restore_batch", { p_batch: batch });
+      if (error) throw error;
+      return data;
+    },
+
+    async allPosts(limit = 40) {
+      const c = sb(); if (!c) return [];
+      const dp = await c.from("desk_posts").select("*")
+        .order("created_at", { ascending: false }).limit(limit);
+      if (!dp.error) return dp.data || [];
+      // pre-002 fallback
+      const { data } = await c.from("posts")
+        .select("id, text, image_url, image_alt, pinned, created_at, published, author_id, profiles(display_name)")
+        .order("created_at", { ascending: false }).limit(limit);
+      return data || [];
+    },
+
+    async setPublished(id, published) {
+      const c = sb(); if (!c) throw new Error("Backend not configured yet.");
+      const { error } = await c.from("posts").update({ published }).eq("id", id);
       if (error) throw error;
     },
 
-    async allPosts(limit = 100) {
+    async pullPost(id) { return OTP.setPublished(id, false); },
+
+    async setPinned(id, pinned) {
+      const c = sb(); if (!c) throw new Error("Backend not configured yet.");
+      const { error } = await c.rpc("admin_set_pinned", { p_id: id, p_on: !!pinned });
+      if (error) throw error;
+    },
+
+    /* ---- housekeeping ---- */
+    async orphanImages() {
       const c = sb(); if (!c) return [];
-      const { data } = await c.from("posts")
-        .select("id, text, created_at, published, author_id, profiles(display_name)")
-        .order("created_at", { ascending: false }).limit(limit);
+      const { data, error } = await c.from("orphan_images").select("*")
+        .eq("cleared", false).order("created_at", { ascending: false });
+      if (error) { console.warn("orphan queue unavailable:", error.message); return []; }
       return data || [];
+    },
+
+    // The database queues a photo when its post goes away. The file itself is
+    // removed here, through the Storage API, because deleting the metadata row
+    // in SQL hides the file without ever reclaiming the space.
+    async drainOrphans() {
+      const c = sb(); if (!c) return { cleared: 0, stuck: 0 };
+      const rows = await OTP.orphanImages();
+      let cleared = 0, stuck = 0;
+      for (const r of rows) {
+        try {
+          const { error } = await c.storage.from("posts").remove([r.object_name]);
+          if (error) throw error;
+          await c.from("orphan_images").update({ cleared: true, reason: "removed by the desk" })
+            .eq("object_name", r.object_name);
+          cleared++;
+        } catch (e) {
+          await c.from("orphan_images").update({ reason: e.message || "could not remove" })
+            .eq("object_name", r.object_name);
+          stuck++;
+        }
+      }
+      return { cleared, stuck };
     },
   };
 
