@@ -242,6 +242,12 @@
   }
   nav.site a:hover::after{transform:scaleX(1);}
   nav.site .spacer{flex:1;}
+  /* Two labels, one destination. The long one is the real copy and it shows
+     wherever there is room; the short one takes over on a phone, where the nav
+     is a scroller and every pixel of label pushes a destination off the edge. */
+  nav.site .nav-short{display:none;}
+  /* The scroll end-cap only exists on mobile, where the nav overflows. */
+  nav.site .nav-more{display:none;}
   nav.site .cta{
     color:#0a0a0d;
     background:linear-gradient(180deg,var(--pink),var(--pink-deep));
@@ -1349,7 +1355,7 @@
       background:rgba(13,12,17,.94);
       backdrop-filter:blur(14px);
       -webkit-backdrop-filter:blur(14px);
-      padding:11px 14px;
+      padding:4px 14px;
       gap:8px;
       overflow-x:auto;
       overflow-y:hidden;
@@ -1362,9 +1368,57 @@
       font-size:11px;
       letter-spacing:.18em;
       flex-shrink:0;
-      padding:6px 4px;
+      /* 44px is the tap-target floor. These were 28px tall, which is a miss on
+         a phone. Vertical padding on the BAR came down from 11px to 4px to pay
+         for it, so the sticky header only grows from 50px to 52px. */
+      min-height:44px;
+      display:inline-flex;
+      align-items:center;
+      padding:0 4px;
     }
-    nav.site a::after{bottom:-2px;}
+    nav.site a::after{bottom:8px;}
+
+    /* THE NAV IS A SCROLLER AND NOTHING SAID SO. Measured 8/21: 875px of links
+       in a 375px bar, scrollbar hidden, so SIX destinations (Music through
+       Follow) sat past the right edge with no fade, no chevron, no hint. The
+       last fully visible item was The Work.
+
+       This is a sticky end-cap INSIDE the scroller: `position:sticky; right:0`
+       pins it to the visible right edge while the links scroll under it, and it
+       fades out once you reach the end. pointer-events:none so it can never eat
+       a tap on the link beneath it. */
+    nav.site .nav-more{
+      display:flex;
+      position:sticky;
+      /* -14px, not 0. A sticky offset resolves against the scroll container's
+         PADDING box, and the bar has 14px of horizontal padding, so right:0
+         parked the cap 14px short of the true edge and a sliver of the next
+         label showed past the chevron. */
+      right:-14px;
+      flex:0 0 auto;
+      align-self:stretch;
+      align-items:center;
+      justify-content:flex-end;
+      /* Wide enough that the label underneath is fully faded before the
+         chevron sits on it. At 38px the glyph landed on the S of MUSIC and
+         read as a rendering glitch rather than an affordance. */
+      width:60px;
+      padding-right:7px;
+      pointer-events:none;
+      background:linear-gradient(90deg,rgba(13,12,17,0),rgba(13,12,17,.88) 45%,rgba(13,12,17,.99) 72%);
+      color:var(--pink-glow);
+      font-size:15px;
+      line-height:1;
+      opacity:0;
+      transition:opacity .2s;
+    }
+    /* Both classes are set from JS off real measurements, so a nav that happens
+       to fit (a wide phone, a shorter roster) shows nothing. */
+    nav.site.scrolls .nav-more{opacity:1;}
+    nav.site.scrolls.at-end .nav-more{opacity:0;}
+
+    nav.site .nav-short{display:inline;}
+    nav.site .nav-long{display:none;}
     nav.site .spacer{flex:0 0 6px;}
     nav.site .cta{
       padding:8px 14px;
@@ -3004,11 +3058,12 @@
   <a href="#work">The Work</a>
   <a href="#music">Music</a>
   <a href="#desk">Catalog</a>
-  <a href="events/">Event Photos</a>
+  <a href="events/"><span class="nav-short">Events</span><span class="nav-long">Event Photos</span></a>
   <a href="#roster">Roster</a>
   <a href="#pitch">DM</a>
   <span class="spacer"></span>
   <a href="#" target="_blank" rel="noopener" class="cta" id="nav-follow">Follow</a>
+  <span class="nav-more" aria-hidden="true">&rsaquo;</span>
 </nav>
 
 <!-- ========== PULSE BANNER ========== -->
@@ -3377,10 +3432,32 @@
   const ticker = document.getElementById('ticker');
   if (ticker) ticker.innerHTML = (site.ticker_headlines || []).map(h => '⚡ ' + esc(h)).join(' &nbsp;·&nbsp; ');
 
+  // Nav overflow state. Measured, never assumed: `scrolls` says there is more
+  // than one screen of links, `at-end` says you have reached the right edge.
+  // The end-cap in CSS keys off both, so a nav that happens to fit shows
+  // nothing at all. Runs again after the Follow label lands, because that label
+  // changes width and is what pushed the bar to 875px in the first place.
+  const navEl = document.querySelector('nav.site');
+  const syncNav = () => {
+    if (!navEl) return;
+    const slack = navEl.scrollWidth - navEl.clientWidth;
+    navEl.classList.toggle('scrolls', slack > 8);
+    navEl.classList.toggle('at-end', slack - navEl.scrollLeft < 8);
+  };
+  if (navEl) {
+    navEl.addEventListener('scroll', syncNav, { passive: true });
+    window.addEventListener('resize', syncNav);
+    syncNav();
+  }
+
   const navFollow = document.getElementById('nav-follow');
   if (navFollow && site.social) {
     navFollow.href = site.social.instagram;
-    navFollow.textContent = 'Follow ' + site.handle;
+    // innerHTML, not textContent, so the handle can be hidden on a phone where
+    // "Follow @vamppsych" is 172px of a 375px bar. esc() because site.handle is
+    // content, and the .nav-long span is what the mobile rule hides.
+    navFollow.innerHTML = 'Follow<span class="nav-long"> ' + esc(site.handle) + '</span>';
+    syncNav();
   }
 
   const mc = document.getElementById('mic-check-mount');
