@@ -1653,7 +1653,10 @@
   }
   .booster-inner{
     position:relative;z-index:2;width:100%;height:100%;border-radius:10px;overflow:hidden;
-    background:#1a0a18 url('assets/booster-pack.jpg') center/cover no-repeat;
+    /* 760px derivative, not the 955px original. This tile is always in the DOM,
+       so its background loads on every page view whether anyone opens a pack or
+       not, and it renders 339 CSS px wide at most. */
+    background:#1a0a18 url('assets/card/booster-pack.jpg') center/cover no-repeat;
     box-shadow:inset 0 0 0 1px rgba(255,255,255,.08), inset 0 0 30px rgba(0,0,0,.55);
     display:flex;flex-direction:column;justify-content:flex-end;
   }
@@ -3022,7 +3025,12 @@
   <aside class="sidebar">
 
     <section class="card brand-card">
-      <img src="assets/logo-xerox-white.png" alt="0FF THE PRINT — xerox print-stamp wordmark, white toner ink" width="280" height="280" decoding="async" style="display:block;width:100%;height:auto;margin:-6px -4px 8px;border-radius:8px;">
+      <!-- 720px lossless WebP, not the 1120px PNG. It renders at 242 CSS px, so 720
+           still covers a DPR 3 phone, and the xerox grain is high-frequency noise
+           that PNG cannot pack: 318 KB -> 96 KB for a pixel-identical wordmark.
+           Lossless beats lossy WebP here because lossy spends its bits smoothing
+           exactly the toner speckle that is the whole point of the mark. -->
+      <img src="assets/logo-xerox-white.webp" alt="0FF THE PRINT — xerox print-stamp wordmark, white toner ink" width="280" height="280" decoding="async" style="display:block;width:100%;height:auto;margin:-6px -4px 8px;border-radius:8px;">
       <div class="handle" style="text-align:center;">SAN ANTONIO · TX</div>
       <div class="strip"></div>
     </section>
@@ -3279,6 +3287,45 @@
     return '';
   };
 
+  // Pick the derivative that matches the box the image is actually painted into.
+  // A CSS background has no srcset and the browser will not defer an offscreen
+  // one, so without this the page ships a 1125x1500 card JPEG to fill a 42px
+  // avatar circle. Measured before this existed: 4.4 MB a load, 98% images.
+  //
+  // 'av' is 96px (42 CSS px at DPR 2 is 84), 'thumb' is 440px (169 CSS px is 338).
+  // Both are built by derive.py, which mirrors EVERY assets/ image the page or
+  // its JSON names, so the rewrite below is total for local art and a missing
+  // file is a build error rather than a blank card on someone's phone.
+  //
+  // Remote art is left alone except Spotify, whose cover id encodes the size:
+  // ab67616d0000b273 is 640px and ab67616d00001e02 is 300px, same image.
+  // Anything else remote, and anything not under assets/, passes through
+  // untouched. Runs AFTER safeUrl, never instead of it.
+  const SPOTIFY_640 = 'ab67616d0000b273';
+  const SPOTIFY_300 = 'ab67616d00001e02';
+  const DERIVED = /(^|\/)assets\/(av|thumb|card)\//i;
+  const sized = (u, kind) => {
+    const v = String(u ?? '');
+    if (!v) return v;
+    if (/^(https?:)?\/\//i.test(v)) {
+      return v.indexOf(SPOTIFY_640) !== -1 && kind !== 'full'
+        ? v.replace(SPOTIFY_640, SPOTIFY_300)
+        : v;
+    }
+    if (kind === 'full') return v;
+    // Already a derivative. Without this guard a second pass nests the folder,
+    // e.g. assets/card/card/x.jpg. Keep DERIVED in step with SIZES in derive.py;
+    // listing them in one place is what stops a new size missing the guard.
+    if (DERIVED.test(v)) return v;
+    // Mirror the whole subpath, so assets/work/w2-mix-010.jpg becomes
+    // assets/thumb/work/w2-mix-010.jpg. The catalog points at assets/work/,
+    // and matching only flat filenames quietly left those on the full frames.
+    return v.replace(
+      /^(.*?)assets\/([A-Za-z0-9._\/-]+)\.(jpe?g|png)$/i,
+      (m, pre, path) => pre + 'assets/' + kind + '/' + path + '.jpg'
+    );
+  };
+
   // Paint every background-image through the CSSOM. Never build one in an
   // inline style attribute: the HTML parser decodes entities BEFORE the CSS
   // parser reads them, so an escaped quote still breaks out of url(). A bad
@@ -3446,7 +3493,7 @@
       // NOT an inline style attribute: the HTML parser decodes entities before the
       // CSS parser sees them, so an escaped quote still breaks out of url(). Painted
       // through the CSSOM below instead, where a bad value is rejected, not executed.
-      const avUrl = safeUrl(who.photo);
+      const avUrl = sized(safeUrl(who.photo), 'av');
       const av = avUrl
         ? `<span class="av" data-bg="${esc(avUrl)}"></span>`
         : `<span class="av av-fallback">${esc((who.name || '0')[0])}</span>`;
@@ -3513,7 +3560,7 @@
       // Art through the CSSOM, never an inline style attribute. Same reason as the
       // timeline avatars: entities decode before CSS parses, so an escaped quote
       // still breaks out of url().
-      if (tArt) tile.querySelector('.track-art').style.backgroundImage = 'url("' + tArt + '")';
+      if (tArt) tile.querySelector('.track-art').style.backgroundImage = 'url("' + sized(tArt, 'thumb') + '")';
       rMount.appendChild(tile);
 
       // TOUCH devices never fire the hover that plays this, so building the Audio
@@ -3592,7 +3639,7 @@
           <div class="desk-num">${it.num ? esc(it.num) : 'Drop ' + String(i+1).padStart(2,'0')}</div>
           <div class="desk-title">${esc(it.title)}</div>
         </div>`;
-      if (cThumb) el.querySelector('.desk-thumb').style.backgroundImage = 'url("' + cThumb + '")';
+      if (cThumb) el.querySelector('.desk-thumb').style.backgroundImage = 'url("' + sized(cThumb, 'thumb') + '")';
       dMount.appendChild(el);
     });
   }
@@ -3649,7 +3696,12 @@
     }
     return v.rarity || 'common';
   }
-  function renderPokeCard(v, source, i){
+  // artSize is the 4th arg on purpose: every grid caller omits it and gets the
+  // 760px derivative, and only openCardDetail asks for 'full'. Keying this off
+  // `source` did not work, because openCardDetail forwards the ORIGINAL source
+  // ('roster', 'curator') and only falls back to 'modal' when it is missing, so
+  // a tapped roster card was silently served the small file.
+  function renderPokeCard(v, source, i, artSize){
     const rarity = pickRarity(v);
     const type = v.type || 'take';
     const hp = v.hp || 0;
@@ -3689,7 +3741,7 @@
           ${hpHtml}
         </div>
         <div class="poke-type">${esc(v.type_label || type.toUpperCase())}</div>
-        ${safeUrl(v.photo) ? `<div class="poke-art" data-bg="${esc(safeUrl(v.photo))}"></div>` : `<div class="poke-art poke-art-pending"><span class="pend-seat">${esc(v.pending_glyph || '0FF')}</span><span class="pend-stamp">${esc(v.pending_stamp || 'FOOTAGE PENDING')}</span></div>`}
+        ${safeUrl(v.photo) ? `<div class="poke-art" data-bg="${esc(sized(safeUrl(v.photo), artSize || 'card'))}"></div>` : `<div class="poke-art poke-art-pending"><span class="pend-seat">${esc(v.pending_glyph || '0FF')}</span><span class="pend-stamp">${esc(v.pending_stamp || 'FOOTAGE PENDING')}</span></div>`}
         <div class="poke-moves">${movesHtml}</div>
         <div class="poke-foot">
           <span class="poke-flavor">${esc(v.flavor||'')}</span>
@@ -3938,7 +3990,9 @@
     if (!modal) return;
     const fixedRarity = data.rarity;
     const dataFixed = Object.assign({}, data, { rarities: null, rarity: fixedRarity });
-    const frontHtml = renderPokeCard(dataFixed, source || 'modal', 0);
+    // 'full' here: the modal is the one place a card is looked at closely
+    // (408 CSS px wide, so 816 at DPR 2), and it only loads on a real tap.
+    const frontHtml = renderPokeCard(dataFixed, source || 'modal', 0, 'full');
     const backHtml = renderCardBack(data);
     modalCardMount.innerHTML = `
       <div class="modal-flip">
