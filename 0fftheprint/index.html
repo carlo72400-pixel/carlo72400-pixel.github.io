@@ -3303,7 +3303,7 @@
   // untouched. Runs AFTER safeUrl, never instead of it.
   const SPOTIFY_640 = 'ab67616d0000b273';
   const SPOTIFY_300 = 'ab67616d00001e02';
-  const DERIVED = /(^|\/)assets\/(av|thumb|card)\//i;
+  const DERIVED = /(^|\/)assets\/(av|thumb|card|grid)\//i;
   const sized = (u, kind) => {
     const v = String(u ?? '');
     if (!v) return v;
@@ -3664,13 +3664,18 @@
     // height attributes, which is what stops the lazy-image deadlock in a
     // columns layout. Coerced to Number so a stray string cannot land inside a
     // style attribute. src goes through the same allowlist as every other URL.
+    //
+    // They keep describing the ORIGINAL frame even though the src is now the
+    // 1000px derivative, and that is correct: only the RATIO is load-bearing
+    // here, and a proportional resize preserves it. There is no lightbox on
+    // this grid, so nothing ever needs the full file.
     wMount.innerHTML = work.map(it => {
       const w = Number(it.w) || 0, h = Number(it.h) || 0;
       const u = safeUrl(it.src);
       if (!u) return '';
       return `
       <figure class="work-item"${w && h ? ` style="aspect-ratio:${w}/${h}"` : ''}>
-        <img src="${esc(u)}" alt="${esc(it.alt || it.label || '')}"${w && h ? ` width="${w}" height="${h}"` : ''} loading="lazy" decoding="async">
+        <img src="${esc(sized(u, 'grid'))}" alt="${esc(it.alt || it.label || '')}"${w && h ? ` width="${w}" height="${h}"` : ''} loading="lazy" decoding="async">
         <figcaption>${esc(it.label || '')}</figcaption>
       </figure>`;
     }).join('');

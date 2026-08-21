@@ -18,6 +18,14 @@ original is touched.
     assets/av/<path>.jpg      96px   timeline avatars (42 CSS px at DPR 2 = 84)
     assets/thumb/<path>.jpg  440px   catalog desk thumbs (169 CSS px = 338)
     assets/card/<path>.jpg   760px   roster + curator cards in the GRID
+    assets/grid/<path>.jpg  1000px   THE WORK grid (named grid, not work: the
+                                     source frames already live in assets/work/)
+
+THE WORK frames ship at 1400px to fill a 349 CSS px column, and there is no
+lightbox, so the extra pixels are never looked at by anybody. 1000px still
+covers DPR 2 with room and lands within 5% of DPR 3. Kept deliberately larger
+and at higher quality than the card derivative because these are the actual
+photographs.
 
 The grid card art is the one that costs real money: four full-art JPEGs at
 1125x1500 were loading on every page view to fill boxes 227 CSS px wide.
@@ -56,6 +64,7 @@ SIZES = [
     (96, "av", 82, None),
     (440, "thumb", 84, None),
     (760, "card", 86, ("roster.json", "creators.json")),
+    (1000, "grid", 85, ("work.json",)),
 ]
 
 # The booster tile is a static CSS background, so no JSON names it.
