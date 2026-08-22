@@ -66,6 +66,8 @@
     display:flex;gap:12px;align-items:center;background:linear-gradient(transparent,rgba(6,11,9,.9));
     font-size:.86rem;color:#c3d1ca}
   .lbbar .grow{flex:1}
+  .hint{color:var(--dim);font-size:.78rem}
+  @media (hover:hover){ .hint{display:none} }
   .btn{display:inline-block;background:var(--green);color:#06100c;text-decoration:none;
     padding:9px 16px;border-radius:999px;font-weight:700;font-size:.86rem;border:0;cursor:pointer;font-family:inherit}
   .btn.ghost{background:transparent;color:#c3d1ca;border:1px solid var(--line)}
@@ -84,8 +86,8 @@
     <p class="kick">Zen Haus &middot; 119 Heiman St</p>
     <h1>Third Friday.<br><em>Find yourself.</em></h1>
     <p class="lede">Every photo from the night, August 21. Tap one to open it, then save it.
-      They are yours, no charge and no credit needed. Save gives you the full size file,
-      the same one the venue got.</p>
+      They are yours, no charge and no credit needed. Full size either way, press save or just
+      hold the photo down.</p>
   </header>
 </div>
 
@@ -103,6 +105,7 @@
   <button class="nav n" id="next" aria-label="next">&#8250;</button>
   <div class="lbbar">
     <span id="lbmeta"></span><span class="grow"></span>
+    <span class="hint">hold the photo to save it</span>
     <a class="btn" id="dl" download>save full size</a>
     <button class="btn ghost" id="close">close</button>
   </div>
@@ -135,10 +138,21 @@ function render(){
   grid.appendChild(f);
   countEl.textContent=view.length+' photos';
 }
+let swap=null;
 function open(i){
   cur=(i+view.length)%view.length;
   const m=view[cur];
+  // Show the light 1600px file immediately so the photo appears at once, then quietly swap in
+  // the full size once it has loaded. On a phone the instinctive way to keep a photo is
+  // long-press then Add to Photos, which saves whatever is DISPLAYED -- so if the displayed
+  // file stayed at 1600px, the instinctive path would hand people the small one while the
+  // button handed over the real one. Instagram's in-app browser also ignores download links,
+  // which makes long-press the likely path, not the fallback.
   lbimg.src='v/'+pad(m.i)+'.jpg';
+  if(swap){swap.onload=null;swap=null}
+  swap=new Image();
+  swap.onload=()=>{ if(view[cur]&&view[cur].i===m.i) lbimg.src=swap.src; };
+  swap.src='../zenhaus-full/'+pad(m.i)+'.jpg';
   lbimg.alt='Third Friday photo '+m.i;
   dl.href='../zenhaus-full/'+pad(m.i)+'.jpg';
   dl.setAttribute('download','ZenHaus-ThirdFriday-'+pad(m.i)+'.jpg');
