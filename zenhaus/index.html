@@ -84,8 +84,8 @@
     <p class="kick">Zen Haus &middot; 119 Heiman St</p>
     <h1>Third Friday.<br><em>Find yourself.</em></h1>
     <p class="lede">Every photo from the night, August 21. Tap one to open it, then save it.
-      They are yours, no charge and no credit needed. If you want a full size copy of any of
-      them, message me and say the number.</p>
+      They are yours, no charge and no credit needed. Save gives you the full size file,
+      the same one the venue got.</p>
   </header>
 </div>
 
@@ -103,14 +103,14 @@
   <button class="nav n" id="next" aria-label="next">&#8250;</button>
   <div class="lbbar">
     <span id="lbmeta"></span><span class="grow"></span>
-    <a class="btn" id="dl" download>save</a>
+    <a class="btn" id="dl" download>save full size</a>
     <button class="btn ghost" id="close">close</button>
   </div>
 </div>
 
 <div class="wrap"><footer>
   Shot and coloured by <a href="https://www.instagram.com/vamppsych/">@vamppsych</a>.
-  301 photos. Nothing here is watermarked.
+  301 photos. Nothing is watermarked and nothing is downsized.
 </footer></div>
 
 <script>
@@ -140,7 +140,7 @@ function open(i){
   const m=view[cur];
   lbimg.src='v/'+pad(m.i)+'.jpg';
   lbimg.alt='Third Friday photo '+m.i;
-  dl.href='v/'+pad(m.i)+'.jpg';
+  dl.href='../zenhaus-full/'+pad(m.i)+'.jpg';
   dl.setAttribute('download','ZenHaus-ThirdFriday-'+pad(m.i)+'.jpg');
   lbmeta.textContent=String(m.i).padStart(3,'0')+' \u00b7 '+m.t+' \u00b7 '+m.s;
   lb.classList.add('on'); document.body.style.overflow='hidden';
