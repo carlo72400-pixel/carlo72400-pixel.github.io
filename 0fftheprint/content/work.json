@@ -1,6 +1,13 @@
 {
   "items": [
     {
+      "src": "assets/work/w3-zen-025.jpg",
+      "label": "ZEN HAUS · night market · 08.21",
+      "alt": "Night market courtyard from above, string lights over the vendor tables",
+      "w": 1400,
+      "h": 788
+    },
+    {
       "src": "assets/work/w2-mix-010.jpg",
       "label": "THE MIX · st mary's · 08.16",
       "alt": "Window light across a worn couch inside The Mix",
@@ -20,6 +27,13 @@
       "alt": "Performer on the mic in green stage wash",
       "w": 1400,
       "h": 787
+    },
+    {
+      "src": "assets/work/w3-zen-033.jpg",
+      "label": "ZEN HAUS · night market · 08.21",
+      "alt": "Flash portrait of two guests throwing peace signs at the night market",
+      "w": 787,
+      "h": 1400
     },
     {
       "src": "assets/work/w2-blade-037.jpg",
@@ -48,6 +62,13 @@
       "alt": "Wide of the patio floor under string lights",
       "w": 1400,
       "h": 787
+    },
+    {
+      "src": "assets/work/w3-zen-019.jpg",
+      "label": "ZEN HAUS · night market · 08.21",
+      "alt": "Two shoppers holding up plush toys in a magenta-lit room",
+      "w": 1400,
+      "h": 788
     },
     {
       "src": "assets/work/w06-arcade-godzilla.jpg",
@@ -83,6 +104,13 @@
       "alt": "Bar portrait in neon",
       "w": 1400,
       "h": 787
+    },
+    {
+      "src": "assets/work/w3-zen-016.jpg",
+      "label": "ZEN HAUS · night market · 08.21",
+      "alt": "Vendor in a painted mask with both hands up behind his table",
+      "w": 1400,
+      "h": 788
     },
     {
       "src": "assets/work/w2-blade-181.jpg",
@@ -125,6 +153,13 @@
       "alt": "Claw machine aisle in pink and blue neon",
       "w": 1400,
       "h": 787
+    },
+    {
+      "src": "assets/work/w3-zen-030.jpg",
+      "label": "ZEN HAUS · night market · 08.21",
+      "alt": "Ceramics table under string lights, the makers working behind it",
+      "w": 1400,
+      "h": 788
     },
     {
       "src": "assets/work/w2-night-121.jpg",
