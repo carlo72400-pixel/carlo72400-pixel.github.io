@@ -2664,6 +2664,71 @@
      WARLORD — Dragon Ball Heroes register: ornate gold scrollwork,
      explosive aura, prismatic holo. Full-art.
      ========================================================== */
+  /* ---- FULL ART: the art bleeds the whole card, the text floats on scrims ---- */
+  .poke.full-art{--foil-1:#ff79c6;--foil-2:#e9e4ef;--foil-3:#9d4edd;--foil-4:#6b6675;}
+  .poke.full-art .poke-inner{
+    background:#08070a;
+    border-radius:9px;
+    box-shadow:
+      inset 0 0 0 3px #14121a,
+      inset 0 0 0 5px rgba(255,121,198,.55),
+      inset 0 0 0 6px #14121a,
+      inset 0 0 0 7px rgba(233,228,239,.30),
+      inset 0 0 80px rgba(0,0,0,.55);
+    padding:13px 13px 12px;
+  }
+  .poke.full-art .poke-art{
+    position:absolute;inset:0;z-index:0;border-radius:9px;
+    filter:contrast(1.05) brightness(1.02);
+  }
+  /* top and bottom scrims carry the type, plus a soft pink bloom off the hit */
+  .poke.full-art .poke-art::before{
+    content:'';position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:
+      linear-gradient(180deg,
+        rgba(8,7,10,.88) 0%, rgba(8,7,10,.40) 16%, transparent 30%,
+        transparent 42%, rgba(8,7,10,.70) 64%, rgba(8,7,10,.94) 100%),
+      radial-gradient(ellipse 60% 36% at 76% 58%, rgba(255,121,198,.18), transparent 70%);
+  }
+  .poke.full-art .poke-head, .poke.full-art .poke-type,
+  .poke.full-art .poke-moves, .poke.full-art .poke-foot{position:relative;z-index:2;}
+  .poke.full-art .poke-head{grid-row:1;}
+  .poke.full-art .poke-type{grid-row:2;align-self:start;}
+  .poke.full-art .poke-moves{grid-row:4;align-self:end;}
+  .poke.full-art .poke-foot{grid-row:5;}
+  .poke.full-art .poke-name{
+    color:#fff;
+    text-shadow:0 2px 10px rgba(0,0,0,.95), 0 0 22px rgba(255,121,198,.55);
+  }
+  .poke.full-art .poke-hp{color:#e9e4ef;text-shadow:0 2px 8px rgba(0,0,0,.9);}
+  .poke.full-art .poke-hp b{color:#ff79c6;text-shadow:0 2px 8px rgba(0,0,0,.9);}
+  .poke.full-art .poke-type{
+    background:rgba(8,7,10,.60);
+    border-color:rgba(255,121,198,.55);
+    color:#ffd7ee;
+    backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);
+  }
+  /* the text group is deliberately tight: on a full art the picture is the point,
+     so the attacks take the bottom third and leave the face clear above them. */
+  .poke.full-art .poke-moves{
+    background:rgba(8,7,10,.52);
+    border:1px solid rgba(255,121,198,.26);
+    border-radius:5px;padding:5px 8px;gap:3px;
+    backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);
+  }
+  .poke.full-art .poke-move{border-top-color:rgba(255,255,255,.10);padding-top:4px;}
+  .poke.full-art .poke-move-name{font-size:10.5px;}
+  .poke.full-art .poke-move-desc{color:#c8c2d2;font-size:8.5px;line-height:1.28;margin-top:0;}
+  .poke.full-art .poke-dmg{font-size:13px;}
+  .poke.full-art .poke-foot{
+    background:rgba(8,7,10,.52);
+    border:1px solid rgba(255,121,198,.20);
+    border-radius:5px;padding:4px 8px;margin-top:5px;
+    backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);
+    border-top-style:solid;min-height:0;
+  }
+  .poke.full-art .poke-flavor{color:#c8c2d2;max-width:58%;font-size:8.5px;line-height:1.25;}
+  .poke.full-art .poke-rare{color:#ff79c6;}
   .poke.warlord{--foil-1:#ffd479;--foil-2:#fff6d8;--foil-3:#6ee77f;--foil-4:#c9982b;}
   .poke.warlord::before{animation-duration:3.6s;}
   .poke.warlord .poke-inner{
@@ -3959,6 +4024,7 @@
     'gold-rare':    [{f:131, d:220, t:'sine',     v:.18},          {f:659, d:340, t:'sine',     v:.14, delay:60},    {f:1319,d:450, t:'sine', v:.13, delay:200}],
     'tag-team':     [{f:262, d:140, t:'sine',     v:.16},          {f:392, d:140, t:'sine',     v:.16, delay:140},   {f:523, d:140, t:'sine', v:.16, delay:280}, {f:784, d:480, t:'sine', v:.18, delay:420}],
     'warlord':      [{f:147, d:120, t:'sawtooth', v:.10},          {f:294, d:120, t:'square',   v:.10, delay:110},   {f:440, d:150, t:'triangle', v:.13, delay:220}, {f:659, d:520, t:'sine', v:.16, delay:340}],
+    'full-art':     [{f:659, d:100, t:'sine',     v:.12},          {f:988, d:120, t:'triangle', v:.12, delay:95},    {f:1319,d:160, t:'sine', v:.13, delay:200}, {f:1976,d:420, t:'sine', v:.15, delay:330}],
     'amazing':      [{f:523, d:110, t:'sine',     v:.12},          {f:784, d:110, t:'sine',     v:.12, delay:100},   {f:1047,d:130, t:'sine', v:.13, delay:200}, {f:1319,d:380, t:'triangle', v:.14, delay:310}],
     'darklord':     [{f:110, d:340, t:'sine',     v:.17},          {f:165, d:280, t:'triangle', v:.13, delay:180},   {f:220, d:600, t:'sine', v:.15, delay:380}],
     'vampy':        [{f:196, d:260, t:'sine',     v:.16},          {f:294, d:220, t:'sine',     v:.13, delay:150},   {f:392, d:520, t:'sine', v:.14, delay:320}],
