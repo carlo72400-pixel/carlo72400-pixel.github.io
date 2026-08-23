@@ -2664,31 +2664,33 @@
      WARLORD — Dragon Ball Heroes register: ornate gold scrollwork,
      explosive aura, prismatic holo. Full-art.
      ========================================================== */
-  /* ---- FULL ART: the art bleeds the whole card, the text floats on scrims ---- */
+  /* ---- FULL ART ----------------------------------------------------------
+     Modelled on a Pokemon special illustration rare: the art is the card, the
+     text is PRINTED ON IT. No panels, no glass, no boxes. Legibility comes from
+     scrims baked into the art layer plus hard text shadows, which is how the
+     real ones do it. ---------------------------------------------------- */
   .poke.full-art{--foil-1:#ff79c6;--foil-2:#e9e4ef;--foil-3:#9d4edd;--foil-4:#6b6675;}
   .poke.full-art .poke-inner{
     background:#08070a;
     border-radius:9px;
     box-shadow:
-      inset 0 0 0 3px #14121a,
-      inset 0 0 0 5px rgba(255,121,198,.55),
-      inset 0 0 0 6px #14121a,
-      inset 0 0 0 7px rgba(233,228,239,.30),
-      inset 0 0 80px rgba(0,0,0,.55);
-    padding:13px 13px 12px;
+      inset 0 0 0 2px rgba(233,228,239,.30),
+      inset 0 0 0 3px rgba(8,7,10,.9);
+    padding:12px 13px 10px;
   }
   .poke.full-art .poke-art{
     position:absolute;inset:0;z-index:0;border-radius:9px;
-    filter:contrast(1.05) brightness(1.02);
+    filter:contrast(1.06) brightness(1.03);
   }
-  /* top and bottom scrims carry the type, plus a soft pink bloom off the hit */
+  /* the only thing holding the type up is this gradient. top scrim for the
+     name, a long bottom scrim for the attacks, one pink bloom off the hit. */
   .poke.full-art .poke-art::before{
     content:'';position:absolute;inset:0;z-index:1;pointer-events:none;
     background:
       linear-gradient(180deg,
-        rgba(8,7,10,.88) 0%, rgba(8,7,10,.40) 16%, transparent 30%,
-        transparent 42%, rgba(8,7,10,.70) 64%, rgba(8,7,10,.94) 100%),
-      radial-gradient(ellipse 60% 36% at 76% 58%, rgba(255,121,198,.18), transparent 70%);
+        rgba(6,5,8,.92) 0%, rgba(6,5,8,.55) 11%, rgba(6,5,8,.10) 22%,
+        transparent 34%, rgba(6,5,8,.42) 52%, rgba(6,5,8,.82) 72%, rgba(6,5,8,.96) 100%),
+      radial-gradient(ellipse 58% 30% at 30% 84%, rgba(255,121,198,.20), transparent 72%);
   }
   .poke.full-art .poke-head, .poke.full-art .poke-type,
   .poke.full-art .poke-moves, .poke.full-art .poke-foot{position:relative;z-index:2;}
@@ -2697,38 +2699,51 @@
   .poke.full-art .poke-moves{grid-row:4;align-self:end;}
   .poke.full-art .poke-foot{grid-row:5;}
   .poke.full-art .poke-name{
-    color:#fff;
-    text-shadow:0 2px 10px rgba(0,0,0,.95), 0 0 22px rgba(255,121,198,.55);
+    font-size:19px;letter-spacing:.01em;color:#fff;
+    text-shadow:0 1px 2px rgba(0,0,0,.98), 0 0 7px rgba(0,0,0,.9), 0 3px 16px rgba(0,0,0,.8);
   }
-  .poke.full-art .poke-hp{color:#e9e4ef;text-shadow:0 2px 8px rgba(0,0,0,.9);}
-  .poke.full-art .poke-hp b{color:#ff79c6;text-shadow:0 2px 8px rgba(0,0,0,.9);}
+  .poke.full-art .poke-hp{color:#f2eef6;text-shadow:0 1px 2px rgba(0,0,0,.98), 0 0 7px rgba(0,0,0,.9);}
+  .poke.full-art .poke-hp b{color:#ff79c6;text-shadow:0 1px 2px rgba(0,0,0,.98), 0 0 10px rgba(255,121,198,.5);}
+  /* slim ribbon, like the mega-evolved banner on the reference */
   .poke.full-art .poke-type{
-    background:rgba(8,7,10,.60);
-    border-color:rgba(255,121,198,.55);
-    color:#ffd7ee;
-    backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);
+    background:linear-gradient(90deg, rgba(255,121,198,.30), rgba(157,78,221,.22) 60%, transparent);
+    border:0;border-left:2px solid #ff79c6;border-radius:0 8px 8px 0;
+    color:#ffe6f5;padding:2px 10px;font-size:9px;
+    text-shadow:0 1px 2px rgba(0,0,0,.95);
   }
-  /* the text group is deliberately tight: on a full art the picture is the point,
-     so the attacks take the bottom third and leave the face clear above them. */
+  /* ATTACKS PRINTED ON THE ART. no background, no border, no blur. */
   .poke.full-art .poke-moves{
-    background:rgba(8,7,10,.52);
-    border:1px solid rgba(255,121,198,.26);
-    border-radius:5px;padding:5px 8px;gap:3px;
-    backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);
+    background:none;border:0;border-radius:0;padding:0;gap:6px;
+    backdrop-filter:none;-webkit-backdrop-filter:none;
   }
-  .poke.full-art .poke-move{border-top-color:rgba(255,255,255,.10);padding-top:4px;}
-  .poke.full-art .poke-move-name{font-size:10.5px;}
-  .poke.full-art .poke-move-desc{color:#c8c2d2;font-size:8.5px;line-height:1.28;margin-top:0;}
-  .poke.full-art .poke-dmg{font-size:13px;}
+  .poke.full-art .poke-move{
+    border-top:1px solid rgba(255,255,255,.20);padding-top:6px;
+  }
+  .poke.full-art .poke-move:first-child{border-top:1px solid rgba(255,255,255,.20);padding-top:6px;}
+  .poke.full-art .poke-move-name{
+    font-size:12px;color:#fff;
+    text-shadow:0 1px 2px rgba(0,0,0,.98), 0 0 6px rgba(0,0,0,.9);
+  }
+  .poke.full-art .poke-move-desc{
+    color:#ded8e6;font-size:8.5px;line-height:1.3;
+    text-shadow:0 1px 2px rgba(0,0,0,.98), 0 0 5px rgba(0,0,0,.85);
+  }
+  .poke.full-art .poke-dmg{
+    font-size:16px;color:#fff;
+    text-shadow:0 1px 2px rgba(0,0,0,.98), 0 0 8px rgba(255,121,198,.45);
+  }
+  .poke.full-art .poke-cost i{box-shadow:0 0 4px rgba(255,121,198,.7), 0 1px 2px rgba(0,0,0,.9);}
   .poke.full-art .poke-foot{
-    background:rgba(8,7,10,.52);
-    border:1px solid rgba(255,121,198,.20);
-    border-radius:5px;padding:4px 8px;margin-top:5px;
-    backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);
-    border-top-style:solid;min-height:0;
+    background:none;border:0;border-top:1px solid rgba(255,255,255,.18);
+    border-radius:0;padding:5px 0 0;margin-top:6px;min-height:0;
+    backdrop-filter:none;-webkit-backdrop-filter:none;
   }
-  .poke.full-art .poke-flavor{color:#c8c2d2;max-width:58%;font-size:8.5px;line-height:1.25;}
-  .poke.full-art .poke-rare{color:#ff79c6;}
+  .poke.full-art .poke-flavor{
+    color:#cfc8da;max-width:58%;font-size:8.5px;line-height:1.25;
+    text-shadow:0 1px 2px rgba(0,0,0,.98), 0 0 5px rgba(0,0,0,.85);
+  }
+  .poke.full-art .poke-rare{color:#ff79c6;text-shadow:0 1px 2px rgba(0,0,0,.98);}
+  .poke.full-art .poke-platform{text-shadow:0 1px 2px rgba(0,0,0,.98);}
   .poke.warlord{--foil-1:#ffd479;--foil-2:#fff6d8;--foil-3:#6ee77f;--foil-4:#c9982b;}
   .poke.warlord::before{animation-duration:3.6s;}
   .poke.warlord .poke-inner{
