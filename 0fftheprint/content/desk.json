@@ -20,13 +20,12 @@
       "link": "https://instagram.com/virgosgateway"
     },
     {
-      "title": "The Ink",
+      "title": "The Ink, day one",
       "lanes": [
-        "interview",
         "scene"
       ],
       "platform": "SITE",
-      "thumb": null,
+      "thumb": "assets/work/w3-ink-inks.jpg",
       "link": "https://smiley-one98.merlin.site/",
       "num": "0TP-002"
     },

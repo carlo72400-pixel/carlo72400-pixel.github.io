@@ -15,6 +15,13 @@
       "h": 787
     },
     {
+      "src": "assets/work/w3-ink-shop.jpg",
+      "label": "LEGION INK · the storefront · 08.21",
+      "alt": "Tattoo shop on North New Braunfels, burglar bars across the glass and an old sedan at the kerb",
+      "w": 1400,
+      "h": 788
+    },
+    {
       "src": "assets/work/w2-blade-025.jpg",
       "label": "PAPER TIGER · after hours · 08.14",
       "alt": "Portrait in front of the red Paper Tiger snake mural",
@@ -41,6 +48,13 @@
       "alt": "Stage beams cutting over the crowd",
       "w": 1400,
       "h": 1050
+    },
+    {
+      "src": "assets/work/w3-ink-work.jpg",
+      "label": "LEGION INK · black and grey · 08.21",
+      "alt": "Artist head down at the station, drawing a stencil freehand in gloves",
+      "w": 1400,
+      "h": 788
     },
     {
       "src": "assets/work/w2-night-037.jpg",
@@ -78,6 +92,13 @@
       "h": 1400
     },
     {
+      "src": "assets/work/w3-ink-red.jpg",
+      "label": "LEGION INK · the red room · 08.21",
+      "alt": "Back room under a ring light, red on every wall, arms crossed against the flash",
+      "w": 1400,
+      "h": 788
+    },
+    {
       "src": "assets/work/w2-mix-046.jpg",
       "label": "THE MIX · st mary's · 08.16",
       "alt": "Dartboard corner, bar texture",
@@ -109,6 +130,13 @@
       "src": "assets/work/w3-zen-016.jpg",
       "label": "ZEN HAUS · night market · 08.21",
       "alt": "Vendor in a painted mask with both hands up behind his table",
+      "w": 1400,
+      "h": 788
+    },
+    {
+      "src": "assets/work/w3-ink-altar.jpg",
+      "label": "LEGION INK · the santos wall · 08.21",
+      "alt": "An Aztec calendar plate hung on the shop wall beside the santos shelf",
       "w": 1400,
       "h": 788
     },
@@ -146,6 +174,13 @@
       "alt": "Flash portrait against a pink corrugated wall",
       "w": 1400,
       "h": 787
+    },
+    {
+      "src": "assets/work/w3-ink-inks.jpg",
+      "label": "LEGION INK · the ink station · 08.21",
+      "alt": "Bottles of ink lined up on the counter, shot as a still life with nobody in frame",
+      "w": 1400,
+      "h": 788
     },
     {
       "src": "assets/work/w07-arcade-claw.jpg",
