@@ -2042,6 +2042,45 @@
     color:#0a0a0d;border-color:transparent;
     box-shadow:0 0 16px rgba(255,121,198,.5);
   }
+  /* ---- THE SLATE marquee: the next piece as a poster ---- */
+  .slate-marquee{
+    position:relative;display:flex;flex-direction:column;justify-content:flex-end;
+    min-height:340px;border:1px solid var(--line);border-radius:14px;overflow:hidden;
+    background:#0a0a0d center 18%/cover no-repeat;text-decoration:none;color:inherit;
+    padding:18px 20px;isolation:isolate;
+  }
+  .slate-marquee::before{
+    content:'';position:absolute;inset:0;z-index:0;pointer-events:none;
+    background:linear-gradient(180deg, rgba(10,10,13,.30) 0%, transparent 30%,
+      rgba(10,10,13,.55) 62%, rgba(10,10,13,.95) 100%);
+  }
+  .slate-marquee>*{position:relative;z-index:1;}
+  .slate-kicker{font-family:var(--f-mono);font-size:10px;letter-spacing:.3em;
+    text-transform:uppercase;color:var(--pink-glow);}
+  .slate-title{font-family:var(--f-display);font-style:italic;font-weight:900;
+    text-transform:uppercase;font-size:clamp(40px,7vw,72px);line-height:.9;
+    letter-spacing:-.01em;color:#fff;margin:4px 0 6px;
+    text-shadow:0 2px 12px rgba(0,0,0,.9), 0 0 30px rgba(255,121,198,.35);}
+  .slate-line{font-size:13px;color:#d9d3e0;max-width:520px;
+    text-shadow:0 1px 3px rgba(0,0,0,.95);}
+  .slate-status{align-self:flex-start;margin-top:10px;font-family:var(--f-mono);
+    font-size:9px;letter-spacing:.24em;padding:4px 10px;border-radius:3px;
+    border:1px dashed rgba(255,121,198,.65);color:#ffd7ee;
+    background:rgba(10,10,13,.6);transform:rotate(-1.2deg);}
+  .slate-marquee:hover{border-color:var(--pink-glow);}
+  .slate-latest{
+    display:flex;align-items:center;gap:10px;margin-top:10px;padding:10px 14px;
+    border:1px solid var(--line);border-radius:10px;text-decoration:none;color:inherit;
+    font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    background:var(--panel);
+  }
+  .slate-latest:hover{border-color:var(--pink-glow);}
+  .slate-latest .l{color:var(--pink-glow);white-space:nowrap;}
+  .slate-latest .t{color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .slate-latest .c{margin-left:auto;color:var(--muted);white-space:nowrap;}
+  @media (max-width:640px){.slate-latest .c{display:none;}}
+
+  .desk-play{background:rgba(255,121,198,.2);border-color:rgba(255,121,198,.6);color:#ffd7ee;}
   .desk-grid{
     display:grid;
     grid-template-columns:repeat(3,1fr);
@@ -3280,11 +3319,17 @@
   <!-- ============ MAIN ============ -->
   <main class="feed">
 
-    <!-- ===== CURATORS HERO (landing — the crew is the brand) ===== -->
+    <!-- ===== THE SLATE — the next piece leads the page, poster-style ===== -->
+    <section id="slate">
+      <a class="slate-marquee" id="slate-marquee" href="#roster"></a>
+      <a class="slate-latest" id="slate-latest" href="events/"></a>
+    </section>
+
+    <!-- ===== CURATORS HERO — one lens, the voices come to it ===== -->
     <section id="curators" class="curators-hero">
       <div class="section-head">
-        <h2>This Is Us <span class="accent">the media house</span></h2>
-        <div class="sub">who's actually on this</div>
+        <h2>This Is Us <span class="accent">the outlet</span></h2>
+        <div class="sub">one lens · a roster of voices · open seats that mean it</div>
       </div>
       <div class="curators-grid" id="curators-mount"></div>
     </section>
@@ -3480,6 +3525,7 @@
 
   // ============ Fetch all content ============
   let site, creators, take, rotation, desk, roster, work;  // `take` gets live posts merged in below
+  let slate = {};
   try {
     // FAULT-ISOLATED ON PURPOSE. This used to be seven bare fetches under one catch,
     // so a single malformed JSON file blanked the entire homepage. Now one bad file
@@ -3492,7 +3538,7 @@
         .catch(err => { console.error('Content load failed:', file, err); return fallback; });
 
     const EMPTY = {items: []};
-    const [s, c, t, m, d, r, w] = await Promise.all([
+    const [s, c, t, m, d, r, w, sl] = await Promise.all([
       grab('site.json', {}),
       grab('creators.json', EMPTY),
       grab('take.json', EMPTY),
@@ -3500,11 +3546,13 @@
       grab('desk.json', EMPTY),
       grab('roster.json', EMPTY),
       grab('work.json', EMPTY),
+      grab('slate.json', {}),
     ]);
     site = s || {};
     creators = (c && c.items) || []; take = (t && t.items) || [];
     rotation = (m && m.items) || []; desk = (d && d.items) || [];
     roster = (r && r.items) || []; work = (w && w.items) || [];
+    slate = sl || {};
   } catch (err) {
     console.error('Content load failed', err);
     document.body.innerHTML = '<div style="padding:40px;color:#fff;font-family:system-ui;text-align:center;">Content failed to load. Refresh, or DM <a href="https://instagram.com/vamppsych" style="color:#ff79c6;">@vamppsych</a>.</div>';
@@ -3512,6 +3560,26 @@
   }
 
   // ============ Site bits ============
+  // ---- THE SLATE marquee ----
+  const smq = document.getElementById('slate-marquee');
+  const slt = document.getElementById('slate-latest');
+  if (smq && slate.next) {
+    const n = slate.next;
+    smq.href = safeUrl(n.link) || '#roster';
+    smq.style.backgroundImage = 'url("' + sized(safeUrl(n.art), 'card') + '")';
+    smq.innerHTML = `
+      <div class="slate-kicker">NEXT OUT THE HOUSE &nbsp;·&nbsp; ${esc(n.num || '')}</div>
+      <div class="slate-title">${esc(n.title || '')}</div>
+      <div class="slate-line">${esc(n.line || '')}</div>
+      <div class="slate-status">${esc(n.status || 'IN PRODUCTION')}</div>`;
+  } else if (smq) { smq.closest('section').remove(); }
+  if (slt && slate.latest_drop) {
+    const L = slate.latest_drop;
+    slt.href = safeUrl(L.link) || 'events/';
+    slt.innerHTML = `<span class="l">${esc(L.label || 'LATEST DROP')} &rarr;</span>
+      <span class="t">${esc(L.title || '')}</span><span class="c">${esc(L.count || '')}</span>`;
+  } else if (slt) { slt.remove(); }
+
   const ticker = document.getElementById('ticker');
   if (ticker) ticker.innerHTML = (site.ticker_headlines || []).map(h => '⚡ ' + esc(h)).join(' &nbsp;·&nbsp; ');
 
@@ -3767,6 +3835,22 @@
   }
 
   // ============ The Desk (filterable feed) ============
+  // ---- catalog video overlay: youtube-nocookie, built on demand ----
+  function openYt(id){
+    const ov = document.createElement('div');
+    ov.style.cssText = 'position:fixed;inset:0;z-index:400;background:rgba(6,6,9,.96);display:flex;align-items:center;justify-content:center;padding:4vw;';
+    ov.innerHTML = `<div style="position:relative;width:min(1100px,100%);aspect-ratio:16/9;">
+      <iframe src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1" title="0FF THE PRINT"
+        style="position:absolute;inset:0;width:100%;height:100%;border:1px solid #23222b;border-radius:12px;"
+        allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+      <button aria-label="Close" style="position:absolute;top:-16px;right:-8px;width:38px;height:38px;border-radius:50%;background:#121218;border:1px solid #ff79c6;color:#f4eef2;font-size:19px;cursor:pointer;">&times;</button></div>`;
+    const close = () => { ov.remove(); document.removeEventListener('keydown', onKey); };
+    const onKey = e => { if (e.key === 'Escape') close(); };
+    ov.addEventListener('click', e => { if (e.target === ov || e.target.tagName === 'BUTTON') close(); });
+    document.addEventListener('keydown', onKey);
+    document.body.appendChild(ov);
+  }
+
   const dMount = document.getElementById('desk-grid');
   const dFilters = document.getElementById('desk-filters');
   if (dMount && desk) {
@@ -3783,10 +3867,16 @@
       el.className = 'desk-item';
       const cLink  = safeUrl(it.link);
       const cThumb = safeUrl(it.thumb);
-      el.href = cLink || '#';
-      if (/^https?:\/\//.test(cLink)) { el.target='_blank'; el.rel='noopener'; }
+      const ytId = (it.youtube && /^[A-Za-z0-9_-]{6,20}$/.test(it.youtube)) ? it.youtube : '';
+      el.href = ytId ? '#' : (cLink || '#');
+      if (!ytId && /^https?:\/\//.test(cLink)) { el.target='_blank'; el.rel='noopener'; }
+      if (ytId) {
+        el.classList.add('has-vid');
+        el.addEventListener('click', ev => { ev.preventDefault(); openYt(ytId); });
+      }
       el.dataset.lanes = (it.lanes || []).join(',');
-      const lanesHtml = (it.lanes || []).map(l => `<span class="desk-lane">${esc(l)}</span>`).join('');
+      const lanesHtml = (it.lanes || []).map(l => `<span class="desk-lane">${esc(l)}</span>`).join('')
+        + (ytId ? `<span class="desk-lane desk-play">&#9654; watch</span>` : '');
       el.innerHTML = `
         <div class="desk-thumb"></div>
         <div class="desk-platform ${esc(it.platform)}">${esc(platformLabel[it.platform] || it.platform)}</div>
