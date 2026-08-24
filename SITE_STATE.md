@@ -310,3 +310,24 @@ after Photo, which is also what draws the mobile swipe chip.
 - Verified: bands render REEL 01/09 through 09/09 in order, nav has 9 links, zero console
   errors, every new asset 200s, and the 375px layout checked through a `width:375px` iframe
   inside a 520px headless window (the 500px-minimum trap).
+
+
+## 2026-08-24 — THE OUTLET MOVED OUT + THE DOMAIN
+
+**0FF THE PRINT no longer lives in this repo.** It is its own project repo
+(`carlo72400-pixel/0fftheprint`) on its own domain, **https://0fftheprint.com**, HTTPS
+enforced. The folder `0fftheprint/` on disk is that repo's working copy (gitignored here);
+deploy the outlet by committing INSIDE it. Old `/0fftheprint/` URLs on this site 301 to the
+domain, deep paths included, so nothing shared ever broke. DNS is 4 GitHub A records + www
+CNAME at Porkbun (account "vamppsych", ⚠️ still no 2FA). Supabase auth Site URL + redirect
+allowlist point at the domain.
+
+Outlet highlights since the split, all in ITS repo: landing marquee + LATEST DROP bar, THE WORK
+featured-6 + /work/ archive with venue filters, private client deliveries (newclient.py,
+unguessable slug + optional PIN, vault repo 0tp-media-style on 0tp-vault), full-res =
+byte-identical originals for photos AND video in both engines (all 3 old events re-released),
+founder card = real photo comp (rule: never fully-AI Gianni, generate environments only),
+masthead "THE CITY GOES DARK. WE CLOCK IN.", rooms strip receipts-only.
+
+Untracked here on purpose: `.mcp.json` (local tool config) and two Operator resume PDFs in
+assets/docs/ that no page links yet — commit those only when a page uses them.
