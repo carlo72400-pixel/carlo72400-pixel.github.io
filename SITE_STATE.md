@@ -2,6 +2,39 @@
 
 > NEW SESSION START HERE: read this file + the job-hunt-2026 memory. Site is LIVE and current. As of Jul 30 2026 the homepage is SPLIT-FILE (see Architecture below): CSS lives in `assets/css/`, JS in `assets/js/`, `index.html` is markup only. Edit the file that owns the thing, bump its `?v=` stamp in BOTH `index.html` and `index-kawaii.html` (or `cp index.html index-kawaii.html` after HTML edits), commit, push. Verify visual changes with HEADLESS Chrome (see Gotchas), not just the preview pane.
 
+## NIGHTS grew two blocks (Aug 26 2026)
+
+`#nights` went from 3 blocks to 5. Same markup pattern as the others (clip-label, `.blue-grid`
+of 8, `p.client-credits`), so nothing structural changed and the PAGES/bands array is untouched.
+
+- **LEGION INK** (`assets/legionink/li_01..08.jpg`) — Smiley Onerr's tattoo shop on N New
+  Braunfels, Aug 21. Built as a photo ESSAY, not a highlight reel: place, person, craft, tools,
+  room, finished piece, out front. The 7 delivered `00 SELECTS` were NOT used, because four of
+  them are near-identical "him bent over working" frames and shipping those together is exactly
+  what the Jul 30 repeat audit exists to prevent. Pulled from the 27-frame graded NATURAL set
+  instead.
+- **THE MIX / RESIDENT EVIL VS SILENT HILL** (`assets/mixhorror/mh_01..08.jpg`) — the Aug 25
+  horror night. Second Mix block, so the clip-label carries the theme, not just the venue, or
+  the two read as duplicates.
+- The section intro gained one clause ("and the shops that keep the same street alive in the
+  daytime") because Legion Ink is a daytime shop and the old line said "club nights, bar nights,
+  showcases." The h2 "I shoot the room the way it felt" already covered it.
+
+⛔ **`.bluep.bhero` MUST BE 1:1 OR THE GRID GETS A HOLE.** The math: `.blue-grid` is 3 cols,
+14px gap, max-width 1000 → col = 324px. bhero spans 2 cols = 662px wide, and the two square rows
+beside it are 2*324+14 = 662px tall. So a bhero at anything but 1:1 is taller than the stack next
+to it and leaves dead space. Shipped a 4:5 hero on both new blocks, saw the hole in the headless
+render, rebuilt at 1400x1400. **zenhaus was right all along (1400x1400); `themix` mix_02 is
+1120x1400 and still has this bug.** Sizes that work: bwide 1600x842, bhero 1400x1400, squares
+1200x1200, q86 progressive.
+
+⚠️ Verifying this needed `?proof` — a plain headless capture of the homepage renders the scroll
+reveals unfired and you get a tall page of hero photo. Use `http://127.0.0.1:PORT/?proof`.
+The Browser pane honours a 375 resize but **will not scroll in a hidden tab** (`scrollY` stays 0),
+so measure element rects for overflow instead of trying to screenshot a scrolled position.
+`body{overflow-x:hidden}` masks overflow from `scrollWidth`, so check `getBoundingClientRect()`
+on the children, which is what was done here (0 offenders at 375).
+
 ## Architecture (added Jul 30 2026 — modeled on his mom's stanthony-olph.org build)
 
 Monolith split into st-anthony-style partials. His words: "apply this type of coding and design
