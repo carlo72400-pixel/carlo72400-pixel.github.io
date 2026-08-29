@@ -156,6 +156,23 @@ Checked and found CLEAN (do not "fix" these, they are correct):
   letter chips, tap-to-unredact buttons, Zener card SVGs. Briefly lived at `/rise/929/` under
   the wrong artist (assumed Kavman) before being moved here; that URL is dead, don't revive it.
   OG card source: `gateway/og_src.html` (in-repo; render recipe in its top comment).
+- `/lingers/` — THE SIDE THAT LINGERS (added Aug 29 2026): campaign plan for **$IPOR**
+  (IG @fivecantell, YouTube @icohw, '99 Houston-born / SA-based, alternative underground rap).
+  A THIRD homie, not Kavman and not Virgo. Same pattern as `/rise/` and `/gateway/`
+  (standalone, `noindex`, not in nav, own `<head>` + OG card `preview.jpg`). Register is
+  **void blue + blood red + bone**, Anton + Inter + JetBrains Mono, with the enneagram
+  linework lifted off his own GHZ/SPAW cover art; structured as a **cassette: SIDE A = where
+  he actually is, SIDE B = the run**, because his own release is VOIDYNT SIDE A / SIDE B.
+  Content: an audited numbers table, the no-distribution blocker, the two SXSW doors
+  (showcase app $35 closing Nov 20 2026; Film & TV Music Video Comp $70 by Sept 15), the
+  Austin unofficial circuit, an honest "not yet" verdict on Atlanta plus the free remote ATL
+  doors, the Texas triangle, a dated calendar to Mar 2027, and a "what I couldn't verify"
+  section. OG card source: `lingers/og_src.html` (headless 1200x630 → `preview.jpg`).
+  ⛔ **Every date, fee and venue on that page was fact-checked and several were killed**
+  (A3C is dormant, Empire Control Room evicted, Elevator dormant, Hot 107.9's path is from
+  2008). Do not "refresh" it from a search without re-verifying, and keep the two corrections
+  noted in section 12 — his bio playlist link WORKS (an earlier audit had the ID wrong), and
+  `@ic.ohw` is not a second account, it does not exist, which is why his YouTube→IG link 404s.
 - `/brujas/` — same thing for 0FF THE PRINT Interview 03, THE PAGE (Angel, @avocado__papi,
   creator of the Brujas comic). Source of truth is
   `03_PROJECTS/0ff-the-print/interviews/TREATMENT-03-brujas.html`. Slug is the comic, not
