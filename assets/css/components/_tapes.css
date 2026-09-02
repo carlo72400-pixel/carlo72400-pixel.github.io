@@ -32,3 +32,15 @@
 .sacp:hover img{transform:scale(1.06)}
 .client-credits{margin-top:18px;font-family:var(--mono);font-size:12px;letter-spacing:.4px;color:var(--dim);max-width:640px}
 .client-credits b{color:var(--ink);font-weight:600}
+
+/* .tape.play = a tape you actually watch, not a silent loop: native controls, real audio,
+   preload:none so the page only pays for the poster until someone presses play. */
+.tapes.watch{grid-template-columns:repeat(auto-fit,minmax(215px,1fr));max-width:760px}
+.tape.play{border-color:var(--pink)}
+.tape.play video{cursor:pointer}
+.tape.play .t-foot{bottom:auto;top:26px;left:8px;color:#fff;opacity:.85}
+.tape.play .t-dur{position:absolute;bottom:46px;right:10px;font-family:var(--mono);font-size:10px;
+  letter-spacing:1px;color:var(--butter);text-shadow:0 1px 3px rgba(0,0,0,.9);pointer-events:none}
+@media(max-width:640px){.tape.play .t-dur{display:none}}
+/* the weekend montage runs alone, so it gets one column instead of the auto-fit row */
+.tapes.solo{grid-template-columns:minmax(0,300px);max-width:300px}

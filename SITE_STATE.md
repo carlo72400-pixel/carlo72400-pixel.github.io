@@ -2,6 +2,46 @@
 
 > NEW SESSION START HERE: read this file + the job-hunt-2026 memory. Site is LIVE and current. As of Jul 30 2026 the homepage is SPLIT-FILE (see Architecture below): CSS lives in `assets/css/`, JS in `assets/js/`, `index.html` is markup only. Edit the file that owns the thing, bump its `?v=` stamp in BOTH `index.html` and `index-kawaii.html` (or `cp index.html index-kawaii.html` after HTML edits), commit, push. Verify visual changes with HEADLESS Chrome (see Gotchas), not just the preview pane.
 
+## NIGHTS grew three blocks and learned to play video (Sep 2 2026)
+
+`#nights` went 5 blocks to 8, and gained the first self-hosted video with SOUND on the homepage.
+Section intro gained one word ("touring rooms") because a national tour date is not a club night.
+
+- **ANDREW E. / STABLE HALL** (`assets/stablehall/sh_01..08.jpg`) Aug 29, the concert.
+- **ANDREW E. / SARI-SARI** (`assets/andrewe/ae_01..08.jpg`) Aug 30, the sit-down the next day.
+  Carries a video row and the weekend montage.
+- **CLOWN CHURCH** (`assets/clownchurch/cc_01..08.jpg`) Aug 30, Rah Rah Room. Frames re-pulled
+  from the INSOMNIA render (his call for the public dump), NOT the Oppenheimer selects folder,
+  by mapping `_grade/selects_names.json` back to source stems.
+
+⛔ **THE REM GATE IS CLEARED, and that is why Aug 29 is publishable at all.** Niko Rivera replied
+2026-09-01: "Yea please go ahead and post please tag rem page please", then asked for his Facebook
+for photo credit on 9/2. The Stable Hall credits line ends "Promoter: REM Entertainment &
+Productions" to honour that. Do not remove it.
+
+### `.tape.play`, the new component in `components/_tapes.css`
+`.tape` was a silent 1.7s loop. `.tape.play` is a real player: `controls`, audio, `preload="none"`
+plus a `poster`, so the page only pays ~80KB per tile until someone presses play. Four videos on the
+page total 16.8MB and NONE of it downloads on load.
+- `.tapes.watch` widens the row to 215px minimum; `.tapes.solo` forces ONE column for the montage.
+- ⛔ **The native control bar owns the bottom ~40px.** `.t-dur` was at `bottom:8px` and collided
+  with the scrubber; it lives at `bottom:46px` now and is `display:none` under 640px.
+- Posters are pulled at t=2.0s deliberately: the burned-in question overlay is up by then, so each
+  thumbnail says what it is ("WHAT DID SAN ANTONIO SOUND LIKE LAST NIGHT?") with no title card.
+
+### The montage rule was followed, not bypassed
+He rejected 9 Clown Church montages and pulled `AndrewE_The-Next-Day` on 9/1. So all three surviving
+cuts were re-encoded small, sent to him, and **he watched them and picked 48 HOURS**. ⛔ Never put a
+scripted montage on this site without that step.
+
+⚠️ **Verifying this needed the viewport set explicitly.** `javascript_tool` runs in a hidden tab whose
+viewport collapses to ~22px wide, so every `getBoundingClientRect()` is garbage and every
+`loading="lazy"` image reports `naturalWidth:0` (the EXISTING blocks report broken too, so a 0 is not
+evidence of a bug). Call `resize_window` to 1280 first, flip lazy images to eager, THEN measure. Once
+sized: all 3 new grids measured hero 662x669 against a 662 two-square stack, hole = 7px, identical to
+zenhaus / legionink / mixhorror. `mix_01` still measures a 172px hole, the known `mix_02` 1120x1400 bug.
+Mobile at 375: scrollWidth 356, zero overflow offenders.
+
 ## NIGHTS grew two blocks (Aug 26 2026)
 
 `#nights` went from 3 blocks to 5. Same markup pattern as the others (clip-label, `.blue-grid`
