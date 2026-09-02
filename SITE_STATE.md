@@ -2,6 +2,44 @@
 
 > NEW SESSION START HERE: read this file + the job-hunt-2026 memory. Site is LIVE and current. As of Jul 30 2026 the homepage is SPLIT-FILE (see Architecture below): CSS lives in `assets/css/`, JS in `assets/js/`, `index.html` is markup only. Edit the file that owns the thing, bump its `?v=` stamp in BOTH `index.html` and `index-kawaii.html` (or `cp index.html index-kawaii.html` after HTML edits), commit, push. Verify visual changes with HEADLESS Chrome (see Gotchas), not just the preview pane.
 
+## ⛔ THE ARCHIVE STALL, AND THE BUG THE NEW VIDEO INTRODUCED (Sep 2 2026)
+
+His report: "the archives had a lot of struggle loading." Two separate causes, both fixed.
+
+**1. `#archive` fires EIGHT videos at once.** It holds two `.tapes` rows (4 SA Current + 4 Legion
+Ink), and the observer played all eight the instant the section intersected. **None of them had a
+`poster`**, so every tile was a black box until bytes landed: 5.2MB opening in one burst behind
+eight blank rectangles. Fixed two ways:
+- **Every video on the page now has a poster** (14 of 14, generated at t=0.3s). An off-screen tape
+  costs nothing (`preload="none"`) and an on-screen one shows a frame before any video arrives.
+- **Autoplay starts are queued 220ms apart** (`tapeQ` / `pumpTapes` in `main.js`). Measured on the
+  exact queue: 8 starts, min gap 220ms, spread 1767ms, instead of 8 simultaneous sockets.
+- Also gated on `navigator.connection.saveData` now, not just `prefers-reduced-motion`.
+
+⛔ **DO NOT re-encode the tapes to save bytes. It was tried and measured, twice.** At CRF 30 +
+750k cap the concert clips fall to **30.8 dB PSNR (tape3)**, which is visible mush on a portfolio.
+At CRF 25 the files come back **7-9% LARGER** than the originals. They are already at their
+efficient point; the fix was never the bitrate, it was the burst and the missing posters.
+
+**2. ⛔ The new `.tape.play` videos were being hijacked by BOTH scripts.** `.tape.play` matched the
+selector `.tape video`, so:
+- `main.js` autoplayed them (they are UNMUTED, with controls) and **paused them on scroll**, which
+  would stop an interview cut somebody was deliberately watching the moment it left the viewport.
+  It also defeated `preload="none"` by forcing the fetch.
+- `a11y.js` put `role="button"` + `tabindex=0` + "Client tape preview" on them, which **masks the
+  native controls from a screen reader** and added a click handler fighting the real ones.
+
+Both selectors are now **`.tape:not(.play) video`**. The four cuts carry real `aria-label`s in the
+markup instead. Verified: observer watches 10 elements not 14, the 4 cuts report `role:null`, and
+they request **zero bytes** until someone presses play.
+
+⚠️ **Measuring this is genuinely hard, log the traps:** `javascript_tool` cannot scroll (scrollY
+stays 0) even fronted, even inside an iframe. Headless Chrome CAN, but `html{scroll-behavior:smooth}`
+in `_reset.css` means `scrollTo` never lands under `--virtual-time-budget` -> set
+`scrollBehavior='auto'` first. And **media element fetches do not appear in
+`performance.getEntriesByType('resource')`**, so an mp4 count of 0 there proves nothing; hook
+`HTMLMediaElement.prototype.play` or read `video.paused` instead.
+
 ## NIGHTS grew three blocks and learned to play video (Sep 2 2026)
 
 `#nights` went 5 blocks to 8, and gained the first self-hosted video with SOUND on the homepage.

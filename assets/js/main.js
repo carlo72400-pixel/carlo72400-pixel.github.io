@@ -146,12 +146,34 @@ document.querySelectorAll('.m-view[data-slides]').forEach(v=>{
   },2600);
 });
 
-/* ---- pause tapes off-screen ---- */
+/* ---- silent tapes play themselves in view, staggered ----
+   #archive shows EIGHT tapes at once. Firing them together opened eight video
+   requests in the same instant, which is what made that section crawl, so starts
+   are queued 220ms apart instead. preload="none" plus a poster means an off-screen
+   tape costs nothing and an on-screen one shows a frame before any video arrives.
+   .tape.play is EXCLUDED on purpose: those carry real audio and native controls,
+   so the viewer starts and stops them. Autoplaying them would blast sound, and
+   pausing them off-screen would stop a clip somebody is deliberately watching. */
 const vioReduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const vioSave = !!(navigator.connection && navigator.connection.saveData);
+const tapeQ=[]; let tapePump=null;
+function pumpTapes(){
+  if(tapePump) return;
+  tapePump=setInterval(()=>{
+    const v=tapeQ.shift();
+    if(!v){clearInterval(tapePump);tapePump=null;return;}
+    if(v.isConnected && v.dataset.want==='1') v.play().catch(()=>{});
+  },220);
+}
 const vio = new IntersectionObserver(es=>es.forEach(e=>{
-  const v=e.target; if(e.isIntersecting && !vioReduce){v.play().catch(()=>{});} else v.pause();
-}),{threshold:.15});
-document.querySelectorAll('.tape video, .mon-vid').forEach(v=>vio.observe(v));
+  const v=e.target;
+  if(e.isIntersecting && !vioReduce && !vioSave){
+    v.dataset.want='1';
+    if(tapeQ.indexOf(v)<0) tapeQ.push(v);
+    pumpTapes();
+  } else { v.dataset.want='0'; v.pause(); }
+}),{threshold:.25});
+document.querySelectorAll('.tape:not(.play) video, .mon-vid').forEach(v=>vio.observe(v));
 
 /* ---- scroll reveal ---- */
 const io = new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);} }),{threshold:.12});

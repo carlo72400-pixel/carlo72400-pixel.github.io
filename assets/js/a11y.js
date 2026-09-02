@@ -1,7 +1,8 @@
 /* post-review patch: video a11y + lightbox alt */
 (function(){
   var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  document.querySelectorAll('.tape video').forEach(function(v){
+  /* .tape.play is excluded: it ships native controls, so role=button would mask them */
+  document.querySelectorAll('.tape:not(.play) video').forEach(function(v){
     if(reduced){
       var c = v.cloneNode(true);           /* clone drops the autoplay observer binding */
       c.removeAttribute('autoplay'); c.setAttribute('controls','');
