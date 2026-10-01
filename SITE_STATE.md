@@ -9,6 +9,8 @@ They were redirect stubs into `0fftheprint.com/portfolio/<slug>/`, and those rea
 0fftheprint repo in the same pass, so both addresses 404 now. Every file is still in git history if one ever
 needs to come back (`git log --diff-filter=D --name-only`). ⛔ `photoshoots/` was the QR target on the ur cute
 card and the flyer (`03_PROJECTS/contact-card/urcute/`, `03_PROJECTS/flyer/qr_matrix.json`) and the old bio link.
+**Same day, his call: `photoshoots/index.html` is back as a redirect to `instagram.com/vamppsych/`** so those
+printed QRs and the old bio link land on his IG instead of a 404. Keep that file; nothing else lives there.
 
 ## ⛔ THE ARCHIVE STALL, AND THE BUG THE NEW VIDEO INTRODUCED (Sep 2 2026)
 
