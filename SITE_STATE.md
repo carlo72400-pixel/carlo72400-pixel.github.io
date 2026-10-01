@@ -2,6 +2,14 @@
 
 > NEW SESSION START HERE: read this file + the job-hunt-2026 memory. Site is LIVE and current. As of Jul 30 2026 the homepage is SPLIT-FILE (see Architecture below): CSS lives in `assets/css/`, JS in `assets/js/`, `index.html` is markup only. Edit the file that owns the thing, bump its `?v=` stamp in BOTH `index.html` and `index-kawaii.html` (or `cp index.html index-kawaii.html` after HTML edits), commit, push. Verify visual changes with HEADLESS Chrome (see Gotchas), not just the preview pane.
 
+
+## 🗑 DELETED 2026-10-01 (his call, cleanup pass)
+Stub folders removed from this repo: `photoshoots/ theplan/ sarisari/ bethel/ brujas/ rise/ gateway/ dream/ steel/`.
+They were redirect stubs into `0fftheprint.com/portfolio/<slug>/`, and those real copies were deleted from the
+0fftheprint repo in the same pass, so both addresses 404 now. Every file is still in git history if one ever
+needs to come back (`git log --diff-filter=D --name-only`). ⛔ `photoshoots/` was the QR target on the ur cute
+card and the flyer (`03_PROJECTS/contact-card/urcute/`, `03_PROJECTS/flyer/qr_matrix.json`) and the old bio link.
+
 ## ⛔ THE ARCHIVE STALL, AND THE BUG THE NEW VIDEO INTRODUCED (Sep 2 2026)
 
 His report: "the archives had a lot of struggle loading." Two separate causes, both fixed.
